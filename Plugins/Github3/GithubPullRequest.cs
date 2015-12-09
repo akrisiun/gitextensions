@@ -2,108 +2,108 @@
 using System.IO;
 using System.Net;
 using System.Text;
-using Git.hub;
+//using Git.hub;
 using GitUIPluginInterfaces.RepositoryHosts;
 
 namespace Github3
 {
-    class GithubPullRequest : IPullRequestInformation
+    class GithubPullRequest //  : IPullRequestInformation
     {
-        private PullRequest pullrequest;
+        // private PullRequest pullrequest;
 
-        public GithubPullRequest(PullRequest pullrequest)
+        public GithubPullRequest() // PullRequest pullrequest)
         {
-            this.pullrequest = pullrequest;
+            //this.pullrequest = pullrequest;
         }
 
-        public string Title
-        {
-            get { return pullrequest.Title; }
-        }
+        //public string Title
+        //{
+        //    get { return pullrequest.Title; }
+        //}
 
-        public string Body
-        {
-            get { return pullrequest.Body; }
-        }
+        //public string Body
+        //{
+        //    get { return pullrequest.Body; }
+        //}
 
-        public string Owner
-        {
-            get { return pullrequest.User.Login; }
-        }
+        //public string Owner
+        //{
+        //    get { return pullrequest.User.Login; }
+        //}
 
-        public DateTime Created
-        {
-            get { return pullrequest.CreatedAt; }
-        }
+        //public DateTime Created
+        //{
+        //    get { return pullrequest.CreatedAt; }
+        //}
 
 
 
-        private string _diffData;
+        private string _diffData = null;
         public string DiffData 
         { 
             get
             {
                 if (_diffData == null)
                 {
-                    HttpWebRequest wr = (HttpWebRequest)WebRequest.Create(pullrequest.DiffUrl);
-                    using (var response = wr.GetResponse())
-                    using (var respStream = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
-                    {
-                        _diffData = respStream.ReadToEnd();
-                    }
+                    //HttpWebRequest wr = (HttpWebRequest)WebRequest.Create(pullrequest.DiffUrl);
+                    //using (var response = wr.GetResponse())
+                    //using (var respStream = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                    //{
+                    //    _diffData = respStream.ReadToEnd();
+                    //}
                 }
                 return _diffData;
             }
         }
 
-        private IHostedRepository _BaseRepo;
+        private IHostedRepository _BaseRepo = null;
         public IHostedRepository BaseRepo
         {
             get
             {
-                if (_BaseRepo == null)
-                    _BaseRepo = new GithubRepo(pullrequest.Base.Repo);
+                //if (_BaseRepo == null)
+                //    _BaseRepo = new GithubRepo(pullrequest.Base.Repo);
 
                 return _BaseRepo;
             }
         }
 
-        private IHostedRepository _HeadRepo;
+        private IHostedRepository _HeadRepo = null;
         public IHostedRepository HeadRepo
         {
             get
             {
-                if(_HeadRepo == null)
-                    _HeadRepo = new GithubRepo(pullrequest.Head.Repo);
+                //if(_HeadRepo == null)
+                //    _HeadRepo = new GithubRepo(pullrequest.Head.Repo);
 
                 return _HeadRepo;
             }
         }
 
-        public string BaseSha
-        {
-            get { return pullrequest.Base.Sha; }
-        }
+        //public string BaseSha
+        //{
+        //    get { return pullrequest.Base.Sha; }
+        //}
 
-        public string HeadSha
-        {
-            get { return pullrequest.Head.Sha; }
-        }
+        //public string HeadSha
+        //{
+        //    get { return pullrequest.Head.Sha; }
+        //}
 
-        public string BaseRef
-        {
-            get { return pullrequest.Base.Ref; }
-        }
+        //public string BaseRef
+        //{
+        //    get { return pullrequest.Base.Ref; }
+        //}
 
-        public string HeadRef
-        {
-            get { return pullrequest.Head.Ref; }
-        }
+        //public string HeadRef
+        //{
+        //    get { return pullrequest.Head.Ref; }
+        //}
 
-        public string Id
-        {
-            get { return pullrequest.Number.ToString(); }
-        }
+        //public string Id
+        //{
+        //    get { return pullrequest.Number.ToString(); }
+        //}
 
         public string DetailedInfo
         {
@@ -112,16 +112,16 @@ namespace Github3
 
         public void Close()
         {
-            pullrequest.Close();
+            //pullrequest.Close();
         }
 
-        private IPullRequestDiscussion _Discussion;
+        private IPullRequestDiscussion _Discussion = null;
         public IPullRequestDiscussion Discussion
         {
             get
             {
-                if(_Discussion == null)
-                    _Discussion = new GithubPullRequestDiscussion(pullrequest);
+                //if(_Discussion == null)
+                //    _Discussion = new GithubPullRequestDiscussion(pullrequest);
 
                 return _Discussion;
             }

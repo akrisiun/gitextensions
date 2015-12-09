@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
-using Git.hub;
+//using Git.hub;
 using GitCommands.Config;
 using GitCommands;
 using ResourceManager;
@@ -53,6 +53,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
 
         private void SearchForUpdates()
         {
+#if GITHUB
             try
             {
                 Client github = new Client();
@@ -85,7 +86,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
                     }, null);
                 Done();
             }
-
+#endif
         }
 
         void CheckForNewerVersion(string releases)

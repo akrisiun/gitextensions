@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Git.hub;
+//using Git.hub;
 
 namespace Github3
 {
@@ -56,22 +56,22 @@ namespace Github3
 
             if (url.Contains("?code="))
             {
-                Uri uri = new Uri(url);
-                var queryParams = GetParams(uri.Query);
-                string code;
-                if (queryParams.TryGetValue("code", out code))
-                {
-                    this.Hide();
-                    this.Close();
-                    string token = OAuth2Helper.requestToken(GithubAPIInfo.client_id, GithubAPIInfo.client_secret, code);
-                    if (token == null)
-                        return;
-                    gotToken = true;
+                //Uri uri = new Uri(url);
+                //var queryParams = GetParams(uri.Query);
+                //string code;
+                //if (queryParams.TryGetValue("code", out code))
+                //{
+                //    this.Hide();
+                //    this.Close();
+                //    string token = OAuth2Helper.requestToken(GithubAPIInfo.client_id, GithubAPIInfo.client_secret, code);
+                //    if (token == null)
+                //        return;
+                //    gotToken = true;
 
-                    GithubLoginInfo.OAuthToken = token;
+                //    GithubLoginInfo.OAuthToken = token;
 
-                    MessageBox.Show(this.Owner as IWin32Window, "Successfully retrieved OAuth token.", "Github Authorization");
-                }
+                //    MessageBox.Show(this.Owner as IWin32Window, "Successfully retrieved OAuth token.", "Github Authorization");
+                //}
             }
         }
     }
