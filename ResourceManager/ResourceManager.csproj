@@ -56,10 +56,13 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>GitCom_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SmartFormat">
-      <HintPath>..\packages\SmartFormat.NET.1.6.1.0\lib\net40-Client\SmartFormat.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -131,8 +134,13 @@
       <Project>{27559302-f35e-4b62-a6ec-11ff21a5fa6f}</Project>
       <Name>GitUIPluginInterfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\vendor\SmartFormat.csproj">
+      <Project>{83a94f48-8529-4a41-b5e1-1684827180df}</Project>
+      <Name>SmartFormat</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="GitCom_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -97,12 +97,15 @@ namespace GitCommands
 #if DEBUG
             string gitExtDir = GetGitExtensionsDirectory().TrimEnd('\\').TrimEnd('/');
             string debugPath = @"GitExtensions\bin\Debug";
-            int len = debugPath.Length;
-            var path = gitExtDir.Substring(gitExtDir.Length - len);
-            if (debugPath.Replace('\\', '/').Equals(path.Replace('\\', '/')))
+            if (Directory.Exists(debugPath))
             {
-                string projectPath = gitExtDir.Substring(0, gitExtDir.Length - len);
-                return Path.Combine(projectPath, "Bin");
+                int len = debugPath.Length;
+                var path = gitExtDir.Substring(gitExtDir.Length - len);
+                if (debugPath.Replace('\\', '/').Equals(path.Replace('\\', '/')))
+                {
+                    string projectPath = gitExtDir.Substring(0, gitExtDir.Length - len);
+                    return Path.Combine(projectPath, "Bin");
+                }
             }
 #endif
             return GetInstallDir();

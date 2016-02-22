@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\FxCop.targets" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CF5B22E7-230F-4E50-BE88-C4F7023CED2C}</ProjectGuid>
+    <ProjectGuid>{A2E74A2E-5B56-4A20-9780-6E283D4154A6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GitUI</RootNamespace>
-    <AssemblyName>GitUI</AssemblyName>
+    <AssemblyName>GitCommitUI</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>gituikey.snk.pfx</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>GitCom_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -33,10 +33,11 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -45,12 +46,13 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET45;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -61,11 +63,9 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PSTaskDialog">
-      <HintPath>..\Bin\PSTaskDialog.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core">
@@ -95,9 +95,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="ICSharpCode.TextEditor">
       <HintPath>..\Bin\ICSharpCode.TextEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack.Shell">
-      <HintPath>..\Bin\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -1516,7 +1513,7 @@
       <Name>Gravatar</Name>
     </ProjectReference>
     <ProjectReference Include="..\NetSpell.SpellChecker\SpellChecker.csproj">
-      <Project>{A426EE0B-E52E-4D74-AF24-06797142D7B2}</Project>
+      <Project>{a426ee0b-e52e-4d74-af24-06797142d7b2}</Project>
       <Name>SpellChecker</Name>
     </ProjectReference>
     <ProjectReference Include="..\ResourceManager\ResourceManager.csproj">
@@ -1527,6 +1524,10 @@
       <Project>{27559302-F35E-4B62-A6EC-11FF21A5FA6F}</Project>
       <Name>GitUIPluginInterfaces</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\vendor\PSTaskDialog.csproj">
+      <Project>{0253e98b-6374-48aa-8740-89bc2939ff77}</Project>
+      <Name>PSTaskDialog</Name>
     </ProjectReference>
     <ProjectReference Include="..\vendor\SmartFormat.csproj">
       <Project>{83a94f48-8529-4a41-b5e1-1684827180df}</Project>
@@ -1556,6 +1557,7 @@
     <Compile Include="Script\SplitButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <None Include="GitCom_TemporaryKey.pfx" />
     <None Include="gituikey.snk.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\GitCommands.GitItem.datasource" />

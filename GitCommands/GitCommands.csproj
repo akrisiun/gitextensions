@@ -12,8 +12,8 @@
     <RootNamespace>GitCommands</RootNamespace>
     <AssemblyName>GitCommands</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>gitcommandkey.snk.pfx</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>GitCom_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -57,11 +57,10 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SmartFormat, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SmartFormat.NET.1.6.1.0\lib\net40-Client\SmartFormat.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -167,6 +166,7 @@
     <None Include="app.config" />
     <None Include="gitcommandkey.snk.pfx" />
     <Compile Include="Repository\RecentRepoInfo.cs" />
+    <None Include="GitCom_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -181,6 +181,10 @@
     <ProjectReference Include="..\Plugins\GitUIPluginInterfaces\GitUIPluginInterfaces.csproj">
       <Project>{27559302-F35E-4B62-A6EC-11FF21A5FA6F}</Project>
       <Name>GitUIPluginInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\vendor\SmartFormat.csproj">
+      <Project>{83a94f48-8529-4a41-b5e1-1684827180df}</Project>
+      <Name>SmartFormat</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

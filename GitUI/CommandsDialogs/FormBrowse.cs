@@ -25,7 +25,7 @@ using GitUI.Script;
 using GitUIPluginInterfaces;
 using ResourceManager;
 using Settings = GitCommands.AppSettings;
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
 using Microsoft.WindowsAPICodePack.Taskbar;
 #endif
 
@@ -131,7 +131,7 @@ namespace GitUI.CommandsDialogs
         private ToolStripItem _bisect;
         private ToolStripItem _warning;
 
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
         private ThumbnailToolBarButton _commitButton;
         private ThumbnailToolBarButton _pushButton;
         private ThumbnailToolBarButton _pullButton;
@@ -323,7 +323,7 @@ namespace GitUI.CommandsDialogs
 
         private void BrowseLoad(object sender, EventArgs e)
         {
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
             if (EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
             {
                 TaskbarManager.Instance.ApplicationId = "GitExtensions";
@@ -697,7 +697,7 @@ namespace GitUI.CommandsDialogs
 
         private void UpdateJumplist(bool validWorkingDir)
         {
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
             if (!EnvUtils.RunningOnWindows() || !TaskbarManager.IsPlatformSupported)
                 return;
 
@@ -741,7 +741,7 @@ namespace GitUI.CommandsDialogs
 #endif
         }
 
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
         private void CreateOrUpdateTaskBarButtons(bool validRepo)
         {
             if (EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
@@ -3372,7 +3372,7 @@ namespace GitUI.CommandsDialogs
         {
             if (disposing)
             {
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
                 if (_commitButton != null)
                     _commitButton.Dispose();
                 if (_pushButton != null)

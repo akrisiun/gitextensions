@@ -7,3 +7,9 @@
 [submodule "Externals/Git.hub"]
 	path = Externals/Git.hub
 	url = git://github.com/gitextensions/Git.hub.git
+[submodule "vendor/SmartFormat.NET"]
+	path = vendor/SmartFormat.NET
+	url = https://github.com/scottrippey/SmartFormat.NET.git
+[submodule "vendor/PSTaskDialog"]
+	path = vendor/PSTaskDialog
+	url = https://github.com/kevinbowe/PSTaskDialog.git

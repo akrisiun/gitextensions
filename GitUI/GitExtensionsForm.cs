@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using GitUI.Properties;
 using ResourceManager;
 using Settings = GitCommands.AppSettings;
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
 using Microsoft.WindowsAPICodePack.Taskbar;
 #endif
 
@@ -58,7 +58,7 @@ namespace GitUI
             if (_enablePositionRestore)
                 SavePosition(GetType().Name);
 
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
             if (GitCommands.Utils.EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
             {
                 try

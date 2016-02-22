@@ -165,6 +165,7 @@ namespace GitUI.UserControls
             /// <summary>Gets the <see cref="GitModule"/> reference.</summary>
             public GitModule Module { get { return UICommands.Module; } }
 
+            // TODO CodeAnaysis warning: Do not call overridable methods in contructors
             protected Node(Tree aTree, Node aParentNode)
             {
                 Nodes = new Nodes(aTree, this);

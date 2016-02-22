@@ -194,6 +194,7 @@ namespace GitUI.CommandsDialogs
                                        PSTaskDialog.eTaskDialogButtons.OKCancel,
                                        PSTaskDialog.eSysIcons.Information,
                                        PSTaskDialog.eSysIcons.Information);
+
                 if (res == DialogResult.OK)
                 {
                     UICommands.StashDrop(this, Stashes.Text);
