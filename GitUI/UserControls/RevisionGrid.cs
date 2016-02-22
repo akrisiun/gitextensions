@@ -3012,6 +3012,9 @@ namespace GitUI
         private void copyToClipboardToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
         {
             var revision = GetRevision(LastRowIndex);
+            if (revision == null)
+                return;  // fail
+
             CopyToClipboardMenuHelper.AddOrUpdateTextPostfix(hashCopyToolStripMenuItem, CopyToClipboardMenuHelper.StrLimitWithElipses(revision.Guid, 15));
             CopyToClipboardMenuHelper.AddOrUpdateTextPostfix(messageCopyToolStripMenuItem, CopyToClipboardMenuHelper.StrLimitWithElipses(revision.Message, 30));
             CopyToClipboardMenuHelper.AddOrUpdateTextPostfix(authorCopyToolStripMenuItem, revision.Author);

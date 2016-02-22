@@ -3344,7 +3344,13 @@ namespace GitUI.CommandsDialogs
 
         private void FormBrowse_Activated(object sender, EventArgs e)
         {
+#if DEBUG
+            try {
+                this.InvokeAsync(OnActivate);
+            } catch (Exception ex) { Console.WriteLine(String.Format("Invoke warning {0} \n {1}", ex.Message, ex.StackTrace)); }
+#else
             this.InvokeAsync(OnActivate);
+#endif
         }
 
         private void cherryPickSelectedDiffFileToolStripMenuItem_Click(object sender, EventArgs e)

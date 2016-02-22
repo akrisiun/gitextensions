@@ -89,6 +89,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitCom", "GitExtensions\GitCom.csproj", "{89D115D2-16AD-4B43-95E8-97A25B45ABC1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Commit", "Commit", "{BC12F8DD-CC6A-4E28-9FB2-DA835ADF9428}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFormat", "vendor\SmartFormat.csproj", "{83A94F48-8529-4A41-B5E1-1684827180DF}"
 EndProject
