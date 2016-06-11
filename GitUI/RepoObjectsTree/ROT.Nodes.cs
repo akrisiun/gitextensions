@@ -162,6 +162,7 @@ namespace GitUI.UserControls
             /// <summary>Gets the <see cref="GitModule"/> reference.</summary>
             public GitModule Module { get { return UICommands.Module; } }
 
+            // ignore CA2214 warning
             protected Node(Tree aTree, Node aParentNode)
             {
                 Nodes = new Nodes(aTree, this);

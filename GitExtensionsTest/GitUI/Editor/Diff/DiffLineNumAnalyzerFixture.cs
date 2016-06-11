@@ -14,7 +14,7 @@ namespace GitExtensionsTest.GitUI.Editor.Diff
     }
 
     [TestFixture]
-    public class TestDiffLineNumAnalyzer
+    public sealed class TestDiffLineNumAnalyzer : IDisposable
     {
         private static readonly string TestDataDir = Path.Combine(GetCallingAssemblyDir(),
             "GitUI", "Editor", "Diff");
@@ -44,6 +44,11 @@ namespace GitExtensionsTest.GitUI.Editor.Diff
             _lineNumAnalyzer = new DiffLineNumAnalyzer();
             _lineNumMetaRecv = Substitute.For<IDiffLineNumRecv>();
             _lineNumAnalyzer.OnLineNumAnalyzed += _lineNumMetaRecv.OnLineNumAnalyzed;
+        }
+
+        public void Dispose()
+        {
+            _lineNumAnalyzer.Dispose();
         }
 
         [Test]

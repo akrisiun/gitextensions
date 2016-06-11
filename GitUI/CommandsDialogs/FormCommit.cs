@@ -220,9 +220,12 @@ namespace GitUI.CommandsDialogs
             Staged.RefreshFocus += Staged_RefreshFocus;
         }
 
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool SetForegroundWindow(IntPtr hWnd);
+        internal class User32
+        {
+            [DllImport("user32.dll")]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            internal static extern bool SetForegroundWindow(IntPtr hWnd);
+        }
 
         public bool Reload(GitUICommands aCommands, IntPtr handle)
         {
@@ -232,10 +235,7 @@ namespace GitUI.CommandsDialogs
             // non modal update
             if (InvokeRequired)
             {
-                SetForegroundWindow(handle);
-                //Invoke((Action)(
-                //    () => Focus()
-                //    ));
+                User32.SetForegroundWindow(handle);
             }
             else
                 Focus();

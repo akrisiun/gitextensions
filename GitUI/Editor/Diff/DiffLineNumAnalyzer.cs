@@ -5,9 +5,9 @@ using PatchApply;
 
 namespace GitUI.Editor.Diff
 {
-    public class DiffLineNumAnalyzer
+    public sealed class DiffLineNumAnalyzer : IDisposable
     {
-        public delegate void EvLineNumAnalyzed(DiffLineNum diffLineNum);
+        public delegate void EvLineNumAnalyzed(DiffLineNum diffline);  // (object sender, EventArgs e);
 
         public event EvLineNumAnalyzed OnLineNumAnalyzed;
 
@@ -16,11 +16,14 @@ namespace GitUI.Editor.Diff
             Start(doWorkEventArgs.Argument as string);
         }
 
-        protected void FireLineAnalyzedEvent(DiffLineNum diffline)
+        // protected 
+        void FireLineAnalyzedEvent(DiffLineNum diffline)
         {
             var handler = OnLineNumAnalyzed;
             if (handler != null) handler(diffline);
         }
+
+        public void Dispose() { _bgWorker.Dispose(); }
 
         BackgroundWorker _bgWorker = new BackgroundWorker();
         public void StartAsync(string diffContent, Action onCompleted)

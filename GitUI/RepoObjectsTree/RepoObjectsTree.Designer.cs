@@ -21,6 +21,9 @@ namespace GitUI.UserControls
             if (disposing && (components != null))
             {
                 components.Dispose();
+                if (_cancelledTokenSource != null)
+                    _cancelledTokenSource.Dispose();
+                _cancelledTokenSource = null;
             }
             base.Dispose(disposing);
         }

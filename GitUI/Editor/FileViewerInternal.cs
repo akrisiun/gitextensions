@@ -38,9 +38,9 @@ namespace GitUI.Editor
             TextEditor.ActiveTextAreaControl.TextArea.DoubleClick += ActiveTextAreaControlDoubleClick;
 
             _lineNumbersControl = new DiffViewerLineNumberCtrl(TextEditor.ActiveTextAreaControl.TextArea);
-            _diffLineNumAnalyzer.OnLineNumAnalyzed += line =>
+            _diffLineNumAnalyzer.OnLineNumAnalyzed += (line) =>
             {
-                _lineNumbersControl.AddDiffLineNum(line);
+                _lineNumbersControl.AddDiffLineNum(line as DiffLineNum);
             };
         }
 

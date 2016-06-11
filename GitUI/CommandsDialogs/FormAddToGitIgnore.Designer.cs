@@ -14,6 +14,7 @@
         protected override void Dispose(bool disposing)
         {
             _ignoredFilesLoader.Cancel();
+            _ignoredFilesLoader.Dispose();
 
             if (disposing && (components != null))
             {
