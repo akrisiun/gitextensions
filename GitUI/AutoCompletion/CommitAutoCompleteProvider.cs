@@ -73,14 +73,26 @@ namespace GitUI.AutoCompletion
             if (File.Exists(path))
                 return File.ReadLines(path);
 
-            Stream s = Assembly.GetEntryAssembly().GetManifestResourceStream("GitExtensions.AutoCompleteRegexes.txt");
-            if (s == null)
-                {
-                    throw new NotImplementedException("Please add AutoCompleteRegexes.txt file into .csproj");
-            }
-            using (var sr = new StreamReader (s))
+            try
             {
-                return sr.ReadToEnd ().Split (new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+                Stream s = Assembly.GetEntryAssembly().GetManifestResourceStream("GitExtensions.AutoCompleteRegexes.txt");
+                if (s == null)
+                {
+                    // this is should be not fatal error
+                    // throw new NotImplementedException("Please add AutoCompleteRegexes.txt file into .csproj");
+                    return System.Linq.Enumerable.Empty<string>();
+                }
+         
+                using (var sr = new StreamReader (s))
+                {
+                  return sr.ReadToEnd ().Split (new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+                }
+                using (var sr = new StreamReader(Assembly.GetEntryAssembly().GetManifestResourceStream("GitExtensions.AutoCompleteRegexes.txt")))
+                      return sr.ReadToEnd().Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            }
+            catch
+            {
+                return System.Linq.Enumerable.Empty<string>();
             }
         }
 
@@ -121,7 +133,7 @@ namespace GitUI.AutoCompletion
             // Try to read the contents of the file: if it cannot be read, skip the operation silently.
             try
             {
-                return File.ReadAllText(Path.Combine(module.WorkingDir, file.Name));
+            return File.ReadAllText(Path.Combine(module.WorkingDir, file.Name));
             }
             catch
             {

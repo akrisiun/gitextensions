@@ -5,7 +5,8 @@ namespace GitUI.RevisionGridClasses
 {
     partial class DvcsGraph
     {
-        private sealed class Junction
+        // private
+        public sealed class Junction
         {
             #region State enum
 

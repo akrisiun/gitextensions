@@ -8,7 +8,8 @@ namespace GitUI.RevisionGridClasses
 {
     partial class DvcsGraph
     {
-        private sealed class Graph
+        // private 
+        public sealed class Graph
         {
             #region Delegates
 
@@ -69,6 +70,8 @@ namespace GitUI.RevisionGridClasses
                 }
             }
 
+            public ICollection<Graph.ILaneRow> Lanes { get { return lanes; } }
+
             public ILaneRow this[int col]
             {
                 get { return lanes[col]; }
@@ -125,7 +128,7 @@ namespace GitUI.RevisionGridClasses
                     return startNode.Ancestors.Any(a => a.IsRelative);
                 }
 
-                return false;              
+                return false;
             }
 
             public void HighlightBranchRecursive(string aId)
@@ -283,7 +286,7 @@ namespace GitUI.RevisionGridClasses
                         while (i > processedNodes)
                         {
                             // This only happens if we weren't in topo order
-                            if (Debugger.IsAttached) Debugger.Break();
+                            //if (Debugger.IsAttached) Debugger.Break();
 
                             Node temp = AddedNodes[i];
                             AddedNodes[i] = AddedNodes[i - 1];
@@ -504,11 +507,13 @@ namespace GitUI.RevisionGridClasses
 
                 // Lane information
                 int Count { get; }
-                LaneInfo this[int lane, int item] { get; }
+                GitUI.RevisionGridClasses.DvcsGraph.Graph.LaneInfo this[int lane, int item] { get; }
                 int LaneInfoCount(int lane);
             }
 
             #endregion
+
         }
+
     }
 }

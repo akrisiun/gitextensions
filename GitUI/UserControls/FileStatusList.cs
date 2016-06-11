@@ -18,6 +18,7 @@ using ResourceManager;
 namespace GitUI
 {
     using GitItemsWithParents = IDictionary<string, IList<GitItemStatus>>;
+    using System.Reactive;
 
     public sealed partial class FileStatusList : GitModuleControl
     {
@@ -25,27 +26,23 @@ namespace GitUI
             new TranslationString("Operation not supported");
         private readonly TranslationString _DiffWithParent =
             new TranslationString("Diff with parent");
-        public readonly TranslationString CombinedDiff =
-            new TranslationString("Combined Diff");
 
-        private readonly IDisposable selectedIndexChangeSubscription;
-        private static readonly TimeSpan SelectedIndexChangeThrottleDuration = TimeSpan.FromMilliseconds(50);
+        private // readonly 
+            IDisposable selectedIndexChangeSubscription;
+        public static readonly TimeSpan SelectedIndexChangeThrottleDuration = TimeSpan.FromMilliseconds(50);
 
         private const int ImageSize = 16;
 
         public FileStatusList()
         {
-            InitializeComponent(); Translate();
-
-            selectedIndexChangeSubscription = Observable.FromEventPattern(
-                h => FileStatusListView.SelectedIndexChanged += h,
-                h => FileStatusListView.SelectedIndexChanged -= h)
-                .Throttle(SelectedIndexChangeThrottleDuration)
-                .ObserveOn(SynchronizationContext.Current)
-                .Subscribe(_ => FileStatusListView_SelectedIndexChanged());
+            InitializeComponent();
+            Translate();
 
             SelectFirstItemOnSetItems = true;
             _noDiffFilesChangesDefaultText = NoFiles.Text;
+
+            Subscribe();
+
 #if !__MonoCS__ // TODO Drag'n'Drop doesn't work on Mono/Linux
             FileStatusListView.MouseMove += FileStatusListView_MouseMove;
             FileStatusListView.MouseDown += FileStatusListView_MouseDown;
@@ -76,9 +73,36 @@ namespace GitUI
             NoFiles.Font = new Font(SystemFonts.MessageBoxFont, FontStyle.Italic);
         }
 
+        public void Subscribe()
+        {
+            if (selectedIndexChangeSubscription != null)
+                return;
+            Exception err = null;
+            try
+            {
+                selectedIndexChangeSubscription =
+                    StatusListObserve.Subscribe(this,
+                        h => FileStatusListView.SelectedIndexChanged += h,
+                        h => FileStatusListView.SelectedIndexChanged -= h
+                    );
+            }
+            catch (Exception ex) { err = ex; }
+            // GenericArguments[1], 'TEventArgs', on 'System.Reactive.IEventPattern`2[TSender,TEventArgs]' violates the constraint of type parameter 'TEventArgs'.
+            if (err != null)
+            {
+                FileStatusListView.SelectedIndexChanged += (s,e) => FileStatusListView_SelectedIndexChanged();
+            }
+        }
+
         protected override void DisposeCustomResources()
         {
-            selectedIndexChangeSubscription.Dispose();
+            if (selectedIndexChangeSubscription == null)
+                return;
+            try
+            {
+                selectedIndexChangeSubscription.Dispose();
+            }
+            catch {; } // handle not created
         }
 
         private static ImageList _images;
@@ -182,6 +206,10 @@ namespace GitUI
                     ClearSelected();
 
                     hover.Item.Selected = true;
+                }
+                if (hover.Item != null && ContextMenu == null && RefreshFocus != null)
+                {
+                    RefreshFocus(this, EventArgs.Empty);
                 }
             }
 
@@ -294,13 +322,15 @@ namespace GitUI
         }
 #endif
 
+        #region Properties
+
         [Browsable(false)]
         public IEnumerable<GitItemStatus> AllItems
         {
             get
             {
                 return (FileStatusListView.Items.Cast<ListViewItem>().
-                    Select(selectedItem => (GitItemStatus) selectedItem.Tag));
+                    Select(selectedItem => (GitItemStatus)selectedItem.Tag));
             }
         }
 
@@ -339,7 +369,7 @@ namespace GitUI
                 if (FileStatusListView.SelectedItems.Count > 0)
                 {
                     ListViewItem item = FileStatusListView.SelectedItems[0];
-                    return (GitItemStatus) item.Tag;
+                    return (GitItemStatus)item.Tag;
                 }
                 return null;
             }
@@ -400,6 +430,8 @@ namespace GitUI
 
         private int _nextIndexToSelect = -1;
 
+        #endregion
+
         public void StoreNextIndexToSelect()
         {
             _nextIndexToSelect = -1;
@@ -421,6 +453,7 @@ namespace GitUI
 
         public event EventHandler SelectedIndexChanged;
         public event EventHandler DataSourceChanged;
+        public event EventHandler RefreshFocus;
 
         public new event EventHandler DoubleClick;
         public new event KeyEventHandler KeyDown;
@@ -433,7 +466,7 @@ namespace GitUI
                 DoubleClick(sender, e);
         }
 
-        void FileStatusListView_SelectedIndexChanged()
+        public void FileStatusListView_SelectedIndexChanged()
         {
             if (SelectedIndexChanged != null)
                 SelectedIndexChanged(this, EventArgs.Empty);
@@ -516,7 +549,7 @@ namespace GitUI
 
         public void SetGitItemStatuses(string parentRev, IList<GitItemStatus> items)
         {
-            var dictionary = new Dictionary<string, IList<GitItemStatus>> {{parentRev ?? "", items}};
+            var dictionary = new Dictionary<string, IList<GitItemStatus>> { { parentRev ?? "", items } };
             GitItemStatusesWithParents = dictionary;
         }
 
@@ -559,18 +592,8 @@ namespace GitUI
                     ListViewGroup group = null;
                     if (!String.IsNullOrEmpty(pair.Key))
                     {
-                        var groupName = "";
-                        if (pair.Key == CombinedDiff.Text)
-                        {
-                            groupName = CombinedDiff.Text;
-                        }
-                        else
-                        {
-                            string shortHash = pair.Key.Length > 8 ? pair.Key.Substring(0, 8) : pair.Key;
-                            groupName = _DiffWithParent.Text + " " + shortHash;
-                        }
-
-                        group = new ListViewGroup(groupName);
+                        string shortHash = pair.Key.Length > 8 ? pair.Key.Substring(0, 8) : pair.Key;
+                        group = new ListViewGroup(_DiffWithParent.Text + " " + shortHash);
                         group.Tag = pair.Key;
                         FileStatusListView.Groups.Add(group);
                     }
@@ -657,22 +680,22 @@ namespace GitUI
             switch (e.KeyCode)
             {
                 case Keys.A:
-                {
-                    if (!e.Control)
+                    {
+                        if (!e.Control)
+                            break;
+                        FileStatusListView.BeginUpdate();
+                        try
+                        {
+                            for (var i = 0; i < FileStatusListView.Items.Count; i++)
+                                FileStatusListView.Items[i].Selected = true;
+                            e.Handled = true;
+                        }
+                        finally
+                        {
+                            FileStatusListView.EndUpdate();
+                        }
                         break;
-                    FileStatusListView.BeginUpdate();
-                    try
-                    {
-                        for (var i = 0; i < FileStatusListView.Items.Count; i++)
-                            FileStatusListView.Items[i].Selected = true;
-                        e.Handled = true;
                     }
-                    finally
-                    {
-                        FileStatusListView.EndUpdate();
-                    }
-                    break;
-                }
                 default:
                     if (KeyDown != null)
                         KeyDown(sender, e);
@@ -765,23 +788,9 @@ namespace GitUI
                 else
                 {
                     GitItemsWithParents dictionary = new Dictionary<string, IList<GitItemStatus>>();
-                    var isMergeCommit = revision.ParentGuids.Count() == 2;
-                    if (isMergeCommit)
-                    {
-                        var conflicts = Module.GetCombinedDiffFileList(revision.Guid);
-                        if (conflicts.Any())
-                        {
-                            dictionary.Add(CombinedDiff.Text, conflicts);
-                        }
-                    }
                     foreach (var parentRev in revision.ParentGuids)
                     {
                         dictionary.Add(parentRev, Module.GetDiffFilesWithSubmodulesStatus(revision.Guid, parentRev));
-
-                        //Only add the first parent to the dictionary if the setting to show diffs
-                        //for app parents is disabled
-                        if (!AppSettings.ShowDiffForAllParents)
-                            break;
                     }
                     GitItemStatusesWithParents = dictionary;
                 }
@@ -789,4 +798,27 @@ namespace GitUI
         }
     }
 
+
+    public static class StatusListObserve
+    {
+        public static IDisposable Subscribe(FileStatusList obj,
+            Action<EventHandler> addHandler, Action<EventHandler> removeHandler)
+        {
+            IObservable<EventPattern<object>> observe = Observable.FromEventPattern(
+                addHandler, removeHandler: removeHandler)
+                //h => FileStatusListView.SelectedIndexChanged += h,
+                //h => FileStatusListView.SelectedIndexChanged -= h)
+                .Throttle(FileStatusList.SelectedIndexChangeThrottleDuration)
+                .ObserveOn(SynchronizationContext.Current);
+
+            IDisposable selectedIndexChangeSubscription =
+                observe.Subscribe(x => obj.FileStatusListView_SelectedIndexChanged());
+
+            //IDisposable Subscribe(IObserver<T> observer);
+            // GenericArguments[1], 'TEventArgs', on 'System.Reactive.IEventPattern`2[TSender,TEventArgs]' violates the constraint of type parameter 'TEventArgs'.
+            // IDisposable Subscribe<T>(this IObservable<T> source, Action<T> onNext);
+
+            return selectedIndexChangeSubscription;
+        }
+    }
 }

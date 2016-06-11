@@ -8,7 +8,7 @@ namespace GitUI.RevisionGridClasses
 {
     partial class DvcsGraph
     {
-        private sealed class Lanes : IEnumerable<Graph.ILaneRow>
+        private sealed class Lanes : ICollection<Graph.ILaneRow>
         {
             private readonly ActiveLaneRow currentRow = new ActiveLaneRow();
             private readonly List<LaneJunctionDetail> laneNodes = new List<LaneJunctionDetail>();
@@ -55,6 +55,17 @@ namespace GitUI.RevisionGridClasses
                 get { return laneRows.Count; }
             }
 
+            #region ICollection<Graph.ILaneRow>
+
+            public bool IsReadOnly { get { return false; } }
+            public void Add(Graph.ILaneRow item) { laneRows.Add(item); }
+            public bool Contains(Graph.ILaneRow item) { return laneRows.Contains(item); }
+            public bool Remove(Graph.ILaneRow item) { return laneRows.Remove(item); }
+
+            void ICollection<Graph.ILaneRow>.CopyTo(Graph.ILaneRow[] array, int arrayIndex) { throw new NotImplementedException(); }
+
+            #endregion
+
             #region IEnumerable<LaneRow> Members
 
             public IEnumerator<Graph.ILaneRow> GetEnumerator()
@@ -68,6 +79,8 @@ namespace GitUI.RevisionGridClasses
             }
 
             #endregion
+
+            #region Enumerable
 
             public void Clear()
             {
@@ -149,7 +162,9 @@ namespace GitUI.RevisionGridClasses
                 if (currentRow.Node == null)
                 {
                     // DEBUG: The check above didn't find anything, but should have
-                    if (Debugger.IsAttached) Debugger.Break();
+
+                    // ankr:
+                    //if (Debugger.IsAttached) Debugger.Break();
                     //Node[] topo = this.sourceGraph.TopoSortedNodes();
                     return false;
                 }
@@ -278,7 +293,7 @@ namespace GitUI.RevisionGridClasses
                     // This means there is a node that got put in the graph twice...
                     if (row.Node.InLane != int.MaxValue)
                     {
-                        if (Debugger.IsAttached) Debugger.Break();
+                        //if (Debugger.IsAttached) Debugger.Break();
                     }
 
                     row.Node.InLane = laneRows.Count;
@@ -418,6 +433,8 @@ namespace GitUI.RevisionGridClasses
 
                 return curLane;
             }
+
+            #endregion
 
             #region Nested type: ActiveLaneRow
 
@@ -575,10 +592,10 @@ namespace GitUI.RevisionGridClasses
                     private readonly List<int> countEnd = new List<int>();
                     private readonly List<int> countStart = new List<int>();
                     private readonly List<Edge> edges = new List<Edge>();
-                    
-                    #pragma warning disable 0649
+
+#pragma warning disable 0649
                     private readonly Graph.LaneInfo emptyItem;
-                    #pragma warning restore 0649
+#pragma warning restore 0649
 
                     public List<Edge> EdgeList
                     {

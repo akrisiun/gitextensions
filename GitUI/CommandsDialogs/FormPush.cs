@@ -73,6 +73,10 @@ namespace GitUI.CommandsDialogs
             : base(aCommands)
         {
             InitializeComponent();
+
+            this.PushDestination.Enabled = true;
+            // this.PushDestination.Readonly
+
             Translate();
 
             //can't be set in OnLoad, because after PushAndShowDialogWhenFailed()

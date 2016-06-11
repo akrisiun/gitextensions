@@ -1,22 +1,32 @@
-﻿using GitUI.CommandsDialogs.BrowseDialog;
+﻿using GitCommands;
+using GitUI.CommandsDialogs.BrowseDialog;
+using ResourceManager;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using GitUI.Hotkey;
 
 namespace GitUI.CommandsDialogs
 {
     class FormBrowseMenuCommands : MenuCommandsBase
     {
+        IRevisionGrid RevisionGrid;
         FormBrowse _formBrowse;
         GitUICommands UICommands { get { return _formBrowse.UICommands; } }
+        GitModule Module { get { return UICommands.Module; } }
 
         // must be created only once because of translation
         IEnumerable<MenuCommand> _navigateMenuCommands;
 
-        public FormBrowseMenuCommands(FormBrowse formBrowse)
+        public FormBrowseMenuCommands(FormBrowse formBrowse, RevisionGrid revisionGrid)
         {
             TranslationCategoryName = "FormBrowse";
             Translate();
 
             _formBrowse = formBrowse;
+            RevisionGrid = revisionGrid;
         }
 
         public IEnumerable<MenuCommand> GetNavigateMenuCommands()

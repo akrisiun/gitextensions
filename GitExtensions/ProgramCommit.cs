@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using System.Reflection;
 using GitCommands;
 using GitCommands.Utils;
 using GitUI;
@@ -10,7 +11,7 @@ using GitUI.CommandsDialogs.SettingsDialog.Pages;
 
 namespace GitExtensions
 {
-    internal static class Program
+    public static class ProgramCommit
     {
         /// <summary>
         /// The main entry point for the application.
@@ -21,39 +22,9 @@ namespace GitExtensions
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            if (!EnvUtils.IsMonoRuntime())
-            {
-                try
-                {
-                    NBug.Settings.UIMode = NBug.Enums.UIMode.Full;
-
-                    // Uncomment the following after testing to see that NBug is working as configured
-                    NBug.Settings.ReleaseMode = true;
-                    NBug.Settings.ExitApplicationImmediately = false;
-                    NBug.Settings.WriteLogToDisk = false;
-                    NBug.Settings.MaxQueuedReports = 10;
-                    NBug.Settings.StopReportingAfter = 90;
-                    NBug.Settings.SleepBeforeSend = 30;
-                    NBug.Settings.StoragePath = NBug.Enums.StoragePath.WindowsTemp;
-
-                    AppDomain.CurrentDomain.UnhandledException += NBug.Handler.UnhandledException;
-                    Application.ThreadException += NBug.Handler.ThreadException;
-
-                }
-                catch (TypeInitializationException tie)
-                {
-                    // is this exception caused by the configuration?
-                    if (tie.InnerException != null
-                        && tie.InnerException.GetType()
-                            .IsSubclassOf(typeof(System.Configuration.ConfigurationException)))
-                    {
-                        HandleConfigurationException((System.Configuration.ConfigurationException)tie.InnerException);
-                    }
-                }
-            }
-
             string[] args = Environment.GetCommandLineArgs();
-            FormSplash.ShowSplash();
+            // FormSplash.ShowSplash();
+
             //Store here SynchronizationContext.Current, because later sometimes it can be null
             //see http://stackoverflow.com/questions/11621372/synchronizationcontext-current-is-null-in-continuation-on-the-main-ui-thread
             GitUIExtensions.UISynchronizationContext = SynchronizationContext.Current;
@@ -62,8 +33,6 @@ namespace GitExtensions
             AppSettings.LoadSettings();
             if (EnvUtils.RunningOnWindows())
             {
-              WebBrowserEmulationMode.SetBrowserFeatureControl();
-
                 //Quick HOME check:
                 FormSplash.SetAction("Checking home path...");
                 Application.DoEvents();
@@ -76,14 +45,10 @@ namespace GitExtensions
 
             if (string.IsNullOrEmpty(AppSettings.Translation))
             {
-                #if DEBUG
-                    AppSettings.Translation = "English";
-                #else
                 using (var formChoose = new FormChooseTranslation())
                 {
                     formChoose.ShowDialog();
                 }
-                #endif
             }
 
             try
@@ -121,7 +86,11 @@ namespace GitExtensions
 
             if (args.Length <= 1)
             {
-                uCommands.StartBrowseDialog();
+                // origin: uCommands.StartBrowseDialog();
+
+                // commit UI: (for gitcom.exe)
+                var exe = Assembly.GetExecutingAssembly();
+                uCommands.RunCommand(new string[] {exe.Location, "commit" });
             }
             else  // if we are here args.Length > 1
             {
@@ -131,8 +100,7 @@ namespace GitExtensions
             AppSettings.SaveSettings();
         }
 
-        // private 
-        public static string GetWorkingDir(string[] args)
+        private static string GetWorkingDir(string[] args)
         {
             string workingDir = string.Empty;
             if (args.Length >= 3)

@@ -17,6 +17,7 @@ namespace GitUI.HelperDialogs
             this.Revision = Revision;
 
             InitializeComponent(); Translate();
+            this.checkNoAsk.Checked = false;    // default
         }
 
         public GitRevision Revision { get; set; }
@@ -42,7 +43,8 @@ namespace GitUI.HelperDialogs
             }
             else if (Hard.Checked)
             {
-                if (MessageBox.Show(this, resetHardWarning.Text, resetCaption.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                if (this.checkNoAsk.Checked ||
+                    MessageBox.Show(this, resetHardWarning.Text, resetCaption.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                 {
                     FormProcess.ShowDialog(this, GitCommandHelpers.ResetHardCmd(Revision.Guid));
 

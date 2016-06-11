@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using GitUI.Properties;
 using ResourceManager;
 using Settings = GitCommands.AppSettings;
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
 using Microsoft.WindowsAPICodePack.Taskbar;
 #endif
 
@@ -58,7 +58,7 @@ namespace GitUI
             if (_enablePositionRestore)
                 SavePosition(GetType().Name);
 
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
             if (GitCommands.Utils.EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
             {
                 try
@@ -118,7 +118,7 @@ namespace GitUI
         public static Icon GetApplicationIcon(string iconStyle, string iconColor)
         {
             var colorIndex = (int)GetColorIndexByName(iconColor);
-            if (colorIndex == (int) ColorIndex.Unknown)
+            if (colorIndex == (int)ColorIndex.Unknown)
                 colorIndex = 0;
 
             Icon appIcon;
@@ -197,8 +197,20 @@ namespace GitUI
             if (_enablePositionRestore)
                 RestorePosition(GetType().Name);
 
+            //if (!CheckComponent(this))
+            //    OnRuntimeLoad(e);
+        }
+
+        public bool IsShown { get; protected set; }
+
+        protected override void OnShown(EventArgs e)
+        {
             if (!CheckComponent(this))
                 OnRuntimeLoad(e);
+
+            base.OnShown(e);
+
+            IsShown = true;
         }
 
         /// <summary>Invoked at runtime during the <see cref="OnLoad"/> method.</summary>
@@ -275,7 +287,6 @@ namespace GitUI
             }
         }
 
-        private static WindowPositionList _windowPositionList;
         /// <summary>
         ///   Save the position of a form to the user settings. Hides the window
         ///   as a side-effect.
@@ -297,9 +308,9 @@ namespace GitUI
                         : FormWindowState.Normal;
 
                 // Write to the user settings:
-                if (_windowPositionList == null)
-                    _windowPositionList = WindowPositionList.Load(); 
-                WindowPosition windowPosition = _windowPositionList.Get(name);
+                if (Properties.Settings.Default.WindowPositions == null)
+                    Properties.Settings.Default.WindowPositions = new WindowPositionList();
+                WindowPosition windowPosition = (WindowPosition)Properties.Settings.Default.WindowPositions[name];
                 // Don't save location when we center modal form
                 if (windowPosition != null && Owner != null && _windowCentred)
                 {
@@ -307,13 +318,13 @@ namespace GitUI
                         rectangle.Location = windowPosition.Rect.Location;
                 }
 
-                var position = new WindowPosition(rectangle, formWindowState, name);
-                _windowPositionList.AddOrUpdate(position);
-                _windowPositionList.Save();
+                var position = new WindowPosition(rectangle, formWindowState);
+                Properties.Settings.Default.WindowPositions[name] = position;
+                Properties.Settings.Default.Save();
             }
-            catch (Exception)
+            catch (ConfigurationException)
             {
-                //TODO: howto restore a corrupted config?
+                //TODO: howto restore a corrupted config? Properties.Settings.Default.Reset() doesn't work.
             }
         }
 
@@ -330,14 +341,11 @@ namespace GitUI
         {
             try
             {
-                if (_windowPositionList == null)
-                    _windowPositionList = WindowPositionList.Load();
-                if (_windowPositionList == null)
-                {
+                var list = Properties.Settings.Default.WindowPositions;
+                if (list == null)
                     return null;
-                }
 
-                var position = _windowPositionList.Get(name);
+                var position = (WindowPosition)list[name];
                 if (position == null || position.Rect.IsEmpty)
                     return null;
 
@@ -346,9 +354,9 @@ namespace GitUI
                     return position;
                 }
             }
-            catch (Exception)
+            catch (ConfigurationException)
             {
-                //TODO: howto restore a corrupted config?
+                //TODO: howto restore a corrupted config? Properties.Settings.Default.Reset() doesn't work.
             }
 
             return null;

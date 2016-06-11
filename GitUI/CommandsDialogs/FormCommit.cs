@@ -21,10 +21,12 @@ using GitUI.Script;
 using PatchApply;
 using ResourceManager;
 using Timer = System.Windows.Forms.Timer;
+using System.Runtime.InteropServices;
 
 namespace GitUI.CommandsDialogs
 {
-    public sealed partial class FormCommit : GitModuleForm //, IHotkeyable
+    public // sealed 
+        partial class FormCommit : GitModuleForm //, IHotkeyable
     {
         #region Translation
         private readonly TranslationString _amendCommit =
@@ -118,6 +120,7 @@ namespace GitUI.CommandsDialogs
         private readonly TranslationString _commitCommitterToolTip = new TranslationString("Click to change committer information.");
         #endregion
 
+        #region Private
         private FileStatusList _currentFilesList;
         private bool _skipUpdate;
         private readonly TaskScheduler _taskScheduler;
@@ -136,6 +139,8 @@ namespace GitUI.CommandsDialogs
         private CancellationTokenSource _interactiveAddBashCloseWaitCts = new CancellationTokenSource();
         private string _userName = "";
         private string _userEmail = "";
+        #endregion
+
         /// <summary>
         /// For VS designer
         /// </summary>
@@ -210,6 +215,31 @@ namespace GitUI.CommandsDialogs
             toolStripMenuItem6.ShortcutKeyDisplayString = GetShortcutKeys((int)Commands.ShowHistory).ToShortcutKeyDisplayString();
             commitAuthorStatus.ToolTipText = _commitCommitterToolTip.Text;
             toolAuthor.Control.PreviewKeyDown += ToolAuthor_PreviewKeyDown;
+
+            Unstaged.RefreshFocus += Unstaged_RefreshFocus;
+            Staged.RefreshFocus += Staged_RefreshFocus;
+        }
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        public bool Reload(GitUICommands aCommands, IntPtr handle)
+        {
+            if (IsDisposed || !Visible)
+                return false;   // failure
+
+            // non modal update
+            if (InvokeRequired)
+            {
+                SetForegroundWindow(handle);
+                //Invoke((Action)(
+                //    () => Focus()
+                //    ));
+            }
+            else
+                Focus();
+            return true;
         }
 
         void ToolAuthor_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -612,15 +642,22 @@ namespace GitUI.CommandsDialogs
             Message.TextBoxFont = AppSettings.CommitFont;
 
             // Check if commit.template is used
-            string fileName = Module.GetEffectivePathSetting("commit.template");
-            if (!string.IsNullOrEmpty(fileName))
+
+            try
             {
-                using (var commitReader = new StreamReader(fileName))
+                // TODO: if not Design mode
+
+                string fileName = Module.GetEffectivePathSetting("commit.template");
+                if (!string.IsNullOrEmpty(fileName))
                 {
-                    _commitTemplate = commitReader.ReadToEnd().Replace("\r", "");
+                    using (var commitReader = new StreamReader(fileName))
+                    {
+                        _commitTemplate = commitReader.ReadToEnd().Replace("\r", "");
+                    }
+                    Message.Text = _commitTemplate;
                 }
-                Message.Text = _commitTemplate;
             }
+            catch {; }
 
             Cursor.Current = Cursors.Default;
         }
@@ -632,8 +669,13 @@ namespace GitUI.CommandsDialogs
 
         private void UpdateMergeHead()
         {
-            var mergeHead = Module.RevParse("MERGE_HEAD");
-            IsMergeCommit = Regex.IsMatch(mergeHead, GitRevision.Sha1HashPattern);
+            try
+            {
+                // TODO: if not Design mode
+                var mergeHead = Module.RevParse("MERGE_HEAD");
+                IsMergeCommit = Regex.IsMatch(mergeHead, GitRevision.Sha1HashPattern);
+            }
+            catch (Exception ex) { Debugger.Log(1, "Error as FormCommit.UpdateMergeHead", ex.Message); }
         }
 
         private void InitializedStaged()
@@ -1083,7 +1125,7 @@ namespace GitUI.CommandsDialogs
             Staged.ClearSelected();
 
             _currentSelection = Unstaged.SelectedItems.ToList();
-            GitItemStatus item = _currentSelection.FirstOrDefault();
+            GitItemStatus item = _currentSelection.LastOrDefault();
             ShowChanges(item, false);
 
             if (!item.IsSubmodule)
@@ -1102,6 +1144,12 @@ namespace GitUI.CommandsDialogs
             }
         }
 
+        private void Unstaged_RefreshFocus(object sender, EventArgs e)
+        {
+            UnstagedSelectionChanged(Unstaged, null);
+        }
+
+
         private void Unstage()
         {
             if (Staged.GitItemStatuses.Count() > 10 && Staged.SelectedItems.Count() == Staged.GitItemStatuses.Count())
@@ -1118,79 +1166,79 @@ namespace GitUI.CommandsDialogs
                 if (_currentFilesList != null)
                     lastSelection = _currentSelection;
 
-                    toolStripProgressBar1.Visible = true;
-                    toolStripProgressBar1.Maximum = Staged.SelectedItems.Count() * 2;
-                    toolStripProgressBar1.Value = 0;
-                    Staged.StoreNextIndexToSelect();
+                toolStripProgressBar1.Visible = true;
+                toolStripProgressBar1.Maximum = Staged.SelectedItems.Count() * 2;
+                toolStripProgressBar1.Value = 0;
+                Staged.StoreNextIndexToSelect();
 
-                    var files = new List<GitItemStatus>();
-                    var allFiles = new List<GitItemStatus>();
+                var files = new List<GitItemStatus>();
+                var allFiles = new List<GitItemStatus>();
 
-                    foreach (var item in Staged.SelectedItems)
+                foreach (var item in Staged.SelectedItems)
+                {
+                    toolStripProgressBar1.Value = Math.Min(toolStripProgressBar1.Maximum - 1, toolStripProgressBar1.Value + 1);
+                    if (!item.IsNew)
                     {
                         toolStripProgressBar1.Value = Math.Min(toolStripProgressBar1.Maximum - 1, toolStripProgressBar1.Value + 1);
-                        if (!item.IsNew)
-                        {
-                            toolStripProgressBar1.Value = Math.Min(toolStripProgressBar1.Maximum - 1, toolStripProgressBar1.Value + 1);
-                            Module.UnstageFileToRemove(item.Name);
-
-                            if (item.IsRenamed)
-                                Module.UnstageFileToRemove(item.OldName);
-                        }
-                        else
-                        {
-                            files.Add(item);
-                        }
-                        allFiles.Add(item);
-                    }
-
-                    Module.UnstageFiles(files);
-
-                    _skipUpdate = true;
-                    InitializedStaged();
-                    var stagedFiles = Staged.GitItemStatuses.ToList();
-                    var unStagedFiles = Unstaged.GitItemStatuses.ToList();
-                    foreach (var item in allFiles)
-                    {
-                        var item1 = item;
-                        if (stagedFiles.Exists(i => i.Name == item1.Name))
-                            continue;
-
-                        var item2 = item;
-                        if (unStagedFiles.Exists(i => i.Name == item2.Name))
-                            continue;
-
-                        if (item.IsNew && !item.IsChanged && !item.IsDeleted)
-                            item.IsTracked = false;
-                        else
-                            item.IsTracked = true;
+                        Module.UnstageFileToRemove(item.Name);
 
                         if (item.IsRenamed)
-                        {
-                            var clone = new GitItemStatus
-                            {
-                                Name = item.OldName,
-                                IsDeleted = true,
-                                IsTracked = true,
-                                IsStaged = false
-                            };
-                            unStagedFiles.Add(clone);
-
-                            item.IsRenamed = false;
-                            item.IsNew = true;
-                            item.IsTracked = false;
-                            item.OldName = string.Empty;
-                        }
-
-                        item.IsStaged = false;
-                        unStagedFiles.Add(item);
+                            Module.UnstageFileToRemove(item.OldName);
                     }
-                    Staged.GitItemStatuses = stagedFiles;
-                    Unstaged.GitItemStatuses = unStagedFiles;
-                    _skipUpdate = false;
-                    Staged.SelectStoredNextIndex();
+                    else
+                    {
+                        files.Add(item);
+                    }
+                    allFiles.Add(item);
+                }
 
-                    toolStripProgressBar1.Value = toolStripProgressBar1.Maximum;
+                Module.UnstageFiles(files);
+
+                _skipUpdate = true;
+                InitializedStaged();
+                var stagedFiles = Staged.GitItemStatuses.ToList();
+                var unStagedFiles = Unstaged.GitItemStatuses.ToList();
+                foreach (var item in allFiles)
+                {
+                    var item1 = item;
+                    if (stagedFiles.Exists(i => i.Name == item1.Name))
+                        continue;
+
+                    var item2 = item;
+                    if (unStagedFiles.Exists(i => i.Name == item2.Name))
+                        continue;
+
+                    if (item.IsNew && !item.IsChanged && !item.IsDeleted)
+                        item.IsTracked = false;
+                    else
+                        item.IsTracked = true;
+
+                    if (item.IsRenamed)
+                    {
+                        var clone = new GitItemStatus
+                        {
+                            Name = item.OldName,
+                            IsDeleted = true,
+                            IsTracked = true,
+                            IsStaged = false
+                        };
+                        unStagedFiles.Add(clone);
+
+                        item.IsRenamed = false;
+                        item.IsNew = true;
+                        item.IsTracked = false;
+                        item.OldName = string.Empty;
+                    }
+
+                    item.IsStaged = false;
+                    unStagedFiles.Add(item);
+                }
+                Staged.GitItemStatuses = stagedFiles;
+                Unstaged.GitItemStatuses = unStagedFiles;
+                _skipUpdate = false;
+                Staged.SelectStoredNextIndex();
+
+                toolStripProgressBar1.Value = toolStripProgressBar1.Maximum;
 
                 toolStripProgressBar1.Visible = false;
 
@@ -1227,6 +1275,11 @@ namespace GitUI.CommandsDialogs
             Stage(Unstaged.SelectedItems.ToList());
             if (Unstaged.IsEmpty)
                 Staged.Focus();
+        }
+
+        private void Staged_RefreshFocus(object sender, EventArgs e)
+        {
+            StagedSelectionChanged(Staged, null);
         }
 
         private void StageAll()
@@ -1522,7 +1575,7 @@ namespace GitUI.CommandsDialogs
 
         private void resetUnstagedChangesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-          ResetUnStagedClick(null, null);
+            ResetUnStagedClick(null, null);
         }
 
         private void EditGitIgnoreToolStripMenuItemClick(object sender, EventArgs e)
@@ -1538,21 +1591,30 @@ namespace GitUI.CommandsDialogs
 
             AcceptButton = Commit;
 
-            string message;
+            string message = null;
 
             switch (_commitKind)
             {
                 case CommitKind.Fixup:
-                    message = string.Format("fixup! {0}", _editedCommit.Subject);
+                    message = string.Format("fixup! {0}", _editedCommit.Message);
                     break;
                 case CommitKind.Squash:
-                    message = string.Format("squash! {0}", _editedCommit.Subject);
+                    message = string.Format("squash! {0}", _editedCommit.Message);
                     break;
                 default:
-                    message = Module.GetMergeMessage();
 
-                    if (string.IsNullOrEmpty(message) && File.Exists(GitCommands.CommitHelper.GetCommitMessagePath(Module)))
-                        message = File.ReadAllText(GitCommands.CommitHelper.GetCommitMessagePath(Module), Module.CommitEncoding);
+                    try
+                    {
+                        // TODO if not design mode
+                        message = Module.GetMergeMessage();
+
+                        if (string.IsNullOrEmpty(message) && File.Exists(GitCommands.CommitHelper.GetCommitMessagePath(Module)))
+                            message = File.ReadAllText(GitCommands.CommitHelper.GetCommitMessagePath(Module), Module.CommitEncoding);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debugger.Log(1, "Error as FormCommit.FormCommitShown", ex.Message);
+                    }
                     break;
             }
 
@@ -1569,9 +1631,9 @@ namespace GitUI.CommandsDialogs
 
             //Commit messages are UTF-8 by default unless otherwise in the config file.
             //The git manual states:
-            //  git commit and git commit-tree issues a warning if the commit log message
-            //  given to it does not look like a valid UTF-8 string, unless you
-            //  explicitly say your project uses a legacy encoding. The way to say
+            //  git commit and git commit-tree issues a warning if the commit log message 
+            //  given to it does not look like a valid UTF-8 string, unless you 
+            //  explicitly say your project uses a legacy encoding. The way to say 
             //  this is to have i18n.commitencoding in .git/config file, like this:...
             Encoding encoding = Module.CommitEncoding;
 
@@ -1867,9 +1929,15 @@ namespace GitUI.CommandsDialogs
             var item = list.SelectedItem;
             var fileName = Path.Combine(Module.WorkingDir, item.Name);
 
-            UICommands.StartFileEditorDialog(fileName);
-
-            UnstagedSelectionChanged(null, null);
+            var thread = new Thread(() =>
+            {
+                UICommands.StartFileEditorDialog(fileName);
+                if (!InvokeRequired)
+                    UnstagedSelectionChanged(null, null);
+            });
+            // SharpCode Editor { "Current thread must be set to single thread apartment (STA) mode before OLE calls can be made
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
         }
 
         private void CommitAndPush_Click(object sender, EventArgs e)
@@ -1929,7 +1997,12 @@ namespace GitUI.CommandsDialogs
 
             ListView lv = menu.SourceControl as ListView;
             if (lv == null)
-                return false;
+            {
+                var ctrl = this.FindFocusedControl();
+                lv = ctrl as ListView;
+                if (lv == null)
+                    return false;
+            }
 
             list = lv.Parent as FileStatusList;
             return (list != null);
@@ -1979,7 +2052,7 @@ namespace GitUI.CommandsDialogs
             if( !Message.IsUndoInProgress )
             {
                 // always format from 0 to handle pasted text
-                FormatAllText(0);
+            FormatAllText(0);
             }
         }
 
