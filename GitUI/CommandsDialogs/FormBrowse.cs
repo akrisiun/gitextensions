@@ -142,7 +142,7 @@ namespace GitUI.CommandsDialogs
         private ToolStripItem _warning;
 
 #if !__MonoCS__ && !NET45
-        private ThumbnailToolBarButton _commitButton;
+        //private ThumbnailToolBarButton _commitButton;
         private ThumbnailToolBarButton _pushButton;
         private ThumbnailToolBarButton _pullButton;
         private bool _toolbarButtonsCreated;
@@ -237,8 +237,8 @@ namespace GitUI.CommandsDialogs
             if (aCommands != null)
             {
                 RevisionGrid.UICommandsSource = this;
-                if (repoObjectsTree != null)
-                    repoObjectsTree.UICommandsSource = this;
+                //if (repoObjectsTree != null)
+                //    repoObjectsTree.UICommandsSource = this;
             }
             Repositories.LoadRepositoryHistoryAsync();
             Task.Factory.StartNew(PluginLoader.Load)
@@ -531,7 +531,7 @@ namespace GitUI.CommandsDialogs
             fileExplorerToolStripMenuItem.Enabled = validWorkingDir;
             manageRemoteRepositoriesToolStripMenuItem1.Enabled = validWorkingDir;
             branchSelect.Enabled = validWorkingDir;
-            toolStripButton1.Enabled = validWorkingDir && !bareRepository;
+            //toolStripButton1.Enabled = validWorkingDir && !bareRepository;
             if (_toolStripGitStatus != null)
                 _toolStripGitStatus.Enabled = validWorkingDir;
             toolStripButtonPull.Enabled = validWorkingDir;
@@ -620,9 +620,9 @@ namespace GitUI.CommandsDialogs
             // load custom user menu
             // LoadUserMenu();
 
-            if (repoObjectsTree == null)
-                repoObjectsTree = new UserControls.RepoObjectsTree(); // ??
-            repoObjectsTree.Reload();
+            //if (repoObjectsTree == null)
+            //    repoObjectsTree = new UserControls.RepoObjectsTree(); // ??
+            //repoObjectsTree.Reload();
 
             bool validWorkingDir = Module.IsValidGitWorkingDir();
             if (validWorkingDir)
@@ -818,8 +818,8 @@ namespace GitUI.CommandsDialogs
             {
                 if (!_toolbarButtonsCreated)
                 {
-                    _commitButton = new ThumbnailToolBarButton(MakeIcon(toolStripButton1.Image, 48, true), toolStripButton1.Text);
-                    _commitButton.Click += ToolStripButton1Click;
+                    //_commitButton = new ThumbnailToolBarButton(MakeIcon(toolStripButton1.Image, 48, true), toolStripButton1.Text);
+                    //_commitButton.Click += ToolStripButton1Click;
 
                     _pushButton = new ThumbnailToolBarButton(MakeIcon(toolStripButtonPush.Image, 48, true), toolStripButtonPush.Text);
                     _pushButton.Click += PushToolStripMenuItemClick;
@@ -828,13 +828,14 @@ namespace GitUI.CommandsDialogs
                     _pullButton.Click += PullToolStripMenuItemClick;
 
                     _toolbarButtonsCreated = true;
-                    ThumbnailToolBarButton[] buttons = new[] { _commitButton, _pullButton, _pushButton };
+                    ThumbnailToolBarButton[] buttons = new[] { // _commitButton, 
+                        _pullButton, _pushButton };
 
                     //Call this method using reflection.  This is a workaround to *not* reference WPF libraries, becuase of how the WindowsAPICodePack was implimented.
                     TaskbarManager.Instance.ThumbnailToolBars.AddButtons(Handle, buttons);
                 }
 
-                _commitButton.Enabled = validRepo;
+                //_commitButton.Enabled = validRepo;
                 _pushButton.Enabled = validRepo;
                 _pullButton.Enabled = validRepo;
             }
@@ -1828,7 +1829,7 @@ namespace GitUI.CommandsDialogs
                 items.Add(new GitRevision(Module, DiffFiles.SelectedItemParent));
 
                 if (!string.IsNullOrWhiteSpace(DiffFiles.SelectedItemParent)
-                    && DiffFiles.SelectedItemParent == DiffFiles.CombinedDiff.Text)
+                    ) // && DiffFiles.SelectedItemParent == DiffFiles.CombinedDiff.Text)
                 {
                     var diffOfConflict = Module.GetCombinedDiffContent(items.First(), DiffFiles.SelectedItem.Name,
                         DiffText.GetExtraDiffArguments(), DiffText.Encoding);
@@ -2250,9 +2251,7 @@ namespace GitUI.CommandsDialogs
             Clipboard.SetText(fileName.Replace('/', '\\'));
         }
 
-        private void copyFilenameToClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            if (!DiffFiles.SelectedItems.Any())
+        //private void copyFilenameToClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
         public static void CopyFullPathToClipboard(FileStatusList diffFiles, GitModule module)
         {
             if (!diffFiles.SelectedItems.Any())
@@ -2656,9 +2655,9 @@ namespace GitUI.CommandsDialogs
             if (!DiffFiles.SelectedItems.Any())
                 return;
 
-            foreach (var item in diffFiles.SelectedItems)
+            foreach (var item in DiffFiles.SelectedItems)
             {
-                string filePath = FormBrowseUtil.GetFullPathFromGitItemStatus(module, item);
+                string filePath = FormBrowseUtil.GetFullPathFromGitItemStatus(Module, item);
                 FormBrowseUtil.ShowFileOrParentFolderInFileExplorer(filePath);
             }
         }
@@ -2786,16 +2785,17 @@ namespace GitUI.CommandsDialogs
 
             // disable items that need exactly one selected item
             bool isExcactlyOneItemSelected = DiffFiles.SelectedItems.Count() == 1;
-            var isCombinedDiff = isExcactlyOneItemSelected &&
-                DiffFiles.CombinedDiff.Text == DiffFiles.SelectedItemParent;
-            var enabled = isExcactlyOneItemSelected && !isCombinedDiff;
+            //var isCombinedDiff = isExcactlyOneItemSelected &&
+            //    DiffFiles.CombinedDiff.Text == DiffFiles.SelectedItemParent;
+
+            var enabled = isExcactlyOneItemSelected; // && !isCombinedDiff;
             openWithDifftoolToolStripMenuItem.Enabled = enabled;
             saveAsToolStripMenuItem1.Enabled = enabled;
             cherryPickSelectedDiffFileToolStripMenuItem.Enabled = enabled;
             diffShowInFileTreeToolStripMenuItem.Enabled = isExcactlyOneItemSelected;
             fileHistoryDiffToolstripMenuItem.Enabled = isExcactlyOneItemSelected;
             blameToolStripMenuItem.Enabled = isExcactlyOneItemSelected;
-            resetFileToToolStripMenuItem.Enabled = !isCombinedDiff;
+            //resetFileToToolStripMenuItem.Enabled = !isCombinedDiff;
 
             // openContainingFolderToolStripMenuItem.Enabled or not
             {
@@ -3190,10 +3190,10 @@ namespace GitUI.CommandsDialogs
             return spmenu;
         }
 
-        private ToolStripMenuItem CreateSubmoduleMenuItem(SubmoduleInfo info)
-        {
-            return CreateSubmoduleMenuItem(info, "{0}");
-        }
+        //private ToolStripMenuItem CreateSubmoduleMenuItem(SubmoduleInfo info)
+        //{
+        //    return CreateSubmoduleMenuItem(info, "{0}");
+        //}
 
         DateTime _previousUpdateTime;
 
@@ -3377,18 +3377,18 @@ namespace GitUI.CommandsDialogs
                 RemoveSubmoduleButtons();
                 var newItems = new List<ToolStripItem>();
 
-                task.Result.OurSubmodules.ForEach(submodule => newItems.Add(CreateSubmoduleMenuItem(submodule)));
-                if (task.Result.OurSubmodules.Count == 0)
-                    newItems.Add(new ToolStripMenuItem(_noSubmodulesPresent.Text));
+                //task.Result.OurSubmodules.ForEach(submodule => newItems.Add(CreateSubmoduleMenuItem(submodule)));
+                //if (task.Result.OurSubmodules.Count == 0)
+                //    newItems.Add(new ToolStripMenuItem(_noSubmodulesPresent.Text));
 
-                if (task.Result.Superproject != null)
-                {
-                    newItems.Add(new ToolStripSeparator());
-                    if (task.Result.TopProject != null)
-                        newItems.Add(CreateSubmoduleMenuItem(task.Result.TopProject, _topProjectModuleFormat.Text));
-                    newItems.Add(CreateSubmoduleMenuItem(task.Result.Superproject, _superprojectModuleFormat.Text));
-                    task.Result.SuperSubmodules.ForEach(submodule => newItems.Add(CreateSubmoduleMenuItem(submodule)));
-                }
+                //if (task.Result.Superproject != null)
+                //{
+                //    newItems.Add(new ToolStripSeparator());
+                //    if (task.Result.TopProject != null)
+                //        newItems.Add(CreateSubmoduleMenuItem(task.Result.TopProject, _topProjectModuleFormat.Text));
+                //    newItems.Add(CreateSubmoduleMenuItem(task.Result.Superproject, _superprojectModuleFormat.Text));
+                //    task.Result.SuperSubmodules.ForEach(submodule => newItems.Add(CreateSubmoduleMenuItem(submodule)));
+                //}
 
                 newItems.Add(new ToolStripSeparator());
 
@@ -3611,8 +3611,8 @@ namespace GitUI.CommandsDialogs
             if (disposing)
             {
 #if !__MonoCS__ && !NET45
-                if (_commitButton != null)
-                    _commitButton.Dispose();
+                //if (_commitButton != null)
+                //    _commitButton.Dispose();
                 if (_pushButton != null)
                     _pushButton.Dispose();
                 if (_pullButton != null)

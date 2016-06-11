@@ -581,7 +581,7 @@ namespace GitUI.RevisionGridClasses
                 var guid = data.Guid;
                 if (!rowsData.Contains(guid))
                 {
-                    var objectData = new object[6] { null, guid, data.Message, data.Author, data.CommitDate, null };
+                    var objectData = new object[6] { null, guid, data.Subject, data.Author, data.CommitDate, null };
                     Rows.Add(objectData);
                 }
             }

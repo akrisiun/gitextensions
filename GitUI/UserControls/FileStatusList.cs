@@ -804,15 +804,15 @@ namespace GitUI
         public static IDisposable Subscribe(FileStatusList obj,
             Action<EventHandler> addHandler, Action<EventHandler> removeHandler)
         {
-            IObservable<EventPattern<object>> observe = Observable.FromEventPattern(
-                addHandler, removeHandler: removeHandler)
-                //h => FileStatusListView.SelectedIndexChanged += h,
-                //h => FileStatusListView.SelectedIndexChanged -= h)
-                .Throttle(FileStatusList.SelectedIndexChangeThrottleDuration)
-                .ObserveOn(SynchronizationContext.Current);
+            //IObservable<EventPattern<object>> observe = Observable.FromEventPattern(
+            //    addHandler, removeHandler: removeHandler)
+            //    //h => FileStatusListView.SelectedIndexChanged += h,
+            //    //h => FileStatusListView.SelectedIndexChanged -= h)
+            //    .Throttle(FileStatusList.SelectedIndexChangeThrottleDuration)
+            //    .ObserveOn(SynchronizationContext.Current);
 
-            IDisposable selectedIndexChangeSubscription =
-                observe.Subscribe(x => obj.FileStatusListView_SelectedIndexChanged());
+            IDisposable selectedIndexChangeSubscription = null;
+                //observe.Subscribe(x => obj.FileStatusListView_SelectedIndexChanged());
 
             //IDisposable Subscribe(IObserver<T> observer);
             // GenericArguments[1], 'TEventArgs', on 'System.Reactive.IEventPattern`2[TSender,TEventArgs]' violates the constraint of type parameter 'TEventArgs'.

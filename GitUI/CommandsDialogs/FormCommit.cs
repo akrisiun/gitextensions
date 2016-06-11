@@ -450,7 +450,8 @@ namespace GitUI.CommandsDialogs
         {
             Func<IList<GitItemStatus>> getAllChangedFilesWithSubmodulesStatus = () => Module.GetAllChangedFilesWithSubmodulesStatus(
                     !showIgnoredFilesToolStripMenuItem.Checked,
-                    !showAssumeUnchangedFilesToolStripMenuItem.Checked,
+                    // !showAssumeUnchangedFilesToolStripMenuItem.Checked
+                    false,
                     showUntrackedFilesToolStripMenuItem.Checked ? UntrackedFilesMode.Default : UntrackedFilesMode.No);
 
             if (DoAsync)
@@ -1596,10 +1597,10 @@ namespace GitUI.CommandsDialogs
             switch (_commitKind)
             {
                 case CommitKind.Fixup:
-                    message = string.Format("fixup! {0}", _editedCommit.Message);
+                    message = string.Format("fixup! {0}", _editedCommit.Subject);
                     break;
                 case CommitKind.Squash:
-                    message = string.Format("squash! {0}", _editedCommit.Message);
+                    message = string.Format("squash! {0}", _editedCommit.Subject);
                     break;
                 default:
 
@@ -1682,8 +1683,8 @@ namespace GitUI.CommandsDialogs
 
         private void ShowAssumeUnchangedFilesToolStripMenuItemClick(object sender, EventArgs e)
         {
-            showAssumeUnchangedFilesToolStripMenuItem.Checked = !showAssumeUnchangedFilesToolStripMenuItem.Checked;
-            doNotAssumeUnchangedToolStripMenuItem.Visible = showAssumeUnchangedFilesToolStripMenuItem.Checked;
+            //showAssumeUnchangedFilesToolStripMenuItem.Checked = !showAssumeUnchangedFilesToolStripMenuItem.Checked;
+            //doNotAssumeUnchangedToolStripMenuItem.Visible = showAssumeUnchangedFilesToolStripMenuItem.Checked;
             RescanChanges();
         }
 

@@ -6,4 +6,4 @@
 	url = https://github.com/gitextensions/NBug.git
 [submodule "Externals/Git.hub"]
 	path = Externals/Git.hub
-	url = https://github.com/gitextensions/Git.hub.git
+	url = https://github.com/akrisiun/Git.hub.git

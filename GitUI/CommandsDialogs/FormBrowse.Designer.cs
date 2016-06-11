@@ -58,7 +58,7 @@ namespace GitUI.CommandsDialogs
             this.toolStripTextBoxFilter = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.MainSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.repoObjectsTree = new GitUI.UserControls.RepoObjectsTree();
+            //this.repoObjectsTree = new GitUI.UserControls.RepoObjectsTree();
             this.RightSplitContainer = new System.Windows.Forms.SplitContainer();
             this.RevisionGrid = new GitUI.RevisionGrid();
             this.CommitInfoTabControl = new System.Windows.Forms.TabControl();
@@ -626,7 +626,7 @@ namespace GitUI.CommandsDialogs
             // 
             // MainSplitContainer.Panel1
             // 
-            this.MainSplitContainer.Panel1.Controls.Add(this.repoObjectsTree);
+            //this.MainSplitContainer.Panel1.Controls.Add(this.repoObjectsTree);
             // 
             // MainSplitContainer.Panel2
             // 
@@ -637,12 +637,12 @@ namespace GitUI.CommandsDialogs
             // 
             // repoObjectsTree
             // 
-            this.repoObjectsTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.repoObjectsTree.Location = new System.Drawing.Point(0, 0);
-            this.repoObjectsTree.Margin = new System.Windows.Forms.Padding(2);
-            this.repoObjectsTree.Name = "repoObjectsTree";
-            this.repoObjectsTree.Size = new System.Drawing.Size(201, 498);
-            this.repoObjectsTree.TabIndex = 0;
+            //this.repoObjectsTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            //this.repoObjectsTree.Location = new System.Drawing.Point(0, 0);
+            //this.repoObjectsTree.Margin = new System.Windows.Forms.Padding(2);
+            //this.repoObjectsTree.Name = "repoObjectsTree";
+            //this.repoObjectsTree.Size = new System.Drawing.Size(201, 498);
+            //this.repoObjectsTree.TabIndex = 0;
             // 
             // RightSplitContainer
             // 
@@ -1118,7 +1118,7 @@ namespace GitUI.CommandsDialogs
             this.copyFilenameToClipboardToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
             this.copyFilenameToClipboardToolStripMenuItem1.Size = new System.Drawing.Size(215, 28);
             this.copyFilenameToClipboardToolStripMenuItem1.Text = "Copy full path(s)";
-            this.copyFilenameToClipboardToolStripMenuItem1.Click += new System.EventHandler(this.copyFilenameToClipboardToolStripMenuItem1_Click);
+            //this.copyFilenameToClipboardToolStripMenuItem1.Click += new System.EventHandler(this.copyFilenameToClipboardToolStripMenuItem1_Click);
             // 
             // openContainingFolderToolStripMenuItem
             // 
@@ -2273,7 +2273,7 @@ namespace GitUI.CommandsDialogs
         private ToolStripSeparator toolStripSeparator46;
         private ToolStripMenuItem checkForUpdatesToolStripMenuItem;
         private SplitContainer MainSplitContainer;
-        private UserControls.RepoObjectsTree repoObjectsTree;
+        //private RepoObjectsTree repoObjectsTree;
         private ToolStripMenuItem commitcountPerUserToolStripMenuItem;
         private ToolStripMenuItem gitcommandLogToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator7;

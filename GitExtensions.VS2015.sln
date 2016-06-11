@@ -111,6 +111,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TfsInterop.Vs2013", "Plugin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitExtUtils", "GitExtUtils\GitExtUtils.csproj", "{0F1F1168-A4B2-4FA2-B17B-735140D17F39}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitTestUI", "GitExtensionsTest\GitTestUI.csproj", "{8BE3BD89-CA18-4F88-AAFB-19319A116B35}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -503,6 +505,18 @@ Global
 		{0F1F1168-A4B2-4FA2-B17B-735140D17F39}.ReleaseTC|Any CPU.Build.0 = Release|Any CPU
 		{0F1F1168-A4B2-4FA2-B17B-735140D17F39}.ReleaseTC|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0F1F1168-A4B2-4FA2-B17B-735140D17F39}.ReleaseTC|Mixed Platforms.Build.0 = Release|Any CPU
+		{8BE3BD89-CA18-4F88-AAFB-19319A116B35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BE3BD89-CA18-4F88-AAFB-19319A116B35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BE3BD89-CA18-4F88-AAFB-19319A116B35}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8BE3BD89-CA18-4F88-AAFB-19319A116B35}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8BE3BD89-CA18-4F88-AAFB-19319A116B35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BE3BD89-CA18-4F88-AAFB-19319A116B35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BE3BD89-CA18-4F88-AAFB-19319A116B35}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8BE3BD89-CA18-4F88-AAFB-19319A116B35}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8BE3BD89-CA18-4F88-AAFB-19319A116B35}.ReleaseTC|Any CPU.ActiveCfg = Release|Any CPU
+		{8BE3BD89-CA18-4F88-AAFB-19319A116B35}.ReleaseTC|Any CPU.Build.0 = Release|Any CPU
+		{8BE3BD89-CA18-4F88-AAFB-19319A116B35}.ReleaseTC|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8BE3BD89-CA18-4F88-AAFB-19319A116B35}.ReleaseTC|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

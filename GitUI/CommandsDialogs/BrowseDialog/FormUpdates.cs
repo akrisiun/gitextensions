@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
-using Git.hub;
+//using Git.hub;
 using GitCommands.Config;
 using GitCommands;
 using ResourceManager;
@@ -55,24 +55,24 @@ namespace GitUI.CommandsDialogs.BrowseDialog
         {
             try
             {
-                Client github = new Client();
-                Repository gitExtRepo = github.getRepository("gitextensions", "gitextensions");
-                if (gitExtRepo == null)
+                //Client github = new Client();
+                //Repository gitExtRepo = github.getRepository("gitextensions", "gitextensions");
+                if (1 / 1 == 1) // TODO gitExtRepo == null)
                     return;
 
-                var configData = gitExtRepo.GetRef("heads/configdata");
-                if (configData == null)
-                    return;
+                //var configData = gitExtRepo.GetRef("heads/configdata");
+                //if (configData == null)
+                //    return;
 
-                var tree = configData.GetTree();
-                if (tree == null)
-                    return;
+                //var tree = configData.GetTree();
+                //if (tree == null)
+                //    return;
 
-                var releases = tree.Tree.Where(entry => "GitExtensions.releases".Equals(entry.Path, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
-                if (releases != null && releases.Blob.Value != null)
-                {
-                    CheckForNewerVersion(releases.Blob.Value.GetContent());
-                }
+                //var releases = tree.Tree.Where(entry => "GitExtensions.releases".Equals(entry.Path, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                //if (releases != null && releases.Blob.Value != null)
+                //{
+                //    CheckForNewerVersion(releases.Blob.Value.GetContent());
+                //}
             }
             catch (Exception ex)
             {

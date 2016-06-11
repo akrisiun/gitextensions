@@ -242,7 +242,7 @@ namespace GitUI.BuildServerIntegration
 
             foreach (var commitHash in buildInfo.CommitHashList)
             {
-                int row = revisionGrid.TrySearchRevision(commitHash);
+                int row = 0; // TODO: revisionGrid.TrySearchRevision(commitHash);
                 if (row >= 0)
                 {
                     var rowData = revisions.GetRowData(row);

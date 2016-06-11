@@ -308,18 +308,18 @@ namespace GitUI
                         : FormWindowState.Normal;
 
                 // Write to the user settings:
-                if (Properties.Settings.Default.WindowPositions == null)
-                    Properties.Settings.Default.WindowPositions = new WindowPositionList();
-                WindowPosition windowPosition = (WindowPosition)Properties.Settings.Default.WindowPositions[name];
-                // Don't save location when we center modal form
-                if (windowPosition != null && Owner != null && _windowCentred)
-                {
-                    if (rectangle.Width <= windowPosition.Rect.Width && rectangle.Height <= windowPosition.Rect.Height)
-                        rectangle.Location = windowPosition.Rect.Location;
-                }
+                //if (Properties.Settings.Default.WindowPositions == null)
+                //    Properties.Settings.Default.WindowPositions = new WindowPositionList();
+                //WindowPosition windowPosition = (WindowPosition)Properties.Settings.Default.WindowPositions[name];
+                //// Don't save location when we center modal form
+                //if (windowPosition != null && Owner != null && _windowCentred)
+                //{
+                //    if (rectangle.Width <= windowPosition.Rect.Width && rectangle.Height <= windowPosition.Rect.Height)
+                //        rectangle.Location = windowPosition.Rect.Location;
+                //}
 
-                var position = new WindowPosition(rectangle, formWindowState);
-                Properties.Settings.Default.WindowPositions[name] = position;
+                //var position = new WindowPosition(rectangle, formWindowState);
+                //Properties.Settings.Default.WindowPositions[name] = position;
                 Properties.Settings.Default.Save();
             }
             catch (ConfigurationException)
@@ -341,18 +341,18 @@ namespace GitUI
         {
             try
             {
-                var list = Properties.Settings.Default.WindowPositions;
-                if (list == null)
-                    return null;
+                //var list = Properties.Settings.Default.WindowPositions;
+                //if (list == null)
+                //    return null;
 
-                var position = (WindowPosition)list[name];
-                if (position == null || position.Rect.IsEmpty)
-                    return null;
+                //var position = (WindowPosition)list[name];
+                //if (position == null || position.Rect.IsEmpty)
+                //    return null;
 
-                if (Screen.AllScreens.Any(screen => screen.WorkingArea.IntersectsWith(position.Rect)))
-                {
-                    return position;
-                }
+                //if (Screen.AllScreens.Any(screen => screen.WorkingArea.IntersectsWith(position.Rect)))
+                //{
+                //    return position;
+                //}
             }
             catch (ConfigurationException)
             {

@@ -142,7 +142,7 @@ namespace GitUI.CommandsDialogs
 
         private void openContainingFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormBrowse.OpenContainingFolder(DiffFiles, Module);
+            //FormBrowse.OpenContainingFolder(DiffFiles, Module);
         }
 
         private void fileHistoryDiffToolstripMenuItem_Click(object sender, EventArgs e)

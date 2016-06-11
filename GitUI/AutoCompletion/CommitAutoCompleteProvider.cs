@@ -87,8 +87,6 @@ namespace GitUI.AutoCompletion
                 {
                   return sr.ReadToEnd ().Split (new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
                 }
-                using (var sr = new StreamReader(Assembly.GetEntryAssembly().GetManifestResourceStream("GitExtensions.AutoCompleteRegexes.txt")))
-                      return sr.ReadToEnd().Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
             }
             catch
             {

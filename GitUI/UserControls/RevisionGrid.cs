@@ -903,7 +903,7 @@ namespace GitUI
             {
                 return CheckCondition(_AuthorFilter, _AuthorFilterRegex, rev.Author) &&
                        CheckCondition(_CommitterFilter, _CommitterFilterRegex, rev.Committer) &&
-                       (CheckCondition(_MessageFilter, _MessageFilterRegex, rev.Message) ||
+                       (CheckCondition(_MessageFilter, _MessageFilterRegex, rev.Subject) ||
                         CheckCondition(_ShaFilter, _ShaFilterRegex, rev.Guid));
             }
 
@@ -1758,7 +1758,7 @@ namespace GitUI
             }
             else if (columnIndex == messageColIndex)
             {
-                e.Value = revision.Message;
+                e.Value = revision.Subject;
             }
             else if (columnIndex == authorColIndex)
             {
@@ -2578,7 +2578,7 @@ namespace GitUI
                 //Add working directory as virtual commit
                 var workingDir = new GitRevision(Module, GitRevision.UnstagedGuid)
                 {
-                    Message = Strings.GetCurrentUnstagedChanges(),
+                    Subject = Strings.GetCurrentUnstagedChanges(),
                     ParentGuids =
                         StagedChanges.Result
                             ? new[] { GitRevision.IndexGuid }
@@ -2592,7 +2592,7 @@ namespace GitUI
                 //Add index as virtual commit
                 var index = new GitRevision(Module, GitRevision.IndexGuid)
                 {
-                    Message = Strings.GetCurrentIndex(),
+                    Subject = Strings.GetCurrentIndex(),
                     ParentGuids = new[] { filtredCurrentCheckout }
                 };
                 Revisions.Add(index.Guid, index.ParentGuids, DvcsGraph.DataType.Normal, index);
@@ -2612,7 +2612,7 @@ namespace GitUI
 
         private void MessageToolStripMenuItemClick(object sender, EventArgs e)
         {
-            Clipboard.SetText(GetRevision(LastRowIndex).Message);
+            Clipboard.SetText(GetRevision(LastRowIndex).Subject);
         }
 
         private void AuthorToolStripMenuItemClick(object sender, EventArgs e)
@@ -3137,7 +3137,7 @@ namespace GitUI
         {
             var revision = GetRevision(LastRowIndex);
             CopyToClipboardMenuHelper.AddOrUpdateTextPostfix(hashCopyToolStripMenuItem, CopyToClipboardMenuHelper.StrLimitWithElipses(revision.Guid, 15));
-            CopyToClipboardMenuHelper.AddOrUpdateTextPostfix(messageCopyToolStripMenuItem, CopyToClipboardMenuHelper.StrLimitWithElipses(revision.Message, 30));
+            CopyToClipboardMenuHelper.AddOrUpdateTextPostfix(messageCopyToolStripMenuItem, CopyToClipboardMenuHelper.StrLimitWithElipses(revision.Subject, 30));
             CopyToClipboardMenuHelper.AddOrUpdateTextPostfix(authorCopyToolStripMenuItem, revision.Author);
             CopyToClipboardMenuHelper.AddOrUpdateTextPostfix(dateCopyToolStripMenuItem, revision.CommitDate.ToString());
         }

@@ -314,9 +314,9 @@ namespace GitCommands
 
         #endregion
 
-        void DataReceived(string line)
+        void DataReceived(string data)
         {
-            if (line == null)
+            if (data == null)
                 return; // TODO ????
 
             if (data.StartsWith(CommitBegin))            

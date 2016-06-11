@@ -10,13 +10,12 @@ using GitUI.CommandsDialogs;
 using GitUI.CommandsDialogs.RepoHosting;
 using GitUI.CommandsDialogs.SettingsDialog;
 using GitUI.Blame;
-using GitUI.Notifications;
 using GitUIPluginInterfaces;
-using GitUIPluginInterfaces.Notifications;
 using GitUIPluginInterfaces.RepositoryHosts;
 using Gravatar;
 using Settings = GitCommands.AppSettings;
 using System.Threading;
+using JetBrains.Annotations;
 
 namespace GitUI
 {

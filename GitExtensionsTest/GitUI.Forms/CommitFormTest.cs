@@ -34,6 +34,7 @@ namespace GitExtensionsTest.GitUI.Forms
 
             GitUICommands uCommands = new GitUICommands(dir);
 
+            // TODO Sta apartment (for Sharp code TextEditorControl)
             Form = new FormCommitTest(uCommands);
 
             Unstaged = Form.ListUnstaged;
