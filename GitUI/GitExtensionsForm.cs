@@ -308,6 +308,8 @@ namespace GitUI
                         : FormWindowState.Normal;
 
                 // Write to the user settings:
+
+                //TODO
                 //if (Properties.Settings.Default.WindowPositions == null)
                 //    Properties.Settings.Default.WindowPositions = new WindowPositionList();
                 //WindowPosition windowPosition = (WindowPosition)Properties.Settings.Default.WindowPositions[name];
@@ -320,7 +322,7 @@ namespace GitUI
 
                 //var position = new WindowPosition(rectangle, formWindowState);
                 //Properties.Settings.Default.WindowPositions[name] = position;
-                Properties.Settings.Default.Save();
+                //Properties.Settings.Default.Save();
             }
             catch (ConfigurationException)
             {
@@ -339,25 +341,25 @@ namespace GitUI
         /// </returns>
         private static WindowPosition LookupWindowPosition(String name)
         {
-            try
-            {
-                //var list = Properties.Settings.Default.WindowPositions;
-                //if (list == null)
-                //    return null;
+            //try
+            //{
+            //    var list = Properties.Settings.Default.WindowPositions;
+            //    if (list == null)
+            //        return null;
 
-                //var position = (WindowPosition)list[name];
-                //if (position == null || position.Rect.IsEmpty)
-                //    return null;
+            //    var position = (WindowPosition)list[name];
+            //    if (position == null || position.Rect.IsEmpty)
+            //        return null;
 
-                //if (Screen.AllScreens.Any(screen => screen.WorkingArea.IntersectsWith(position.Rect)))
-                //{
-                //    return position;
-                //}
-            }
-            catch (ConfigurationException)
-            {
-                //TODO: howto restore a corrupted config? Properties.Settings.Default.Reset() doesn't work.
-            }
+            //    if (Screen.AllScreens.Any(screen => screen.WorkingArea.IntersectsWith(position.Rect)))
+            //    {
+            //        return position;
+            //    }
+            //}
+            //catch (ConfigurationException)
+            //{
+            //    //TODO: howto restore a corrupted config? Properties.Settings.Default.Reset() doesn't work.
+            //}
 
             return null;
         }

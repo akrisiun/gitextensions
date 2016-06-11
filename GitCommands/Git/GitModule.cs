@@ -2941,6 +2941,18 @@ namespace GitCommands
             return CheckSubmoduleStatus(commit, oldCommit, null, null, true);
         }
 
+        const char LineSeparator = '\n';
+        public static char ActiveBranchIndicator = '*';
+
+        public IEnumerable<string> GetBranchNames()
+        {
+            return RunGitCmd("branch", SystemEncoding)
+                .Split(LineSeparator)
+                .Where(branch => !string.IsNullOrWhiteSpace(branch))// first is ""
+                .OrderByDescending(branch => branch.Contains(ActiveBranchIndicator))// * for current branch
+                .Select(line => line.Trim());// trim justify space
+        }
+
         /// <summary>
         /// Uses check-ref-format to ensure that a branch name is well formed.
         /// </summary>

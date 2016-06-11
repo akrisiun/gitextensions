@@ -136,13 +136,15 @@ namespace GitUI.CommandsDialogs
             new TranslationString("Exactly one revision must be selected. Abort.");
         #endregion
 
+        #region Private
+
         private Dashboard _dashboard;
         private ToolStripItem _rebase;
         private ToolStripItem _bisect;
         private ToolStripItem _warning;
 
 #if !__MonoCS__ && !NET45
-        //private ThumbnailToolBarButton _commitButton;
+        private ThumbnailToolBarButton _commitButton;
         private ThumbnailToolBarButton _pushButton;
         private ThumbnailToolBarButton _pullButton;
         private bool _toolbarButtonsCreated;
@@ -165,9 +167,10 @@ namespace GitUI.CommandsDialogs
         private FormBrowse()
         {
             InitializeComponent();
-
             Translate();
         }
+
+        #endregion
 
         public FormBrowse(GitUICommands aCommands, string filter)
             : base(true, aCommands)
@@ -366,9 +369,10 @@ namespace GitUI.CommandsDialogs
             HideVariableMainMenuItems();
 
             RevisionGrid.Load();
-#if DEBUG
+
+            //#if DEBUG // TODO VirtualMode enable
             RevisionGrid.RemovePainting();
-#endif
+            //#endif
 
             _filterBranchHelper.InitToolStripBranchFilter();
 
@@ -531,7 +535,8 @@ namespace GitUI.CommandsDialogs
             fileExplorerToolStripMenuItem.Enabled = validWorkingDir;
             manageRemoteRepositoriesToolStripMenuItem1.Enabled = validWorkingDir;
             branchSelect.Enabled = validWorkingDir;
-            //toolStripButton1.Enabled = validWorkingDir && !bareRepository;
+
+            toolStripButtonCommit.Enabled = validWorkingDir && !bareRepository;
             if (_toolStripGitStatus != null)
                 _toolStripGitStatus.Enabled = validWorkingDir;
             toolStripButtonPull.Enabled = validWorkingDir;
@@ -615,14 +620,9 @@ namespace GitUI.CommandsDialogs
             CheckForMergeConflicts();
             UpdateStashCount();
 
-            UpdateSubmodulesList(); // so long
+            UpdateSubmodulesList();
 
-            // load custom user menu
-            // LoadUserMenu();
-
-            //if (repoObjectsTree == null)
-            //    repoObjectsTree = new UserControls.RepoObjectsTree(); // ??
-            //repoObjectsTree.Reload();
+            repoObjectsTree.Reload();
 
             bool validWorkingDir = Module.IsValidGitWorkingDir();
             if (validWorkingDir)
@@ -642,7 +642,7 @@ namespace GitUI.CommandsDialogs
         }
 
         #endregion
-    
+
         #region UI
 
         internal Keys GetShortcutKeys(Commands cmd)
@@ -818,8 +818,8 @@ namespace GitUI.CommandsDialogs
             {
                 if (!_toolbarButtonsCreated)
                 {
-                    //_commitButton = new ThumbnailToolBarButton(MakeIcon(toolStripButton1.Image, 48, true), toolStripButton1.Text);
-                    //_commitButton.Click += ToolStripButton1Click;
+                    _commitButton = new ThumbnailToolBarButton(MakeIcon(toolStripButtonCommit.Image, 48, true), toolStripButtonCommit.Text);
+                    _commitButton.Click += toolStripButtonCommitClick;
 
                     _pushButton = new ThumbnailToolBarButton(MakeIcon(toolStripButtonPush.Image, 48, true), toolStripButtonPush.Text);
                     _pushButton.Click += PushToolStripMenuItemClick;
@@ -835,7 +835,7 @@ namespace GitUI.CommandsDialogs
                     TaskbarManager.Instance.ThumbnailToolBars.AddButtons(Handle, buttons);
                 }
 
-                //_commitButton.Enabled = validRepo;
+                _commitButton.Enabled = validRepo;
                 _pushButton.Enabled = validRepo;
                 _pullButton.Enabled = validRepo;
             }
@@ -968,30 +968,30 @@ namespace GitUI.CommandsDialogs
                 (result) =>
                 {
                     if (result)
-            {
-                if (_warning == null)
-                {
-                            _warning = new WarningToolStripItem {Text = _hintUnresolvedMergeConflicts.Text};
-                    _warning.Click += WarningClick;
-                    statusStrip.Items.Add(_warning);
-                }
-            }
-            else
-            {
-                if (_warning != null)
-                {
-                    _warning.Click -= WarningClick;
-                    statusStrip.Items.Remove(_warning);
-                    _warning = null;
-                }
-            }
+                    {
+                        if (_warning == null)
+                        {
+                            _warning = new WarningToolStripItem { Text = _hintUnresolvedMergeConflicts.Text };
+                            _warning.Click += WarningClick;
+                            statusStrip.Items.Add(_warning);
+                        }
+                    }
+                    else
+                    {
+                        if (_warning != null)
+                        {
+                            _warning.Click -= WarningClick;
+                            statusStrip.Items.Remove(_warning);
+                            _warning = null;
+                        }
+                    }
 
-            //Only show status strip when there are status items on it.
-            //There is always a close (x) button, do not count first item.
-            if (statusStrip.Items.Count > 1)
-                statusStrip.Show();
-            else
-                statusStrip.Hide();
+                    //Only show status strip when there are status items on it.
+                    //There is always a close (x) button, do not count first item.
+                    if (statusStrip.Items.Count > 1)
+                        statusStrip.Show();
+                    else
+                        statusStrip.Hide();
                 });
         }
 
@@ -1657,7 +1657,7 @@ namespace GitUI.CommandsDialogs
             UICommands.StartMergeBranchDialog(this, null);
         }
 
-        private void ToolStripButton1Click(object sender, EventArgs e)
+        private void toolStripButtonCommitClick(object sender, EventArgs e)
         {
             CommitToolStripMenuItemClick(sender, e);
         }
@@ -3151,11 +3151,15 @@ namespace GitUI.CommandsDialogs
 
         private void SubmoduleToolStripButtonClick(object sender, EventArgs e)
         {
-            var menuSender = sender as ToolStripMenuItem;
-            if (menuSender != null)
-            {
-                SetWorkingDir(menuSender.Tag as string);
-            }
+            var button = sender as ToolStripMenuItem;
+
+            if (button == null)
+                return;
+
+            if (button.Tag is GitModule)
+                SetGitModule(this, new GitModuleEventArgs(button.Tag as GitModule));
+            else
+                SetWorkingDir(button.Tag as string);
         }
 
         private void toolStripButtonLevelUp_DropDownOpening(object sender, EventArgs e)
@@ -3257,7 +3261,7 @@ namespace GitUI.CommandsDialogs
                 if (submoduleStatus != null && submoduleStatus.Commit != submoduleStatus.OldCommit)
                 {
                     submoduleStatus.CheckSubmoduleStatus(submoduleStatus.GetSubmodule(supermodule));
-            }
+                }
                 if (submoduleStatus != null)
                 {
                     info.Status = submoduleStatus.Status;
@@ -3292,78 +3296,78 @@ namespace GitUI.CommandsDialogs
 
                 // Add all submodules inside the current repository:
                 foreach (var submodule in threadModule.GetSubmodulesLocalPaths().OrderBy(submoduleName => submoduleName))
-            {
+                {
                     cancelToken.ThrowIfCancellationRequested();
-                var name = submodule;
+                    var name = submodule;
                     string path = threadModule.GetSubmoduleFullPath(submodule);
-                if (Settings.DashboardShowCurrentBranch && !GitModule.IsBareRepository(path))
-                    name = name + " " + GetModuleBranch(path);
+                    if (Settings.DashboardShowCurrentBranch && !GitModule.IsBareRepository(path))
+                        name = name + " " + GetModuleBranch(path);
 
                     var smi = new SubmoduleInfo { Text = name, Path = path };
                     result.OurSubmodules.Add(smi);
                     GetSubmoduleStatusAsync(smi, cancelToken);
-            }
+                }
 
                 if (threadModule.SuperprojectModule != null)
-            {
+                {
                     GitModule supersuperproject = threadModule.FindTopProjectModule();
                     if (threadModule.SuperprojectModule.WorkingDir != supersuperproject.WorkingDir)
-                {
+                    {
                         var name = Path.GetFileName(Path.GetDirectoryName(supersuperproject.WorkingDir));
-                    string path = supersuperproject.WorkingDir;
-                    if (Settings.DashboardShowCurrentBranch && !GitModule.IsBareRepository(path))
-                        name = name + " " + GetModuleBranch(path);
+                        string path = supersuperproject.WorkingDir;
+                        if (Settings.DashboardShowCurrentBranch && !GitModule.IsBareRepository(path))
+                            name = name + " " + GetModuleBranch(path);
 
                         result.TopProject = new SubmoduleInfo { Text = name, Path = supersuperproject.WorkingDir };
                         GetSubmoduleStatusAsync(result.TopProject, cancelToken);
-                }
+                    }
 
-                {
+                    {
                         string name;
                         GitModule parentModule = threadModule.SuperprojectModule;
-                    string localpath = "";
+                        string localpath = "";
                         if (threadModule.SuperprojectModule.WorkingDir != supersuperproject.WorkingDir)
-                    {
-                        parentModule = supersuperproject;
+                        {
+                            parentModule = supersuperproject;
                             localpath = threadModule.SuperprojectModule.WorkingDir.Substring(supersuperproject.WorkingDir.Length);
-                        localpath = PathUtil.GetDirectoryName(localpath.ToPosixPath());
+                            localpath = PathUtil.GetDirectoryName(localpath.ToPosixPath());
                             name = localpath;
-                    }
-                    else
+                        }
+                        else
                             name = Path.GetFileName(Path.GetDirectoryName(supersuperproject.WorkingDir));
                         string path = threadModule.SuperprojectModule.WorkingDir;
-                    if (Settings.DashboardShowCurrentBranch && !GitModule.IsBareRepository(path))
-                        name = name + " " + GetModuleBranch(path);
+                        if (Settings.DashboardShowCurrentBranch && !GitModule.IsBareRepository(path))
+                            name = name + " " + GetModuleBranch(path);
 
                         result.Superproject = new SubmoduleInfo { Text = name, Path = threadModule.SuperprojectModule.WorkingDir };
                         GetSubmoduleStatusAsync(result.Superproject, cancelToken);
-                }
+                    }
 
                     var submodules = supersuperproject.GetSubmodulesLocalPaths().OrderBy(submoduleName => submoduleName);
-                if (submodules.Any())
-                {
-                        string localpath = threadModule.WorkingDir.Substring(supersuperproject.WorkingDir.Length);
-                    localpath = PathUtil.GetDirectoryName(localpath.ToPosixPath());
-
-                    foreach (var submodule in submodules)
+                    if (submodules.Any())
                     {
-                            cancelToken.ThrowIfCancellationRequested();
-                        var name = submodule;
-                        string path = supersuperproject.GetSubmoduleFullPath(submodule);
-                        if (Settings.DashboardShowCurrentBranch && !GitModule.IsBareRepository(path))
-                            name = name + " " + GetModuleBranch(path);
-                            bool bold = false;
-                        if (submodule == localpath)
+                        string localpath = threadModule.WorkingDir.Substring(supersuperproject.WorkingDir.Length);
+                        localpath = PathUtil.GetDirectoryName(localpath.ToPosixPath());
+
+                        foreach (var submodule in submodules)
                         {
+                            cancelToken.ThrowIfCancellationRequested();
+                            var name = submodule;
+                            string path = supersuperproject.GetSubmoduleFullPath(submodule);
+                            if (Settings.DashboardShowCurrentBranch && !GitModule.IsBareRepository(path))
+                                name = name + " " + GetModuleBranch(path);
+                            bool bold = false;
+                            if (submodule == localpath)
+                            {
                                 result.CurrentSubmoduleName = threadModule.GetCurrentSubmoduleLocalPath();
                                 bold = true;
-                        }
+                            }
                             var smi = new SubmoduleInfo { Text = name, Path = path, Bold = bold };
                             result.SuperSubmodules.Add(smi);
                             GetSubmoduleStatusAsync(smi, cancelToken);
+                        }
                     }
                 }
-            }
                 return result;
             }, cancelToken);
 
@@ -3392,17 +3396,17 @@ namespace GitUI.CommandsDialogs
 
                 newItems.Add(new ToolStripSeparator());
 
-            var mi = new ToolStripMenuItem(updateAllSubmodulesToolStripMenuItem.Text);
-            mi.Click += UpdateAllSubmodulesToolStripMenuItemClick;
+                var mi = new ToolStripMenuItem(updateAllSubmodulesToolStripMenuItem.Text);
+                mi.Click += UpdateAllSubmodulesToolStripMenuItemClick;
                 newItems.Add(mi);
 
                 if (task.Result.CurrentSubmoduleName != null)
-            {
-                var usmi = new ToolStripMenuItem(_updateCurrentSubmodule.Text);
+                {
+                    var usmi = new ToolStripMenuItem(_updateCurrentSubmodule.Text);
                     usmi.Tag = task.Result.CurrentSubmoduleName;
-                usmi.Click += UpdateSubmoduleToolStripMenuItemClick;
+                    usmi.Click += UpdateSubmoduleToolStripMenuItemClick;
                     newItems.Add(usmi);
-            }
+                }
 
                 // Using AddRange is critical: if you used Add to add menu items one at a
                 // time, performance would be extremely slow with many submodules (> 100).
@@ -3550,57 +3554,57 @@ namespace GitUI.CommandsDialogs
 	    /// Adds a tab with console interface to Git over the current working copy. Recreates the terminal on tab activation if user exits the shell.
 	    /// </summary>
 	    private void FillTerminalTab()
-	    {
-		    if(!EnvUtils.RunningOnWindows())
-			    return; // ConEmu only works on WinNT
-		    TabPage tabpage;
-		    string sImageKey = "Resources.IconConsole";
-		    CommitInfoTabControl.ImageList.Images.Add(sImageKey, Resources.IconConsole);
-		    CommitInfoTabControl.Controls.Add(tabpage = new TabPage("Console"));
-		    tabpage.ImageKey = sImageKey; // After adding page
+        {
+            if (!EnvUtils.RunningOnWindows())
+                return; // ConEmu only works on WinNT
+            TabPage tabpage;
+            string sImageKey = "Resources.IconConsole";
+            CommitInfoTabControl.ImageList.Images.Add(sImageKey, Resources.IconConsole);
+            CommitInfoTabControl.Controls.Add(tabpage = new TabPage("Console"));
+            tabpage.ImageKey = sImageKey; // After adding page
 
-		    // Delay-create the terminal window when the tab is first selected
-		    ConEmuControl terminal = null;
-		    CommitInfoTabControl.Selecting += (sender, args) =>
-		    {
-			    if(args.TabPage != tabpage)
-				    return;
-			    if(terminal == null) // Lazy-create on first opening the tab
-			    {
-				    tabpage.Controls.Clear();
-				    tabpage.Controls.Add(terminal = new ConEmuControl() {Dock = DockStyle.Fill, AutoStartInfo = null});
-			    }
-			    if(terminal.IsConsoleEmulatorOpen) // If user has typed "exit" in there, restart the shell; otherwise just return
-				    return;
+            // Delay-create the terminal window when the tab is first selected
+            ConEmuControl terminal = null;
+            CommitInfoTabControl.Selecting += (sender, args) =>
+            {
+                if (args.TabPage != tabpage)
+                    return;
+                if (terminal == null) // Lazy-create on first opening the tab
+                {
+                    tabpage.Controls.Clear();
+                    tabpage.Controls.Add(terminal = new ConEmuControl() { Dock = DockStyle.Fill, AutoStartInfo = null });
+                }
+                if (terminal.IsConsoleEmulatorOpen) // If user has typed "exit" in there, restart the shell; otherwise just return
+                    return;
 
-			    // Create the terminal
-			    var startinfo = new ConEmuStartInfo();
-			    startinfo.StartupDirectory = Module.WorkingDir;
-			    startinfo.WhenConsoleProcessExits = WhenConsoleProcessExits.CloseConsoleEmulator;
+                // Create the terminal
+                var startinfo = new ConEmuStartInfo();
+                startinfo.StartupDirectory = Module.WorkingDir;
+                startinfo.WhenConsoleProcessExits = WhenConsoleProcessExits.CloseConsoleEmulator;
 
-			    // Choose the console: bash from git with fallback to cmd
-			    string sGitBashFromUsrBin = "";/*This is not a console program and is not reliable yet, suppress for now.*/ //Path.Combine(Path.Combine(Path.Combine(AppSettings.GitBinDir, ".."), ".."), "git-bash.exe"); // Git bin dir is /usr/bin under git installdir, so go 2x up
-			    string sGitBashFromBinOrCmd = "";/*This is not a console program and is not reliable yet, suppress for now.*/ //Path.Combine(Path.Combine(AppSettings.GitBinDir, ".."), "git-bash.exe"); // In case we're running off just /bin or /cmd
-		        var gitDir = Path.GetDirectoryName(AppSettings.GitCommandValue);
-			    string sJustBash = Path.Combine(gitDir, "bash.exe"); // Generic bash, should generally be in the git dir, less configured than the specific git-bash
-			    string sJustSh = Path.Combine(gitDir, "sh.exe"); // Fallback to SH
-			    startinfo.ConsoleProcessCommandLine = new[] {sGitBashFromUsrBin, sGitBashFromBinOrCmd, sJustBash, sJustSh}.Where(File.Exists).FirstOrDefault() ?? ConEmuConstants.DefaultConsoleCommandLine; // Choose whatever exists, or default CMD shell
-                if(startinfo.ConsoleProcessCommandLine != ConEmuConstants.DefaultConsoleCommandLine)
+                // Choose the console: bash from git with fallback to cmd
+                string sGitBashFromUsrBin = "";/*This is not a console program and is not reliable yet, suppress for now.*/ //Path.Combine(Path.Combine(Path.Combine(AppSettings.GitBinDir, ".."), ".."), "git-bash.exe"); // Git bin dir is /usr/bin under git installdir, so go 2x up
+                string sGitBashFromBinOrCmd = "";/*This is not a console program and is not reliable yet, suppress for now.*/ //Path.Combine(Path.Combine(AppSettings.GitBinDir, ".."), "git-bash.exe"); // In case we're running off just /bin or /cmd
+                var gitDir = Path.GetDirectoryName(AppSettings.GitCommandValue);
+                string sJustBash = Path.Combine(gitDir, "bash.exe"); // Generic bash, should generally be in the git dir, less configured than the specific git-bash
+                string sJustSh = Path.Combine(gitDir, "sh.exe"); // Fallback to SH
+                startinfo.ConsoleProcessCommandLine = new[] { sGitBashFromUsrBin, sGitBashFromBinOrCmd, sJustBash, sJustSh }.Where(File.Exists).FirstOrDefault() ?? ConEmuConstants.DefaultConsoleCommandLine; // Choose whatever exists, or default CMD shell
+                if (startinfo.ConsoleProcessCommandLine != ConEmuConstants.DefaultConsoleCommandLine)
                 {
                     startinfo.ConsoleProcessCommandLine += " --login -i";
                 }
 
-			    // Set path to git in this window (actually, effective with CMD only)
-			    if(!string.IsNullOrEmpty(AppSettings.GitCommand))
-			    {
-				    string dirGit = Path.GetDirectoryName(AppSettings.GitCommand);
-				    if(!string.IsNullOrEmpty(dirGit))
-					    startinfo.SetEnv("PATH", dirGit + ";" + "%PATH%");
-			    }
+                // Set path to git in this window (actually, effective with CMD only)
+                if (!string.IsNullOrEmpty(AppSettings.GitCommand))
+                {
+                    string dirGit = Path.GetDirectoryName(AppSettings.GitCommand);
+                    if (!string.IsNullOrEmpty(dirGit))
+                        startinfo.SetEnv("PATH", dirGit + ";" + "%PATH%");
+                }
 
-			    terminal.Start(startinfo);
-		    };
-	    }
+                terminal.Start(startinfo);
+            };
+        }
 
         /// <summary>
         /// Clean up any resources being used.
@@ -3611,8 +3615,8 @@ namespace GitUI.CommandsDialogs
             if (disposing)
             {
 #if !__MonoCS__ && !NET45
-                //if (_commitButton != null)
-                //    _commitButton.Dispose();
+                if (_commitButton != null)
+                    _commitButton.Dispose();
                 if (_pushButton != null)
                     _pushButton.Dispose();
                 if (_pullButton != null)

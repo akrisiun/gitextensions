@@ -1,15 +1,24 @@
 ﻿using GitCommands;
 using GitUI;
+using GitUI.CommandsDialogs;
 using GitUI.HelperDialogs;
 using System;
 using System.Windows.Forms;
 
 namespace GitExtensionsTest.GitUI.Forms
 {
-    public class ResetFormTest : FormResetCurrentBranch, IGitUICommandsSource
+    class BrowseFormTest : FormBrowse, IGitUICommandsSource
     {
-        public ResetFormTest(GitUICommands aCommands = null, GitRevision revision = null)
-            : base(aCommands, revision)
+        private BrowseFormTest(GitUICommands aCommands = null, string filter = "")
+            : base(aCommands, filter)
+        {
+        }
+    }
+
+    public class SubmodulesTreeTest : FormBrowse, IGitUICommandsSource
+    {
+        public SubmodulesTreeTest(GitUICommands aCommands = null, string filter = "")
+            : base(aCommands, filter)
         {
         }
 

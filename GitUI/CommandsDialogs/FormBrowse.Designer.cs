@@ -58,7 +58,7 @@ namespace GitUI.CommandsDialogs
             this.toolStripTextBoxFilter = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.MainSplitContainer = new System.Windows.Forms.SplitContainer();
-            //this.repoObjectsTree = new GitUI.UserControls.RepoObjectsTree();
+            this.repoObjectsTree = new GitUI.UserControls.RepoObjectsTree();
             this.RightSplitContainer = new System.Windows.Forms.SplitContainer();
             this.RevisionGrid = new GitUI.RevisionGrid();
             this.CommitInfoTabControl = new System.Windows.Forms.TabControl();
@@ -436,7 +436,7 @@ namespace GitUI.CommandsDialogs
             this.toolStripButtonCommit.Name = "toolStripButtonCommit";
             this.toolStripButtonCommit.Size = new System.Drawing.Size(77, 27);
             this.toolStripButtonCommit.Text = "Commit";
-            this.toolStripButtonCommit.Click += new System.EventHandler(this.ToolStripButton1Click);
+            this.toolStripButtonCommit.Click += new System.EventHandler(this.toolStripButtonCommitClick);
             // 
             // toolStripButtonFetchAll
             // 
@@ -626,7 +626,7 @@ namespace GitUI.CommandsDialogs
             // 
             // MainSplitContainer.Panel1
             // 
-            //this.MainSplitContainer.Panel1.Controls.Add(this.repoObjectsTree);
+            this.MainSplitContainer.Panel1.Controls.Add(this.repoObjectsTree);
             // 
             // MainSplitContainer.Panel2
             // 
@@ -637,12 +637,12 @@ namespace GitUI.CommandsDialogs
             // 
             // repoObjectsTree
             // 
-            //this.repoObjectsTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            //this.repoObjectsTree.Location = new System.Drawing.Point(0, 0);
-            //this.repoObjectsTree.Margin = new System.Windows.Forms.Padding(2);
-            //this.repoObjectsTree.Name = "repoObjectsTree";
-            //this.repoObjectsTree.Size = new System.Drawing.Size(201, 498);
-            //this.repoObjectsTree.TabIndex = 0;
+            this.repoObjectsTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.repoObjectsTree.Location = new System.Drawing.Point(0, 0);
+            this.repoObjectsTree.Margin = new System.Windows.Forms.Padding(2);
+            this.repoObjectsTree.Name = "repoObjectsTree";
+            this.repoObjectsTree.Size = new System.Drawing.Size(201, 498);
+            this.repoObjectsTree.TabIndex = 0;
             // 
             // RightSplitContainer
             // 
@@ -1995,6 +1995,16 @@ namespace GitUI.CommandsDialogs
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(165, 6);
+
+            // 
+            // repoObjectsTree
+            // 
+            this.repoObjectsTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.repoObjectsTree.Location = new System.Drawing.Point(0, 0);
+            this.repoObjectsTree.Name = "repoObjectsTree";
+            this.repoObjectsTree.Size = new System.Drawing.Size(213, 501);
+            this.repoObjectsTree.TabIndex = 0;
+
             // 
             // menuStrip1
             // 
@@ -2026,7 +2036,7 @@ namespace GitUI.CommandsDialogs
             // 
             // FormBrowse
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.ClientSize = new System.Drawing.Size(923, 573);
@@ -2241,7 +2251,7 @@ namespace GitUI.CommandsDialogs
         private ToolStripMenuItem blameToolStripMenuItem;
         private ToolStripMenuItem blameToolStripMenuItem1;
         private ToolStripMenuItem expandAllToolStripMenuItem;
-        private ToolStripMenuItem findInDiffToolStripMenuItem;
+        private ToolStripMenuItem findInDiffToolStripMenuItem;        
         private ToolStripMenuItem collapseAllToolStripMenuItem;
         private ToolStripSplitButton toolStripButtonLevelUp;
         private ToolStripSplitButton toolStripButtonPull;
@@ -2257,12 +2267,12 @@ namespace GitUI.CommandsDialogs
         private ToolStripMenuItem resetFileToParentToolStripMenuItem;
         private ToolStripMenuItem resetFileToSecondToolStripMenuItem;
         private ToolStripMenuItem resetFileToSelectedToolStripMenuItem;
-        private ToolStripMenuItem resetToolStripMenuItem;
+        private ToolStripMenuItem resetToolStripMenuItem;        
         private ToolStripMenuItem aBToolStripMenuItem;
         private ToolStripMenuItem aLocalToolStripMenuItem;
         private ToolStripMenuItem bLocalToolStripMenuItem;
         private ToolStripMenuItem parentOfALocalToolStripMenuItem;
-        private ToolStripMenuItem parentOfBLocalToolStripMenuItem;
+        private ToolStripMenuItem parentOfBLocalToolStripMenuItem;        
         private ToolStripMenuItem reportAnIssueToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator40;
         private ToolStripSeparator toolStripSeparator41;
@@ -2273,7 +2283,7 @@ namespace GitUI.CommandsDialogs
         private ToolStripSeparator toolStripSeparator46;
         private ToolStripMenuItem checkForUpdatesToolStripMenuItem;
         private SplitContainer MainSplitContainer;
-        //private RepoObjectsTree repoObjectsTree;
+        private RepoObjectsTree repoObjectsTree;
         private ToolStripMenuItem commitcountPerUserToolStripMenuItem;
         private ToolStripMenuItem gitcommandLogToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator7;

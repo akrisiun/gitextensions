@@ -1,18 +1,17 @@
 ﻿using GitCommands;
 using GitUI;
-using GitUI.CommandsDialogs;
 using GitUI.RevisionGridClasses;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
 namespace GitExtensionsTest.GitUI.Forms
 {
-    //using NUnit.Framework;
-    [NUnit.Framework.TestFixture, TestClass]
+    [NUnit.Framework.TestFixture]
+    // [TestClass]
     public class RevisionGridTest
     {
         public RevisionGrid RevisionGrid { get; set; }
@@ -20,7 +19,8 @@ namespace GitExtensionsTest.GitUI.Forms
         public FormRevisionGrid Form { get; set; }
         ApplicationContext app;
 
-        [TestMethod, NUnit.Framework.Test]
+        [Test]  // TestMethod
+        [STAThread]
         public void RevisionGrid_Form1()
         {
             app = new ApplicationContext();
@@ -51,18 +51,23 @@ namespace GitExtensionsTest.GitUI.Forms
             };
             _revisionGraphCommand.Updated += _revisionGraphCommand_Updated;
             _revisionGraphCommand.Error += _revisionGraphCommand_Error;
-            //_revisionGraphCommand.InMemFilter = revGraphIMF;
 
             _revisionGraphCommand.Exited += _revisionGraphCommand_Exited;
 
             RevisionGrid.RevisionsGraph.Columns[1].Visible = false;
-            RevisionGrid.RevisionsGraph.RemovePainting();
+            RevisionGrid.RemovePainting(); // RevisionsGraph.RemovePainting();
 
+            Form.Shown += Form_Shown;
             Form.Show();
 
             _revisionGraphCommand.Execute();
 
             Application.Run(app);
+        }
+
+        private void Form_Shown(object sender, EventArgs e)
+        {
+            (sender as Form).Focus();
         }
 
         void _revisionGraphCommand_Error(object sender, AsyncErrorEventArgs e)
@@ -83,7 +88,7 @@ namespace GitExtensionsTest.GitUI.Forms
             if (revision != null)
             {
                 if (Revisions.Rows.Count > 100)
-                    return; // enought
+                    return; // enough
 
                 GitRevision rev = updatedEvent.Revision;
 
@@ -95,7 +100,6 @@ namespace GitExtensionsTest.GitUI.Forms
                     dataType = DvcsGraph.DataType.Special;
 
                 Revisions.Add(rev.Guid, rev.ParentGuids, dataType, rev);
-                // Debug.WriteLine("Cached item FAILED {0}", curCount.ToString());
             }
         }
 

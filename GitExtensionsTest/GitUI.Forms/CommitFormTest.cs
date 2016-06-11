@@ -1,17 +1,16 @@
 ﻿using GitCommands;
 using GitUI;
 using GitUI.RevisionGridClasses;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
 namespace GitExtensionsTest.GitUI.Forms
 {
     //using NUnit.Framework;
-    [NUnit.Framework.TestFixture, TestClass]
+    [NUnit.Framework.TestFixture] 
+    // [TestClass]
     public class CommitFormTest
     {
         public FormCommitTest Form { get; set; }
@@ -20,7 +19,9 @@ namespace GitExtensionsTest.GitUI.Forms
 
         ApplicationContext app;
 
-        [TestMethod, NUnit.Framework.Test]
+        [NUnit.Framework.Test]
+        [STAThread]
+        //[TestMethod]
         public void FormCommit_Form1()
         {
             app = new ApplicationContext();

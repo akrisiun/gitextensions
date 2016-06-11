@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\FxCop.targets" />
   <PropertyGroup>
@@ -242,6 +242,9 @@
     <Compile Include="Hotkey\KeysExtensions.cs" />
     <Compile Include="RepoHosts.cs" />
     <Compile Include="AutoCompletion\AutoCompleteWord.cs" />
+    <Compile Include="RepoObjectsTree\ROT.ContextActions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UserControls\BranchComboBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1015,6 +1018,33 @@
     <Compile Include="UserControls\FolderBrowserButton.Designer.cs">
       <DependentUpon>FolderBrowserButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="RepoObjectsTree\ROT.DragDrops.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Branches.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\RepoObjectsTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\RepoObjectsTree.Designer.cs">
+      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Remotes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Stashes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Submodules.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Tags.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UserControls\WarningToolStripItem.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1468,7 +1498,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <CustomToolNamespace>GitUI.Properties</CustomToolNamespace>
-      <LogicalName>GitUI.Properties.Resources.resources</LogicalName> 
+      <LogicalName>GitUI.Properties.Resources.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\RevisionGrid.resx">
       <DependentUpon>RevisionGrid.cs</DependentUpon>
@@ -1484,6 +1514,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\FolderBrowserButton.resx">
       <DependentUpon>FolderBrowserButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RepoObjectsTree\RepoObjectsTree.resx">
+      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -1858,6 +1891,9 @@
     <None Include="Resources\Icons\IconSubmoduleRevisionDownDirty.png" />
     <None Include="Resources\Icons\IconSubmoduleRevisionUpDirty.png" />
     <None Include="Resources\Icons\IconRevertCommit.png" />
+    <None Include="Resources\Icons\CollapseAll.png" />
+    <None Include="Resources\Icons\ExpandAll.png" />
+    <None Include="Resources\Icons\StashesClear.png" />
     <None Include="Resources\Icons\HelpPullMergeFastForward.png" />
     <None Include="Resources\Icons\HelpCommandMergeFastForward.png" />
     <Content Include="Resources\Icons\BuildCancelled.png" />

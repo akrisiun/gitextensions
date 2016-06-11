@@ -186,11 +186,8 @@ namespace GitUI
 
         public void RemovePainting()
         {
-            // Revisions.CellPainting -= RevisionsCellPainting;
-
-            var grid = Revisions;
-            grid.RemovePainting();
-            grid.VirtualMode = false;
+            // RevisionsCellPainting ok
+            Revisions.VirtualMode = false;
         }
 
         private void FillMenuFromMenuCommands(IEnumerable<MenuCommand> menuCommands, ToolStripMenuItem targetMenuItem)

@@ -155,11 +155,6 @@ namespace GitUI.RevisionGridClasses
             Clear();
         }
 
-        public void RemovePainting()
-        {
-            //CellPainting -= dataGrid_CellPainting;
-        }
-
         #region Create, Columns
 
         protected override void OnCreateControl()

@@ -61,6 +61,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.TextEditor">
+      <HintPath>..\Bin\ICSharpCode.TextEditor.dll</HintPath>
+    </Reference>
     <Reference Include="SmartFormat, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SmartFormat.NET.1.6.1.0\lib\net40-Client\SmartFormat.dll</HintPath>
       <Private>True</Private>
@@ -127,6 +130,10 @@
     <ProjectReference Include="..\Externals\NBug\NBug\NBug.csproj">
       <Project>{62ced1d5-f603-40de-8bf5-3e49d3a392f4}</Project>
       <Name>NBug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GitExtUtils\GitExtUtils.csproj">
+      <Project>{0f1f1168-a4b2-4fa2-b17b-735140d17f39}</Project>
+      <Name>GitExtUtils</Name>
     </ProjectReference>
     <ProjectReference Include="..\GitUI\GitUI.csproj">
       <Project>{CF5B22E7-230F-4E50-BE88-C4F7023CED2C}</Project>
