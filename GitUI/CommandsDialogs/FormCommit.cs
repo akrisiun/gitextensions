@@ -222,7 +222,7 @@ namespace GitUI.CommandsDialogs
 
         internal class User32
         {
-            [DllImport("user32.dll")]
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass"), DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool SetForegroundWindow(IntPtr hWnd);
         }

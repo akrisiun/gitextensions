@@ -9,6 +9,7 @@ namespace GitUI.Editor.Diff
     {
         public delegate void EvLineNumAnalyzed(DiffLineNum diffline);  // (object sender, EventArgs e);
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
         public event EvLineNumAnalyzed OnLineNumAnalyzed;
 
         private void BgWorkerOnDoWork(object sender, DoWorkEventArgs doWorkEventArgs)

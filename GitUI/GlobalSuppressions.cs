@@ -13,3 +13,5 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "Henk", Scope = "member", Target = "GitUI.AboutBox.#InitializeComponent()")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "henkwesthuis", Scope = "member", Target = "GitUI.AboutBox.#InitializeComponent()")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "ppk", Scope = "member", Target = "GitUI.BrowseForPrivateKey.#Browse(System.Windows.Forms.IWin32Window)")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly", Scope = "member", Target = "GitUI.RevisionGridClasses.DvcsGraph+Graph.#Updated")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Scope = "member", Target = "GitUI.UserControls.RepoObjectsTree+Node.#.ctor(GitUI.UserControls.RepoObjectsTree+Tree,GitUI.UserControls.RepoObjectsTree+Node)")]

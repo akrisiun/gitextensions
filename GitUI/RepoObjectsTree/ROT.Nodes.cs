@@ -10,9 +10,9 @@ using GitCommands;
 
 namespace GitUI.UserControls
 {
-    partial class RepoObjectsTree
+    public partial class RepoObjectsTree
     {
-        class Nodes
+        public class Nodes
         {
             public readonly Tree Tree;
             public readonly Node OwnerNode;
@@ -102,7 +102,7 @@ namespace GitUI.UserControls
             public int Count { get { return NodesList.Count; } }
         }
 
-        abstract class Tree
+        public abstract class Tree
         {
             public readonly Nodes Nodes;
             private readonly IGitUICommandsSource UICommandsSource;
@@ -119,14 +119,20 @@ namespace GitUI.UserControls
 
             public Task ReloadTask(CancellationToken token)
             {
-                ClearNodes();
-                Task task = new Task(() => LoadNodes(token), token);
+                if (!TreeViewNode.IsVisible)
+                    return null;
+
+                Task task = new Task(() => DoLoad(token), token);
+
                 Action<Task> continuationAction = (t) =>
                     {
                         TreeViewNode.TreeView.BeginUpdate();
                         try
                         {
-                            FillTreeViewNode();
+                            var node = TreeViewNode.TreeView.SelectedNode;
+                            // var item = node.Tag as GitItem;
+                            bool isActive = node.Index == 1;  // TODO
+                            FillTreeViewNode(isActive);
                         }
                         finally
                         {
@@ -138,20 +144,53 @@ namespace GitUI.UserControls
                 return task;
             }
 
-            protected abstract void LoadNodes(CancellationToken token);
+            public void DoLoad(CancellationToken token)
+            {
+                var rootNode = TreeViewNode;
+                var allBranches = Module.GetBranchNames();
+                var numerator = allBranches.GetEnumerator();
+                if (!numerator.MoveNext())
+                    return;
+
+                rootNode.Nodes.Clear();
+                // ClearNodes();
+
+                LoadNodes(token, allBranches);
+                if (rootNode.Nodes.Count == 0)
+                {
+                    var nodes = this.Nodes;
+                    var TreeNodes = rootNode.TreeView.Nodes;
+                    foreach (var node in nodes)
+                    {
+                        // TreeNode Add(string key, string text);
+                        TreeNode tvNode = new TreeNode { Tag = node, Text = node.DisplayText() };
+                        try
+                        {
+                            rootNode.Nodes.Add(tvNode);
+                        }
+                        catch { ;}
+                    }
+                }
+
+                rootNode.Expand();
+            }
+
+            protected abstract void LoadNodes(CancellationToken token, IEnumerable<string> branches);
 
             protected virtual void ClearNodes()
             {
+                if (Nodes.Count <= 1)
+                    return;
                 Nodes.Clear();
             }
 
-            protected virtual void FillTreeViewNode()
+            protected virtual void FillTreeViewNode(bool isActive)
             {
                 Nodes.FillTreeViewNode(TreeViewNode);
             }
         }
 
-        abstract class Node
+        public abstract class Node
         {
             /// <summary>Gets the parent node.</summary>
             public Node ParentNode { get; internal set; }

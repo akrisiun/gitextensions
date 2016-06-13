@@ -146,13 +146,21 @@ namespace GitUI.RevisionGridClasses
             _blackBorderPen = new Pen(Brushes.Black, _laneLineWidth + 1);
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            _graphData.Updated += graphData_Updated;
+            Scroll += dataGrid_Scroll;
             CellPainting += dataGrid_CellPainting;
             ColumnWidthChanged += dataGrid_ColumnWidthChanged;
-            Scroll += dataGrid_Scroll;
-            _graphData.Updated += graphData_Updated;
 
             VirtualMode = true;
             Clear();
+
+        }
+
+        bool bound = false;
+        public void Bind()
+        {
+            if (bound) return;
+            bound = true;
         }
 
         #region Create, Columns
@@ -568,6 +576,8 @@ namespace GitUI.RevisionGridClasses
                 }
             }
 
+            this.SuspendLayout();
+
             var numer = lanes.GetEnumerator();
             for (int row = 0; numer.MoveNext() && row <= maxRows; row++)
             {
@@ -580,6 +590,8 @@ namespace GitUI.RevisionGridClasses
                     Rows.Add(objectData);
                 }
             }
+
+            this.ResumeLayout();
         }
 
 
@@ -594,30 +606,6 @@ namespace GitUI.RevisionGridClasses
                 });
         }
 
-        //protected override void OnPaint(PaintEventArgs e)
-        //{
-        //    if (VirtualMode)
-        //    {
-        //        Graphics g = e.Graphics;
-        //        RectangleF clipBounds = e.Graphics.ClipBounds;
-
-        //        using (var cellBackground = new SolidBrush(Color.Silver))
-        //        {
-        //            g.FillRectangle(cellBackground, clipBounds);
-        //        }
-        //    }
-
-        //    // lastRow = -1;
-        //    if (Rows.Count > 0)
-        //    {
-        //        base.OnPaint(e);
-        //    }
-        //}
-
-        //private Rectangle _lastRect = new Rectangle(0, 0, 0, 0);
-        //private int lastRow = 0, lastCol = 0;
-        //private Graph.ILaneRow _row;
-
         // private 
         public void dataGrid_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
@@ -625,11 +613,7 @@ namespace GitUI.RevisionGridClasses
             var cell = Rows[rowIndex].Cells[1];
             Graph.ILaneRow row = _graphData[rowIndex];
 
-            if (e.ColumnIndex > 0)
-                return;
-
-             
-            if (e.RowIndex < 0)
+            if (e.ColumnIndex > 0 || e.RowIndex < 0)
                 return;
             if (Rows[e.RowIndex].Height != RowTemplate.Height)
             {
@@ -667,6 +651,14 @@ namespace GitUI.RevisionGridClasses
         private void dataGrid_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
         {
             ClearDrawCache();
+
+            //if (bound && !VirtualMode && Rows.Count > 0 && e.Column.Index == 1 && e.Column.Width < 300)
+            //{
+            //    // AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            //    e.Column.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            //    e.Column.MinimumWidth = this.Width < 900 ? 300 : 400;
+            //    //{"This operation cannot be performed while an auto-filled column is being resized."}
+            //}
         }
 
         #region Update, Draw
@@ -749,7 +741,8 @@ namespace GitUI.RevisionGridClasses
                     // Update the row (if needed)
                     if (curCount < _visibleBottom || _toBeSelected.Count > 0)
                     {
-                        this.InvokeAsync(o => UpdateRow((int)o), curCount);
+                        if (VirtualMode)
+                            this.InvokeAsync(o => UpdateRow((int)o), curCount);
                     }
 
                     int count = 0;
@@ -1459,6 +1452,10 @@ namespace GitUI.RevisionGridClasses
             _cacheCountMax = Height * 2 / _rowHeight + 1;
             ClearDrawCache();
             dataGrid_Scroll(null, null);
+
+            var Column1 = Columns[1];
+            Column1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            Column1.MinimumWidth = this.Width < 900 ? 300 : 400;
         }
 
         #endregion

@@ -959,6 +959,8 @@ namespace GitUI
 
         #endregion
 
+        public event EventHandler Exited; // <- _revisionGraphCommand.Exited; }} 
+
         public void ForceRefreshRevisions()
         {
             try
@@ -1087,7 +1089,7 @@ namespace GitUI
                 Error.Visible = true;
                 Error.BringToFront();
                 if (!(e is NullReferenceException))
-                    throw e;
+                    throw;
             }
 
             //\RevisionGrid.cs:line 1093
@@ -1257,6 +1259,9 @@ namespace GitUI
                 Revisions.EnumerateRows();
                 Loading.Visible = false;
             }
+
+            if (Exited != null)
+                Exited(this, e);
         }
 
         private void SelectInitialRevision()

@@ -297,10 +297,12 @@ namespace GitUI.UserControls
                 SelectedBranch = null;
             }
 
-            protected override void LoadNodes(System.Threading.CancellationToken token)
+            protected override void LoadNodes(System.Threading.CancellationToken token, IEnumerable<string> branches)
             {
-                var allBranches = Module.GetBranchNames();
-                FillBranchTree(allBranches);
+                if (TreeViewNode.Nodes.Count > 0)
+                    return;
+
+                FillBranchTree(branches);
             }
 
             /// <summary>Gets the hierarchical branch tree from the specified list of <paramref name="branches"/>.</summary>
@@ -346,7 +348,7 @@ namespace GitUI.UserControls
 
             public const string Branches = "Branches";
 
-            protected override void FillTreeViewNode()
+            protected override void FillTreeViewNode(bool isActive)
             {
                 var selectedNode = Node.GetNodeSafe<BranchNode>(TreeViewNode.TreeView.SelectedNode);
                 if (selectedNode != null)
@@ -354,7 +356,7 @@ namespace GitUI.UserControls
                     SelectedBranch = selectedNode.FullPath;
                 }
 
-                base.FillTreeViewNode();
+                base.FillTreeViewNode(isActive);
 
                 TreeViewNode.Text = string.Format("{0} ({1})", Branches, Nodes.Count);
 

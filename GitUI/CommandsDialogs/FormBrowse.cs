@@ -181,7 +181,7 @@ namespace GitUI.CommandsDialogs
             this.Activated += new System.EventHandler(this.FormBrowse_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormBrowseFormClosing);
             this.Load += new System.EventHandler(this.BrowseLoad);
-            this.Shown += new System.EventHandler(this.BrowseShown);
+            //this.Shown += new System.EventHandler(this.BrowseShown);
 
             _filterRevisionsHelper = new FilterRevisionsHelper(toolStripTextBoxFilter, toolStripDropDownButton1, RevisionGrid, toolStripLabel2, this);
             _filterBranchHelper = new FilterBranchHelper(toolStripBranches, toolStripDropDownButton2, RevisionGrid);
@@ -381,8 +381,9 @@ namespace GitUI.CommandsDialogs
 
         #endregion
 
-        private void BrowseShown(object sender, EventArgs e)
+        void BrowseShown(object sender, EventArgs e)
         {
+
             LoadUserMenu();     // !!! before RevisionGrid
 
             InternalInitialize(false);
@@ -404,10 +405,19 @@ namespace GitUI.CommandsDialogs
             catch // This code is just for fun, we do not want the program to crash because of it.
             {
             }
+
+            RevisionGrid.Exited += RevisionGrid_Exited;
+        }
+
+        void RevisionGrid_Exited(object sender, EventArgs e)
+        {
+            repoObjectsTree.ClearEmpty();
         }
 
         protected override void OnShown(EventArgs e)
         {
+            RevisionGrid.RevisionsGraph.Bind();
+
             base.OnShown(e);
 
             // menuStrip1.Refresh();
@@ -416,6 +426,7 @@ namespace GitUI.CommandsDialogs
             RevisionGrid.ShowLoadingIcon();
 
             OnActivate();
+            BrowseShown(this, EventArgs.Empty);
         }
 
         #region Activate
@@ -613,6 +624,7 @@ namespace GitUI.CommandsDialogs
             OnActivate();
         }
 
+        Task treeLoad = null;
         private void OnActivate()
         {
             if (!IsShown)
@@ -622,7 +634,11 @@ namespace GitUI.CommandsDialogs
 
             UpdateSubmodulesList();
 
-            repoObjectsTree.Reload();
+            if (treeLoad == null)
+            {
+                treeLoad = repoObjectsTree.Reload();
+                treeLoad.Start(TaskScheduler.Default);
+            }
 
             bool validWorkingDir = Module.IsValidGitWorkingDir();
             if (validWorkingDir)

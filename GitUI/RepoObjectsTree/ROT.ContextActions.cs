@@ -38,7 +38,7 @@ namespace GitUI.UserControls
         /// <summary>Registers the context menu actions.</summary>
         void RegisterContextActions()
         {
-            RegisterClick(mnubtnReload, Reload);
+            RegisterClick(mnubtnReload, DoReload);
 
             treeMain.NodeMouseClick += OnNodeMouseClick;
             // RegisterClick<BranchNode>(mnubtnNewBranch, branches => branches.CreateBranch());
