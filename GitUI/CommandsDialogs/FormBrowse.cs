@@ -3262,6 +3262,10 @@ namespace GitUI.CommandsDialogs
 
         private static void GetSubmoduleStatusAsync(SubmoduleInfo info, CancellationToken cancelToken)
         {
+            // TODO if application exited
+            if (Application.OpenForms.Count == 0)
+                return;
+
             Task.Factory.StartNew(() =>
             {
                 var submodule = new GitModule(info.Path);

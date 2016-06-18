@@ -48,7 +48,7 @@ namespace GitExtensionsTest.GitUI.Editor.Diff
 
         public void Dispose()
         {
-            _lineNumAnalyzer.Dispose();
+            (_lineNumAnalyzer as IDisposable).Dispose();
         }
 
         [Test]

@@ -179,7 +179,6 @@ namespace GitUI
         {
             if (disposing)
             {
-                tagsToolStripMenuItem.Dispose();
                 localToolStripMenuItem.Dispose();
                 remoteToolStripMenuItem.Dispose();
             }

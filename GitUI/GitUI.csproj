@@ -33,10 +33,11 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -45,13 +46,14 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;NET45;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <NoWarn>1573</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -60,8 +62,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ConEmu.WinForms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=00340228797aafb8, processorArchitecture=MSIL">
@@ -100,9 +103,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="ICSharpCode.TextEditor">
       <HintPath>..\Bin\ICSharpCode.TextEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack.Shell">
-      <HintPath>..\Bin\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +242,18 @@
     <Compile Include="Hotkey\KeysExtensions.cs" />
     <Compile Include="RepoHosts.cs" />
     <Compile Include="AutoCompletion\AutoCompleteWord.cs" />
-    <Compile Include="RepoObjectsTree\ROT.ContextActions.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="RepoObjectsTree\RepoObjectsTree.cs" />
+    <Compile Include="RepoObjectsTree\RepoObjectsTree.Designer.cs">
+      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
     </Compile>
+    <Compile Include="RepoObjectsTree\ROT.ContextActions.cs" />
+    <Compile Include="RepoObjectsTree\ROT.DragDrops.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Branches.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Remotes.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Stashes.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Submodules.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Tags.cs" />
     <Compile Include="UserControls\BranchComboBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1018,33 +1027,6 @@
     <Compile Include="UserControls\FolderBrowserButton.Designer.cs">
       <DependentUpon>FolderBrowserButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="RepoObjectsTree\ROT.DragDrops.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="RepoObjectsTree\ROT.Nodes.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="RepoObjectsTree\ROT.Nodes.Branches.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="RepoObjectsTree\RepoObjectsTree.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="RepoObjectsTree\RepoObjectsTree.Designer.cs">
-      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RepoObjectsTree\ROT.Nodes.Remotes.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="RepoObjectsTree\ROT.Nodes.Stashes.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="RepoObjectsTree\ROT.Nodes.Submodules.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="RepoObjectsTree\ROT.Nodes.Tags.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="UserControls\WarningToolStripItem.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1107,6 +1089,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Plugins\PluginRootIntroductionPage.resx">
       <DependentUpon>PluginRootIntroductionPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RepoObjectsTree\RepoObjectsTree.resx">
+      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\BranchSelector.resx">
       <DependentUpon>BranchSelector.cs</DependentUpon>
@@ -1515,9 +1500,6 @@
     <EmbeddedResource Include="UserControls\FolderBrowserButton.resx">
       <DependentUpon>FolderBrowserButton.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RepoObjectsTree\RepoObjectsTree.resx">
-      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Externals\Git.hub\Git.hub\Git.hub.csproj">
@@ -1672,6 +1654,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="RepoObjectsTree\BlankIcon.png" />
     <Content Include="Translation\Czech.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1891,9 +1874,6 @@
     <None Include="Resources\Icons\IconSubmoduleRevisionDownDirty.png" />
     <None Include="Resources\Icons\IconSubmoduleRevisionUpDirty.png" />
     <None Include="Resources\Icons\IconRevertCommit.png" />
-    <None Include="Resources\Icons\CollapseAll.png" />
-    <None Include="Resources\Icons\ExpandAll.png" />
-    <None Include="Resources\Icons\StashesClear.png" />
     <None Include="Resources\Icons\HelpPullMergeFastForward.png" />
     <None Include="Resources\Icons\HelpCommandMergeFastForward.png" />
     <Content Include="Resources\Icons\BuildCancelled.png" />

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using GitCommands;
 using ResourceManager;
+using System.Dynamic;
 
 namespace GitUI.UserControls
 {
@@ -14,12 +15,14 @@ namespace GitUI.UserControls
         #region private classes
 
         /// <summary>base class for a branch node</summary>
-        abstract class BaseBranchNode : Node
+        public abstract class BaseBranchNode : Node
         {
             protected readonly string PathSeparator = "/";
             /// <summary>Short name of the branch/branch path. <example>"issue1344"</example></summary>
-            public string Name { get; private set; }
-            public string ParentPath { get; private set; }
+            public string Name { get; protected set; }
+            public string Origin { get; protected set; }
+            public string ParentPath { get; protected set; }
+
             /// <summary>Full path of the branch. <example>"issues/issue1344"</example></summary>
             public string FullPath
             {
@@ -95,13 +98,25 @@ namespace GitUI.UserControls
         }
 
         /// <summary>Local branch node.</summary>
-        sealed class BranchNode : BaseBranchNode
+        public sealed class BranchNode : BaseBranchNode
         {
             public static char ActiveBranchIndicator = '*';
 
-            public BranchNode(Tree aTree, string aFullPath)
+            public BranchNode(Tree aTree, string aFullPath, ExpandoObject data)
                 : base(aTree, aFullPath.TrimStart(ActiveBranchIndicator))
             {
+                if (Origin == null)
+                {
+                    var dataKeys = data as IDictionary<string, object>;
+                    object revisionObj;
+                    if (dataKeys.TryGetValue("Revision", out revisionObj))
+                    {
+                        var rev = revisionObj as GitRevision;
+                        var guid = rev.TreeGuid;
+                        // aTree.
+                        // 
+                    }
+                }
                 IsDraggable = true;
                 AllowDrop = true;
                 IsActive = aFullPath.StartsWith(ActiveBranchIndicator.ToString());
@@ -219,12 +234,13 @@ namespace GitUI.UserControls
         }
 
         /// <summary>Part of a path leading to local branch(es)</summary>
-        class BranchPathNode : BaseBranchNode
+        public class BranchPathNode : BaseBranchNode
         {
             /// <summary>Creates a new <see cref="BranchPathNode"/>.</summary>
             public BranchPathNode(Tree aTree, string aFullPath)
                 : base(aTree, aFullPath)
             {
+                this.Origin = "";
             }
 
             public override string ToString()
@@ -278,7 +294,7 @@ namespace GitUI.UserControls
         //}
 
 
-        class BranchTree : Tree
+        public class BranchTree : Tree
         {
             public const char PathSeparator = '/';
             private string SelectedBranch;
@@ -297,16 +313,19 @@ namespace GitUI.UserControls
                 SelectedBranch = null;
             }
 
-            protected override void LoadNodes(System.Threading.CancellationToken token, IEnumerable<string> branches)
+            protected override void LoadNodes(System.Threading.CancellationToken token, IEnumerable<object> branches, object parentObj)
             {
                 if (TreeViewNode.Nodes.Count > 0)
                     return;
 
-                FillBranchTree(branches);
+                // parentObj as GitModule 
+                // _branchListLoader.Load(() => Module.GetRemoteRefs(from, false, true), UpdateBranches);
+
+                FillBranchTree(branches, parentObj);
             }
 
             /// <summary>Gets the hierarchical branch tree from the specified list of <paramref name="branches"/>.</summary>
-            public void FillBranchTree(IEnumerable<string> branches)
+            public void FillBranchTree(IEnumerable<object> branches, object parentObj)
             {
                 #region ex
                 // (input)
@@ -337,9 +356,22 @@ namespace GitUI.UserControls
                 #endregion ex
 
                 Dictionary<string, BaseBranchNode> nodes = new Dictionary<string, BaseBranchNode>();
-                foreach (string branch in branches)
+                foreach (object data in branches)
                 {
-                    BranchNode branchNode = new BranchNode(this, branch);
+                    string branch = null;
+                    if (data is ExpandoObject)
+                    {
+                        var dataObj = data as IDictionary<string, object>;
+                        branch = dataObj["Line"] as string;
+                        // var revision = dataObj["Revision"] as GitRevision;  // TODO
+                    }
+                    else if (data is string)
+                        branch = data as string;
+
+                    if (string.IsNullOrWhiteSpace(branch))
+                        continue;
+
+                    BranchNode branchNode = new BranchNode(this, branch, data as ExpandoObject);
                     BaseBranchNode parent = branchNode.CreateRootNode(nodes);
                     if (parent != null)
                         Nodes.AddNode(parent);

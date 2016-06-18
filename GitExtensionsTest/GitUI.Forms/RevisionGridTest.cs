@@ -73,7 +73,7 @@ namespace GitExtensionsTest.GitUI.Forms
         void _revisionGraphCommand_Error(object sender, AsyncErrorEventArgs e)
         {
             this.RevisionGrid.RevisionsGraph.Dispose();
-            this.RevisionGrid.Dispose();
+            (this.RevisionGrid as IDisposable).Dispose();
 
             var obj = sender as AsyncLoader;
             obj.Cancel();

@@ -446,7 +446,9 @@ namespace GitUI.UserControls.RevisionGridClasses
             _revisionGrid.ExecuteCommand(GitUI.RevisionGrid.Commands.SelectCurrentRevision);
         }
 
-        public void GotoCommitExcecute()
+        public void GotoCommitExcecute() { GotoCommitExcecute(false); }
+
+        public void GotoCommitExcecute(bool noMessage = false)
         {
             using (FormGoToCommit formGoToCommit = new FormGoToCommit(_revisionGrid.UICommands))
             {
@@ -460,7 +462,9 @@ namespace GitUI.UserControls.RevisionGridClasses
                 }
                 else
                 {
-                    MessageBox.Show(_revisionGrid, _noRevisionFoundError.Text);
+                    // no revision found
+                    if (!noMessage)
+                        MessageBox.Show(_revisionGrid, _noRevisionFoundError.Text);
                 }
             }
         }

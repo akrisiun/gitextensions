@@ -9,7 +9,7 @@ using GitUI.UserControls;
 using JetBrains.Annotations;
 
 using ResourceManager;
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
 using Microsoft.WindowsAPICodePack.Taskbar;
 #endif
 
@@ -89,7 +89,7 @@ namespace GitUI
                             ProgressBar.Style = ProgressBarStyle.Blocks;
                         ProgressBar.Value = Math.Min(100, progressValue);
 
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
                         if (GitCommands.Utils.EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
                         {
                             try
@@ -104,7 +104,7 @@ namespace GitUI
 #endif
                     }
                     // Show last progress message in the title, unless it's showin in the control body already
-                    if(!ConsoleOutput.IsDisplayingFullProcessOutput)
+                    if (!ConsoleOutput.IsDisplayingFullProcessOutput)
                       Text = text;
                 };
             BeginInvoke(method, this);
@@ -134,7 +134,7 @@ namespace GitUI
             Ok.Focus();
             AcceptButton = Ok;
             Abort.Enabled = false;
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
             if (GitCommands.Utils.EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
             {
                 try
@@ -234,7 +234,7 @@ namespace GitUI
 
         private void FormStatus_FormClosed(object sender, FormClosedEventArgs e)
         {
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
             if (GitCommands.Utils.EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
             {
                 try
@@ -248,7 +248,7 @@ namespace GitUI
 
         private void Start()
         {
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
             if (GitCommands.Utils.EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
             {
                 try

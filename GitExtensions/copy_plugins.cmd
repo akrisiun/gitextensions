@@ -1,6 +1,7 @@
 @echo off
 set config=%1
 md Plugins\
+md ComEmu\
 echo Microsoft.TeamFoundation.WorkItemTracking.Client.DataStoreLoader.dll > exclude.txt
 echo Microsoft.WITDataStore.dll >> exclude.txt
 for /d %%I in ("%~p0\..\Plugins\*", "%~p0\..\Plugins\Statistics\*", "%~p0\..\Plugins\BuildServerIntegration\*") do (
