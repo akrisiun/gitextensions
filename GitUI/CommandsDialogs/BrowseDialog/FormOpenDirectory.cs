@@ -48,6 +48,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
                 choosenModule = new GitModule(_NO_TRANSLATE_Directory.Text);
 
                 Repositories.AddMostRecentRepository(choosenModule.WorkingDir);
+                Close();
             }
             else
             {
