@@ -6,7 +6,7 @@ using GitCommands.Utils;
 
 namespace GitUI.UserControls
 {
-    [CLSCompliant(false)]
+    [CLSCompliant(true)]
     public enum ListViewGroupState : uint
     {
         /// <summary>
@@ -48,7 +48,7 @@ namespace GitUI.UserControls
         SubSetLinkFocused = 128
     }
 
-    class ExListView : ListView
+    public class ExListView : ListView
     {
         public ExListView()
         {

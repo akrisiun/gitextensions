@@ -202,13 +202,13 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayout;
-        private GravatarControl gravatar1;
-        private System.Windows.Forms.RichTextBox RevisionInfo;
+        public System.Windows.Forms.TableLayoutPanel tableLayout;
+        public GravatarControl gravatar1;
+        public System.Windows.Forms.RichTextBox RevisionInfo;
         private System.Windows.Forms.ContextMenuStrip commitInfoContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem showContainedInBranchesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showContainedInTagsToolStripMenuItem;
-        private System.Windows.Forms.RichTextBox _RevisionHeader;
+        public System.Windows.Forms.RichTextBox _RevisionHeader;
         private System.Windows.Forms.ToolStripMenuItem copyCommitInfoToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem showContainedInBranchesRemoteToolStripMenuItem;
