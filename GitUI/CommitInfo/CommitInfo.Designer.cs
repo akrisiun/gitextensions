@@ -1,4 +1,6 @@
-﻿namespace GitUI.CommitInfo
+﻿using System;
+
+namespace GitUI.CommitInfo
 {
     partial class CommitInfo
     {
@@ -208,6 +210,8 @@
         private System.Windows.Forms.ContextMenuStrip commitInfoContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem showContainedInBranchesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showContainedInTagsToolStripMenuItem;
+
+        [CLSCompliant(false)]
         public System.Windows.Forms.RichTextBox _RevisionHeader;
         private System.Windows.Forms.ToolStripMenuItem copyCommitInfoToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
