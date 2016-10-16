@@ -56,9 +56,12 @@ namespace GitUI.BuildServerIntegration
                     return;
                 }
 
-                buildServerAdapter = task.Result;
+                try {
+                    buildServerAdapter = task.Result;
 
-                UpdateUI();
+                    UpdateUI();
+                }
+                catch { ; }
 
                 if (buildServerAdapter == null)
                     return;

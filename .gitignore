@@ -64,3 +64,5 @@ GitExtensions.*.sln.VisualState.xml
 GitExtensions.settings.backup
 *.opendb
 *.VS2015.VC.db
+Bin/
+*.log

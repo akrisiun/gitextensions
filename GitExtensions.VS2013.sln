@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{3D5CA0E0-EF51-4488-A8B7-86CC330D7AD8}"
 EndProject
@@ -25,11 +25,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitUIPluginInterfaces", "Plugins\GitUIPluginInterfaces\GitUIPluginInterfaces.csproj", "{27559302-F35E-4B62-A6EC-11FF21A5FA6F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitStatistics", "Plugins\Statistics\GitStatistics\GitStatistics.csproj", "{92B57383-233E-46AE-8A86-6E98BF349A72}"
-EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup", "Setup\Setup.wixproj", "{9380C29C-3C7F-47A8-A4C9-A5EE9D7B386A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F15A69AF-7EBD-4F69-A026-5071FA3EC61B} = {F15A69AF-7EBD-4F69-A026-5071FA3EC61B}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceManager", "ResourceManager\ResourceManager.csproj", "{D3440FD7-AFC5-4351-8741-6CDBF15CE944}"
 EndProject
@@ -119,6 +114,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitExtensionsVSIX", "GitExt
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VS", "VS", "{BA576F22-5035-4B75-8A0D-58DD067FD379}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution Items", ".Solution Items", "{7DFEE24F-5DC9-44A6-BD0D-1E15AC6F25F7}"
+	ProjectSection(SolutionItems) = preProject
+		build.cmd = build.cmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -199,14 +199,6 @@ Global
 		{92B57383-233E-46AE-8A86-6E98BF349A72}.ReleaseTC|Any CPU.Build.0 = Release|Any CPU
 		{92B57383-233E-46AE-8A86-6E98BF349A72}.ReleaseTC|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{92B57383-233E-46AE-8A86-6E98BF349A72}.ReleaseTC|Mixed Platforms.Build.0 = Release|Any CPU
-		{9380C29C-3C7F-47A8-A4C9-A5EE9D7B386A}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{9380C29C-3C7F-47A8-A4C9-A5EE9D7B386A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{9380C29C-3C7F-47A8-A4C9-A5EE9D7B386A}.Release|Any CPU.ActiveCfg = Release|x86
-		{9380C29C-3C7F-47A8-A4C9-A5EE9D7B386A}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{9380C29C-3C7F-47A8-A4C9-A5EE9D7B386A}.Release|Mixed Platforms.Build.0 = Release|x86
-		{9380C29C-3C7F-47A8-A4C9-A5EE9D7B386A}.ReleaseTC|Any CPU.ActiveCfg = Release|x86
-		{9380C29C-3C7F-47A8-A4C9-A5EE9D7B386A}.ReleaseTC|Mixed Platforms.ActiveCfg = Release|x86
-		{9380C29C-3C7F-47A8-A4C9-A5EE9D7B386A}.ReleaseTC|Mixed Platforms.Build.0 = Release|x86
 		{D3440FD7-AFC5-4351-8741-6CDBF15CE944}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D3440FD7-AFC5-4351-8741-6CDBF15CE944}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3440FD7-AFC5-4351-8741-6CDBF15CE944}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -547,6 +539,7 @@ Global
 		{EC6988F6-0E8E-42D2-8E41-E562C5FB65BC} = {3D5CA0E0-EF51-4488-A8B7-86CC330D7AD8}
 		{274F449F-7472-4248-9A57-8CA665A75B5D} = {3D5CA0E0-EF51-4488-A8B7-86CC330D7AD8}
 		{8B3778F2-6049-4D4C-B94F-D5FF3A5DC7F8} = {3D5CA0E0-EF51-4488-A8B7-86CC330D7AD8}
+		{BB46D906-E5AC-4CAB-B53E-BCC26AA74146} = {7DFEE24F-5DC9-44A6-BD0D-1E15AC6F25F7}
 		{F261BCD1-F5F7-4664-A230-E52032E6E9FD} = {3D5CA0E0-EF51-4488-A8B7-86CC330D7AD8}
 		{7E5433F4-DD13-4D8E-95B2-59B4FFE7D636} = {3D5CA0E0-EF51-4488-A8B7-86CC330D7AD8}
 		{D4628A13-CD53-401F-A645-CB16FD15ABBB} = {3D5CA0E0-EF51-4488-A8B7-86CC330D7AD8}

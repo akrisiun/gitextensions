@@ -372,10 +372,10 @@ namespace TeamCityIntegration
                 throw new OperationCanceledException(task.Result.ReasonPhrase);
             }
 
-            throw new HttpRequestException(task.Result.ReasonPhrase);
-#else
-            return null;
+            // throw new HttpRequestException(task.Result.ReasonPhrase);
+// #else
 #endif
+            return null;
         }
 
         private void UpdateHttpClientOptions(IBuildServerCredentials buildServerCredentials)
