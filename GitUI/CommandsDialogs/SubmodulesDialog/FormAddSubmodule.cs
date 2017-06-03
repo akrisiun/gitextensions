@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 using GitCommands;
 using GitCommands.Repository;
-using GitUIPluginInterfaces;
 using ResourceManager;
 
 namespace GitUI.CommandsDialogs.SubmodulesDialog
@@ -63,11 +63,11 @@ namespace GitUI.CommandsDialogs.SubmodulesDialog
         {
             GitModule module = new GitModule(Directory.Text);
             Branch.DisplayMember = "Name";
-            IList<IGitRef> heads;
+            IList<GitRef> heads;
             if (module.IsValidGitWorkingDir())
                 heads = module.GetRefs(false);
             else
-                heads = new List<IGitRef>();
+                heads = new List<GitRef>();
             heads.Insert(0, GitRef.NoHead(module));
             Branch.DataSource = heads;
         }

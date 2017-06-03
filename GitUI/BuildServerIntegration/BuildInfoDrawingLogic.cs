@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using GitCommands;
 using GitUI.Properties;
-using GitUI.UserControls;
 using GitUIPluginInterfaces.BuildServerIntegration;
 
 namespace GitUI.BuildServerIntegration
@@ -45,34 +44,33 @@ namespace GitUI.BuildServerIntegration
             }
         }
 
-        public static void BuildStatusMessageCellPainting(DataGridViewCellPaintingEventArgs e, GitRevision revision, Color foreColor, Font rowFont)
+        public static void BuildStatusMessageCellPainting(DataGridViewCellPaintingEventArgs e, GitRevision revision, Brush foreBrush, Font rowFont)
         {
             if (revision.BuildStatus != null)
             {
-                var buildStatusForeColor = foreColor;
+                Brush buildStatusForebrush = foreBrush;
 
                 switch (revision.BuildStatus.Status)
                 {
                     case BuildInfo.BuildStatus.Success:
-                        buildStatusForeColor = Color.DarkGreen;
+                        buildStatusForebrush = Brushes.DarkGreen;
                         break;
                     case BuildInfo.BuildStatus.Failure:
-                        buildStatusForeColor = Color.DarkRed;
+                        buildStatusForebrush = Brushes.DarkRed;
                         break;
                     case BuildInfo.BuildStatus.InProgress:
-                        buildStatusForeColor = Color.Blue;
+                        buildStatusForebrush = Brushes.Blue;
                         break;
                     case BuildInfo.BuildStatus.Unstable:
-                        buildStatusForeColor = Color.OrangeRed;
+                        buildStatusForebrush = Brushes.OrangeRed;
                         break;
                     case BuildInfo.BuildStatus.Stopped:
-                        buildStatusForeColor = Color.Gray;
+                        buildStatusForebrush = Brushes.Gray;
                         break;
                 }
 
                 var text = (string)e.FormattedValue;
-                var rect = RevisionGridUtils.GetCellRectangle(e);
-                RevisionGridUtils.DrawColumnText(e.Graphics, text, rowFont, buildStatusForeColor, rect);
+                e.Graphics.DrawString(text, rowFont, buildStatusForebrush, new PointF(e.CellBounds.Left, e.CellBounds.Top + 4));
             }
         }
 

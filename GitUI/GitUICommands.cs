@@ -9,13 +9,13 @@ using GitCommands.Settings;
 using GitUI.CommandsDialogs;
 using GitUI.CommandsDialogs.RepoHosting;
 using GitUI.CommandsDialogs.SettingsDialog;
+using GitUI.Blame;
 using GitUIPluginInterfaces;
 using GitUIPluginInterfaces.RepositoryHosts;
 using Gravatar;
-
-using JetBrains.Annotations;
-
 using Settings = GitCommands.AppSettings;
+using System.Threading;
+using JetBrains.Annotations;
 
 namespace GitUI
 {
@@ -675,22 +675,70 @@ namespace GitUI
             return DoActionOnRepo(action);
         }
 
+        public Tuple<IntPtr, FormCommit> FormCommit { get; set; }
+
+        public static bool Reload(FormCommit form, GitUICommands @this, IntPtr hWnd)
+        {
+            // TODO
+            return false;
+        }
+
         public bool StartCommitDialog(IWin32Window owner, bool showOnlyWhenChanges)
         {
             Func<bool> action = () =>
             {
-                using (var form = new FormCommit(this))
+                if (FormCommit != null)
                 {
-                    if (showOnlyWhenChanges)
-                        form.ShowDialogWhenChanges(owner);
-                    else
-                        form.ShowDialog(owner);
+                    FormCommit form = FormCommit.Item2;
+                    IntPtr hWnd = FormCommit.Item1;
+                    if (!Reload(form, this, hWnd))
+                        FormCommit = new Tuple<IntPtr, CommandsDialogs.FormCommit>(IntPtr.Zero, null);
+                }
+                if (FormCommit == null)
+                {
+                    Thread thread = new Thread(() =>
+                    {
+                        IWin32Window ownerNonModal = null;
+                        var form = new FormCommit(this);
+
+                        form.ShowInTaskbar = true;
+                        form.Shown += FormCommit_Shown;
+                        form.FormClosing += FormCommit_FormClosing;
+
+                        if (showOnlyWhenChanges)
+                            form.ShowDialogWhenChanges(ownerNonModal);
+                        else
+                            form.ShowDialog(ownerNonModal);
+
+                        form.Dispose();
+                        FormCommit = null;
+                    });
+
+                    thread.SetApartmentState(ApartmentState.STA);
+                    thread.Start();
                 }
                 return true;
             };
 
             return DoActionOnRepo(owner, true, false, PreCommit, PostCommit, action);
         }
+
+        private void FormCommit_Shown(object sender, EventArgs e)
+        {
+            var form = sender as Form;
+
+            FormCommit = new Tuple<IntPtr, CommandsDialogs.FormCommit>(form.Handle, form as FormCommit);
+            form.Focus();
+        }
+
+        private void FormCommit_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (FormCommit == sender)
+                FormCommit = null;
+        }
+
+
+        #region Dialogs
 
         public bool StartCommitDialog(IWin32Window owner)
         {
@@ -786,6 +834,8 @@ namespace GitUI
         {
             return StartInitializeDialog(null, dir, null);
         }
+
+        #endregion
 
         /// <summary>
         /// Starts pull dialog
@@ -1001,7 +1051,7 @@ namespace GitUI
             if (resetAction == FormResetChanges.ActionEnum.Cancel)
             {
                 return false;
-        }
+            }
 
             Cursor.Current = Cursors.WaitCursor;
 
@@ -1412,13 +1462,29 @@ namespace GitUI
         {
             Func<bool> action = () =>
             {
-                using (var form = new FormSubmodules(this))
-                    form.ShowDialog(owner);
+                // non modal!
+                var thread = new Thread(() =>
+                    {
+                        using (var form = new FormSubmodules(this))
+                        {
+                            form.Shown += FormSubmodules_Shown;
+                            form.ShowDialog(null);
+                        }
+                    });
+
+                thread.SetApartmentState(ApartmentState.STA);
+                thread.Start();
 
                 return true;
             };
 
             return DoActionOnRepo(owner, true, true, PreSubmodulesEdit, PostSubmodulesEdit, action);
+        }
+
+        private void FormSubmodules_Shown(object sender, EventArgs e)
+        {
+            var form = sender as Form;
+            form.Focus();
         }
 
         public bool StartSubmodulesDialog()
@@ -1499,6 +1565,31 @@ namespace GitUI
 
             InvokeEvent(owner, PostBrowse);
             return true;
+        }
+
+        // test unit
+        public FormBrowse StartBrowseForm(Form form, string filter = "", bool run = false)
+        {
+            IWin32Window owner = form;
+            if (!InvokeEvent(owner, PreBrowse))
+                return null;
+
+            var formBrowse = new FormBrowse(this, filter);
+
+            if (run)
+            {
+                if (Application.MessageLoop)
+                {
+                    formBrowse.Show();
+                }
+                else
+                {
+                    Application.Run(form);
+                }
+            }
+
+            InvokeEvent(owner, PostBrowse);
+            return formBrowse;
         }
 
         public bool StartBrowseDialog(string filter)

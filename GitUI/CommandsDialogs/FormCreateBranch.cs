@@ -18,13 +18,10 @@ namespace GitUI.CommandsDialogs
         private readonly GitBranchNameOptions _gitBranchNameOptions = new GitBranchNameOptions(AppSettings.AutoNormaliseSymbol);
 
 
-        public FormCreateBranch(GitUICommands aCommands, GitRevision revision)
+        public FormCreateBranch(GitUICommands aCommands, GitRevision revision, IGitBranchNameNormaliser branchNameNormaliser = null)
             : base(aCommands)
         {
-            _branchNameNormaliser = new GitBranchNameNormaliser();
-            CheckoutAfterCreation = true;
-            UserAbleToChangeRevision = true;
-            CouldBeOrphan = true;
+            _branchNameNormaliser = branchNameNormaliser ?? new GitBranchNameNormaliser();
 
             InitializeComponent();
             Translate();
@@ -36,9 +33,6 @@ namespace GitUI.CommandsDialogs
             }
         }
 
-        public bool CheckoutAfterCreation { get; set; }
-        public bool UserAbleToChangeRevision { get; set; }
-        public bool CouldBeOrphan { get; set; }
 
         private IEnumerable<T> FindControls<T>(Control control) where T : Control
         {
@@ -71,10 +65,6 @@ namespace GitUI.CommandsDialogs
             {
                 label.AutoSize = true;
             }
-
-            chkbxCheckoutAfterCreate.Checked = CheckoutAfterCreation;
-            commitPickerSmallControl1.Enabled = UserAbleToChangeRevision;
-            groupBox1.Enabled = CouldBeOrphan;
 
             BranchNameTextBox.Focus();
         }

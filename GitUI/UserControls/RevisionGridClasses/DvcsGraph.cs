@@ -52,10 +52,11 @@ namespace GitUI.RevisionGridClasses
 
         #endregion
 
-        private int _nodeDimension = 10;
+        private int _nodeDimension = 8;
         private int _laneWidth = 13;
         private int _laneLineWidth = 2;
         private const int MaxLanes = 40;
+        private Brush _selectionBrush;
 
         private Pen _whiteBorderPen;
         private Pen _blackBorderPen;
@@ -96,12 +97,13 @@ namespace GitUI.RevisionGridClasses
         private int _visibleBottom;
         private int _visibleTop;
 
-        public void SetDimensions(int nodeDimension, int laneWidth, int laneLineWidth, int rowHeight)
+        public void SetDimensions(int nodeDimension, int laneWidth, int laneLineWidth, int rowHeight, Brush selectionBrush)
         {
             RowTemplate.Height = rowHeight;
             _nodeDimension = nodeDimension;
             _laneWidth = laneWidth;
             _laneLineWidth = laneLineWidth;
+            this._selectionBrush = selectionBrush;
 
             dataGrid_Resize(null, null);
         }
@@ -128,10 +130,11 @@ namespace GitUI.RevisionGridClasses
             RowHeadersDefaultCellStyle.Font = SystemFonts.DefaultFont;
             RowTemplate.DefaultCellStyle.Font = SystemFonts.DefaultFont;
 
-            _whiteBorderPen = new Pen(Brushes.White, _laneLineWidth);
+            _whiteBorderPen = new Pen(Brushes.White, _laneLineWidth + 2);
             _blackBorderPen = new Pen(Brushes.Black, _laneLineWidth + 1);
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            CellPainting += dataGrid_CellPainting;
             ColumnWidthChanged += dataGrid_ColumnWidthChanged;
             Scroll += dataGrid_Scroll;
             _graphData.Updated += graphData_Updated;
@@ -260,10 +263,6 @@ namespace GitUI.RevisionGridClasses
             }
             set
             {
-                string[] currentSelection = SelectedIds;
-                if (value != null && currentSelection != null && value.SequenceEqual(currentSelection))
-                    return;
-
                 lock (_backgroundEvent)
                 lock (_graphData)
                 {
@@ -527,7 +526,7 @@ namespace GitUI.RevisionGridClasses
                 });
         }
 
-        public void dataGrid_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        private void dataGrid_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             if (e.RowIndex < 0)
                 return;
@@ -539,6 +538,10 @@ namespace GitUI.RevisionGridClasses
 
             if ((e.State & DataGridViewElementStates.Visible) == 0 || e.ColumnIndex != 0)
                 return;
+
+            var brush = (e.State & DataGridViewElementStates.Selected) == DataGridViewElementStates.Selected
+                            ? _selectionBrush : Brushes.White;
+            e.Graphics.FillRectangle(brush, e.CellBounds);
 
             Rectangle srcRect = DrawGraph(e.RowIndex);
             if (!srcRect.IsEmpty)
@@ -1295,6 +1298,8 @@ namespace GitUI.RevisionGridClasses
 
             return childrenIds;
         }
+
+
 
         private void dataGrid_Resize(object sender, EventArgs e)
         {

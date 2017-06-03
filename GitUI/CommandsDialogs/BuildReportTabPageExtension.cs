@@ -154,22 +154,15 @@ namespace GitUI.CommandsDialogs
                 links.Cast<HtmlElement>()
                      .SingleOrDefault(x => x.GetAttribute("rel").ToLowerInvariant() == "shortcut icon");
 
-            if (favIconLink == null || htmlDocument.Url == null)
+            if (favIconLink != null)
             {
-                return null;
-            }
-            var href = favIconLink.GetAttribute("href");
+                var href = favIconLink.GetAttribute("href");
+                var favIconUrl = htmlDocument.Url.AbsoluteUri.Replace(htmlDocument.Url.PathAndQuery, href);
 
-            if (htmlDocument.Url.PathAndQuery == "/")
-            {
-                //Szenario: http://test.test/teamcity/....
-                return htmlDocument.Url.AbsoluteUri.Replace(htmlDocument.Url.PathAndQuery, href);
+                return favIconUrl;
             }
-            else
-            {
-                //Szenario: http://teamcity.domain.test/
-                return new Uri(new Uri(htmlDocument.Url.AbsoluteUri), href).ToString();
-            }
+
+            return null;
         }
 
         private static Task<Stream> DownloadRemoteImageFileAsync(string uri)

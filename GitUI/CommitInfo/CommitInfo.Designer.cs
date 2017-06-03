@@ -1,4 +1,7 @@
-﻿namespace GitUI.CommitInfo
+﻿using System;
+using GitCommands;
+
+namespace GitUI.CommitInfo
 {
     partial class CommitInfo
     {
@@ -51,7 +54,7 @@
             // 
             this.tableLayout.AutoSize = true;
             this.tableLayout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayout.BackColor = System.Drawing.SystemColors.Window;
+            //this.tableLayout.BackColor = SkinManager.Window;
             this.tableLayout.ColumnCount = 2;
             this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -72,7 +75,7 @@
             // 
             // gravatar1
             // 
-            this.gravatar1.BackColor = System.Drawing.SystemColors.Window;
+            //this.gravatar1.BackColor = SkinManager.Window;
             this.gravatar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gravatar1.Location = new System.Drawing.Point(0, 0);
             this.gravatar1.Margin = new System.Windows.Forms.Padding(0);
@@ -83,7 +86,7 @@
             // 
             // RevisionInfo
             // 
-            this.RevisionInfo.BackColor = System.Drawing.SystemColors.Window;
+            //this.RevisionInfo.BackColor = SkinManager.Window;
             this.RevisionInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.RevisionInfo.ContextMenuStrip = this.commitInfoContextMenuStrip;
             this.RevisionInfo.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -172,7 +175,7 @@
             // 
             // _RevisionHeader
             // 
-            this._RevisionHeader.BackColor = System.Drawing.SystemColors.ControlLight;
+     //       this._RevisionHeader.BackColor = SkinManager.ControlLight;
             this._RevisionHeader.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this._RevisionHeader.ContextMenuStrip = this.commitInfoContextMenuStrip;
             this._RevisionHeader.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -202,13 +205,15 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayout;
-        private GravatarControl gravatar1;
-        private System.Windows.Forms.RichTextBox RevisionInfo;
+        public System.Windows.Forms.TableLayoutPanel tableLayout;
+        public GravatarControl gravatar1;
+        public System.Windows.Forms.RichTextBox RevisionInfo;
         private System.Windows.Forms.ContextMenuStrip commitInfoContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem showContainedInBranchesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showContainedInTagsToolStripMenuItem;
-        private System.Windows.Forms.RichTextBox _RevisionHeader;
+
+        [CLSCompliant(false)]
+        public System.Windows.Forms.RichTextBox _RevisionHeader;
         private System.Windows.Forms.ToolStripMenuItem copyCommitInfoToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem showContainedInBranchesRemoteToolStripMenuItem;

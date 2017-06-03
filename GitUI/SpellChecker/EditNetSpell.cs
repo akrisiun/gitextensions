@@ -617,6 +617,7 @@ namespace GitUI.SpellChecker
 
         private void TextBoxLeave(object sender, EventArgs e)
         {
+            ShowWatermark();
             if (ActiveControl != AutoComplete)
                 CloseAutoComplete();
         }
@@ -665,19 +666,26 @@ namespace GitUI.SpellChecker
                 return;
             }
 
-            // handle paste from clipboard (Ctrl+V, Shift+Ins)
-            if((e.Control && e.KeyCode == Keys.V) || (e.Shift && e.KeyCode == Keys.Insert))
+            if (e.Control && e.KeyCode == Keys.V)
             {
-                PasteTextFromClipboard();
-                e.Handled = true;
-                return;
+                if (!Clipboard.ContainsText())
+                {
+                    e.Handled = true;
+                    return;
+                }
+                // remove image data from clipboard
+                var text = Clipboard.GetText();
+                // Clipboard.SetText throws exception when text is null or empty. See https://msdn.microsoft.com/en-us/library/ydby206k.aspx
+                if (!string.IsNullOrEmpty(text))
+                {
+                    Clipboard.SetText(text);
+                }
             }
-
-            if (e.Control && !e.Alt && e.KeyCode == Keys.Z)
+            else if (e.Control && !e.Alt && e.KeyCode == Keys.Z)
             {
                 UndoHighlighting();
             }
-            else if (e.Control && !e.Alt && e.KeyCode == Keys.Space && AppSettings.ProvideAutocompletion)
+            else if (e.Control && !e.Alt && e.KeyCode == Keys.Space)
             {
                 UpdateOrShowAutoComplete(true);
                 e.Handled = true;
@@ -686,12 +694,6 @@ namespace GitUI.SpellChecker
             }
 
             OnKeyDown(e);
-        }
-
-        private void PasteTextFromClipboard()
-        {
-            // insert only text
-            TextBox.Paste(DataFormats.GetFormat(DataFormats.UnicodeText));
         }
 
         private void TextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -705,6 +707,11 @@ namespace GitUI.SpellChecker
 
             if (SelectionChanged != null)
                 SelectionChanged(sender, e);
+        }
+
+        private void TextBox_Enter(object sender, EventArgs e)
+        {
+            HideWatermark();
         }
 
         private void ShowWatermark()
@@ -729,14 +736,10 @@ namespace GitUI.SpellChecker
             }
         }
 
-         private void TextBox_LostFocus(object sender, EventArgs e)
-        {
-            ShowWatermark();
-        }
-
-        private void TextBox_GotFocus(object sender, EventArgs e)
+        public new bool Focus()
         {
             HideWatermark();
+            return base.Focus();
         }
 
         private void CutMenuItemClick(object sender, EventArgs e)
@@ -753,7 +756,11 @@ namespace GitUI.SpellChecker
         private void PasteMenuItemClick(object sender, EventArgs e)
         {
             if (!Clipboard.ContainsText()) return;
-            PasteTextFromClipboard();
+            // remove image data from clipboard
+            string text = Clipboard.GetText();
+            Clipboard.SetText(text);
+
+            TextBox.Paste();
             CheckSpelling();
         }
 

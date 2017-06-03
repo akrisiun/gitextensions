@@ -464,7 +464,11 @@ namespace GitUI.UserControls.RevisionGridClasses
 
             foreach (var menuCommand in GetMenuCommandsWithoutSeparators())
             {
-                menuCommand.SetCheckForRegisteredMenuItems();
+                try
+                {
+                    menuCommand.SetCheckForRegisteredMenuItems();
+                }
+                catch (Exception) { } // ignore .dll errors
                 menuCommand.UpdateMenuItemsShortcutKeyDisplayString();
             }
         }

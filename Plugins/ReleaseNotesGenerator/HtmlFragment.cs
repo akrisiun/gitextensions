@@ -200,11 +200,12 @@ namespace ReleaseNotesGenerator
             // The string layout (<<<) also ensures that it can't appear in the body of the html because the <
             // character must be escaped.
             string header =
-                "Version:0.9\r\n" +
-                "StartHTML:<<<<<<<1\r\n" +
-                "EndHTML:<<<<<<<2\r\n" +
-                "StartFragment:<<<<<<<3\r\n" +
-                "EndFragment:<<<<<<<4\r\n";
+    @"Version:0.9
+StartHTML:<<<<<<<1
+EndHTML:<<<<<<<2
+StartFragment:<<<<<<<3
+EndFragment:<<<<<<<4
+";
 
             sb.Append(header);
 
@@ -214,18 +215,16 @@ namespace ReleaseNotesGenerator
             }
             int startHtml = sb.Length;
 
-            const string pre =
-                "<html><body>\r\n" +
-                "<!--StartFragment-->";
+            const string pre = @"<html><body>
+<!--StartFragment-->";
             sb.Append(pre);
             int fragmentStart = sb.Length;
 
             sb.Append(htmlFragment);
             int fragmentEnd = sb.Length;
 
-            const string post = 
-                "<!--EndFragment-->\r\n" +
-                "</body></html>";
+            const string post = @"<!--EndFragment-->
+</body></html>";
             sb.Append(post);
             int endHtml = sb.Length;
 

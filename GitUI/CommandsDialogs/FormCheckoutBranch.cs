@@ -9,7 +9,6 @@ using ResourceManager;
 using System.Drawing;
 using GitUI.Script;
 using GitCommands.Utils;
-using GitUIPluginInterfaces;
 
 namespace GitUI.CommandsDialogs
 {
@@ -30,11 +29,6 @@ namespace GitUI.CommandsDialogs
 
         private readonly TranslationString _dontShowAgain =
             new TranslationString("Don't show me this message again.");
-
-        private readonly TranslationString _resetNonFastForwardBranch =
-            new TranslationString("You are going to reset the “{0}” branch to a new location\n" +
-                "discarding ALL the commited changes since the {1} revision.\n\nAre you sure?");
-        readonly TranslationString resetCaption = new TranslationString("Reset branch");
         #endregion
 
         private readonly string[] _containRevisons;
@@ -44,12 +38,9 @@ namespace GitUI.CommandsDialogs
         private string _remoteName = "";
         private string _newLocalBranchName = "";
         private string _localBranchName = "";
-        private readonly IGitBranchNameNormaliser _branchNameNormaliser;
-        private readonly GitBranchNameOptions _gitBranchNameOptions = new GitBranchNameOptions(AppSettings.AutoNormaliseSymbol);
 
-        private IEnumerable<IGitRef> _localBranches;
-        private IEnumerable<IGitRef> _remoteBranches;
-
+        private List<string> _localBranches;
+        private List<string> _remoteBranches;
 
         private FormCheckoutBranch()
             : this(null)
@@ -59,7 +50,6 @@ namespace GitUI.CommandsDialogs
         internal FormCheckoutBranch(GitUICommands aCommands)
             : base(aCommands)
         {
-            _branchNameNormaliser = new GitBranchNameNormaliser();
             InitializeComponent();
             Translate();
             _rbResetBranchDefaultText = rbResetBranch.Text;
@@ -118,7 +108,6 @@ namespace GitUI.CommandsDialogs
                 _isLoading = false;
             }
         }
-
 
         /// <summary>
         /// This functions applies docking properties of controls in a way
@@ -183,11 +172,11 @@ namespace GitUI.CommandsDialogs
             {
                 if (LocalBranch.Checked)
                 {
-                    Branches.Items.AddRange(GetLocalBranches().Select(b => b.Name).ToArray());
+                    Branches.Items.AddRange(GetLocalBranches().ToArray());
                 }
                 else
                 {
-                    Branches.Items.AddRange(GetRemoteBranches().Select(b => b.Name).ToArray());
+                    Branches.Items.AddRange(GetRemoteBranches().ToArray());
                 }
             }
             else
@@ -235,10 +224,6 @@ namespace GitUI.CommandsDialogs
 
         private DialogResult OkClick()
         {
-            // Ok button set as the "AcceptButton" for the form
-            // if the user hits [Enter] at any point, we need to trigger txtCustomBranchName Leave event
-            Ok.Focus();
-
             GitCheckoutBranchCmd cmd = new GitCheckoutBranchCmd(Branches.Text.Trim(), Remotebranch.Checked);
 
             if (Remotebranch.Checked)
@@ -262,26 +247,6 @@ namespace GitUI.CommandsDialogs
                 }
                 else if (rbResetBranch.Checked)
                 {
-                    IGitRef localBranchRef = GetLocalBranchRef(_localBranchName);
-                    IGitRef remoteBranchRef = GetRemoteBranchRef(cmd.BranchName);
-                    if (localBranchRef != null && remoteBranchRef != null)
-                    {
-                        string mergeBaseGuid = Module.GetMergeBase(localBranchRef.Guid, remoteBranchRef.Guid);
-                        bool isResetFastForward = localBranchRef.Guid.Equals(mergeBaseGuid);
-                        if (!isResetFastForward)
-                        {
-                            string mergeBaseText = mergeBaseGuid.IsNullOrWhiteSpace()
-                                ? "merge base"
-                                : GitRevision.ToShortSha(mergeBaseGuid);
-
-                            string warningMessage = string.Format(_resetNonFastForwardBranch.Text, _localBranchName, mergeBaseText);
-                            if (MessageBox.Show(this, warningMessage, resetCaption.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No)
-                            {
-                                DialogResult = DialogResult.None;
-                                return DialogResult.None;
-                            }
-                        }
-                    }
                     cmd.NewBranchAction = GitCheckoutBranchCmd.NewBranch.Reset;
                     cmd.NewBranchName = _localBranchName;
                 }
@@ -389,17 +354,7 @@ namespace GitUI.CommandsDialogs
 
         private bool LocalBranchExists(string name)
         {
-            return GetLocalBranches().Any(head => head.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-        }
-
-        private IGitRef GetLocalBranchRef(string name)
-        {
-            return GetLocalBranches().FirstOrDefault(head => head.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-        }
-
-        private IGitRef GetRemoteBranchRef(string name)
-        {
-            return GetRemoteBranches().FirstOrDefault(head => head.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            return GetLocalBranches().Any(head => head.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
 
         private void Branches_SelectedIndexChanged(object sender, EventArgs e)
@@ -442,18 +397,18 @@ namespace GitUI.CommandsDialogs
             }
         }
 
-        private IEnumerable<IGitRef> GetLocalBranches()
+        private IList<string> GetLocalBranches()
         {
             if (_localBranches == null)
-                _localBranches = Module.GetRefs(false);
+                _localBranches = Module.GetRefs(false).Select(b => b.Name).ToList();
 
             return _localBranches;
         }
 
-        private IEnumerable<IGitRef> GetRemoteBranches()
+        private IList<string> GetRemoteBranches()
         {
             if (_remoteBranches == null)
-                _remoteBranches = Module.GetRefs(true, true).Where(h => h.IsRemote && !h.IsTag);
+                _remoteBranches = Module.GetRefs(true, true).Where(h => h.IsRemote && !h.IsTag).Select(b => b.Name).ToList();
 
             return _remoteBranches;
         }
@@ -483,7 +438,6 @@ namespace GitUI.CommandsDialogs
             return result.ToList();
         }
 
-
         private void FormCheckoutBranch_Activated(object sender, EventArgs e)
         {
             Branches.Focus();
@@ -496,19 +450,6 @@ namespace GitUI.CommandsDialogs
             {
                 chkSetLocalChangesActionAsDefault.Checked = false;
             }
-        }
-
-        private void txtCustomBranchName_Leave(object sender, EventArgs e)
-        {
-            if (!AppSettings.AutoNormaliseBranchName || !txtCustomBranchName.Text.Any(GitBranchNameNormaliser.IsValidChar))
-            {
-                return;
-            }
-
-            var caretPosition = txtCustomBranchName.SelectionStart;
-            var branchName = _branchNameNormaliser.Normalise(txtCustomBranchName.Text, _gitBranchNameOptions);
-            txtCustomBranchName.Text = branchName;
-            txtCustomBranchName.SelectionStart = caretPosition;
         }
     }
 }

@@ -48,11 +48,6 @@ namespace GitUI.CommandsDialogs
                     Branches.SetSelectedText(merge);
             }
 
-            if (!GitCommandHelpers.VersionInUse.SupportMergeUnrelatedHistory)
-            {
-                allowUnrelatedHistories.Visible = false;
-                allowUnrelatedHistories.Checked = false;
-            }
             Branches.Select();
         }
 
@@ -62,7 +57,7 @@ namespace GitUI.CommandsDialogs
             AppSettings.DontCommitMerge = noCommit.Checked;
 
             var successfullyMerged = FormProcess.ShowDialog(this,
-                GitCommandHelpers.MergeBranchCmd(Branches.GetSelectedText(), fastForward.Checked, squash.Checked, noCommit.Checked, _NO_TRANSLATE_mergeStrategy.Text, allowUnrelatedHistories.Checked));
+                GitCommandHelpers.MergeBranchCmd(Branches.GetSelectedText(), fastForward.Checked, squash.Checked, noCommit.Checked, _NO_TRANSLATE_mergeStrategy.Text));
 
             var wasConflict = MergeConflictHandler.HandleMergeConflicts(UICommands, this, !noCommit.Checked);
 

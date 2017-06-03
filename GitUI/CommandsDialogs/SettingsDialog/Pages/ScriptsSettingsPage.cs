@@ -144,7 +144,6 @@ Current Branch:
             commandTextBox.Text = scriptInfo.Command;
             argumentsTextBox.Text = scriptInfo.Arguments;
             scriptRunInBackground.Checked = scriptInfo.RunInBackground;
-            scriptIsPowerShell.Checked = scriptInfo.IsPowerShell;
             inMenuCheckBox.Checked = scriptInfo.AddToRevisionGridContextMenu;
             scriptEnabled.Checked = scriptInfo.Enabled;
             scriptNeedsConfirmation.Checked = scriptInfo.AskConfirmation;
@@ -191,7 +190,6 @@ Current Branch:
                 selectedScriptInfo.AddToRevisionGridContextMenu = inMenuCheckBox.Checked;
                 selectedScriptInfo.Enabled = scriptEnabled.Checked;
                 selectedScriptInfo.RunInBackground = scriptRunInBackground.Checked;
-                selectedScriptInfo.IsPowerShell = scriptIsPowerShell.Checked;
                 selectedScriptInfo.AskConfirmation = scriptNeedsConfirmation.Checked;
                 selectedScriptInfo.OnEvent = (ScriptEvent)scriptEvent.SelectedItem;
                 selectedScriptInfo.Icon = IconName;
@@ -337,15 +335,6 @@ Current Branch:
             helpDisplayDialog.ContentText = @_scriptSettingsPageHelpDisplayContent.Text.Replace("\n", Environment.NewLine);
 
             helpDisplayDialog.ShowDialog();
-        }
-
-        private void argumentsTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if ((e.Control && e.KeyCode == Keys.V) || (e.Shift && e.KeyCode == Keys.Insert))
-            {
-                ((RichTextBox)sender).Paste(DataFormats.GetFormat(DataFormats.UnicodeText));
-                e.Handled = true;
-            }
         }
     }
 }

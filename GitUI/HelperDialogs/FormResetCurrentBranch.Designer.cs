@@ -36,6 +36,7 @@
             this.Ok = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
             this.commitSummaryUserControl1 = new GitUI.UserControls.CommitSummaryUserControl();
+            this.checkNoAsk = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,8 +69,8 @@
             this.Hard.Name = "Hard";
             this.Hard.Size = new System.Drawing.Size(323, 34);
             this.Hard.TabIndex = 2;
-            this.Hard.Text = "Hard: reset working directory and index\r\n(discard ALL local changes, even uncommitted c" +
-    "hanges)";
+            this.Hard.Text = "Hard: reset working directory and index\r\n(discard ALL local changes, even uncommi" +
+    "tted changes)";
             this.Hard.UseVisualStyleBackColor = false;
             // 
             // Mixed
@@ -79,7 +80,7 @@
             this.Mixed.Checked = true;
             this.Mixed.Location = new System.Drawing.Point(13, 64);
             this.Mixed.Name = "Mixed";
-            this.Mixed.Size = new System.Drawing.Size(276, 19);
+            this.Mixed.Size = new System.Drawing.Size(309, 19);
             this.Mixed.TabIndex = 1;
             this.Mixed.TabStop = true;
             this.Mixed.Text = "Mixed: leave working directory untouched, reset index";
@@ -91,7 +92,7 @@
             this.Soft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.Soft.Location = new System.Drawing.Point(13, 28);
             this.Soft.Name = "Soft";
-            this.Soft.Size = new System.Drawing.Size(257, 19);
+            this.Soft.Size = new System.Drawing.Size(290, 19);
             this.Soft.TabIndex = 0;
             this.Soft.Text = "Soft: leave working directory and index untouched";
             this.Soft.UseVisualStyleBackColor = false;
@@ -126,6 +127,15 @@
             this.commitSummaryUserControl1.Size = new System.Drawing.Size(477, 160);
             this.commitSummaryUserControl1.TabIndex = 8;
             // 
+            // checkNoAsk
+            // 
+            this.checkNoAsk.Location = new System.Drawing.Point(409, 320);
+            this.checkNoAsk.Name = "checkNoAsk";
+            this.checkNoAsk.Size = new System.Drawing.Size(83, 35);
+            this.checkNoAsk.TabIndex = 9;
+            this.checkNoAsk.Text = "No need to confirm";
+            this.checkNoAsk.UseVisualStyleBackColor = true;
+            // 
             // FormResetCurrentBranch
             // 
             this.AcceptButton = this.Ok;
@@ -133,6 +143,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.CancelButton = this.Cancel;
             this.ClientSize = new System.Drawing.Size(502, 401);
+            this.Controls.Add(this.checkNoAsk);
             this.Controls.Add(this.commitSummaryUserControl1);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.Ok);
@@ -162,5 +173,6 @@
         private System.Windows.Forms.Button Ok;
         private System.Windows.Forms.Button Cancel;
         private UserControls.CommitSummaryUserControl commitSummaryUserControl1;
+        private System.Windows.Forms.CheckBox checkNoAsk;
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -29,16 +28,16 @@ namespace GitCommands
         public static readonly char PosixPathSeparator = '/';
         public static Version AppVersion { get { return Assembly.GetCallingAssembly().GetName().Version; } }
         public static string ProductVersion { get { return Application.ProductVersion; } }
-        public static readonly string SettingsFileName = "GitExtensions.settings";
+        public const string SettingsFileName = "GitExtensions.settings";
 
-        public static readonly Lazy<string> ApplicationDataPath;
+        public static Lazy<string> ApplicationDataPath;
         public static string SettingsFilePath { get { return Path.Combine(ApplicationDataPath.Value, SettingsFileName); } }
 
         private static RepoDistSettings _SettingsContainer;
         public static RepoDistSettings SettingsContainer { get { return _SettingsContainer; } }
 
-        public static readonly int BranchDropDownMinWidth = 300;
-        public static readonly int BranchDropDownMaxWidth = 600;
+        public static int BranchDropDownMinWidth = 300;
+        public static int BranchDropDownMaxWidth = 600;
 
         static AppSettings()
         {
@@ -372,7 +371,7 @@ namespace GitCommands
 
         public static string GravatarCachePath
         {
-            get { return Path.Combine(ApplicationDataPath.Value, "Images\\"); }
+            get { return ApplicationDataPath.Value + "Images\\"; }
         }
 
         public static string Translation
@@ -847,12 +846,6 @@ namespace GitCommands
             set { SetInt("commitdialogrightsplitter", value); }
         }
 
-        public static bool CommitDialogSelectionFilter 
-        {
-            get { return GetBool("commitdialogselectionfilter", false); }
-            set { SetBool("commitdialogselectionfilter", value); }
-        }
-
         public static string DefaultCloneDestinationPath
         {
             get { return GetString("defaultclonedestinationpath", string.Empty); }
@@ -918,20 +911,20 @@ namespace GitCommands
 
         public static string Plink
         {
-            get { return GetString("plink", Environment.GetEnvironmentVariable("GITEXT_PLINK") ?? ReadStringRegValue("plink", "")); }
-            set { if (value != Environment.GetEnvironmentVariable("GITEXT_PLINK")) SetString("plink", value); }
+            get { return GetString("plink", ReadStringRegValue("plink", "")); }
+            set { SetString("plink", value); }
         }
         public static string Puttygen
         {
-            get { return GetString("puttygen", Environment.GetEnvironmentVariable("GITEXT_PUTTYGEN") ?? ReadStringRegValue("puttygen", "")); }
-            set { if (value != Environment.GetEnvironmentVariable("GITEXT_PUTTYGEN")) SetString("puttygen", value); }
+            get { return GetString("puttygen", ReadStringRegValue("puttygen", "")); }
+            set { SetString("puttygen", value); }
         }
 
         /// <summary>Gets the path to Pageant (SSH auth agent).</summary>
         public static string Pageant
         {
-            get { return GetString("pageant", Environment.GetEnvironmentVariable("GITEXT_PAGEANT") ?? ReadStringRegValue("pageant", "")); }
-            set { if (value != Environment.GetEnvironmentVariable("GITEXT_PAGEANT")) SetString("pageant", value); }
+            get { return GetString("pageant", ReadStringRegValue("pageant", "")); }
+            set { SetString("pageant", value); }
         }
 
         public static bool AutoStartPageant
@@ -1081,72 +1074,8 @@ namespace GitCommands
 
         public static bool RememberIgnoreWhiteSpacePreference
         {
-            get { return GetBool("rememberIgnoreWhiteSpacePreference", true); }
+            get { return GetBool("rememberIgnoreWhiteSpacePreference", false); }
             set { SetBool("rememberIgnoreWhiteSpacePreference", value); }
-        }
-
-        public static bool ShowNonPrintingChars
-        {
-            get
-            {
-                return RememberShowNonPrintingCharsPreference && GetBool("ShowNonPrintingChars", false);
-            }
-            set
-            {
-                if (RememberShowNonPrintingCharsPreference)
-                {
-                    SetBool("ShowNonPrintingChars", value);
-                }
-            }
-        }
-
-        public static bool RememberShowNonPrintingCharsPreference
-        {
-            get { return GetBool("RememberShowNonPrintableCharsPreference", false); }
-            set { SetBool("RememberShowNonPrintableCharsPreference", value); }
-        }
-
-        public static bool ShowEntireFile
-        {
-            get
-            {
-                return RememberShowEntireFilePreference && GetBool("ShowEntireFile", false);
-            }
-            set
-            {
-                if (RememberShowEntireFilePreference)
-                {
-                    SetBool("ShowEntireFile", value);
-                }
-            }
-        }
-
-        public static bool RememberShowEntireFilePreference
-        {
-            get { return GetBool("RememberShowEntireFilePreference", false); }
-            set { SetBool("RememberShowEntireFilePreference", value); }
-        }
-
-        public static int NumberOfContextLines
-        {
-            get
-            {
-                const int defaultValue = 3;
-                return RememberNumberOfContextLines ? GetInt("NumberOfContextLines", defaultValue) : defaultValue;
-            }
-            set
-            {
-                if (RememberNumberOfContextLines)
-                {
-                    SetInt("NumberOfContextLines", value);
-                }
-            }
-        }
-
-        public static bool RememberNumberOfContextLines
-        {
-            get { return GetBool("RememberNumberOfContextLines", false); }
-            set { SetBool("RememberNumberOfContextLines", value); }
         }
 
         public static string GetDictionaryDir()

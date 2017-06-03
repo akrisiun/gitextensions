@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{27559302-F35E-4B62-A6EC-11FF21A5FA6F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GitUIPluginInterfaces</RootNamespace>
+    <AssemblyName>GitUIPluginInterfaces</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\..\FxCopRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\..\FxCopRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\..\..\..\packages\Rx-Interfaces.2.2.5\lib\net40\System.Reactive.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="BuildServerIntegration\BuildInfo.cs" />
+    <Compile Include="BuildServerIntegration\BuildServerAdapterMetadataAttribute.cs" />
+    <Compile Include="BuildServerIntegration\BuildServerCredentials.cs" />
+    <Compile Include="BuildServerIntegration\BuildServerSettingsUserControlMetadata.cs" />
+    <Compile Include="BuildServerIntegration\IBuildServerAdapter.cs" />
+    <Compile Include="BuildServerIntegration\IBuildServerCredentials.cs" />
+    <Compile Include="BuildServerIntegration\IBuildServerSettingsUserControl.cs" />
+    <Compile Include="BuildServerIntegration\IBuildServerTypeMetadata.cs" />
+    <Compile Include="BuildServerIntegration\IBuildServerWatcher.cs" />
+    <Compile Include="GitCmdResult.cs" />
+    <Compile Include="GitUIPostActionEventArgs.cs" />
+    <Compile Include="IBrowseRepo.cs" />
+    <Compile Include="IGitPluginForRepository.cs" />
+    <Compile Include="IGitModule.cs" />
+    <Compile Include="IGitRemoteCommand.cs" />
+    <Compile Include="ILockableNotifier.cs" />
+    <Compile Include="Settings\BoolSetting.cs" />
+    <Compile Include="ISetting.cs" />
+    <Compile Include="ISettingsSource.cs" />
+    <Compile Include="ManagedExtensibility.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryHosts\IRepositoryHostPlugin.cs" />
+    <Compile Include="IGitPlugin.cs" />
+    <Compile Include="IGitPluginSettingsContainer.cs" />
+    <Compile Include="IGitSubmoduleInfo.cs" />
+    <Compile Include="IGitUICommands.cs" />
+    <Compile Include="GitUIBaseEventArgs.cs" />
+    <Compile Include="RepositoryHosts\IHostedRepository.cs" />
+    <Compile Include="RepositoryHosts\IPasswordHelper.cs" />
+    <Compile Include="RepositoryHosts\IHostedRemote.cs" />
+    <Compile Include="RepositoryHosts\IPullRequestInformation.cs" />
+    <Compile Include="Settings\NumberSetting.cs" />
+    <Compile Include="Settings\ChoiceSetting.cs" />
+    <Compile Include="Settings\PasswordSetting.cs" />
+    <Compile Include="Settings\StringSetting.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

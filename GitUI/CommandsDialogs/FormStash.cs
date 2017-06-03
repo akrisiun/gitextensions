@@ -59,7 +59,7 @@ namespace GitUI.CommandsDialogs
         {
             IList<GitStash> stashedItems = Module.GetStashes();
 
-            currentWorkingDirStashItem = new GitStash("currentWorkingDirStashItem")
+            currentWorkingDirStashItem = new GitStash
             {
                 Name = currentWorkingDirChanges.Text,
                 Message = currentWorkingDirChanges.Text
@@ -70,7 +70,6 @@ namespace GitUI.CommandsDialogs
             Stashes.Text = "";
             StashMessage.Text = "";
             Stashes.SelectedItem = null;
-            Stashes.ComboBox.DisplayMember = "Message";
             Stashes.Items.Clear();
             foreach (GitStash stashedItem in stashedItems)
                 Stashes.Items.Add(stashedItem);
@@ -105,7 +104,7 @@ namespace GitUI.CommandsDialogs
             }
             else
             {
-                Task.Factory.StartNew(() => Module.GetStashDiffFiles(gitStash.Name)) 
+                Task.Factory.StartNew(() => Module.GetStashDiffFiles(gitStash.Name))
                     .ContinueWith((task) => LoadGitItemStatuses(task.Result),
                         TaskScheduler.FromCurrentSynchronizationContext());
                 Clear.Enabled = true; // allow Drop
@@ -181,7 +180,7 @@ namespace GitUI.CommandsDialogs
         private void ClearClick(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
-            var stashName = GetStashName();
+
             if (AppSettings.StashConfirmDropShow)
             {
                 DialogResult res = PSTaskDialog.cTaskDialog.MessageBox(
@@ -197,7 +196,7 @@ namespace GitUI.CommandsDialogs
                                        PSTaskDialog.eSysIcons.Information);
                 if (res == DialogResult.OK)
                 {
-                    UICommands.StashDrop(this, stashName);
+                    UICommands.StashDrop(this, Stashes.Text);
                     Initialize();
                     Cursor.Current = Cursors.Default;
                 }
@@ -209,20 +208,15 @@ namespace GitUI.CommandsDialogs
             }
             else
             {
-                UICommands.StashDrop(this, stashName); 
+                UICommands.StashDrop(this, Stashes.Text);
                 Initialize();
                 Cursor.Current = Cursors.Default;
             }
         }
 
-        private string GetStashName()
-        {
-            return ((GitStash)Stashes.SelectedItem).Name;
-        }
-
         private void ApplyClick(object sender, EventArgs e)
         {
-            UICommands.StashApply(this, GetStashName());
+            UICommands.StashApply(this, Stashes.Text);
             Initialize();
         }
 

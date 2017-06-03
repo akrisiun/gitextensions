@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using GitUI.Properties;
 using ResourceManager;
 using Settings = GitCommands.AppSettings;
-#if !__MonoCS__
+#if !__MonoCS__ && !NOAPICODE
 using Microsoft.WindowsAPICodePack.Taskbar;
 #endif
 
@@ -197,8 +197,20 @@ namespace GitUI
             if (_enablePositionRestore)
                 RestorePosition(GetType().Name);
 
+            //if (!CheckComponent(this))
+            //    OnRuntimeLoad(e);
+        }
+
+        public bool IsShown { get; protected set; }
+
+        protected override void OnShown(EventArgs e)
+        {
             if (!CheckComponent(this))
                 OnRuntimeLoad(e);
+
+            base.OnShown(e);
+
+            IsShown = true;
         }
 
         /// <summary>Invoked at runtime during the <see cref="OnLoad"/> method.</summary>

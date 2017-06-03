@@ -26,12 +26,10 @@ namespace GitUIPluginInterfaces
                 {
                     _compositionContainers = new List<CompositionContainer>();
                     var pluginsDir = new DirectoryInfo(Directory.GetParent(Application.ExecutablePath).FullName + Path.DirectorySeparatorChar + "Plugins");
-                    if (pluginsDir.Exists)
+
+                    foreach (var dll in pluginsDir.EnumerateFiles("*.dll"))
                     {
-                        foreach (var dll in pluginsDir.EnumerateFiles("*.dll"))
-                        {
-                            _compositionContainers.Add(new CompositionContainer(new DirectoryCatalog(dll.DirectoryName, dll.Name)));
-                        }
+                        _compositionContainers.Add(new CompositionContainer(new DirectoryCatalog(dll.DirectoryName, dll.Name)));
                     }
                 }
 

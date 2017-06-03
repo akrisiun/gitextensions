@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -227,7 +226,6 @@ namespace GitUI.CommandsDialogs
             if (AppSettings.CommitDialogRightSplitter != -1)
                 splitRight.SplitterDistance = AppSettings.CommitDialogRightSplitter;
 
-            SetVisibilityOfSelectionFilter(AppSettings.CommitDialogSelectionFilter);
             Reset.Visible = AppSettings.ShowResetAllChanges;
             ResetUnStaged.Visible = AppSettings.ShowResetUnstagedChanges;
             CommitAndPush.Visible = AppSettings.ShowCommitAndPush;
@@ -251,7 +249,6 @@ namespace GitUI.CommandsDialogs
 
             AppSettings.CommitDialogSplitter = splitMain.SplitterDistance;
             AppSettings.CommitDialogRightSplitter = splitRight.SplitterDistance;
-            AppSettings.CommitDialogSelectionFilter = toolbarSelectionFilter.Visible;
         }
 
         void SelectedDiff_ContextMenuOpening(object sender, System.ComponentModel.CancelEventArgs e)
@@ -389,19 +386,9 @@ namespace GitUI.CommandsDialogs
 
         private bool ToggleSelectionFilter()
         {
-            var visible = !selectionFilterToolStripMenuItem.Checked;
-            SetVisibilityOfSelectionFilter(visible);
-            if (visible)
-                selectionFilter.Focus();
-            else if (selectionFilter.Focused)
-                Unstaged.Focus();
+            selectionFilterToolStripMenuItem.Checked = !selectionFilterToolStripMenuItem.Checked;
+            toolbarSelectionFilter.Visible = selectionFilterToolStripMenuItem.Checked;
             return true;
-        }
-
-        private void SetVisibilityOfSelectionFilter(bool visible)
-        {
-            selectionFilterToolStripMenuItem.Checked = visible;
-            toolbarSelectionFilter.Visible = visible;
         }
 
         protected override bool ExecuteCommand(int cmd)
@@ -836,7 +823,7 @@ namespace GitUI.CommandsDialogs
         private void ClearDiffViewIfNoFilesLeft()
         {
             llShowPreview.Hide();
-            if ((Staged.IsEmpty && Unstaged.IsEmpty) || (!Unstaged.SelectedItems.Any() && !Staged.SelectedItems.Any()))
+            if (Staged.IsEmpty && Unstaged.IsEmpty)
                 SelectedDiff.Clear();
         }
 
@@ -872,21 +859,9 @@ namespace GitUI.CommandsDialogs
                         return;
                     }
 
-                    try
-                    {
-                        // unsubscribe the event handler so that after the message box is closed, the RescanChanges call is suppressed
-                        // (otherwise it would move all changed files from staged back to unstaged file list)
-                        this.Activated -= FormCommitActivated;
-
-                        // there are no staged files, but there are unstaged files. Most probably user forgot to stage them.
-                        if (MessageBox.Show(this, _noFilesStagedButSuggestToCommitAllUnstaged.Text, _noStagedChanges.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-                            return;
-                    }
-                    finally
-                    {
-                        this.Activated += FormCommitActivated;
-                    }
-
+                    // there are no staged files, but there are unstaged files. Most probably user forgot to stage them.
+                    if (MessageBox.Show(this, _noFilesStagedButSuggestToCommitAllUnstaged.Text, _noStagedChanges.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                        return;
                     StageAllAccordingToFilter();
                     // if staging failed (i.e. line endings conflict), user already got error message, don't try to commit empty changeset.
                     if (Staged.IsEmpty)
@@ -946,7 +921,7 @@ namespace GitUI.CommandsDialogs
 
                 ScriptManager.RunEventScripts(this, ScriptEvent.BeforeCommit);
 
-                var errorOccurred = !FormProcess.ShowDialog(this, Module.CommitCmd(amend, signOffToolStripMenuItem.Checked, toolAuthor.Text, _useFormCommitMessage, noVerifyToolStripMenuItem.Checked));
+                var errorOccurred = !FormProcess.ShowDialog(this, Module.CommitCmd(amend, signOffToolStripMenuItem.Checked, toolAuthor.Text, _useFormCommitMessage));
 
                 UICommands.RepoChangedNotifier.Notify();
 
@@ -954,7 +929,6 @@ namespace GitUI.CommandsDialogs
                     return;
 
                 Amend.Checked = false;
-                noVerifyToolStripMenuItem.Checked = false;
 
                 ScriptManager.RunEventScripts(this, ScriptEvent.AfterCommit);
 
@@ -1287,11 +1261,6 @@ namespace GitUI.CommandsDialogs
             ShowChanges(item, true);
         }
 
-		private void Staged_DataSourceChanged(object sender, EventArgs e)
-		{
-            int totalFilesCount = Staged.UnfilteredItemsCount() + Unstaged.UnfilteredItemsCount();
-            commitStagedCount.Text = Staged.UnfilteredItemsCount().ToString() + "/" + totalFilesCount.ToString();
-		}
         private void Staged_Enter(object sender, EventArgs e)
         {
             if (_currentFilesList != Staged)
@@ -1846,20 +1815,20 @@ namespace GitUI.CommandsDialogs
             Clipboard.SetText(fileNames.ToString());
         }
 
-        private void OpenFilesWithDiffTool(IEnumerable<GitItemStatus> items, bool staged)
-        {
-            foreach (var item in items)
-            {
-                string output = Module.OpenWithDifftool(item.Name, null, null, null, staged? "--cached" : "");
-                if (!string.IsNullOrEmpty(output))
-                    MessageBox.Show(this, output);
-            }
-        }
-
         private void OpenWithDifftoolToolStripMenuItemClick(object sender, EventArgs e)
         {
-            OpenFilesWithDiffTool(Unstaged.SelectedItems, staged: false);
+            if (!Unstaged.SelectedItems.Any())
+                return;
+
+            var item = Unstaged.SelectedItem;
+            var fileName = item.Name;
+
+            var cmdOutput = Module.OpenWithDifftool(fileName);
+
+            if (!string.IsNullOrEmpty(cmdOutput))
+                MessageBox.Show(this, cmdOutput);
         }
+
 
         private void ResetPartOfFileToolStripMenuItemClick(object sender, EventArgs e)
         {
@@ -2450,15 +2419,15 @@ namespace GitUI.CommandsDialogs
 
         private void openContainingFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenContainingFolder(Unstaged);
+            OpenContainingFolder(Unstaged, this.Module);
         }
 
-        private void OpenContainingFolder(FileStatusList list)
+        public static void OpenContainingFolder(FileStatusList list, GitModule module)
         {
             foreach (var item in list.SelectedItems)
             {
                 var fileNames = new StringBuilder();
-                fileNames.Append((Path.Combine(Module.WorkingDir, item.Name)).ToNativePath());
+                fileNames.Append((Path.Combine(module.WorkingDir, item.Name)).ToNativePath());
 
                 string filePath = fileNames.ToString();
                 if (File.Exists(filePath))
@@ -2470,12 +2439,17 @@ namespace GitUI.CommandsDialogs
 
         private void toolStripMenuItem9_Click(object sender, EventArgs e)
         {
-            OpenFilesWithDiffTool(Staged.SelectedItems, staged: true);
+            foreach (var item in Staged.SelectedItems)
+            {
+                string output = Module.OpenWithDifftool(item.Name, null, null, null, "--cached");
+                if (!string.IsNullOrEmpty(output))
+                    MessageBox.Show(this, output);
+            }
         }
 
         private void toolStripMenuItem10_Click(object sender, EventArgs e)
         {
-            OpenContainingFolder(Staged);
+            OpenContainingFolder(Staged, this.Module);
         }
 
         private void toolStripMenuItem4_Click(object sender, EventArgs e)

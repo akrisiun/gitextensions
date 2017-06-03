@@ -1,4 +1,6 @@
-﻿namespace GitUI
+﻿using GitCommands;
+
+namespace GitUI
 {
     partial class FormPuttyError
     {
@@ -86,7 +88,7 @@
             this.lblPleaseLoadKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPleaseLoadKey.Font = new System.Drawing.Font(this.Font,System.Drawing.FontStyle.Bold);
-            this.lblPleaseLoadKey.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            //this.lblPleaseLoadKey.ForeColor = SkinManager.ControlDarkDark;
             this.lblPleaseLoadKey.Location = new System.Drawing.Point(64, 18);
             this.lblPleaseLoadKey.Name = "lblPleaseLoadKey";
             this.lblPleaseLoadKey.Size = new System.Drawing.Size(259, 34);

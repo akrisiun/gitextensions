@@ -34,9 +34,16 @@ namespace GitUI
         {
             if (!string.IsNullOrEmpty(email))
                 _gravatarImg.Visible = true;
+            else
+                return;
+
             Email = email;
             ImageFileName = string.Concat(Email, ".png");
-            UpdateGravatar();
+            try
+            {
+                UpdateGravatar();
+            }
+            catch { }
         }
 
         /// <summary>

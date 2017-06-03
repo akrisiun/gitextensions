@@ -58,18 +58,7 @@ namespace BackgroundFetch
             {
                 cancellationToken =
                     Observable.Timer(TimeSpan.FromSeconds(Math.Max(5, fetchInterval)))
-                              .SelectMany(i => {
-                                // if git not runing - start fetch immediately
-                                if (!gitModule.IsRunningGitProcess())
-                                    return Observable.Return(i);
-
-                                // in other case - every 5 seconds check if git still runnnig
-                                return Observable
-                                    .Interval(TimeSpan.FromSeconds(5))
-                                    .SkipWhile(ii => gitModule.IsRunningGitProcess())
-                                    .FirstAsync()
-                                ;
-                              })
+                              .SkipWhile(i => gitModule.IsRunningGitProcess())
                               .Repeat()
                               .ObserveOn(ThreadPoolScheduler.Instance)
                               .Subscribe(i =>

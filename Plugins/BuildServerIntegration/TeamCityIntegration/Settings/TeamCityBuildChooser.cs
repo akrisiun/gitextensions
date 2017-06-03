@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -7,10 +6,9 @@ namespace TeamCityIntegration.Settings
 {
     public partial class TeamCityBuildChooser : Form
     {
-        private readonly TeamCityAdapter _teamCityAdapter = new TeamCityAdapter();
-        private TreeNode _previouslySelectedProject;
-        public string TeamCityProjectName { get; private set; }
-        public string TeamCityBuildIdFilter { get; private set; }
+        private TeamCityAdapter _teamCityAdapter = new TeamCityAdapter();
+        private TreeNode _previouslySelectedBuild;
+        private string _teamCityServerUrl;
 
         public TeamCityBuildChooser(string teamCityServerUrl, string teamCityProjectName, string teamCityBuildIdFilter)
         {
@@ -18,92 +16,87 @@ namespace TeamCityIntegration.Settings
 
             TeamCityProjectName = teamCityProjectName;
             TeamCityBuildIdFilter = teamCityBuildIdFilter;
+            _teamCityServerUrl = teamCityServerUrl;
+        }
+
+        struct Node
+        {
+            public string Name;
+            public bool Loaded;
+            public bool IsProject;
+            public string ParentProject;
+        }
+
+        public string TeamCityProjectName { get; set; }
+        public string TeamCityBuildIdFilter { get; set; }
+
+        public void LoadProjectsAndBuilds(string teamCityServerUrl)
+        {
             _teamCityAdapter.InitializeHttpClient(teamCityServerUrl);
-
-            var rootProject = _teamCityAdapter.GetProjectsTree();
-            var rootTreeNode = LoadTreeView(treeViewTeamCityProjects, rootProject);
-
-            rootTreeNode.Expand();
-        }
-
-        private void TeamCityBuildChooser_Load(object sender, EventArgs e)
-        {
-            ReselectPreviouslySelectedBuild();
-        }
-
-        private void ReselectPreviouslySelectedBuild()
-        {
-            if (_previouslySelectedProject == null)
-                return;
-
-            _previouslySelectedProject.Expand();
-            treeViewTeamCityProjects.SelectedNode = _previouslySelectedProject.Nodes.Find(TeamCityBuildIdFilter, false).FirstOrDefault()
-                ?? _previouslySelectedProject;
-        }
-
-        private TreeNode LoadTreeView(TreeView treeView, Project rootProject)
-        {
-            treeView.Nodes.Clear();
-            var rootNode = ConvertProjectInTreeNode(rootProject);
-            treeView.Nodes.Add(rootNode);
-            return rootNode;
-        }
-
-        private TreeNode ConvertProjectInTreeNode(Project project)
-        {
-            var projectNode = new TreeNode(project.Name)
+            var projects = _teamCityAdapter.GetAllProjects();
+            var loadingNode = new TreeNode("loading...");
+            treeViewTeamCityProjects.Nodes.Clear();
+            treeViewTeamCityProjects.Nodes.AddRange(projects.Select(p => new TreeNode(p)
             {
-                Name = project.Name,
-                Tag = project,
-            };
+                Name = p,
+                Tag = new Node {IsProject = true, Loaded = false, Name = p}
+            }).OrderBy(p=>p.Name).ToArray());
 
-            projectNode.Nodes.AddRange(project.SubProjects.Select(ConvertProjectInTreeNode).OrderBy(p => p.Name).ToArray());
-            if (projectNode.Nodes.Count == 0)
+            foreach (TreeNode node in treeViewTeamCityProjects.Nodes)
             {
-                projectNode.Nodes.Add(new TreeNode("Loading..."));
+                node.Nodes.Add((TreeNode) loadingNode.Clone());
             }
 
-            if (TeamCityProjectName == project.Id)
+            if(!string.IsNullOrWhiteSpace(TeamCityProjectName))
             {
-                _previouslySelectedProject = projectNode;
+                foreach (TreeNode node in treeViewTeamCityProjects.Nodes)
+                {
+                    if(node.Name == TeamCityProjectName)
+                    {
+                        treeViewTeamCityProjects.SelectedNode = node;
+                        node.Expand();
+                        break;
+                    }
+                }
             }
-            return projectNode;
         }
 
         private void treeViewTeamCityProjects_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {
-            LoadProjectBuilds(e.Node);
+            LoadSubProjects(e.Node);
         }
 
-        private void LoadProjectBuilds(TreeNode treeNode)
+        private void LoadSubProjects(TreeNode treeNode)
         {
-            var project = (Project)treeNode.Tag;
-            if (project.Builds == null)
+            var node = (Node)treeNode.Tag;
+            if (node.IsProject && !node.Loaded)
             {
-                project.Builds = _teamCityAdapter.GetProjectBuilds(project.Name);
+                treeNode.Nodes.Clear();
+                var project = _teamCityAdapter.GetProjectChildren(node.Name);
 
-                //Remove "Loading..." node
-                if (treeNode.Nodes.Count == 1 && treeNode.Nodes[0].Tag == null)
+                var projectNodes = project.Projects.Select(p => new TreeNode(p)
                 {
-                    treeNode.Nodes.RemoveAt(0);
-                }
+                    Name = p,
+                    Tag = new Node { IsProject = true, Loaded = false, Name = p, ParentProject = node.Name }
+                }).OrderBy(p => p.Name).ToArray();
+                treeNode.Nodes.AddRange(projectNodes);
 
-                var buildNodes = project.Builds.Select(b => new TreeNode(b.DisplayName)
+                var buildNodes = project.Builds.Select(b => new TreeNode(b.Name + " (" + b.Id + ")")
                 {
                     Name = b.Id,
-                    ForeColor = Color.Blue,
-                    Tag = b
-                }).OrderBy(b => b.Name).ToArray();
+                    Tag = new Node { IsProject = false, Loaded = true, Name = b.Id, ParentProject = node.Name }
+                }).OrderBy(p => p.Name).ToArray();
                 treeNode.Nodes.AddRange(buildNodes);
+
+                //Find previous already selected build in the treeview
+                var previouslySelectedBuild = buildNodes.FirstOrDefault(n => n.Name == TeamCityBuildIdFilter
+                    && n.Parent.Name == TeamCityProjectName);
+                if (previouslySelectedBuild != null)
+                    _previouslySelectedBuild = previouslySelectedBuild;
             }
         }
 
         private void treeViewTeamCityProjects_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            SelectBuild();
-        }
-
-        private void buttonOK_Click(object sender, EventArgs e)
         {
             SelectBuild();
         }
@@ -113,30 +106,49 @@ namespace TeamCityIntegration.Settings
             if (treeViewTeamCityProjects.SelectedNode == null)
                 return;
 
-            var build = treeViewTeamCityProjects.SelectedNode.Tag as Build;
-            if (build == null)
+            var node = (Node) treeViewTeamCityProjects.SelectedNode.Tag;
+            if (node.IsProject)
                 return;
-            TeamCityProjectName = build.ParentProject;
-            TeamCityBuildIdFilter = build.Id;
+            TeamCityProjectName = node.ParentProject;
+            TeamCityBuildIdFilter = node.Name;
 
-            DialogResult = DialogResult.OK;
-            Close();
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void buttonOK_Click(object sender, EventArgs e)
+        {
+            SelectBuild();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
-            Close();
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
 
         private bool IsBuildSelected(TreeNode selectedNode)
         {
-            return selectedNode != null && selectedNode.Tag is Build;
+            if (selectedNode == null)
+                return false;
+
+            var node = (Node)selectedNode.Tag;
+            return !node.IsProject;
         }
 
         private void treeViewTeamCityProjects_AfterSelect(object sender, TreeViewEventArgs e)
         {
             buttonOK.Enabled = IsBuildSelected(e.Node);
+        }
+
+        private void TeamCityBuildChooser_Load(object sender, EventArgs e)
+        {
+            LoadProjectsAndBuilds(_teamCityServerUrl);
+
+            if (_previouslySelectedBuild != null)
+            {
+                treeViewTeamCityProjects.SelectedNode = _previouslySelectedBuild;
+            }
         }
     }
 }

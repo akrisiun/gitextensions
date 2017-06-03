@@ -7,7 +7,10 @@ using System.Windows.Forms;
 using GitCommands;
 using GitCommands.Config;
 using GitCommands.Repository;
-using GitUIPluginInterfaces;
+
+using JetBrains.Annotations;
+using GitUI.UserControls;
+
 using ResourceManager;
 
 namespace GitUI.CommandsDialogs
@@ -64,7 +67,7 @@ namespace GitUI.CommandsDialogs
 
             _NO_TRANSLATE_To.Text = AppSettings.DefaultCloneDestinationPath;
 
-            if (CanBeGitURL(url) || GitModule.IsValidGitWorkingDir(url))
+            if (url.IsNotNullOrWhitespace())
             {
                 _NO_TRANSLATE_From.Text = url;
             }
@@ -79,7 +82,10 @@ namespace GitUI.CommandsDialogs
                         string text = Clipboard.GetText(TextDataFormat.Text) ?? string.Empty;
 
                         // See if it's a valid URL.
-                        if (CanBeGitURL(text))
+                        string lowerText = text.ToLowerInvariant();
+                        if (lowerText.StartsWith("http") ||
+                            lowerText.StartsWith("git") ||
+                            lowerText.StartsWith("ssh"))
                         {
                             _NO_TRANSLATE_From.Text = text;
                         }
@@ -93,7 +99,7 @@ namespace GitUI.CommandsDialogs
                 //that the cloned repository is hosted on the same server
                 if (_NO_TRANSLATE_From.Text.IsNullOrWhiteSpace())
                 {
-                    var currentBranchRemote = Module.GetSetting(string.Format(SettingKeyString.BranchRemote, Module.GetSelectedBranch()));
+                    var currentBranchRemote = Module.GetSetting(string.Format("branch.{0}.remote", Module.GetSelectedBranch()));
                     if (currentBranchRemote.IsNullOrEmpty())
                     {
                         var remotes = Module.GetRemotes();
@@ -110,42 +116,21 @@ namespace GitUI.CommandsDialogs
                         pushUrl = Module.GetPathSetting(string.Format(SettingKeyString.RemoteUrl, currentBranchRemote));
                     }
 
+
                     _NO_TRANSLATE_From.Text = pushUrl;
-
-                    try
-                    {
-                        // If the from directory is filled with the pushUrl from current working directory, set the destination directory to the parent
-                        if (pushUrl.IsNotNullOrWhitespace() && _NO_TRANSLATE_To.Text.IsNullOrWhiteSpace() && Module.WorkingDir.IsNotNullOrWhitespace())
-                            _NO_TRANSLATE_To.Text = Path.GetDirectoryName(Module.WorkingDir.TrimEnd(Path.DirectorySeparatorChar));
-
-                    }
-                    catch (Exception)
-                    {
-                        // Exceptions on setting the destination directory can be ingnored
-                    }
                 }
             }
 
-            //if there is no destination directory, then use current working directory
-            if (_NO_TRANSLATE_To.Text.IsNullOrWhiteSpace() && Module.WorkingDir.IsNotNullOrWhitespace())
-                _NO_TRANSLATE_To.Text = Module.WorkingDir.TrimEnd(Path.DirectorySeparatorChar);
+            try
+            {
+                //if there is no destination directory, then use the parent directory of the current repository
+                if (_NO_TRANSLATE_To.Text.IsNullOrWhiteSpace() && Module.WorkingDir.IsNotNullOrWhitespace())
+                    _NO_TRANSLATE_To.Text = Path.GetDirectoryName(Module.WorkingDir.TrimEnd(Path.DirectorySeparatorChar));
+            }
+            catch (Exception)
+            { }
 
             FromTextUpdate(null, null);
-        }
-
-        private bool CanBeGitURL(string anURL)
-        {
-            if (anURL == null)
-            {
-                return false;
-            }
-
-            string anURLLowered = anURL.ToLowerInvariant();
-
-            return (anURLLowered.StartsWith("http") ||
-                anURLLowered.StartsWith("git") ||
-                anURLLowered.StartsWith("ssh"));
-
         }
 
         private void OkClick(object sender, EventArgs e)
@@ -354,7 +339,7 @@ namespace GitUI.CommandsDialogs
 
         private readonly AsyncLoader _branchListLoader = new AsyncLoader();
 
-        private void UpdateBranches(RemoteActionResult<IList<IGitRef>> branchList)
+        private void UpdateBranches(RemoteActionResult<IList<GitRef>> branchList)
         {
             Cursor = Cursors.Default;
 

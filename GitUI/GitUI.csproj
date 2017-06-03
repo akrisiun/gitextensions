@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\FxCop.targets" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CF5B22E7-230F-4E50-BE88-C4F7023CED2C}</ProjectGuid>
+    <ProjectGuid>{A19AF7D5-2BD9-470D-A4D0-0519C2694258}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GitUI</RootNamespace>
@@ -32,10 +33,11 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -44,11 +46,14 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET45;__MonoCS__;WIN;NOAPICODE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <NoWarn>1573</NoWarn>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <NoWarn>1573,3003</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -58,8 +63,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ConEmu.WinForms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=00340228797aafb8, processorArchitecture=MSIL">
+      <HintPath>..\packages\ConEmu.Control.WinForms.1.0.20160313.1\lib\net40\ConEmu.WinForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PSTaskDialog">
       <HintPath>..\Bin\PSTaskDialog.dll</HintPath>
     </Reference>
@@ -93,13 +104,6 @@
     <Reference Include="ICSharpCode.TextEditor">
       <HintPath>..\Bin\ICSharpCode.TextEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack">
-      <HintPath>..\Bin\Microsoft.WindowsAPICodePack.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack.Shell">
-      <HintPath>..\Bin\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
-    </Reference>
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonAssemblyInfo.cs">
@@ -145,12 +149,6 @@
     <Compile Include="CommandsDialogs\FormDiff.Designer.cs">
       <DependentUpon>FormDiff.cs</DependentUpon>
     </Compile>
-    <Compile Include="CommandsDialogs\FormReflog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CommandsDialogs\FormReflog.Designer.cs">
-      <DependentUpon>FormReflog.cs</DependentUpon>
-    </Compile>
     <Compile Include="CommandsDialogs\FormSparseWorkingCopyViewModel.cs" />
     <Compile Include="CommandsDialogs\FormMergeSubmodule.cs">
       <SubType>Form</SubType>
@@ -180,12 +178,6 @@
     <Compile Include="CommandsDialogs\RepoHosting\ViewPullRequestsForm.Designer.cs">
       <DependentUpon>ViewPullRequestsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CommandsDialogs\SettingsDialog\Pages\DiffViewerSettingsPage.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CommandsDialogs\SettingsDialog\Pages\DiffViewerSettingsPage.Designer.cs">
-      <DependentUpon>DiffViewerSettingsPage.cs</DependentUpon>
-    </Compile>
     <Compile Include="CommandsDialogs\SettingsDialog\Pages\BuildServerIntegrationSettingsPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -199,31 +191,7 @@
       <DependentUpon>CommitDialogSettingsPage.cs</DependentUpon>
     </Compile>
     <Compile Include="CommandsDialogs\SettingsDialog\EditorHelper.cs" />
-    <Compile Include="CommandsDialogs\SettingsDialog\AutoLayoutSettingsPage.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CommandsDialogs\SettingsDialog\AutoLayoutSettingsPage.Designer.cs">
-      <DependentUpon>AutoLayoutSettingsPage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CommandsDialogs\SettingsDialog\Pages\DetailedSettingsPage.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CommandsDialogs\SettingsDialog\Pages\DetailedSettingsPage.Designer.cs">
-      <DependentUpon>DetailedSettingsPage.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormStatusOutputLog.cs" />
-    <Compile Include="CommandsDialogs\WorktreeDialog\FormCreateWorktree.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CommandsDialogs\WorktreeDialog\FormCreateWorktree.Designer.cs">
-      <DependentUpon>FormCreateWorktree.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CommandsDialogs\WorktreeDialog\FormManageWorktree.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CommandsDialogs\WorktreeDialog\FormManageWorktree.Designer.cs">
-      <DependentUpon>FormManageWorktree.cs</DependentUpon>
-    </Compile>
     <Compile Include="Editor\Diff\CombinedDiffHighlightService.cs" />
     <Compile Include="Editor\Diff\DiffHighlightService.cs" />
     <Compile Include="Editor\Diff\DiffLineNumAnalyzer.cs" />
@@ -272,12 +240,21 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Hotkey\KeysExtensions.cs" />
-    <Compile Include="Script\PowerShellHelper.cs" />
-    <Compile Include="Objects\GitRemote.cs" />
-    <Compile Include="Objects\GitRemoteController.cs" />
-    <Compile Include="Objects\GitRemoteSaveResult.cs" />
     <Compile Include="RepoHosts.cs" />
     <Compile Include="AutoCompletion\AutoCompleteWord.cs" />
+    <!-- 
+    <Compile Include="RepoObjectsTree\RepoObjectsTree.cs" />
+    <Compile Include="RepoObjectsTree\RepoObjectsTree.Designer.cs">
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.ContextActions.cs" />
+    <Compile Include="RepoObjectsTree\ROT.DragDrops.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Branches.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Remotes.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Stashes.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Submodules.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Tags.cs" />
+	-->
     <Compile Include="UserControls\BranchComboBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -325,12 +302,12 @@
     </Compile>
     <Compile Include="UserControls\RevisionGridClasses\CopyToClipboardMenuHelper.cs" />
     <Compile Include="UserControls\RevisionGridClasses\CaptionCustomMenuRenderer.cs" />
+    <Compile Include="UserControls\RevisionGridClasses\FollowParentRewriter.cs" />
     <Compile Include="UserControls\RevisionGridClasses\GitRefListsForRevision.cs" />
     <Compile Include="UserControls\RevisionGridClasses\MenuUtil.cs" />
     <Compile Include="UserControls\RevisionGridClasses\NavigationHistory.cs" />
     <Compile Include="UserControls\RevisionGridClasses\ParentChildNavigationHistory.cs" />
     <Compile Include="UserControls\AuthorEmailBasedRevisionHighlighting.cs" />
-    <Compile Include="UserControls\RevisionGridUtils.cs" />
     <Compile Include="UserControls\TextEventArgs.cs" />
     <Compile Include="UserControls\WebBrowserCtrl.cs">
       <SubType>Component</SubType>
@@ -1081,10 +1058,6 @@
       <DependentUpon>FormMergeSubmodule.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="CommandsDialogs\FormReflog.resx">
-      <DependentUpon>FormReflog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\RepoHosting\CreatePullRequestForm.resx">
       <DependentUpon>CreatePullRequestForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1097,31 +1070,11 @@
       <DependentUpon>ViewPullRequestsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\DiffViewerSettingsPage.resx">
-      <DependentUpon>DiffViewerSettingsPage.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\BuildServerIntegrationSettingsPage.resx">
       <DependentUpon>BuildServerIntegrationSettingsPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\CommitDialogSettingsPage.resx">
       <DependentUpon>CommitDialogSettingsPage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\AutoLayoutSettingsPage.resx">
-      <DependentUpon>AutoLayoutSettingsPage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\DetailedSettingsPage.resx">
-      <DependentUpon>DetailedSettingsPage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\RepoDistSettingsPage.resx">
-      <DependentUpon>RepoDistSettingsPage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CommandsDialogs\WorktreeDialog\FormCreateWorktree.resx">
-      <DependentUpon>FormCreateWorktree.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CommandsDialogs\WorktreeDialog\FormManageWorktree.resx">
-      <DependentUpon>FormManageWorktree.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="HelperDialogs\FormBuildServerCredentials.resx">
       <DependentUpon>FormBuildServerCredentials.cs</DependentUpon>
@@ -1139,6 +1092,11 @@
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Plugins\PluginRootIntroductionPage.resx">
       <DependentUpon>PluginRootIntroductionPage.cs</DependentUpon>
     </EmbeddedResource>
+    <!-- 
+    <EmbeddedResource Include="RepoObjectsTree\RepoObjectsTree.resx">
+      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
+    </EmbeddedResource>
+	-->
     <EmbeddedResource Include="UserControls\BranchSelector.resx">
       <DependentUpon>BranchSelector.cs</DependentUpon>
     </EmbeddedResource>
@@ -1548,10 +1506,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Externals\conemu-inside\ConEmuWinForms\ConEmuWinForms.csproj">
-      <Project>{1DC7D403-484B-43B4-B017-1356397A32CB}</Project>
-      <Name>ConEmuWinForms</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Externals\Git.hub\Git.hub\Git.hub.csproj">
       <Project>{f50b1dbf-1c9f-4437-87ec-7aba805cc446}</Project>
       <Name>Git.hub</Name>
@@ -1624,14 +1578,6 @@
     <None Include="Translation\Dutch.xlf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Translation\English.Plugins.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\English.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\en_pseudo.Plugins.xlf" />
-    <None Include="Translation\en_pseudo.xlf" />
     <None Include="Translation\French.Plugins.xlf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -1712,9 +1658,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Icons\IconShowFirstParent.png" />
-    <Content Include="Resources\Icons\86.png" />
-    <None Include="Resources\Icons\IconBlank.png" />
+    <!--
+	<Content Include="RepoObjectsTree\BlankIcon.png" />
+	-->
     <Content Include="Translation\Czech.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1943,6 +1889,7 @@
     <None Include="Resources\Icons\IconWarning.png" />
     <None Include="Resources\Icons\IconGotoCurrentRevision.png" />
     <None Include="Resources\Icons\IconFileStatusUnknown.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionDown2.png" />
     <None Include="Resources\Icons\IconSubmoduleRevisionSemiDown.png" />
     <None Include="Resources\Icons\IconSubmoduleRevisionSemiDownDirty.png" />
     <None Include="Resources\Icons\IconSubmoduleRevisionSemiUp.png" />
@@ -1977,25 +1924,16 @@
     <None Include="Resources\Icons\error.png" />
     <None Include="Resources\Icons\loadingpanel.gif" />
   </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
   <ItemGroup />
-  <Import Project="..\FxCop.targets" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
+  <Import Project="..\packages\ConEmu.Core.16.3.10.0\build\ConEmu.Core.Targets" Condition="Exists('..\packages\ConEmu.Core.16.3.10.0\build\ConEmu.Core.Targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <!-- 
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\ConEmu.Core.16.3.10.0\build\ConEmu.Core.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ConEmu.Core.16.3.10.0\build\ConEmu.Core.Targets'))" />
+    -->
+  </Target>
 </Project>

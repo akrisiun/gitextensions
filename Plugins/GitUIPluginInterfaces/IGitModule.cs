@@ -8,17 +8,6 @@ namespace GitUIPluginInterfaces
     /// <summary>Provides manipulation with git module.</summary>
     public interface IGitModule
     {
-        ISettingsValueGetter LocalConfigFile { get; }
-
-        string AddRemote(string name, string path);
-        IList<IGitRef> GetRefs(bool tags = true, bool branches = true);
-        IEnumerable<string> GetSettings(string setting);
-        IList<IGitItem> GetTree(string id, bool full);
-        string RemoveRemote(string name);
-        string RenameRemote(string name, string newName);
-        void SetSetting(string setting, string value);
-        void UnsetSetting(string setting);
-
         /// <summary>
         /// Run git command, console window is hidden, redirect output
         /// </summary>
@@ -55,9 +44,6 @@ namespace GitUIPluginInterfaces
         /// <summary>Indicates whether the specified directory contains a git repository.</summary>
         bool IsValidGitWorkingDir();
 
-        /// <summary>Indicates whether the repository is in a 'detached HEAD' state.</summary>
-        bool IsDetachedHead();
-
         /// <summary>Gets the path to the git application executable.</summary>
         string GitCommand { get; }
 
@@ -71,7 +57,7 @@ namespace GitUIPluginInterfaces
 
         IGitModule GetSubmodule(string submoduleName);
 
-        string[] GetRemotes(bool allowEmpty = true);
+        string[] GetRemotes(bool allowEmpty);
 
         string GetSetting(string setting);
 

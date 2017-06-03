@@ -19,6 +19,8 @@ namespace GitCommands
         public SynchronizedProcessReader(Process aProcess)
         {
             Process = aProcess;
+            GitModule.RunningProcesses.Add(Process);
+
             stdOutputLoaderThread = new Thread(_ => Output = ReadByte(Process.StandardOutput.BaseStream));
             stdOutputLoaderThread.Start();
             stdErrLoaderThread = new Thread(_ => Error = ReadByte(Process.StandardError.BaseStream));
@@ -30,6 +32,9 @@ namespace GitCommands
             stdOutputLoaderThread.Join();
             stdErrLoaderThread.Join();              
             Process.WaitForExit();
+
+            if (GitModule.RunningProcesses.Contains(Process))
+                GitModule.RunningProcesses.Remove(Process);
         }
 
         public string OutputString(Encoding encoding)
