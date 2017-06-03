@@ -11,7 +11,7 @@ using ResourceManager;
 
 namespace GitUI.CommandsDialogs.RepoHosting
 {
-    public partial class ForkAndCloneForm : GitExtensionsForm
+    public partial class ForkAndCloneForm : GitExtensionsForm, IWin32Window
     {
         #region Translation
 
@@ -217,7 +217,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
         {
             var initialDir = _destinationTB.Text.Length > 0 ? _destinationTB.Text : "C:\\";
 
-            var userSelectedPath = OsShellUtil.PickFolder(this, initialDir);
+            var userSelectedPath = OsShellUtil.PickFolder((object)this, initialDir);
 
             if (userSelectedPath != null)
             {

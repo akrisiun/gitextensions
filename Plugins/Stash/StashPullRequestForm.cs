@@ -18,26 +18,25 @@ namespace Stash
         private readonly TranslationString _error = new TranslationString("Error");
 
         private Settings _settings;
-        private readonly StashPlugin _plugin;
         private readonly GitUIBaseEventArgs _gitUiCommands;
         private readonly ISettingsSource _settingsContainer;
         private readonly BindingList<StashUser> _reviewers = new BindingList<StashUser>();
         private readonly List<string> _stashUsers = new List<string>();
 
 
-        public StashPullRequestForm(StashPlugin plugin, ISettingsSource settings, GitUIBaseEventArgs gitUiCommands)
+        public StashPullRequestForm(GitUIBaseEventArgs gitUiCommands,
+            ISettingsSource settings)
         {
             InitializeComponent();
             Translate();
 
-            _plugin = plugin;
-            _settingsContainer = settings;
             _gitUiCommands = gitUiCommands;
+            _settingsContainer = settings;
         }
 
         private void StashPullRequestFormLoad(object sender, EventArgs e)
         {
-            _settings = Settings.Parse(_gitUiCommands.GitModule, _settingsContainer, _plugin);
+            _settings = Settings.Parse(_gitUiCommands.GitModule, _settingsContainer);
             if (_settings == null)
             {
                 MessageBox.Show(_yourRepositoryIsNotInStash.Text);

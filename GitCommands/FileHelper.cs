@@ -27,7 +27,7 @@ namespace GitCommands
             ".jpeg",//image
             ".mpg",//movie
             ".mpeg",//movie
-            ".msi",//installer
+            ".msi",//instaler
             ".pdf",//pdf document
             ".png",//image
             ".pdb",//debug file

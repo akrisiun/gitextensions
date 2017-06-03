@@ -88,7 +88,12 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
             DifftoolPath.Text = CurrentSettings.GetValue(string.Format("difftool.{0}.path", _NO_TRANSLATE_GlobalDiffTool.Text));
             DifftoolCmd.Text = CurrentSettings.GetValue(string.Format("difftool.{0}.cmd", _NO_TRANSLATE_GlobalDiffTool.Text));
 
-            GlobalKeepMergeBackup.SetNullableChecked(CurrentSettings.mergetool.keepBackup.Value);
+            GlobalKeepMergeBackup.SetNullableChecked(CurrentSettings.mergetool.keepBackup.Value, (o, val) 
+                =>
+                {
+                   GlobalKeepMergeBackup.CheckState = val == null ? CheckState.Indeterminate
+                   : val.Value ? CheckState.Checked : CheckState.Unchecked;
+                });
 
             globalAutoCrlfFalse.Checked = CurrentSettings.core.autocrlf.Value == AutoCRLFType.@false;
             globalAutoCrlfInput.Checked = CurrentSettings.core.autocrlf.Value == AutoCRLFType.input;
@@ -121,13 +126,18 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
                 CurrentSettings.SetPathValue(string.Format("mergetool.{0}.path", _NO_TRANSLATE_GlobalMergeTool.Text), MergetoolPath.Text);
                 CurrentSettings.SetPathValue(string.Format("mergetool.{0}.cmd", _NO_TRANSLATE_GlobalMergeTool.Text), MergeToolCmd.Text);
 
-                CurrentSettings.mergetool.keepBackup.Value = GlobalKeepMergeBackup.GetNullableChecked();
+                CurrentSettings.mergetool.keepBackup.Value = GlobalKeepMergeBackup.GetNullableChecked(toValue(GlobalKeepMergeBackup.CheckState));
 
                 if (globalAutoCrlfFalse.Checked) CurrentSettings.core.autocrlf.Value = AutoCRLFType.@false;
                 if (globalAutoCrlfInput.Checked) CurrentSettings.core.autocrlf.Value = AutoCRLFType.input;
                 if (globalAutoCrlfTrue.Checked) CurrentSettings.core.autocrlf.Value = AutoCRLFType.@true;
                 if (globalAutoCrlfNotSet.Checked) CurrentSettings.core.autocrlf.Value = null;
             }
+        }
+
+        bool? toValue(CheckState state)
+        {
+            return state == CheckState.Indeterminate ? (bool?)null : state == CheckState.Checked;
         }
 
         private void GlobalMergeTool_TextChanged(object sender, EventArgs e)

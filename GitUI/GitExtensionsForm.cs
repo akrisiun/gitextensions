@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using GitUI.Properties;
 using ResourceManager;
 using Settings = GitCommands.AppSettings;
-#if !__MonoCS__ && !NOAPICODE
+#if !__MonoCS__
 using Microsoft.WindowsAPICodePack.Taskbar;
 #endif
 
@@ -118,7 +118,7 @@ namespace GitUI
         public static Icon GetApplicationIcon(string iconStyle, string iconColor)
         {
             var colorIndex = (int)GetColorIndexByName(iconColor);
-            if (colorIndex == (int) ColorIndex.Unknown)
+            if (colorIndex == (int)ColorIndex.Unknown)
                 colorIndex = 0;
 
             Icon appIcon;

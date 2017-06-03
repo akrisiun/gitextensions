@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GitPluginShared.Properties
+namespace GitPlugin.Properties
 {
 
 

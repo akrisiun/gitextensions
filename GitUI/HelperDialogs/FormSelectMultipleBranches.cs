@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GitUIPluginInterfaces;
+using GitCommands;
+using ResourceManager;
 
 namespace GitUI.HelperDialogs
 {
@@ -15,7 +16,7 @@ namespace GitUI.HelperDialogs
             Translate();
         }
 
-        public FormSelectMultipleBranches(IList<IGitRef> branchesToSelect)
+        public FormSelectMultipleBranches(IList<GitRef> branchesToSelect)
         {
             InitializeComponent();
             Translate();
@@ -32,7 +33,7 @@ namespace GitUI.HelperDialogs
             int index = 0;
             foreach (object item in Branches.Items)
             {
-                var branch = item as IGitRef;
+                GitRef branch = item as GitRef;
                 if (branch != null && branch.Name == name)
                 {
                     Branches.SetItemChecked(index, true);
@@ -42,11 +43,11 @@ namespace GitUI.HelperDialogs
             }
         }
 
-        public IList<IGitRef> GetSelectedBranches()
+        public IList<GitRef> GetSelectedBranches()
         {
-            IList<IGitRef> branches = new List<IGitRef>();
+            IList<GitRef> branches = new List<GitRef>();
 
-            foreach (IGitRef head in Branches.CheckedItems)
+            foreach (GitRef head in Branches.CheckedItems)
                 branches.Add(head);
 
             return branches;

@@ -186,10 +186,13 @@ namespace GitUI.CommandsDialogs
 
                 if (!Module.InTheMiddleOfPatch() && !Module.InTheMiddleOfRebase() && _offerCommit)
                 {
-                    if (MessageBox.Show(this, allConflictsResolved.Text, allConflictsResolvedCaption.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        UICommands.StartCommitDialog(this);
-                    }
+                    // Disable commit
+
+                    //if (MessageBox.Show(this, allConflictsResolved.Text, allConflictsResolvedCaption.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    //{
+                    //    UICommands.StartCommitDialog(this);
+                    //}
+
                 }
 
                 Close();

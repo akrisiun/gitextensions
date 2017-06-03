@@ -463,8 +463,10 @@
 
         private System.Windows.Forms.TableLayoutPanel mainLayoutPanel;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private FileStatusList DiffFiles;
-        private Editor.FileViewer DiffText;
+
+        public FileStatusList DiffFiles;
+        public Editor.FileViewer DiffText;
+
         private System.Windows.Forms.TableLayoutPanel settingsLayoutPanel;
         private System.Windows.Forms.Label lblHeadCommit;
         private System.Windows.Forms.Button btnSwap;

@@ -34,16 +34,15 @@ namespace GitUI
         {
             if (!string.IsNullOrEmpty(email))
                 _gravatarImg.Visible = true;
-            else
-                return;
-
             Email = email;
             ImageFileName = string.Concat(Email, ".png");
             try
             {
                 UpdateGravatar();
             }
-            catch { }
+            catch (Exception)
+            {  // avatar excepion is not reason to stop at all!
+            }
         }
 
         /// <summary>

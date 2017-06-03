@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using GitUIPluginInterfaces;
 
 namespace GitCommands
 {
@@ -32,6 +31,8 @@ namespace GitCommands
 
     public sealed class RevisionGraph : IDisposable
     {
+        #region Properties, private
+
         public event EventHandler Exited;
         public event EventHandler<AsyncErrorEventArgs> Error
         {
@@ -65,7 +66,7 @@ namespace GitCommands
 
         private const string CommitBegin = "<(__BEGIN_COMMIT__)>"; // Something unlikely to show up in a comment
 
-        private Dictionary<string, List<IGitRef>> _refs;
+        private Dictionary<string, List<GitRef>> _refs;
 
         private enum ReadStep
         {
@@ -82,6 +83,8 @@ namespace GitCommands
         private readonly AsyncLoader _backgroundLoader = new AsyncLoader();
 
         private readonly GitModule _module;
+
+        #endregion
 
         public RevisionGraph(GitModule module)
         {
@@ -102,6 +105,8 @@ namespace GitCommands
                 _backgroundLoader.Dispose();
             }
         }
+
+        #region Execute
 
         public RefsFiltringOptions RefsOptions = RefsFiltringOptions.All | RefsFiltringOptions.Boundary;
         public string RevisionFilter = String.Empty;
@@ -214,13 +219,13 @@ namespace GitCommands
         }
 
         private static IEnumerable<string> ReadDataBlocks(StreamReader reader)
-        {
+            {
             int bufferSize = 4 * 1024;
             char[] buffer = new char[bufferSize];
 
             StringBuilder incompleteBlock = new StringBuilder();
             while (true)
-            {
+                {
                 int bytesRead = reader.ReadBlock(buffer, 0, bufferSize);
                 if (bytesRead == 0)
                     break;
@@ -229,12 +234,12 @@ namespace GitCommands
                 string[] dataBlocks = bufferString.Split(new char[] { '\0' });
 
                 if (dataBlocks.Length > 1)
-                {
+                    {
                     // There are at least two blocks, so we can return the first one
                     incompleteBlock.Append(dataBlocks[0]);
                     yield return incompleteBlock.ToString();
                     incompleteBlock.Clear();
-                }
+                    }
 
                 int lastDataBlockIndex = dataBlocks.Length - 1;
 
@@ -246,7 +251,7 @@ namespace GitCommands
 
                 // Append the beginning of the last block
                 incompleteBlock.Append(dataBlocks[lastDataBlockIndex]);
-            }
+        }
 
             if (incompleteBlock.Length > 0)
             {
@@ -263,12 +268,12 @@ namespace GitCommands
                 Exited(this, EventArgs.Empty);
         }
 
-        private IList<IGitRef> GetRefs()
+        private IList<GitRef> GetRefs()
         {
             var result = _module.GetRefs(true);
             bool validWorkingDir = _module.IsValidGitWorkingDir();
             _selectedBranchName = validWorkingDir ? _module.GetSelectedBranch() : string.Empty;
-            var selectedRef = result.FirstOrDefault(head => head.Name == _selectedBranchName);
+            GitRef selectedRef = result.FirstOrDefault(head => head.Name == _selectedBranchName);
 
             if (selectedRef != null)
             {
@@ -286,22 +291,6 @@ namespace GitCommands
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>Refs loaded while the latest processing of git log</returns>
-        public IEnumerable<IGitRef> LatestRefs()
-        {
-            if (_refs == null)
-            {
-                return Enumerable.Empty<IGitRef>();
-            }
-            else
-            {
-                return _refs.Values.Unwrap();
-            }
         }
 
         private string _previousFileName;
@@ -331,12 +320,18 @@ namespace GitCommands
             }
         }
 
+        #endregion
+
         void DataReceived(string data)
         {
-            if (data.StartsWith(CommitBegin))
+            if (data == null)
+                return; // TODO ????
+
+            if (data.StartsWith(CommitBegin))            
             {
                 // a new commit finalizes the last revision
                 FinishRevision();
+
                 _nextStep = ReadStep.Commit;
             }
 
@@ -349,13 +344,13 @@ namespace GitCommands
                     Debug.Assert(lines.Length == 11);
                     Debug.Assert(lines[0] == CommitBegin);
 
-                    _revision = new GitRevision(_module, null);
+                        _revision = new GitRevision(_module, null);
 
                     _revision.Guid = lines[1];
                     {
-                        List<IGitRef> gitRefs;
-                        if (_refs.TryGetValue(_revision.Guid, out gitRefs))
-                            _revision.Refs.AddRange(gitRefs);
+                    List<GitRef> gitRefs;
+                    if (_refs.TryGetValue(_revision.Guid, out gitRefs))
+                        _revision.Refs.AddRange(gitRefs);
                     }
 
                     // RemoveEmptyEntries is required for root commits. They should have empty list of parents.
@@ -394,7 +389,6 @@ namespace GitCommands
                     {
                         // Git adds \n between the format string (ends with \0 in our case) 
                         // and the first file name. So, we need to remove it from the file name.
-                        data = GitModule.ReEncodeFileNameFromLossless(data);
                         _revision.Name = data.TrimStart(new char[] { '\n' });
                     }
                     break;

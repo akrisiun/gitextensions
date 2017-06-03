@@ -37,8 +37,6 @@ namespace GitUI.HelperDialogs
                 DiffFiles.SetDiff(_revision);
 
                 commitInfo.Revision = _revision;
-
-                Text = "Diff - " + _revision.Guid.Substring(0, 10) + " - " + _revision.AuthorDate + " - " + _revision.Author + " - " + Module.WorkingDir; ;
             }
         }
 

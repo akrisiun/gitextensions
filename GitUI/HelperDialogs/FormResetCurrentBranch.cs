@@ -11,32 +11,13 @@ namespace GitUI.HelperDialogs
         readonly TranslationString resetHardWarning = new TranslationString("You are about to discard ALL local changes, are you sure?");
         readonly TranslationString resetCaption = new TranslationString("Reset branch");
 
-        public enum ResetType
-        {
-            Soft,
-            Mixed,
-            Hard
-        }
-
-        public FormResetCurrentBranch(GitUICommands aCommands, GitRevision Revision, ResetType resetType = ResetType.Mixed)
+        public FormResetCurrentBranch(GitUICommands aCommands, GitRevision Revision)
             : base(aCommands)
         {
             this.Revision = Revision;
 
             InitializeComponent(); Translate();
-
-            switch (resetType)
-            {
-                case ResetType.Soft:
-                    Soft.Checked = true;
-                    break;
-                case ResetType.Mixed:
-                    Mixed.Checked = true;
-                    break;
-                case ResetType.Hard:
-                    Hard.Checked = true;
-                    break;
-            }
+            this.checkNoAsk.Checked = false;    // default
         }
 
         public GitRevision Revision { get; set; }
@@ -62,7 +43,8 @@ namespace GitUI.HelperDialogs
             }
             else if (Hard.Checked)
             {
-                if (MessageBox.Show(this, resetHardWarning.Text, resetCaption.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                if (this.checkNoAsk.Checked ||
+                    MessageBox.Show(this, resetHardWarning.Text, resetCaption.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                 {
                     FormProcess.ShowDialog(this, GitCommandHelpers.ResetHardCmd(Revision.Guid));
 
@@ -75,13 +57,11 @@ namespace GitUI.HelperDialogs
             }
 
             UICommands.RepoChangedNotifier.Notify();
-            DialogResult = DialogResult.OK;
             Close();
         }
 
         private void Cancel_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
             Close();
         }
     }

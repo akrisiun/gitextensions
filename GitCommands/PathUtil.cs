@@ -211,23 +211,5 @@ namespace GitCommands
             fullPath = null;
             return false;
         }
-
-        public static bool TryFindShellPath(string shell, out string shellPath)
-        {
-            shellPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Git", shell);
-            if (PathUtil.PathExists(shellPath))
-                return true;
-
-            shellPath = Path.Combine(AppSettings.GitBinDir, shell);
-            if (PathUtil.PathExists(shellPath))
-                return true;
-
-            if (PathUtil.TryFindFullPath(shell, out shellPath))
-                return true;
-
-            shellPath = null;
-            return false;
-        }
-
     }
 }

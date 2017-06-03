@@ -120,7 +120,7 @@ namespace GitExtensionsTest
         {
             var paths = GetValidPaths().Concat(GetInvalidPaths());
             var quotedPaths = paths.Select(path => path.Quote(" ")).Select(path => path.Quote());
-            string pathVariable = string.Join(";", quotedPaths);
+            string pathVariable = string.Join(";", paths);
             var envPaths = PathUtil.GetEnvironmentPaths(pathVariable);
             var validEnvPaths = PathUtil.GetValidPaths(envPaths);
             CollectionAssert.AreEqual(validEnvPaths, GetValidPaths());

@@ -7,7 +7,7 @@ using ResourceManager;
 
 namespace GitUI.CommandsDialogs
 {
-    public partial class FormInit : GitExtensionsForm
+    public partial class FormInit : GitExtensionsForm, IWin32Window
     {
         private readonly TranslationString _chooseDirectory =
             new TranslationString("Please choose a directory.");
@@ -79,7 +79,7 @@ namespace GitUI.CommandsDialogs
 
         private void BrowseClick(object sender, EventArgs e)
         {
-            var userSelectedPath = OsShellUtil.PickFolder(this);
+            var userSelectedPath = OsShellUtil.PickFolder(this as IWin32Window);
 
             if (userSelectedPath != null)
             {

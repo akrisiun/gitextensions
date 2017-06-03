@@ -58,21 +58,33 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
 
         protected override void SettingsToPage()
         {
-            _populateBuildServerTypeTask.ContinueWith(
-                task =>
-                {
-                    checkBoxEnableBuildServerIntegration.SetNullableChecked(CurrentSettings.BuildServer.EnableIntegration.Value);
-                    checkBoxShowBuildSummary.SetNullableChecked(CurrentSettings.BuildServer.ShowBuildSummaryInGrid.Value);
+            //_populateBuildServerTypeTask.ContinueWith(
+            //    task =>
+            //    {
+            //        checkBoxEnableBuildServerIntegration.SetNullableChecked(CurrentSettings.BuildServer.EnableIntegration.Value
+            //            , (o, val)
+            //            =>
+            //            {
+            //                checkBoxEnableBuildServerIntegration.CheckState = val == null ? CheckState.Indeterminate
+            //                : val.Value ? CheckState.Checked : CheckState.Unchecked;
+            //            }););
+            //        checkBoxShowBuildSummary.SetNullableChecked(CurrentSettings.BuildServer.ShowBuildSummaryInGrid.Value
+            //            , (o, val)
+            //            =>
+            //            {
+            //                checkBoxShowBuildSummary.CheckState = val == null ? CheckState.Indeterminate
+            //                : val.Value ? CheckState.Checked : CheckState.Unchecked;
+            //            }););
 
-                    BuildServerType.SelectedItem = CurrentSettings.BuildServer.Type.Value ?? _noneItem.Text;
-                },
-                TaskScheduler.FromCurrentSynchronizationContext());
+            //        BuildServerType.SelectedItem = CurrentSettings.BuildServer.Type.Value ?? _noneItem.Text;
+            //    },
+            //    TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         protected override void PageToSettings()
         {
-            CurrentSettings.BuildServer.EnableIntegration.Value = checkBoxEnableBuildServerIntegration.GetNullableChecked();
-            CurrentSettings.BuildServer.ShowBuildSummaryInGrid.Value = checkBoxShowBuildSummary.GetNullableChecked();
+            //CurrentSettings.BuildServer.EnableIntegration.Value = checkBoxEnableBuildServerIntegration.GetNullableChecked();
+            //CurrentSettings.BuildServer.ShowBuildSummaryInGrid.Value = checkBoxShowBuildSummary.GetNullableChecked();
 
             var selectedBuildServerType = GetSelectedBuildServerType();
 
@@ -88,6 +100,9 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
         private void ActivateBuildServerSettingsControl()
         {
             var controls = buildServerSettingsPanel.Controls.OfType<IBuildServerSettingsUserControl>().Cast<Control>();
+            if (controls == null)
+                return;
+
             var previousControl = controls.SingleOrDefault();
             if (previousControl != null) previousControl.Dispose();
 

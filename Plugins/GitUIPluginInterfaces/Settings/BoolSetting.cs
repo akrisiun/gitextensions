@@ -70,12 +70,15 @@ namespace GitUIPluginInterfaces
                     settingVal = Setting[settings];
                 }
 
-                control.SetNullableChecked(settingVal);
+                control.SetNullableChecked(settingVal, (c, val) => 
+                    control.CheckState  = val == null ? CheckState.Indeterminate : 
+                        val ?? true ? CheckState.Checked : CheckState.Unchecked);
             }
 
             public override void SaveSetting(ISettingsSource settings, CheckBox control)
             {
-                Setting[settings] = control.GetNullableChecked();
+                bool? isChecked = (control.CheckState == CheckState.Indeterminate) ? (bool?)null : (control.CheckState == CheckState.Checked);
+                Setting[settings] = UIExtensions.GetNullableChecked(control, isChecked);
             }
         }
     }

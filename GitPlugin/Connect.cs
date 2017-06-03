@@ -5,8 +5,7 @@ using System.Resources;
 using EnvDTE;
 using EnvDTE80;
 using Extensibility;
-using GitPluginShared;
-using GitPluginShared.Commands;
+using GitPlugin.Commands;
 using Microsoft.VisualStudio.CommandBars;
 using Thread = System.Threading.Thread;
 

@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GitCommands</RootNamespace>
-    <AssemblyName>GitCommands</AssemblyName>
+    <AssemblyName>GitCommandsLib</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>gitcommandkey.snk.pfx</AssemblyOriginatorKeyFile>
@@ -43,11 +43,13 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\..\bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET45;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NoWarn>1573</NoWarn>
+    <CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -59,11 +61,13 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SmartFormat">
-      <HintPath>..\..\..\packages\SmartFormat.NET.1.6.1.0\lib\net40-Client\SmartFormat.dll</HintPath>
+    <Reference Include="SmartFormat, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Bin\SmartFormat.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
@@ -83,6 +87,11 @@
     <Compile Include="ExceptionUtils.cs" />
     <Compile Include="FileHelper.cs" />
     <Compile Include="Git\AuthorEmailEqualityComparer.cs" />
+    <Compile Include="Git\BranchComparison.cs" />
+    <Compile Include="Git\GitBranchNameNormaliser.cs" />
+    <Compile Include="Git\GitBranchNameOptions.cs" />
+    <Compile Include="Git\GitCommandResult.cs" />
+    <Compile Include="Git\RemoteInfo.cs" />
     <Compile Include="Logging\CommandLogEntry.cs" />
     <Compile Include="RemoteActionResult.cs" />
     <Compile Include="Settings\BasicSettingTypes.cs" />
@@ -96,6 +105,7 @@
     <Compile Include="Settings\SettingsCache.cs" />
     <Compile Include="Settings\SettingsContainer.cs" />
     <Compile Include="Settings\SettingsPath.cs" />
+    <Compile Include="Strings.cs" />
     <Compile Include="Utils\EnvUtils.cs" />
     <Compile Include="GitExtLinks\GitExtLink.cs" />
     <Compile Include="GitExtLinks\GitExtLinkDef.cs" />

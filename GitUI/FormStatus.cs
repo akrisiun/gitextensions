@@ -9,8 +9,7 @@ using GitUI.UserControls;
 using JetBrains.Annotations;
 
 using ResourceManager;
-using System.Windows.Threading;
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
 using Microsoft.WindowsAPICodePack.Taskbar;
 #endif
 
@@ -22,7 +21,6 @@ namespace GitUI
         public delegate void ProcessAbort(FormStatus form);
 
         private readonly bool UseDialogSettings = true;
-        private DispatcherFrameModalControler ModalControler;
 
         public FormStatus(): this(true)
         { }
@@ -104,7 +102,7 @@ namespace GitUI
                             ProgressBar.Style = ProgressBarStyle.Blocks;
                         ProgressBar.Value = Math.Min(100, progressValue);
 
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
                         if (GitCommands.Utils.EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
                         {
                             try
@@ -119,7 +117,7 @@ namespace GitUI
 #endif
                     }
                     // Show last progress message in the title, unless it's showin in the control body already
-                    if(!ConsoleOutput.IsDisplayingFullProcessOutput)
+                    if (!ConsoleOutput.IsDisplayingFullProcessOutput)
                       Text = text;
                 };
             BeginInvoke(method, this);
@@ -143,47 +141,46 @@ namespace GitUI
 
         public void Done(bool isSuccess)
         {
-            try
+            AppendMessageCrossThread("Done");
+            ProgressBar.Visible = false;
+            Ok.Enabled = true;
+            Ok.Focus();
+            AcceptButton = Ok;
+            Abort.Enabled = false;
+#if !__MonoCS__ && !NET45
+            if (GitCommands.Utils.EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
             {
-                AppendMessageCrossThread("Done");
-                ProgressBar.Visible = false;
-                Ok.Enabled = true;
-                Ok.Focus();
-                AcceptButton = Ok;
-                Abort.Enabled = false;
-#if !__MonoCS__
-                if (GitCommands.Utils.EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
+                try
                 {
-                    try
-                    {
-                        TaskbarManager.Instance.SetProgressState(isSuccess
-                                                                     ? TaskbarProgressBarState.Normal
-                                                                     : TaskbarProgressBarState.Error);
+                    TaskbarManager.Instance.SetProgressState(isSuccess
+                                                                 ? TaskbarProgressBarState.Normal
+                                                                 : TaskbarProgressBarState.Error);
 
-                        TaskbarManager.Instance.SetProgressValue(100, 100);
-                    }
-                    catch (InvalidOperationException) { }
+                    TaskbarManager.Instance.SetProgressValue(100, 100);
                 }
+                catch (InvalidOperationException) { }
+            }
 #endif
 
-                if (isSuccess)
-                    picBoxSuccessFail.Image = GitUI.Properties.Resources.success;
-                else
-                    picBoxSuccessFail.Image = GitUI.Properties.Resources.error;
+            if (isSuccess)
+                picBoxSuccessFail.Image = GitUI.Properties.Resources.success;
+            else
+                picBoxSuccessFail.Image = GitUI.Properties.Resources.error;
 
-                errorOccurred = !isSuccess;
+            errorOccurred = !isSuccess;
 
-                if (isSuccess && !showOnError && (UseDialogSettings && AppSettings.CloseProcessDialog))
-                {
-                    Close();
-                }
-            }
-            finally
+            if (showOnError && !isSuccess)
             {
-                if (ModalControler != null)
-                {
-                    ModalControler.EndModal(isSuccess);
-                }
+                // For some reason setting the state to normal interferes with
+                // proper parent centering...
+                WindowState = FormWindowState.Normal;
+                CenterToParent();
+                Visible = true;
+            }
+
+            if (isSuccess && (showOnError || (UseDialogSettings && GitCommands.AppSettings.CloseProcessDialog)))
+            {
+                Close();
             }
         }
 
@@ -214,11 +211,13 @@ namespace GitUI
 
         public void ShowDialogOnError(IWin32Window owner)
         {
+            Visible = false;
             KeepDialogOpen.Visible = false;
             Abort.Visible = false;
             showOnError = true;
-            ModalControler = new DispatcherFrameModalControler(this, owner);
-            ModalControler.BeginModal();
+            // Just hiding it still seems to draw one frame of the control
+            WindowState = FormWindowState.Minimized;
+            ShowDialog(owner);
         }
 
         private void Ok_Click(object sender, EventArgs e)
@@ -232,21 +231,6 @@ namespace GitUI
             if (DesignMode)
                 return;
 
-            if (ModalControler != null)
-            {
-                return;
-            }            
-
-            Start();
-        }
-
-        private void FormStatus_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            AfterClosed();
-        }
-
-        internal void Start()
-        {
             if (ProcessCallback == null)
             {
                 throw new InvalidOperationException("You can't load the form without a ProcessCallback");
@@ -256,10 +240,28 @@ namespace GitUI
             {
                 Abort.Visible = false;
             }
-
             StartPosition = FormStartPosition.CenterParent;
 
-#if !__MonoCS__
+            Start();
+        }
+
+        private void FormStatus_FormClosed(object sender, FormClosedEventArgs e)
+        {
+#if !__MonoCS__ && !NET45
+            if (GitCommands.Utils.EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
+            {
+                try
+                {
+                    TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.NoProgress);
+                }
+                catch (InvalidOperationException) { }
+            }
+#endif
+        }
+
+        private void Start()
+        {
+#if !__MonoCS__ && !NET45
             if (GitCommands.Utils.EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
             {
                 try
@@ -298,51 +300,5 @@ namespace GitUI
           if((!KeepDialogOpen.Checked /* keep off */) && (Ok.Enabled /* done */) && (!errorOccurred /* and successful */)) /* not checking for UseDialogSettings because checkbox is only visible with True */
               Close();
       }
-
-        internal void AfterClosed()
-        {
-#if !__MonoCS__
-            if (GitCommands.Utils.EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
-            {
-                try
-                {
-                    TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.NoProgress);
-                }
-                catch (InvalidOperationException) { }
-            }
-#endif
-        }
-    }
-
-    class DispatcherFrameModalControler
-    {
-        private DispatcherFrame DispatcherFrame = new DispatcherFrame();
-        private FormStatus FormStatus;
-        private IWin32Window Owner;
-
-        public DispatcherFrameModalControler(FormStatus aFormStatus, IWin32Window aOwner)
-        {
-            FormStatus = aFormStatus;
-            Owner = aOwner;
-        }
-
-        public void BeginModal()
-        {
-            FormStatus.Start();
-            Dispatcher.PushFrame(DispatcherFrame);
-        }
-
-        public void EndModal(bool success)
-        {
-            if (!success)
-            {
-                FormStatus.ShowDialog(Owner);
-            }
-            else
-            {
-                FormStatus.AfterClosed();
-            }
-            DispatcherFrame.Continue = false;
-        }
     }
 }

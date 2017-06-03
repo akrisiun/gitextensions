@@ -8,7 +8,7 @@ using ICSharpCode.TextEditor;
 
 namespace GitUI.Editor.Diff
 {
-    class DiffViewerLineNumberCtrl : AbstractMargin
+    public class DiffViewerLineNumberCtrl : AbstractMargin
     {
         const int TextHorizontalMargin = 4;
 
@@ -149,5 +149,7 @@ namespace GitUI.Editor.Diff
         {
             _visible = visible;
         }
+
+        public void Clear() { Clear(false); }
     }
 }

@@ -21,23 +21,29 @@ namespace GitCommands.Logging
 
         public void Log(string command, DateTime executionStartTimestamp, DateTime executionEndTimestamp)
         {
+            CommandLogEntry commandLogEntry = null;
             lock (_logQueue)
             {
                 if (_logQueue.Count >= LogLimit)
                     _logQueue.Dequeue();
 
-                var commandLogEntry = new CommandLogEntry(command, executionStartTimestamp, executionEndTimestamp);
+                commandLogEntry = new CommandLogEntry(command, executionStartTimestamp, executionEndTimestamp);
                 _logQueue.Enqueue(commandLogEntry);
             }
 
             var handler = CommandsChanged;
             if (handler != null)
-                handler(this, EventArgs.Empty);
+                handler(this, new EventArgs<CommandLogEntry>() { Value = commandLogEntry });
         }
 
         public override string ToString()
         {
             return string.Join(Environment.NewLine, GetCommands().Select(cle => cle.ToString()));
         }
+    }
+
+    public class EventArgs<T> : EventArgs where T : class
+    {
+        public T Value { get; set; }
     }
 }

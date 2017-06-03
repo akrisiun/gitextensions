@@ -19,28 +19,23 @@ namespace GitCommands
         const string NameFormat = "stash@{{{0}}}";
         const string DefaultFormat = "WIP on ";
         const string CustomFormat = "On ";
-        const string AutostashFormat = "autostash";
         static int DefaultFormatLength = DefaultFormat.Length;
         static int CustomFormatLength = CustomFormat.Length;
 
         /// <summary>Initializes a new <see cref="GitStash"/> with all properties null.</summary>
-        public GitStash(string stash)
+        public GitStash() { }
+
+        public GitStash(string stash, int i)
         {
             if (string.IsNullOrWhiteSpace(stash))
             {
                 throw new ArgumentException("Stash has NO characters.", "stash");
             }
-            _stash = stash;
-        }
-
-        public GitStash(string stash, int i)
-            : this(stash)
-        {
 
             // "stash@{i}: WIP on {branch}: {PreviousCommitMiniSHA} {PreviousCommitMessage}"
             // "stash@{i}: On {branch}: {Message}"
-            // "stash@{i}: autostash"
 
+            _stash = stash;
             Index = i;
 
             Name = string.Format(NameFormat, Index);
@@ -49,8 +44,7 @@ namespace GitCommands
             if (msgStart < stash.Length)
             {
                 Message = stash.Substring(msgStart).Trim();
-                if(Message != AutostashFormat)
-                    FindBranch();
+                FindBranch();
             }
         }
 

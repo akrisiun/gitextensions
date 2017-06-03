@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ResourceManager</RootNamespace>
-    <AssemblyName>ResourceManager</AssemblyName>
+    <AssemblyName>ResourceManagerLib</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -40,12 +40,12 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\..\bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -86,9 +86,9 @@
     <Compile Include="Translate.cs" />
     <Compile Include="ITranslation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TranslationStringRef.cs" />
     <Compile Include="TranslationUtils.cs" />
     <Compile Include="Xliff\TranslationUtl.cs" />
-    <Compile Include="TranslationString.cs" />
     <Compile Include="Translator.cs" />
     <Compile Include="Xliff\TranslationFile.cs" />
     <Compile Include="Xliff\TranslationBody.cs" />
@@ -98,7 +98,6 @@
     <Compile Include="Xliff\TranslationItem.cs" />
     <Compile Include="Xliff\TranslationSerializer.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\GitCommands\GitCommandsLib.csproj">
       <Project>{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}</Project>

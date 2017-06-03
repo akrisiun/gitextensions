@@ -1219,7 +1219,7 @@ namespace GitUI.CommandsDialogs
                 return;
             Stage(Unstaged.SelectedItems.ToList());
             if (Unstaged.IsEmpty)
-                Message.Focus();
+                Staged.Focus();
         }
 
         void Unstaged_DoubleClick(object sender, EventArgs e)
@@ -1227,17 +1227,14 @@ namespace GitUI.CommandsDialogs
             _currentFilesList = Unstaged;
             Stage(Unstaged.SelectedItems.ToList());
             if (Unstaged.IsEmpty)
-                Message.Focus();
+                Staged.Focus();
         }
 
         private void StageAllAccordingToFilter()
         {
             Stage(Unstaged.GitItemFilteredStatuses);
             Unstaged.SetFilter(String.Empty);
-            if (Unstaged.IsEmpty)
-                Message.Focus();
-            else
-                Staged.Focus();
+            Staged.Focus();
         }
 
         private void StageAllToolStripMenuItemClick(object sender, EventArgs e)
@@ -2419,15 +2416,15 @@ namespace GitUI.CommandsDialogs
 
         private void openContainingFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenContainingFolder(Unstaged, this.Module);
+            OpenContainingFolder(Unstaged);
         }
 
-        public static void OpenContainingFolder(FileStatusList list, GitModule module)
+        private void OpenContainingFolder(FileStatusList list)
         {
             foreach (var item in list.SelectedItems)
             {
                 var fileNames = new StringBuilder();
-                fileNames.Append((Path.Combine(module.WorkingDir, item.Name)).ToNativePath());
+                fileNames.Append((Path.Combine(Module.WorkingDir, item.Name)).ToNativePath());
 
                 string filePath = fileNames.ToString();
                 if (File.Exists(filePath))
@@ -2449,7 +2446,7 @@ namespace GitUI.CommandsDialogs
 
         private void toolStripMenuItem10_Click(object sender, EventArgs e)
         {
-            OpenContainingFolder(Staged, this.Module);
+            OpenContainingFolder(Staged);
         }
 
         private void toolStripMenuItem4_Click(object sender, EventArgs e)

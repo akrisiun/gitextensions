@@ -28,7 +28,7 @@ namespace GitUI
         public readonly TranslationString CombinedDiff =
             new TranslationString("Combined Diff");
 
-        private IDisposable selectedIndexChangeSubscription;
+        private readonly IDisposable selectedIndexChangeSubscription;
         private static readonly TimeSpan SelectedIndexChangeThrottleDuration = TimeSpan.FromMilliseconds(50);
 
         private const int ImageSize = 16;
@@ -39,6 +39,13 @@ namespace GitUI
         {
             InitializeComponent(); Translate();
             FilterVisible = false;
+
+            selectedIndexChangeSubscription = Observable.FromEventPattern(
+                h => FileStatusListView.SelectedIndexChanged += h,
+                h => FileStatusListView.SelectedIndexChanged -= h)
+                .Throttle(SelectedIndexChangeThrottleDuration)
+                .ObserveOn(SynchronizationContext.Current)
+                .Subscribe(_ => FileStatusListView_SelectedIndexChanged());
 
             SelectFirstItemOnSetItems = true;
             _noDiffFilesChangesDefaultText = NoFiles.Text;
@@ -77,23 +84,7 @@ namespace GitUI
 
         protected override void DisposeCustomResources()
         {
-            if (selectedIndexChangeSubscription != null)
-            {
-                selectedIndexChangeSubscription.Dispose();
-            }
-        }
-
-        private void EnsureSelectedIndexChangeSubscription()
-        {
-            if (selectedIndexChangeSubscription == null)
-            {
-                selectedIndexChangeSubscription = Observable.FromEventPattern(
-                    h => FileStatusListView.SelectedIndexChanged += h,
-                    h => FileStatusListView.SelectedIndexChanged -= h)
-                    .Throttle(SelectedIndexChangeThrottleDuration)
-                    .ObserveOn(SynchronizationContext.Current)
-                    .Subscribe(_ => FileStatusListView_SelectedIndexChanged());
-            }
+            selectedIndexChangeSubscription.Dispose();
         }
 
         private static ImageList _images;
@@ -324,18 +315,6 @@ namespace GitUI
         }
 #endif
 
-        public int UnfilteredItemsCount()
-        {
-            if (_itemsDictionary == null)
-            {
-                return 0;
-            }
-            else
-            {
-                return _itemsDictionary.Select(pair => pair.Value).Unwrap().Count();
-            }
-        }
-
         [Browsable(false)]
         public IEnumerable<GitItemStatus> AllItems
         {
@@ -424,30 +403,6 @@ namespace GitUI
                 foreach (ListViewItem item in FileStatusListView.SelectedItems)
                     return item.Group != null ? (string)item.Group.Tag : null;
                 return null;
-            }
-        }
-
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        [Browsable(false)]
-        public IEnumerable<string> SelectedItemParents
-        {
-            get
-            {
-                return FileStatusListView.SelectedItems.Cast<ListViewItem>()
-                    .Where(i => i.Group != null)
-                    .Select(i => (string)i.Group.Tag);
-            }
-        }
-
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        [Browsable(false)]
-        public IEnumerable<Tuple<GitItemStatus, string>> SelectedItemsWithParent
-        {
-            get
-            {
-                return FileStatusListView.SelectedItems.Cast<ListViewItem>()
-                    .Where(i => i.Group != null) // Or maybe return null parents?
-                    .Select(i => new Tuple<GitItemStatus, string>((GitItemStatus)i.Tag, (string)i.Group.Tag));
             }
         }
 
@@ -635,14 +590,9 @@ namespace GitUI
         private void UpdateFileStatusListView(bool updateCausedByFilter = false)
         {
             if (_itemsDictionary == null || !_itemsDictionary.Any())
-            {
                 HandleVisibility_NoFilesLabel_FilterComboBox(filesPresent: false);
-            }
             else
-            {
-                EnsureSelectedIndexChangeSubscription();
                 HandleVisibility_NoFilesLabel_FilterComboBox(filesPresent: true);
-            }
             FileStatusListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
             var previouslySelectedItems = new List<GitItemStatus>();
@@ -652,9 +602,6 @@ namespace GitUI
                 {
                     previouslySelectedItems.Add((GitItemStatus)Item.Tag);
                 }
-
-                if (DataSourceChanged != null)
-                    DataSourceChanged(this, new EventArgs());
             }
 
             FileStatusListView.BeginUpdate();

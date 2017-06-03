@@ -15,16 +15,14 @@ namespace GitUI.CommandsDialogs
     public class BuildReportTabPageExtension
     {
         private readonly TabControl tabControl;
-        private readonly string _caption;
 
         private TabPage buildReportTabPage;
         private WebBrowserCtrl buildReportWebBrowser;
         private GitRevision selectedGitRevision;
 
-        public BuildReportTabPageExtension(TabControl tabControl, string caption)
+        public BuildReportTabPageExtension(TabControl tabControl)
         {
             this.tabControl = tabControl;
-            _caption = caption;
         }
 
         public void FillBuildReport(GitRevision revision)
@@ -98,7 +96,7 @@ namespace GitUI.CommandsDialogs
                 {
                     Padding = new Padding(3),
                     TabIndex = tabControl.Controls.Count,
-                    Text = _caption,
+                    Text = "Build Report",
                     UseVisualStyleBackColor = true
                 };
             this.buildReportWebBrowser = new WebBrowserCtrl

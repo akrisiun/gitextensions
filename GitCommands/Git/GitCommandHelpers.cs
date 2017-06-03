@@ -599,6 +599,7 @@ namespace GitCommands
                 Environment.SetEnvironmentVariable("GIT_SSH", path, EnvironmentVariableTarget.Process);
         }
 
+        /// <summary>Indicates whether the git SSH command uses Plink.</summary>
         public static bool Plink()
         {
             var sshString = GetSsh();
@@ -913,7 +914,7 @@ namespace GitCommands
 
                 if (line != null)
                 {
-                    var match = Regex.Match(line, @"diff --git a/(.+)\sb/(.+)");
+                    var match = Regex.Match(line, @"diff --git a/(\S+) b/(\S+)");
                     if (match.Groups.Count > 1)
                     {
                         status.Name = match.Groups[1].Value;
@@ -921,7 +922,7 @@ namespace GitCommands
                     }
                     else
                     {
-                        match = Regex.Match(line, @"diff --cc (.+)");
+                        match = Regex.Match(line, @"diff --cc (\S+)");
                         if (match.Groups.Count > 1)
                         {
                             status.Name = match.Groups[1].Value;
@@ -1029,7 +1030,7 @@ namespace GitCommands
 
                 if (x != '?' && x != '!' && x != ' ')
                 {
-                    GitItemStatus gitItemStatusX = null;
+                    GitItemStatus gitItemStatusX;
                     if (x == 'R' || x == 'C') // Find renamed files...
                     {
                         string nextfile = n + 1 < files.Length ? files[n + 1] : "";
@@ -1138,7 +1139,7 @@ namespace GitCommands
             return string.Empty;
         }
 
-        public static string MergeBranchCmd(string branch, bool allowFastForward, bool squash, bool noCommit, string strategy, bool allowUnrelatedHistories)
+        public static string MergeBranchCmd(string branch, bool allowFastForward, bool squash, bool noCommit, string strategy)
         {
             StringBuilder command = new StringBuilder("merge");
 
@@ -1153,8 +1154,6 @@ namespace GitCommands
                 command.Append(" --squash");
             if (noCommit)
                 command.Append(" --no-commit");
-            if (allowUnrelatedHistories)
-                command.Append(" --allow-unrelated-histories");
 
             command.Append(" ");
             command.Append(branch);

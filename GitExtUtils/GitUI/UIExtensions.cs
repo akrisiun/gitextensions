@@ -1,24 +1,27 @@
-﻿using System.Windows.Forms;
+﻿//using System.Windows.Forms;
+
+using System;
 
 namespace GitUI
 {
     public static class UIExtensions
     {
-        public static bool? GetNullableChecked(this CheckBox chx)
+        public static bool? GetNullableChecked(this object chx, bool? IsChecked) // CheckBox chx)
         {
-            if (chx.CheckState == CheckState.Indeterminate)
+            if (IsChecked == null)  // chx.CheckState == CheckState.Indeterminate)
                 return null;
             else
-                return chx.Checked;
+                return IsChecked.Value; // chx.Checked;
 
         }
 
-        public static void SetNullableChecked(this CheckBox chx, bool? Checked)
+        // public static void SetNullableChecked(this CheckBox chx, bool? Checked)
+        public static void SetNullableChecked(this object chx, bool? Checked, Action<object, bool?> setState)
         {
             if (Checked.HasValue)
-                chx.CheckState = Checked.Value ? CheckState.Checked : CheckState.Unchecked;
+                setState(chx, Checked.Value); // chx.CheckState = Checked.Value ? CheckState.Checked : CheckState.Unchecked;
             else
-                chx.CheckState = CheckState.Indeterminate;
+                setState(chx, null); //  chx.CheckState = CheckState.Indeterminate;
         }
     }
 }

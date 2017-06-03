@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GitUIPluginInterfaces</RootNamespace>
-    <AssemblyName>GitUIPluginInterfaces</AssemblyName>
+    <AssemblyName>GitUIPluginInterfacesLib</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -40,11 +40,11 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\..\bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\..\FxCopRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -75,6 +75,7 @@
     <Compile Include="BuildServerIntegration\BuildInfo.cs" />
     <Compile Include="BuildServerIntegration\BuildServerAdapterMetadataAttribute.cs" />
     <Compile Include="BuildServerIntegration\BuildServerCredentials.cs" />
+    <Compile Include="BuildServerIntegration\BuildServerSettingsHelper.cs" />
     <Compile Include="BuildServerIntegration\BuildServerSettingsUserControlMetadata.cs" />
     <Compile Include="BuildServerIntegration\IBuildServerAdapter.cs" />
     <Compile Include="BuildServerIntegration\IBuildServerCredentials.cs" />
@@ -88,6 +89,10 @@
     <Compile Include="IGitModule.cs" />
     <Compile Include="IGitRemoteCommand.cs" />
     <Compile Include="ILockableNotifier.cs" />
+    <Compile Include="Notifications\ContextAction.cs" />
+    <Compile Include="Notifications\INotifications.cs" />
+    <Compile Include="Notifications\Notification.cs" />
+    <Compile Include="Notifications\StatusSeverity.cs" />
     <Compile Include="Settings\BoolSetting.cs" />
     <Compile Include="ISetting.cs" />
     <Compile Include="ISettingsSource.cs" />
@@ -110,6 +115,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\GitExtUtils\GitExtUtilsLib.csproj">
+      <Project>{0f1f1168-a4b2-4fa2-b17b-735140d17f39}</Project>
+      <Name>GitExtUtilsLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

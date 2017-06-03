@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -81,11 +81,12 @@
     <Compile Include="GitCmdResult.cs" />
     <Compile Include="GitUIPostActionEventArgs.cs" />
     <Compile Include="IBrowseRepo.cs" />
-    <Compile Include="IGitItem.cs" />
     <Compile Include="IGitPluginForRepository.cs" />
     <Compile Include="IGitModule.cs" />
-    <Compile Include="IGitRef.cs" />
     <Compile Include="IGitRemoteCommand.cs" />
+    <Compile Include="Notifications\ContextAction.cs" />
+    <Compile Include="Notifications\INotifications.cs" />
+    <Compile Include="Notifications\Notification.cs" />
     <Compile Include="ILockableNotifier.cs" />
     <Compile Include="Settings\BoolSetting.cs" />
     <Compile Include="ISetting.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="RepositoryHosts\IPasswordHelper.cs" />
     <Compile Include="RepositoryHosts\IHostedRemote.cs" />
     <Compile Include="RepositoryHosts\IPullRequestInformation.cs" />
+    <Compile Include="Notifications\StatusSeverity.cs" />
     <Compile Include="Settings\NumberSetting.cs" />
     <Compile Include="Settings\ChoiceSetting.cs" />
     <Compile Include="Settings\PasswordSetting.cs" />

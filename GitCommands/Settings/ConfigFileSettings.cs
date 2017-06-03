@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using GitCommands.Config;
-using GitUIPluginInterfaces;
 
 namespace GitCommands.Settings
 {
-    public class ConfigFileSettings : SettingsContainer<ConfigFileSettings, ConfigFileSettingsCache>, ISettingsValueGetter
+    public class ConfigFileSettings : SettingsContainer<ConfigFileSettings, ConfigFileSettingsCache>
     {
         public ConfigFileSettings(ConfigFileSettings aLowerPriority, ConfigFileSettingsCache aSettingsCache)
             : base(aLowerPriority, aSettingsCache)
@@ -50,15 +49,9 @@ namespace GitCommands.Settings
 
         public static ConfigFileSettings CreateSystemWide(bool allowCache = true)
         {
-            // Git 2.xx
-            string configPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Git", "config");
+            string configPath = Path.Combine(AppSettings.GitBinDir, "..", "etc", "gitconfig");
             if (!File.Exists(configPath))
-            {
-                // Git 1.xx
-                configPath = Path.Combine(AppSettings.GitBinDir, "..", "etc", "gitconfig");
-                if (!File.Exists(configPath))
-                    return null;
-            }
+                return null;
 
             return new ConfigFileSettings(null,
                 ConfigFileSettingsCache.Create(configPath, false, allowCache));
@@ -102,6 +95,11 @@ namespace GitCommands.Settings
         public void RemoveConfigSection(string configSectionName)
         {
             SettingsCache.RemoveConfigSection(configSectionName);
+        }
+
+        public IEnumerable<ConfigSection> GetConfigSections(string configSectionName)
+        {
+            return SettingsCache.GetConfigSections(configSectionName);
         }
 
         public Encoding FilesEncoding

@@ -47,6 +47,11 @@
             }
         }
 
+        public static string PickFolder(object ownerWindow, string selectedPath = null)
+        {
+            return PickFolder(ownerWindow as IWin32Window, selectedPath);
+        }
+
         /// <summary>
         /// Prompts the user to select a directory.
         /// </summary>

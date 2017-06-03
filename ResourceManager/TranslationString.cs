@@ -18,3 +18,12 @@ namespace ResourceManager
         public override string ToString() { return Text; }
     }
 }
+
+
+namespace ResourceManager.Texts
+{
+}
+
+namespace GitCommands.Texts
+{
+}

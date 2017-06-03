@@ -34,7 +34,6 @@ namespace GitUIPluginInterfaces
         /// Loads setting value from settings to Control
         /// </summary>
         /// <param name="settings"></param>
-        /// <param name="areSettingsEffective"></param>
         void LoadSetting(ISettingsSource settings, bool areSettingsEffective);
 
         /// <summary>

@@ -1,16 +1,16 @@
 ﻿using System;
-using ResourceManager;
+using System.Diagnostics;
 using SmartFormat;
 
-namespace GitCommands
+namespace ResourceManager
 {
     /// <summary>Contains common string literals which are translated.</summary>
-    public class Strings : Translate
+    public class Strings // : Translate
     {
         // public only because of FormTranslate
         public Strings()
         {
-            Translator.Translate(this, AppSettings.CurrentTranslation);
+            // Translator.Translate(this, AppSettings.CurrentTranslation);
         }
 
         private static Lazy<Strings> _instance = new Lazy<Strings>();
@@ -108,18 +108,18 @@ namespace GitCommands
         public static TranslationString RemoteDifferingUrlsTip = new TranslationString("Fetch and Push URLs differ");
 
 
-        private readonly TranslationString _dateText               = new TranslationString("Date");
-        private readonly TranslationString _authorText             = new TranslationString("Author");
-        private readonly TranslationString _authorDateText         = new TranslationString("Author date");
-        private readonly TranslationString _committerText          = new TranslationString("Committer");
-        private readonly TranslationString _commitDateText         = new TranslationString("Commit date");
-        private readonly TranslationString _commitHashText         = new TranslationString("Commit hash");
-        private readonly TranslationString _messageText            = new TranslationString("Message");
-        private readonly TranslationString _parentsText            = new TranslationString("Parent(s)");
-        private readonly TranslationString _childrenText   = new TranslationString("Children");
+        private readonly TranslationString _dateText = new TranslationString("Date");
+        private readonly TranslationString _authorText = new TranslationString("Author");
+        private readonly TranslationString _authorDateText = new TranslationString("Author date");
+        private readonly TranslationString _committerText = new TranslationString("Committer");
+        private readonly TranslationString _commitDateText = new TranslationString("Commit date");
+        private readonly TranslationString _commitHashText = new TranslationString("Commit hash");
+        private readonly TranslationString _messageText = new TranslationString("Message");
+        private readonly TranslationString _parentsText = new TranslationString("Parent(s)");
+        private readonly TranslationString _childrenText = new TranslationString("Children");
         private readonly TranslationString _currentUnstagedChanges = new TranslationString("Current unstaged changes");
-        private readonly TranslationString _currentIndex   = new TranslationString("Commit index");
-        private readonly TranslationString _loadingData    = new TranslationString("Loading data...");
+        private readonly TranslationString _currentIndex = new TranslationString("Commit index");
+        private readonly TranslationString _loadingData = new TranslationString("Loading data...");
 
         public static string GetNSecondsAgoText(int value)
         {
@@ -158,10 +158,39 @@ namespace GitCommands
 
         private readonly TranslationString _secondsAgo = new TranslationString("{0} {1:second|seconds} ago");
         private readonly TranslationString _minutesAgo = new TranslationString("{0} {1:minute|minutes} ago");
-        private readonly TranslationString _hoursAgo   = new TranslationString("{0} {1:hour|hours} ago");
-        private readonly TranslationString _daysAgo    = new TranslationString("{0} {1:day|days} ago");
-        private readonly TranslationString _weeksAgo   = new TranslationString("{0} {1:week|weeks} ago");
-        private readonly TranslationString _monthsAgo  = new TranslationString("{0} {1:month|months} ago");
-        private readonly TranslationString _yearsAgo   = new TranslationString("{0} {1:year|years} ago");
+        private readonly TranslationString _hoursAgo = new TranslationString("{0} {1:hour|hours} ago");
+        private readonly TranslationString _daysAgo = new TranslationString("{0} {1:day|days} ago");
+        private readonly TranslationString _weeksAgo = new TranslationString("{0} {1:week|weeks} ago");
+        private readonly TranslationString _monthsAgo = new TranslationString("{0} {1:month|months} ago");
+        private readonly TranslationString _yearsAgo = new TranslationString("{0} {1:year|years} ago");
+
+        private readonly TranslationString _uninterestingDiffOmitted = new TranslationString("Uninteresting diff hunks are omitted.");
+
+        public static string GetUninterestingDiffOmitted()
+        {
+            return Instance._uninterestingDiffOmitted.Text;
+        }
     }
+
+    public class TranslationString
+    {
+        public TranslationString(object str)
+        {
+            if (str != null)
+                this.Text = str as string ?? str.ToString();
+            else
+                this.Text = null;
+        }
+
+        /// <summary>Gets the translated text.</summary>
+        public string Text { [DebuggerStepThrough] get; private set; }
+
+        /// <summary>Returns <see cref="Text"/> value.</summary>
+        public override string ToString() { return Text; }
+    }
+
 }
+
+//namespace GitCommands.Texts
+//{
+//}

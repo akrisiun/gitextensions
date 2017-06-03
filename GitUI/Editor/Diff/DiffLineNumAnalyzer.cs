@@ -155,6 +155,24 @@ namespace GitUI.Editor.Diff
         {
             return line.StartsWith("--") || line.StartsWith("- ") || line.StartsWith(" -");
         }
+
+
+        public void StartAsync(object text, Action run)
+        {
+            run();
+            // StartAsync(text, () =>
+        }
+            
+        //public event OnLineNumAnalyzed { add; remove; } 
+        public Action<DiffLineNum> OnLineNumAnalyzed {get; set; }
+
+        public void AddDiffLineNum(DiffViewerLineNumberCtrl lineNumbersControl, DiffLineNum line)
+        {
+        }
+
+        // += (line) =>
+            //{
+            //    _lineNumbersControl.AddDiffLineNum(line as DiffLineNum);
     }
 
     public class DiffLineNum

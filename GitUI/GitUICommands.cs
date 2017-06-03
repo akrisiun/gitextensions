@@ -10,12 +10,15 @@ using GitUI.CommandsDialogs;
 using GitUI.CommandsDialogs.RepoHosting;
 using GitUI.CommandsDialogs.SettingsDialog;
 using GitUI.Blame;
+using GitUI.Notifications;
 using GitUIPluginInterfaces;
+using GitUIPluginInterfaces.Notifications;
 using GitUIPluginInterfaces.RepositoryHosts;
 using Gravatar;
-using Settings = GitCommands.AppSettings;
-using System.Threading;
+
 using JetBrains.Annotations;
+
+using Settings = GitCommands.AppSettings;
 
 namespace GitUI
 {
@@ -27,6 +30,7 @@ namespace GitUI
             Module = module;
             RepoChangedNotifier = new ActionNotifier(
                 () => InvokeEvent(null, PostRepositoryChanged));
+            Notifications = NotificationManager.Get(this);
         }
 
         public GitUICommands(string workingDir)
@@ -231,6 +235,9 @@ namespace GitUI
 
         public Icon FormIcon { get { return GitExtensionsForm.ApplicationIcon; } }
 
+        /// <summary>Gets notifications implementation.</summary>
+        public INotifications Notifications { get; private set; }
+
         public bool StartBatchFileProcessDialog(object owner, string batchFile)
         {
             string tempFileName = Path.ChangeExtension(Path.GetTempFileName(), ".cmd");
@@ -291,20 +298,25 @@ namespace GitUI
             return StartBrowseDialog("");
         }
 
+        public bool StartDeleteBranchDialog(string branch)
+        {
+            return StartDeleteBranchDialog(null, branch);
+        }
+
         public bool StartDeleteBranchDialog(IWin32Window owner, string branch)
+        {
+            return StartDeleteBranchDialog(owner, new string[] { branch });
+        }
+
+        public bool StartDeleteBranchDialog(IWin32Window owner, IEnumerable<string> branches)
         {
             return DoActionOnRepo(owner, true, false, PreDeleteBranch, PostDeleteBranch, () =>
                 {
-                    using (var form = new FormDeleteBranch(this, branch))
+                    using (var form = new FormDeleteBranch(this, branches))
                         form.ShowDialog(owner);
                     return true;
                 }
             );
-        }
-
-        public bool StartDeleteBranchDialog(string branch)
-        {
-            return StartDeleteBranchDialog(null, branch);
         }
 
         public bool StartCheckoutRevisionDialog(IWin32Window owner, string revision = null)
@@ -428,7 +440,7 @@ namespace GitUI
         /// </summary>
         /// <param name="requiresValidWorkingDir">If action requires valid working directory</param>
         /// <param name="owner">Owner window</param>
-        /// <param name="changesRepo">if successfully done action changes repo state</param>
+        /// <param name="changesRepo">if successfuly done action changes repo state</param>
         /// <param name="preEvent">Event invoked before performing action</param>
         /// <param name="postEvent">Event invoked after performing action</param>
         /// <param name="action">Action to do. Return true to indicate that the action was successfully done.</param>
@@ -675,70 +687,22 @@ namespace GitUI
             return DoActionOnRepo(action);
         }
 
-        public Tuple<IntPtr, FormCommit> FormCommit { get; set; }
-
-        public static bool Reload(FormCommit form, GitUICommands @this, IntPtr hWnd)
-        {
-            // TODO
-            return false;
-        }
-
         public bool StartCommitDialog(IWin32Window owner, bool showOnlyWhenChanges)
         {
             Func<bool> action = () =>
             {
-                if (FormCommit != null)
+                using (var form = new FormCommit(this))
                 {
-                    FormCommit form = FormCommit.Item2;
-                    IntPtr hWnd = FormCommit.Item1;
-                    if (!Reload(form, this, hWnd))
-                        FormCommit = new Tuple<IntPtr, CommandsDialogs.FormCommit>(IntPtr.Zero, null);
-                }
-                if (FormCommit == null)
-                {
-                    Thread thread = new Thread(() =>
-                    {
-                        IWin32Window ownerNonModal = null;
-                        var form = new FormCommit(this);
-
-                        form.ShowInTaskbar = true;
-                        form.Shown += FormCommit_Shown;
-                        form.FormClosing += FormCommit_FormClosing;
-
-                        if (showOnlyWhenChanges)
-                            form.ShowDialogWhenChanges(ownerNonModal);
-                        else
-                            form.ShowDialog(ownerNonModal);
-
-                        form.Dispose();
-                        FormCommit = null;
-                    });
-
-                    thread.SetApartmentState(ApartmentState.STA);
-                    thread.Start();
+                    if (showOnlyWhenChanges)
+                        form.ShowDialogWhenChanges(owner);
+                    else
+                        form.ShowDialog(owner);
                 }
                 return true;
             };
 
             return DoActionOnRepo(owner, true, false, PreCommit, PostCommit, action);
         }
-
-        private void FormCommit_Shown(object sender, EventArgs e)
-        {
-            var form = sender as Form;
-
-            FormCommit = new Tuple<IntPtr, CommandsDialogs.FormCommit>(form.Handle, form as FormCommit);
-            form.Focus();
-        }
-
-        private void FormCommit_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (FormCommit == sender)
-                FormCommit = null;
-        }
-
-
-        #region Dialogs
 
         public bool StartCommitDialog(IWin32Window owner)
         {
@@ -834,8 +798,6 @@ namespace GitUI
         {
             return StartInitializeDialog(null, dir, null);
         }
-
-        #endregion
 
         /// <summary>
         /// Starts pull dialog
@@ -1051,7 +1013,7 @@ namespace GitUI
             if (resetAction == FormResetChanges.ActionEnum.Cancel)
             {
                 return false;
-            }
+        }
 
             Cursor.Current = Cursors.WaitCursor;
 
@@ -1462,29 +1424,13 @@ namespace GitUI
         {
             Func<bool> action = () =>
             {
-                // non modal!
-                var thread = new Thread(() =>
-                    {
-                        using (var form = new FormSubmodules(this))
-                        {
-                            form.Shown += FormSubmodules_Shown;
-                            form.ShowDialog(null);
-                        }
-                    });
-
-                thread.SetApartmentState(ApartmentState.STA);
-                thread.Start();
+                using (var form = new FormSubmodules(this))
+                    form.ShowDialog(owner);
 
                 return true;
             };
 
             return DoActionOnRepo(owner, true, true, PreSubmodulesEdit, PostSubmodulesEdit, action);
-        }
-
-        private void FormSubmodules_Shown(object sender, EventArgs e)
-        {
-            var form = sender as Form;
-            form.Focus();
         }
 
         public bool StartSubmodulesDialog()
@@ -1565,31 +1511,6 @@ namespace GitUI
 
             InvokeEvent(owner, PostBrowse);
             return true;
-        }
-
-        // test unit
-        public FormBrowse StartBrowseForm(Form form, string filter = "", bool run = false)
-        {
-            IWin32Window owner = form;
-            if (!InvokeEvent(owner, PreBrowse))
-                return null;
-
-            var formBrowse = new FormBrowse(this, filter);
-
-            if (run)
-            {
-                if (Application.MessageLoop)
-                {
-                    formBrowse.Show();
-                }
-                else
-                {
-                    Application.Run(form);
-                }
-            }
-
-            InvokeEvent(owner, PostBrowse);
-            return formBrowse;
         }
 
         public bool StartBrowseDialog(string filter)

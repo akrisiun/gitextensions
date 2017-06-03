@@ -55,7 +55,7 @@ namespace GitUI.UserControls
             DoubleBuffered = true;
         }
 
-#if !__MonoCS__ || WIN
+#if !__MonoCS__
         #region Win32 Apis
 
         protected class NativeMethods
@@ -108,7 +108,6 @@ namespace GitUI.UserControls
                 }
             }
 
-            [CLSCompliant(false)]
             public static POINT LParamToPOINT(uint lParam)
             {
                 uint ulParam = lParam;
@@ -143,7 +142,6 @@ namespace GitUI.UserControls
             /// see http://msdn.microsoft.com/en-us/library/bb774754%28v=VS.85%29.aspx
             /// </summary>
             [Flags]
-            [CLSCompliant(false)]
             public enum LVHITTESTFLAGS : uint
             {
                 LVHT_NOWHERE = 0x00000001,
@@ -164,7 +162,6 @@ namespace GitUI.UserControls
                 LVHT_EX_GROUP_SUBSETLINK = 0x02000000,
             }
 
-            [CLSCompliant(false)]
             public enum ListViewGroupMask : uint
             {
                 None = 0x00000,
@@ -285,7 +282,6 @@ namespace GitUI.UserControls
         }
 #endif
 
-        [CLSCompliant(false)]
         public void SetGroupState(ListViewGroupState state)
         {
 #if !__MonoCS__

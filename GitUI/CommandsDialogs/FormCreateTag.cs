@@ -35,7 +35,7 @@ namespace GitUI.CommandsDialogs
 
         private void FormCreateTag_Load(object sender, EventArgs e)
         {
-            textBoxTagName.Select();
+            textBoxTagName.Focus();
             _currentRemote = Module.GetCurrentRemote();
             if (String.IsNullOrEmpty(_currentRemote))
                 _currentRemote = "origin";
