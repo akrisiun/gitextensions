@@ -99,7 +99,7 @@ namespace GitUI.CommandsDialogs
             settingsTreeView.AddSettingsPage(SettingsPageBase.Create<AdvancedSettingsPage>(this), gitExtPageRef);
             SettingsPageReference advancedPageRef = AdvancedSettingsPage.GetPageReference();
 
-            settingsTreeView.AddSettingsPage(SettingsPageBase.Create<DetailedSettingsPage>(this), gitExtPageRef);
+            // settingsTreeView.AddSettingsPage(SettingsPageBase.Create<DetailedSettingsPage>(this), gitExtPageRef);
 
             settingsTreeView.AddSettingsPage(SettingsPageBase.Create<ConfirmationsSettingsPage>(this), advancedPageRef);
 
@@ -108,8 +108,8 @@ namespace GitUI.CommandsDialogs
             settingsTreeView.AddSettingsPage(SettingsPageBase.Create<PluginRootIntroductionPage>(this), pluginsPageRef, true); // as root
             foreach (var gitPlugin in LoadedPlugins.Plugins)
             {
-                var settingsPage = PluginSettingsPage.CreateSettingsPageFromPlugin(this, gitPlugin);
-                settingsTreeView.AddSettingsPage(settingsPage, pluginsPageRef);
+                //var settingsPage = PluginSettingsPage.CreateSettingsPageFromPlugin(this, gitPlugin);
+                //settingsTreeView.AddSettingsPage(settingsPage, pluginsPageRef);
             }
 
             settingsTreeView.GotoPage(initalPage);

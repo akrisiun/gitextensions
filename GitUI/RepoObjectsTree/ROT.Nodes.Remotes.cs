@@ -376,7 +376,7 @@ namespace GitUI.UserControls
 
             public void Reset()
             {
-                using (var form = new FormResetCurrentBranch(UICommands, new GitRevision(Module, FullPath)))
+                using (var form = new FormResetCurrentBranch(UICommands, new GitRevision(Module, FullPath), false))
                 {
                     form.ShowDialog(TreeViewNode.TreeView);
                 }

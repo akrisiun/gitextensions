@@ -5,7 +5,13 @@ using GitCommands.Settings;
 
 namespace GitCommands
 {
-    public class GitRef : IGitItem
+    public interface IGitRef : IGitItem
+    {
+        GitModule Module { get; }
+        string LocalName { get; }
+    }
+
+    public class GitRef : IGitRef, IGitItem
     {
         private readonly string _mergeSettingName;
         private readonly string _remoteSettingName;

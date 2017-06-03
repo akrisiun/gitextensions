@@ -149,6 +149,12 @@
     <Compile Include="CommandsDialogs\FormDiff.Designer.cs">
       <DependentUpon>FormDiff.cs</DependentUpon>
     </Compile>
+    <Compile Include="CommandsDialogs\FormReflog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormReflog.Designer.cs">
+      <DependentUpon>FormReflog.cs</DependentUpon>
+    </Compile>
     <Compile Include="CommandsDialogs\FormSparseWorkingCopyViewModel.cs" />
     <Compile Include="CommandsDialogs\FormMergeSubmodule.cs">
       <SubType>Form</SubType>
@@ -178,6 +184,12 @@
     <Compile Include="CommandsDialogs\RepoHosting\ViewPullRequestsForm.Designer.cs">
       <DependentUpon>ViewPullRequestsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CommandsDialogs\SearchControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SearchControl.Designer.cs">
+      <DependentUpon>SearchControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="CommandsDialogs\SettingsDialog\Pages\BuildServerIntegrationSettingsPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -191,6 +203,18 @@
       <DependentUpon>CommitDialogSettingsPage.cs</DependentUpon>
     </Compile>
     <Compile Include="CommandsDialogs\SettingsDialog\EditorHelper.cs" />
+    <Compile Include="CommandsDialogs\WorktreeDialog\FormCreateWorktree.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\WorktreeDialog\FormCreateWorktree.Designer.cs">
+      <DependentUpon>FormCreateWorktree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\WorktreeDialog\FormManageWorktree.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\WorktreeDialog\FormManageWorktree.Designer.cs">
+      <DependentUpon>FormManageWorktree.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStatusOutputLog.cs" />
     <Compile Include="Editor\Diff\CombinedDiffHighlightService.cs" />
     <Compile Include="Editor\Diff\DiffHighlightService.cs" />
@@ -239,9 +263,60 @@
     <Compile Include="CommandsDialogs\SettingsDialog\SettingsPageWithHeader.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Helpers\SystemExtensions.cs" />
+    <Compile Include="Helpers\TreeViewExtensions.cs" />
     <Compile Include="Hotkey\KeysExtensions.cs" />
+    <Compile Include="Notifications\NotificationFeed.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Notifications\NotificationList.cs" />
+    <Compile Include="Notifications\NotificationManager.cs" />
+    <Compile Include="Notifications\NotificationPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Notifications\NotificationPopup.Designer.cs">
+      <DependentUpon>NotificationPopup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Notifications\NotificationsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Notifications\NotificationsForm.Designer.cs">
+      <DependentUpon>NotificationsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Notifications\NotifierHelpers.cs" />
     <Compile Include="RepoHosts.cs" />
     <Compile Include="AutoCompletion\AutoCompleteWord.cs" />
+    <Compile Include="RepoObjectsTree\RepoObjectsTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\RepoObjectsTree.Designer.cs">
+      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.ContextActions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.DragDrops.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Branches.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Remotes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Stashes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Submodules.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Tags.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Script\PowerShellHelper.cs" />
     <!-- 
     <Compile Include="RepoObjectsTree\RepoObjectsTree.cs" />
     <Compile Include="RepoObjectsTree\RepoObjectsTree.Designer.cs">
@@ -682,9 +757,7 @@
     <Compile Include="CommandsDialogs\SettingsDialog\Pages\StartPageSettingsPage.Designer.cs">
       <DependentUpon>StartPageSettingsPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="CommandsDialogs\SettingsDialog\Plugins\PluginSettingsPage.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Plugins\PluginSettingsPage.cs" />
     <Compile Include="CommandsDialogs\SettingsDialog\Plugins\PluginSettingsPage.Designer.cs">
       <DependentUpon>PluginSettingsPage.cs</DependentUpon>
     </Compile>
@@ -1058,6 +1131,9 @@
       <DependentUpon>FormMergeSubmodule.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormReflog.resx">
+      <DependentUpon>FormReflog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\RepoHosting\CreatePullRequestForm.resx">
       <DependentUpon>CreatePullRequestForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1070,11 +1146,20 @@
       <DependentUpon>ViewPullRequestsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SearchControl.resx">
+      <DependentUpon>SearchControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\BuildServerIntegrationSettingsPage.resx">
       <DependentUpon>BuildServerIntegrationSettingsPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\CommitDialogSettingsPage.resx">
       <DependentUpon>CommitDialogSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\WorktreeDialog\FormCreateWorktree.resx">
+      <DependentUpon>FormCreateWorktree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\WorktreeDialog\FormManageWorktree.resx">
+      <DependentUpon>FormManageWorktree.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HelperDialogs\FormBuildServerCredentials.resx">
       <DependentUpon>FormBuildServerCredentials.cs</DependentUpon>
@@ -1091,6 +1176,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Plugins\PluginRootIntroductionPage.resx">
       <DependentUpon>PluginRootIntroductionPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Notifications\NotificationPopup.resx">
+      <DependentUpon>NotificationPopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RepoObjectsTree\RepoObjectsTree.resx">
+      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
     </EmbeddedResource>
     <!-- 
     <EmbeddedResource Include="RepoObjectsTree\RepoObjectsTree.resx">
@@ -1566,149 +1657,12 @@
     <None Include="Properties\DataSources\GitCommands.GitItemStatus.datasource" />
     <None Include="Properties\DataSources\GitCommands.GitRevision.datasource" />
     <None Include="Resources\Icons\User.PNG" />
-    <None Include="Translation\Czech.Plugins.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Czech.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Dutch.Plugins.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Dutch.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\French.Plugins.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\French.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\German.Plugins.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\German.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Italian.Plugins.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Italian.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Japanese.Plugins.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Japanese.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Korean.Plugins.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Korean.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Polish.Plugins.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Polish.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Portuguese %28Brazil%29.Plugins.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Portuguese %28Brazil%29.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Portuguese %28Portugal%29.Plugins.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Portuguese %28Portugal%29.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Romanian.Plugins.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Romanian.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Russian.Plugins.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Russian.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Simplified Chinese.Plugins.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Simplified Chinese.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Spanish.Plugins.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Spanish.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Traditional Chinese.Plugins.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Translation\Traditional Chinese.xlf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <!--
 	<Content Include="RepoObjectsTree\BlankIcon.png" />
 	-->
-    <Content Include="Translation\Czech.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Translation\Dutch.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Translation\English.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Translation\French.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Translation\German.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Translation\Italian.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Translation\Japanese.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Translation\Korean.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Translation\Polish.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Translation\Portuguese %28Brazil%29.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Translation\Portuguese %28Portugal%29.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Translation\Romanian.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Translation\Russian.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Translation\Simplified Chinese.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Translation\Spanish.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Translation\Traditional Chinese.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="RepoObjectsTree\BlankIcon.png" />
     <None Include="..\Bin\Logo\cow-head-blue.ico">
       <Link>Resources\ApplicationIcons\cow-head-blue.ico</Link>
     </None>

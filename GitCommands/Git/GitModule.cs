@@ -152,6 +152,8 @@ namespace GitCommands
 
         #endregion
 
+        #region Properties 1
+
         private bool _superprojectInit;
         private GitModule _superprojectModule;
         private string _submoduleName;
@@ -369,6 +371,11 @@ namespace GitCommands
             get { return AppSettings.GetEnum("LastPullAction_" + WorkingDir, AppSettings.PullAction.None); }
             set { AppSettings.SetEnum("LastPullAction_" + WorkingDir, value); }
         }
+
+        #endregion
+
+
+        #region Commands 1
 
         public void LastPullActionToFormPullAction()
         {
@@ -997,6 +1004,8 @@ namespace GitCommands
                     : "";
         }
 
+        #endregion
+
         public void RunGitK()
         {
             if (EnvUtils.RunningOnUnix())
@@ -1022,6 +1031,8 @@ namespace GitCommands
                 RunExternalCmdDetached("cmd.exe", "/c \"\"" + AppSettings.GitCommand + "\" gui\"");
             }
         }
+
+
 
         /// <summary>Runs a bash or shell command.</summary>
         public Process RunBash(string bashCommand = null)
@@ -2842,9 +2853,11 @@ namespace GitCommands
 
             // do not show default head if remote has a branch on the same commit
             GitRef defaultHead;
-            foreach (var gitRef in gitRefs.Where(head => defaultHeads.TryGetValue(head.Remote, out defaultHead) && head.Guid == defaultHead.Guid))
+            foreach (var gitRef in gitRefs.Where(
+                head => defaultHeads.TryGetValue((head as GitRef).Remote, out defaultHead) && head.Guid == defaultHead.Guid))
             {
-                defaultHeads.Remove(gitRef.Remote);
+                var objGitRef = gitRef as GitRef;
+                defaultHeads.Remove(objGitRef.Remote);
             }
 
             gitRefs.AddRange(defaultHeads.Values);

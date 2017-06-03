@@ -2273,7 +2273,9 @@ namespace GitUI.CommandsDialogs
         private ToolStripSeparator toolStripSeparator46;
         private ToolStripMenuItem checkForUpdatesToolStripMenuItem;
         private SplitContainer MainSplitContainer;
+
         private UserControls.RepoObjectsTree repoObjectsTree;
+
         private ToolStripMenuItem commitcountPerUserToolStripMenuItem;
         private ToolStripMenuItem gitcommandLogToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator7;

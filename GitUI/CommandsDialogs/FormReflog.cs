@@ -86,9 +86,10 @@ namespace GitUI.CommandsDialogs
 
             using (var form = new FormCreateBranch(UICommands, new GitCommands.GitRevision((GitCommands.GitModule)UICommands.GitModule, GetShaOfRefLine())))
             {
-                form.CheckoutAfterCreation = false;
-                form.UserAbleToChangeRevision = false;
-                form.CouldBeOrphan = false;
+                // TODO
+                //form.CheckoutAfterCreation = false;
+                //form.UserAbleToChangeRevision = false;
+                //form.CouldBeOrphan = false;
                 ShouldRefresh = form.ShowDialog(this) == DialogResult.OK;
             }
         }
@@ -122,8 +123,9 @@ namespace GitUI.CommandsDialogs
             }
 
             var gitRevision = UICommands.Module.GetRevision(GetShaOfRefLine());
-            var resetType = _isDirtyDir ? FormResetCurrentBranch.ResetType.Soft : FormResetCurrentBranch.ResetType.Hard;
+            var resetType = _isDirtyDir; //  ? FormResetCurrentBranch.ResetType.Soft : FormResetCurrentBranch.ResetType.Hard;
             var formResetCurrentBranch = new FormResetCurrentBranch(UICommands, gitRevision, resetType);
+
             var result = formResetCurrentBranch.ShowDialog(this);
             ShouldRefresh = result == DialogResult.OK;
         }

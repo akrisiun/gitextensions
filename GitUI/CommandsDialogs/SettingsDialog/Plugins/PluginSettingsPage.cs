@@ -8,7 +8,7 @@ using GitCommands.Settings;
 
 namespace GitUI.CommandsDialogs.SettingsDialog.Plugins
 {
-    public partial class PluginSettingsPage : AutoLayoutSettingsPage
+    public partial class PluginSettingsPage : IDisposable // : AutoLayoutSettingsPage
     {
         private IGitPlugin _gitPlugin;
         private GitPluginSettingsContainer settingsCointainer;
@@ -16,7 +16,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Plugins
         public PluginSettingsPage()
         {
             InitializeComponent();
-            Translate();
+            // Translate();
         }
 
         private void CreateSettingsControls()
@@ -25,7 +25,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Plugins
 
             foreach (var setting in settings)
             {
-               this.AddSetting(setting);
+               // this.AddSetting(setting);
             }
         }
 
@@ -37,23 +37,23 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Plugins
             // Translate();
         }
 
-        public static PluginSettingsPage CreateSettingsPageFromPlugin(ISettingsPageHost aPageHost, IGitPlugin gitPlugin)
-        {
-            var result = SettingsPageBase.Create<PluginSettingsPage>(aPageHost);
-            result.Init(gitPlugin);
-            return result;
-        }
+        //public static PluginSettingsPage CreateSettingsPageFromPlugin(ISettingsPageHost aPageHost, IGitPlugin gitPlugin)
+        //{
+        //    var result = SettingsPageBase.Create<PluginSettingsPage>(aPageHost);
+        //    result.Init(gitPlugin);
+        //    return result;
+        //}
 
-        protected override ISettingsSource GetCurrentSettings()
-        {
-            settingsCointainer.SetSettingsSource(base.GetCurrentSettings());
-            return settingsCointainer;
-        }
+        //protected override ISettingsSource GetCurrentSettings()
+        //{
+        //    settingsCointainer.SetSettingsSource(base.GetCurrentSettings());
+        //    return settingsCointainer;
+        //}
 
-        public override string GetTitle()
-        {
-            return _gitPlugin == null ? string.Empty : _gitPlugin.Description;
-        }
+        //public override string GetTitle()
+        //{
+        //    return _gitPlugin == null ? string.Empty : _gitPlugin.Description;
+        //}
 
         private IEnumerable<ISetting> GetSettings()
         {
@@ -63,20 +63,30 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Plugins
             return _gitPlugin.GetSettings();
         }
 
-        public override SettingsPageReference PageReference
+        public // override 
+            SettingsPageReference PageReference
         {
             get { return new SettingsPageReferenceByType(_gitPlugin.GetType()); }
         }
 
-        protected override SettingsLayout CreateSettingsLayout()
+        //protected  // override 
+        //    object // SettingsLayout 
+        //           CreateSettingsLayout()
+        //{
+        //    labelNoSettings.Visible = !GetSettings().Any();
+
+        //    var layout = base.CreateSettingsLayout();
+
+        //    this.tableLayoutPanel1.Controls.Add(layout.GetControl(), 0, 1);
+
+        //    return layout;
+        //}
+
+        public void Dispose()
         {
-            labelNoSettings.Visible = !GetSettings().Any();
-
-            var layout = base.CreateSettingsLayout();
-
-            this.tableLayoutPanel1.Controls.Add(layout.GetControl(), 0, 1);
-
-            return layout;
+            this.Dispose(true);
+            tableLayoutPanel1.Dispose();
+            labelNoSettings.Dispose();
         }
     }
 }

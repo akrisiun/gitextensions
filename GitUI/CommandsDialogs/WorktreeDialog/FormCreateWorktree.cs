@@ -45,7 +45,10 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
         private void LoadBranchesAsync()
         {
             var selectedBranch = UICommands.GitModule.GetSelectedBranch();
-            ExistingBranches = Module.GetRefs(false);
+
+            GitModule module = Module;
+            ExistingBranches = module.GetRefs(false);
+
             comboBoxBranches.Text = Strings.GetLoadingData();
             _branchesLoader.Load(
                 () => ExistingBranches.Where(r => r.Name != selectedBranch).ToList(),
@@ -71,7 +74,7 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        public IList<IGitRef> ExistingBranches { get; set; }
+        public IList<GitRef> ExistingBranches { get; set; }
 
         private void comboBoxBranches_TextChanged(object sender, EventArgs e)
         {
@@ -80,7 +83,8 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
                 return;
             }
 
-            _selectedBranch = ((IList<IGitRef>)comboBoxBranches.DataSource).FirstOrDefault(a => a.LocalName == comboBoxBranches.Text);
+            _selectedBranch = ((IList<IGitRef>)comboBoxBranches.DataSource).FirstOrDefault(
+                a => a.LocalName == comboBoxBranches.Text);
         }
 
         private void comboBoxBranches_SelectionChangeCommitted(object sender, EventArgs e)

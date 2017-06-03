@@ -10,7 +10,7 @@ using GitUI.CommandsDialogs;
 using GitUI.CommandsDialogs.RepoHosting;
 using GitUI.CommandsDialogs.SettingsDialog;
 using GitUI.Blame;
-using GitUI.Notifications;
+//using GitUI.Notifications;
 using GitUIPluginInterfaces;
 using GitUIPluginInterfaces.Notifications;
 using GitUIPluginInterfaces.RepositoryHosts;
@@ -30,7 +30,8 @@ namespace GitUI
             Module = module;
             RepoChangedNotifier = new ActionNotifier(
                 () => InvokeEvent(null, PostRepositoryChanged));
-            Notifications = NotificationManager.Get(this);
+
+            // Notifications = NotificationManager.Get(this);
         }
 
         public GitUICommands(string workingDir)

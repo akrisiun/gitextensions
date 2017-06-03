@@ -11,13 +11,14 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+        protected // override 
+             void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
                 components.Dispose();
             }
-            base.Dispose(disposing);
+            //  base.Dispose(disposing);
         }
 
         #region Component Designer generated code
@@ -31,7 +32,8 @@
             this.labelNoSettings = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
-            this.SuspendLayout();
+            // this.SuspendLayout();
+
             // 
             // labelNoSettings
             // 
@@ -60,17 +62,19 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(600, 301);
             this.tableLayoutPanel1.TabIndex = 3;
+
             // 
             // PluginSettingsPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "PluginSettingsPage";
-            this.Size = new System.Drawing.Size(600, 301);
+            //this.Name = "PluginSettingsPage";
+
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            //this.Controls.Add(this.tableLayoutPanel1);
+            //this.Size = new System.Drawing.Size(600, 301);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.ResumeLayout(false);
+            //this.ResumeLayout(false);
 
         }
 

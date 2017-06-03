@@ -11,7 +11,7 @@ namespace GitUI.HelperDialogs
         readonly TranslationString resetHardWarning = new TranslationString("You are about to discard ALL local changes, are you sure?");
         readonly TranslationString resetCaption = new TranslationString("Reset branch");
 
-        public FormResetCurrentBranch(GitUICommands aCommands, GitRevision Revision)
+        public FormResetCurrentBranch(GitUICommands aCommands, GitRevision Revision, bool isSoftReset)
             : base(aCommands)
         {
             this.Revision = Revision;

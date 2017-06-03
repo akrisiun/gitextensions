@@ -273,7 +273,7 @@ namespace GitCommands
             var result = _module.GetRefs(true);
             bool validWorkingDir = _module.IsValidGitWorkingDir();
             _selectedBranchName = validWorkingDir ? _module.GetSelectedBranch() : string.Empty;
-            GitRef selectedRef = result.FirstOrDefault(head => head.Name == _selectedBranchName);
+            GitRef selectedRef = result.FirstOrDefault(head => (head as GitRef).Name == _selectedBranchName);
 
             if (selectedRef != null)
             {
@@ -282,7 +282,7 @@ namespace GitCommands
                 var localConfigFile = _module.LocalConfigFile;
 
                 var selectedHeadMergeSource =
-                    result.FirstOrDefault(head => head.IsRemote
+                    result.FirstOrDefault<GitRef>(head => head.IsRemote
                                         && selectedRef.GetTrackingRemote(localConfigFile) == head.Remote
                                         && selectedRef.GetMergeWith(localConfigFile) == head.LocalName);
 

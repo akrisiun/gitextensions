@@ -19,6 +19,10 @@ using ResourceManager;
 
 namespace GitUI.SpellChecker
 {
+    public class NoF7Designer : EditNetSpell
+    { }
+
+
     [DefaultEvent("TextChanged")]
     public partial class EditNetSpell : GitModuleControl
     {
@@ -1056,5 +1060,13 @@ namespace GitUI.SpellChecker
             }
             base.Dispose(disposing);
         }
+
+        //  EventHandler
+        void TextBox_GotFocus(object sender, EventArgs e)
+        { }
+
+        void TextBox_LostFocus(object sender, EventArgs e)
+        { }
+
     }
 }

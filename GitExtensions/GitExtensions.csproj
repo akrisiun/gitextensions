@@ -149,7 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Externals\NBugLib.csproj">
-      <Project>{62ced1d5-f603-40de-8bf5-3e49d3a392f4}</Project>
+      <Project>{14e7137b-7f0e-44d2-af0b-cdaec9bf9a6d}</Project>
       <Name>NBugLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\GitUI\GitUI.csproj">

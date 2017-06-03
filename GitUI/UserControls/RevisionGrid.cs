@@ -2007,7 +2007,7 @@ namespace GitUI
             if (Revisions.RowCount <= LastRowIndex || LastRowIndex < 0)
                 return;
 
-            var frm = new FormResetCurrentBranch(UICommands, GetRevision(LastRowIndex));
+            var frm = new FormResetCurrentBranch(UICommands, GetRevision(LastRowIndex), false);
             frm.ShowDialog(this);
         }
 

@@ -2049,7 +2049,7 @@ namespace GitUI.CommandsDialogs
 
         }
 
-        private void SetWorkingDir(string path)
+        public void SetWorkingDir(string path)
         {
             SetGitModule(this, new GitModuleEventArgs(new GitModule(path)));
         }

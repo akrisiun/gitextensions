@@ -7,7 +7,7 @@ using GitCommands.Utils;
 namespace GitUI.UserControls
 {
     [CLSCompliant(false)]
-    public enum ListViewGroupState : uint
+    public enum ListViewGroupState : int
     {
         /// <summary>
         /// Groups are expanded, the group name is displayed, 
@@ -72,7 +72,7 @@ namespace GitUI.UserControls
                                                    IntPtr wParam,
                                                    ref LVGROUP lParam);
 
-            #region Windows constants
+        #region Windows constants
 
             public const int WM_LBUTTONDOWN = 0x0201;
             public const int WM_LBUTTONUP = 0x0202;
@@ -83,7 +83,7 @@ namespace GitUI.UserControls
             public const int LVM_SETGROUPINFO = (LVM_FIRST + 147);
             public const int LVM_SUBITEMHITTEST = (LVM_FIRST + 57);
 
-            #endregion Windows constants
+        #endregion Windows constants
 
             [StructLayout(LayoutKind.Sequential)]
             public struct POINT
@@ -282,6 +282,7 @@ namespace GitUI.UserControls
         }
 #endif
 
+        #pragma warning disable CS3001
         public void SetGroupState(ListViewGroupState state)
         {
 #if !__MonoCS__

@@ -76,15 +76,15 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
             {
                 if (i == 0)
                 {
-                    Worktrees.Rows[i].Cells["Delete"].Value = Resources.IconBlank;
+                    Worktrees.Rows[i].Cells["Delete"].Value = Resources.BlankIcon; // IconBlank;
                     if(IsCurrentlyOpenedWorktree(_worktrees[0]))
-                        Worktrees.Rows[i].Cells["Open"].Value = Resources.IconBlank;
+                        Worktrees.Rows[i].Cells["Open"].Value = Resources.BlankIcon;
 
                 }
                 else if (!CanDeleteWorkspace(_worktrees[i]))
                 {
-                    Worktrees.Rows[i].Cells["Open"].Value = Resources.IconBlank;
-                    Worktrees.Rows[i].Cells["Delete"].Value = Resources.IconBlank;
+                    Worktrees.Rows[i].Cells["Open"].Value = Resources.BlankIcon;
+                    Worktrees.Rows[i].Cells["Delete"].Value = Resources.BlankIcon;
                 }
             }
             buttonPruneWorktrees.Enabled = _worktrees.Skip(1).Any(w => w.IsDeleted);
