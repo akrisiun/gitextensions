@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{14E7137B-7F0E-44D2-AF0B-CDAEC9BF9A6D}</ProjectGuid>
+    <ProjectGuid>{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NBug</RootNamespace>

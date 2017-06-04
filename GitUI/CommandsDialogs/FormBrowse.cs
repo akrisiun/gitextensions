@@ -172,9 +172,14 @@ namespace GitUI.CommandsDialogs
             RecoverSplitterContainerLayout();
         }
 
+        public static Lazy<IRepoObjectsTree> Tree { get; set; }
+
         public FormBrowse(GitUICommands aCommands, string filter)
             : base(true, aCommands)
         {
+            if (Tree == null)
+                throw new ArgumentNullException("Repository Tree interface error");
+
             InitializeComponent();
 
             // set tab page images

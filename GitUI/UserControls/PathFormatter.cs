@@ -8,7 +8,7 @@ using GitCommands.Utils;
 
 namespace GitUI
 {
-    internal sealed class PathFormatter
+    public sealed class PathFormatter
     {
         private static class NativeMethods
         {

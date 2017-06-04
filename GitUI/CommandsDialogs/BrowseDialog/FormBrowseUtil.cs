@@ -3,7 +3,7 @@ using System.IO;
 
 namespace GitUI.CommandsDialogs.BrowseDialog
 {
-    internal class FormBrowseUtil
+    public class FormBrowseUtil
     {
         public static string GetFullPathFromGitItem(GitModule gitModule, GitItem gitItem)
         {

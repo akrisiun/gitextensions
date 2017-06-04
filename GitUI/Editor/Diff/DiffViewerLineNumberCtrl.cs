@@ -151,5 +151,11 @@ namespace GitUI.Editor.Diff
         }
 
         public void Clear() { Clear(false); }
+
+        public void AddDiffLineNum(DiffLineNum line)
+        {
+            // TODO
+            Debugger.Break();
+        }
     }
 }

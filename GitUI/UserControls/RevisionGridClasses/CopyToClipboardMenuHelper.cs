@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace GitUI.UserControls.RevisionGridClasses
 {
-    class CopyToClipboardMenuHelper
+    public class CopyToClipboardMenuHelper
     {
         /// <summary>
         /// ...

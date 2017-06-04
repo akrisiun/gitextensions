@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GitUI.UserControls.RevisionGridClasses
 {
-    class NavigationHistory
+    public class NavigationHistory
     {
         // history of selected items (browse history)
         // head == currently selected item

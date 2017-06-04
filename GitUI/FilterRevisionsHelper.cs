@@ -1,6 +1,8 @@
 using System;
 using System.Windows.Forms;
 using GitCommands;
+using GitCommands.Logging;
+using System.Diagnostics;
 
 namespace GitUI
 {
@@ -8,7 +10,7 @@ namespace GitUI
     {
         private ToolStripTextBox _NO_TRANSLATE_textBox;
         private ToolStripDropDownButton _NO_TRANSLATE_dropDownButton;
-        private RevisionGrid _NO_TRANSLATE_revisionGrid;
+        private IRevisionGrid _NO_TRANSLATE_revisionGrid;
         private ToolStripLabel _NO_TRANSLATE_label;
         private ToolStripButton _NO_TRANSLATE_showFirstParentButton;
 
@@ -63,7 +65,8 @@ namespace GitUI
             this.hashToolStripMenuItem.Text = "Hash";        
         }
 
-        public FilterRevisionsHelper(ToolStripTextBox textBox, ToolStripDropDownButton dropDownButton, RevisionGrid revisionGrid, ToolStripLabel label, ToolStripButton showFirstParentButton, Form form)
+        public FilterRevisionsHelper(ToolStripTextBox textBox, ToolStripDropDownButton dropDownButton, 
+            IRevisionGrid revisionGrid, ToolStripLabel label, ToolStripButton showFirstParentButton, Form form)
             : this()
         {
             this._NO_TRANSLATE_dropDownButton = dropDownButton;
@@ -79,13 +82,17 @@ namespace GitUI
                 this.authorToolStripMenuItem,
                 this.diffContainsToolStripMenuItem});
 
-            this._NO_TRANSLATE_showFirstParentButton.Checked = AppSettings.ShowFirstParent;
 
+            if (this._NO_TRANSLATE_showFirstParentButton != null)
+            {
+                this._NO_TRANSLATE_showFirstParentButton.Checked = AppSettings.ShowFirstParent;
+                this._NO_TRANSLATE_showFirstParentButton.Click += this.ToolStripShowFirstParentButtonClick;
+            }
             this._NO_TRANSLATE_label.Click += this.ToolStripLabelClick;
             this._NO_TRANSLATE_textBox.Leave += this.ToolStripTextBoxFilterLeave;
             this._NO_TRANSLATE_textBox.KeyPress += this.ToolStripTextBoxFilterKeyPress;
-            this._NO_TRANSLATE_showFirstParentButton.Click += this.ToolStripShowFirstParentButtonClick;
-            this._NO_TRANSLATE_revisionGrid.ShowFirstParentsToggled += this.RevisionGridShowFirstParentsToggled;       
+            
+            this._NO_TRANSLATE_revisionGrid.ShowFirstParentsToggled += this.RevisionGridShowFirstParentsToggled;
         }
 
         public void SetFilter(string filter)
@@ -105,34 +112,39 @@ namespace GitUI
             filterParams[1] = committerToolStripMenuItem.Checked;
             filterParams[2] = authorToolStripMenuItem.Checked;
             filterParams[3] = diffContainsToolStripMenuItem.Checked;
-            try
-            {
-                _NO_TRANSLATE_revisionGrid.FormatQuickFilter(_NO_TRANSLATE_textBox.Text,
-                                               filterParams,
-                                               out revListArgs,
-                                               out inMemMessageFilter,
-                                               out inMemCommitterFilter,
-                                               out inMemAuthorFilter);
-            }
-            catch (InvalidOperationException ex)
-            {
-                MessageBox.Show(_NO_TRANSLATE_form, ex.Message, "Filter error");
-                _NO_TRANSLATE_textBox.Text = "";
-                return;
-            }
 
-            if ((_NO_TRANSLATE_revisionGrid.QuickRevisionFilter == revListArgs) &&
-                (_NO_TRANSLATE_revisionGrid.InMemMessageFilter == inMemMessageFilter) &&
-                (_NO_TRANSLATE_revisionGrid.InMemCommitterFilter == inMemCommitterFilter) &&
-                (_NO_TRANSLATE_revisionGrid.InMemAuthorFilter == inMemAuthorFilter) &&
-                (_NO_TRANSLATE_revisionGrid.InMemFilterIgnoreCase))
-                return;
-            _NO_TRANSLATE_revisionGrid.QuickRevisionFilter = revListArgs;
-            _NO_TRANSLATE_revisionGrid.InMemMessageFilter = inMemMessageFilter;
-            _NO_TRANSLATE_revisionGrid.InMemCommitterFilter = inMemCommitterFilter;
-            _NO_TRANSLATE_revisionGrid.InMemAuthorFilter = inMemAuthorFilter;
-            _NO_TRANSLATE_revisionGrid.InMemFilterIgnoreCase = true;
-            _NO_TRANSLATE_revisionGrid.Visible = true;
+            Debugger.Break();
+
+            //try
+            //{
+            //    _NO_TRANSLATE_revisionGrid.FormatQuickFilter(_NO_TRANSLATE_textBox.Text,
+            //                                   filterParams,
+            //                                   out revListArgs,
+            //                                   out inMemMessageFilter,
+            //                                   out inMemCommitterFilter,
+            //                                   out inMemAuthorFilter);
+            //}
+            //catch (InvalidOperationException ex)
+            //{
+            //    MessageBox.Show(_NO_TRANSLATE_form, ex.Message, "Filter error");
+            //    _NO_TRANSLATE_textBox.Text = "";
+            //    return;
+            //}
+
+            // TODO:
+
+            //if ((_NO_TRANSLATE_revisionGrid.QuickRevisionFilter == revListArgs) &&
+            //    (_NO_TRANSLATE_revisionGrid.InMemMessageFilter == inMemMessageFilter) &&
+            //    (_NO_TRANSLATE_revisionGrid.InMemCommitterFilter == inMemCommitterFilter) &&
+            //    (_NO_TRANSLATE_revisionGrid.InMemAuthorFilter == inMemAuthorFilter) &&
+            //    (_NO_TRANSLATE_revisionGrid.InMemFilterIgnoreCase))
+            //    return;
+            //_NO_TRANSLATE_revisionGrid.QuickRevisionFilter = revListArgs;
+            //_NO_TRANSLATE_revisionGrid.InMemMessageFilter = inMemMessageFilter;
+            //_NO_TRANSLATE_revisionGrid.InMemCommitterFilter = inMemCommitterFilter;
+            //_NO_TRANSLATE_revisionGrid.InMemAuthorFilter = inMemAuthorFilter;
+            //_NO_TRANSLATE_revisionGrid.InMemFilterIgnoreCase = true;
+            //_NO_TRANSLATE_revisionGrid.Visible = true;
             _NO_TRANSLATE_revisionGrid.ForceRefreshRevisions();
         }
 
@@ -157,7 +169,7 @@ namespace GitUI
             this._NO_TRANSLATE_revisionGrid.ShowFirstParent_ToolStripMenuItemClick(sender, e);
         }
 
-        private void RevisionGridShowFirstParentsToggled(object sender, EventArgs e)
+        public void RevisionGridShowFirstParentsToggled(object sender, IRevisionGrid e)
         {
             this._NO_TRANSLATE_showFirstParentButton.Checked = AppSettings.ShowFirstParent;
         }

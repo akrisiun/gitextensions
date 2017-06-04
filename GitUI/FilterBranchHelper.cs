@@ -10,7 +10,7 @@ namespace GitUI
     {
         private ToolStripComboBox _NO_TRANSLATE_toolStripBranches;
         private ToolStripDropDownButton _NO_TRANSLATE_toolStripDropDownButton2;
-        private RevisionGrid _NO_TRANSLATE_RevisionGrid;
+        private IRevisionGrid _NO_TRANSLATE_RevisionGrid;
         private ToolStripMenuItem localToolStripMenuItem;
         private ToolStripMenuItem tagsToolStripMenuItem;
         private ToolStripMenuItem remoteToolStripMenuItem;
@@ -43,7 +43,7 @@ namespace GitUI
             this.remoteToolStripMenuItem.Text = "Remote";        
         }
 
-        public FilterBranchHelper(ToolStripComboBox toolStripBranches, ToolStripDropDownButton toolStripDropDownButton2, RevisionGrid RevisionGrid)
+        public FilterBranchHelper(ToolStripComboBox toolStripBranches, ToolStripDropDownButton toolStripDropDownButton2, IRevisionGrid RevisionGrid)
             : this()
         {
             this._NO_TRANSLATE_toolStripBranches = toolStripBranches;

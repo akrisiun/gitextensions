@@ -155,7 +155,7 @@ namespace GitUI
                     diffArgs, encoding, cacheResult);
         }
 
-        public static string GetSelectedPatch(this FileViewer diffViewer, RevisionGrid grid, GitItemStatus file)
+        public static string GetSelectedPatch(this FileViewer diffViewer, IRevisionGrid grid, GitItemStatus file)
         {
             IList<GitRevision> revisions = grid.GetSelectedRevisions();
             string firstRevision = revisions.Count > 0 ? revisions[0].Guid : null;
@@ -348,7 +348,7 @@ namespace GitUI
             };
 
             if (!control.IsDisposed)
-                UISynchronizationContext.Send(checkDisposedAndInvoke, state);
+                UISynchronizationContext?.Send(checkDisposedAndInvoke, state);
         }
 
         public static Control FindFocusedControl(this ContainerControl container)

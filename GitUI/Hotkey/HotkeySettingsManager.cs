@@ -11,7 +11,7 @@ using ResourceManager;
 
 namespace GitUI.Hotkey
 {
-    class HotkeySettingsManager
+    public class HotkeySettingsManager
     {
         #region Serializer
         private static XmlSerializer _Serializer;
@@ -209,30 +209,30 @@ namespace GitUI.Hotkey
                     hk(FormBrowse.Commands.CloseRepositry, Keys.Control | Keys.W),
                     hk(FormBrowse.Commands.RotateApplicationIcon, Keys.Control | Keys.Shift | Keys.I)),
                 new HotkeySettings(RevisionGrid.HotkeySettingsName,
-                    hk(RevisionGrid.Commands.RevisionFilter, Keys.Control | Keys.F),
-                    hk(RevisionGrid.Commands.ToggleRevisionGraph, Keys.None),
-                    hk(RevisionGrid.Commands.ToggleAuthorDateCommitDate, Keys.None),
-                    hk(RevisionGrid.Commands.ToggleOrderRevisionsByDate, Keys.None),
-                    hk(RevisionGrid.Commands.ToggleShowRelativeDate, Keys.None),
-                    hk(RevisionGrid.Commands.ToggleDrawNonRelativesGray, Keys.None),
-                    hk(RevisionGrid.Commands.ToggleShowGitNotes, Keys.None),
-                    hk(RevisionGrid.Commands.ToggleRevisionCardLayout, Keys.Control | Keys.Shift | Keys.L),
-                    hk(RevisionGrid.Commands.ShowAllBranches, Keys.Control | Keys.Shift | Keys.A),
-                    hk(RevisionGrid.Commands.ShowCurrentBranchOnly, Keys.Control | Keys.Shift | Keys.U),
-                    hk(RevisionGrid.Commands.ToggleShowMergeCommits, Keys.Control | Keys.Shift | Keys.M),
-                    hk(RevisionGrid.Commands.ShowFilteredBranches, Keys.Control | Keys.Shift | Keys.T),
-                    hk(RevisionGrid.Commands.ShowRemoteBranches, Keys.Control | Keys.Shift | Keys.R),
-                    hk(RevisionGrid.Commands.ShowFirstParent, Keys.Control | Keys.Shift | Keys.S),
-                    hk(RevisionGrid.Commands.GoToParent, Keys.Control | Keys.P),
-                    hk(RevisionGrid.Commands.GoToChild, Keys.Control | Keys.N),
-                    hk(RevisionGrid.Commands.ToggleHighlightSelectedBranch, Keys.Control | Keys.Shift | Keys.B),
-                    hk(RevisionGrid.Commands.NextQuickSearch, Keys.Alt | Keys.Down),
-                    hk(RevisionGrid.Commands.PrevQuickSearch, Keys.Alt | Keys.Up),
-                    hk(RevisionGrid.Commands.SelectCurrentRevision, Keys.Control | Keys.Shift | Keys.C),
-                    hk(RevisionGrid.Commands.SelectAsBaseToCompare, Keys.Control | Keys.L),
-                    hk(RevisionGrid.Commands.CompareToBase, Keys.Control | Keys.R),
-                    hk(RevisionGrid.Commands.ToggleLeftPanel, Keys.Control | Keys.Alt | Keys.C),
-                    hk(RevisionGrid.Commands.GoToCommit, Keys.Control | Keys.Shift | Keys.G)
+                    hk(Revision.Commands.RevisionFilter, Keys.Control | Keys.F),
+                    hk(Revision.Commands.ToggleRevisionGraph, Keys.None),
+                    hk(Revision.Commands.ToggleAuthorDateCommitDate, Keys.None),
+                    hk(Revision.Commands.ToggleOrderRevisionsByDate, Keys.None),
+                    hk(Revision.Commands.ToggleShowRelativeDate, Keys.None),
+                    hk(Revision.Commands.ToggleDrawNonRelativesGray, Keys.None),
+                    hk(Revision.Commands.ToggleShowGitNotes, Keys.None),
+                    hk(Revision.Commands.ToggleRevisionCardLayout, Keys.Control | Keys.Shift | Keys.L),
+                    hk(Revision.Commands.ShowAllBranches, Keys.Control | Keys.Shift | Keys.A),
+                    hk(Revision.Commands.ShowCurrentBranchOnly, Keys.Control | Keys.Shift | Keys.U),
+                    hk(Revision.Commands.ToggleShowMergeCommits, Keys.Control | Keys.Shift | Keys.M),
+                    hk(Revision.Commands.ShowFilteredBranches, Keys.Control | Keys.Shift | Keys.T),
+                    hk(Revision.Commands.ShowRemoteBranches, Keys.Control | Keys.Shift | Keys.R),
+                    hk(Revision.Commands.ShowFirstParent, Keys.Control | Keys.Shift | Keys.S),
+                    hk(Revision.Commands.GoToParent, Keys.Control | Keys.P),
+                    hk(Revision.Commands.GoToChild, Keys.Control | Keys.N),
+                    hk(Revision.Commands.ToggleHighlightSelectedBranch, Keys.Control | Keys.Shift | Keys.B),
+                    hk(Revision.Commands.NextQuickSearch, Keys.Alt | Keys.Down),
+                    hk(Revision.Commands.PrevQuickSearch, Keys.Alt | Keys.Up),
+                    hk(Revision.Commands.SelectCurrentRevision, Keys.Control | Keys.Shift | Keys.C),
+                    hk(Revision.Commands.SelectAsBaseToCompare, Keys.Control | Keys.L),
+                    hk(Revision.Commands.CompareToBase, Keys.Control | Keys.R),
+                    hk(Revision.Commands.ToggleLeftPanel, Keys.Control | Keys.Alt | Keys.C),
+                    hk(Revision.Commands.GoToCommit, Keys.Control | Keys.Shift | Keys.G)
                     ),
                 new HotkeySettings(FileViewer.HotkeySettingsName,
                     hk(FileViewer.Commands.Find, Keys.Control | Keys.F),

@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace GitUI.UserControls.RevisionGridClasses
 {
-    class MenuUtil
+    public class MenuUtil
     {
         private static CaptionCustomMenuRenderer customMenuRenderer = new CaptionCustomMenuRenderer();
         private static Font disabledFont;

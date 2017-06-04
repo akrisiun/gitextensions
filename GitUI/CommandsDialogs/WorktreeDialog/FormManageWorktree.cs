@@ -76,15 +76,15 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
             {
                 if (i == 0)
                 {
-                    Worktrees.Rows[i].Cells["Delete"].Value = Resources.BlankIcon; // IconBlank;
-                    if(IsCurrentlyOpenedWorktree(_worktrees[0]))
-                        Worktrees.Rows[i].Cells["Open"].Value = Resources.BlankIcon;
+                    Worktrees.Rows[i].Cells["Delete"].Value = Resources.IconBlank; // BlankIcon
+                    if (IsCurrentlyOpenedWorktree(_worktrees[0]))
+                        Worktrees.Rows[i].Cells["Open"].Value = Resources.IconBlank;
 
                 }
                 else if (!CanDeleteWorkspace(_worktrees[i]))
                 {
-                    Worktrees.Rows[i].Cells["Open"].Value = Resources.BlankIcon;
-                    Worktrees.Rows[i].Cells["Delete"].Value = Resources.BlankIcon;
+                    Worktrees.Rows[i].Cells["Open"].Value = Resources.IconBlank;
+                    Worktrees.Rows[i].Cells["Delete"].Value = Resources.IconBlank;
                 }
             }
             buttonPruneWorktrees.Enabled = _worktrees.Skip(1).Any(w => w.IsDeleted);
@@ -171,7 +171,7 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
                 {
                     if (Directory.Exists(workTree.Path))
                     {
-                        ((FormBrowse) Owner).SetWorkingDir(System.IO.Path.GetFullPath(workTree.Path));
+                        ((IFormBrowse)Owner).SetWorkingDir(System.IO.Path.GetFullPath(workTree.Path));
                         Close();
                     }
                 }

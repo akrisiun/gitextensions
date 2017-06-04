@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GitUI.CommandsDialogs
 {
-    class FormBrowseMenuCommands : MenuCommandsBase
+    public class FormBrowseMenuCommands : MenuCommandsBase
     {
         FormBrowse _formBrowse;
         GitUICommands UICommands { get { return _formBrowse.UICommands; } }

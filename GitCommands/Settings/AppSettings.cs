@@ -70,6 +70,11 @@ namespace GitCommands
             set { SetBool("AutoNormaliseBranchName", value); }
         }
 
+        public static bool DonSetAsLastPullAction {
+            get { return GetBool("DonSetAsLastPullAction", true); }
+            set { SetBool("DonSetAsLastPullAction", value); }
+        }
+
         public static string AutoNormaliseSymbol
         {
             // when persisted "" is treated as null, so use "+" instead

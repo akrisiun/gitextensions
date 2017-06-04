@@ -135,14 +135,19 @@ namespace GitUI.CommandsDialogs
             RevisionGrid.OpenWithDifftool(selectedItem.Name, selectedItem.OldName, diffKind, parentGuid);
         }
 
+#if !SKIN
         private void copyFilenameToClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             FormBrowse.CopyFullPathToClipboard(DiffFiles, Module);
         }
+#endif
 
         private void openContainingFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormBrowse.OpenContainingFolder(DiffFiles, Module);
+            Debugger.Break();
+            // TODO
+            throw new NotImplementedException();
+            //FormBrowse.OpenContainingFolder(DiffFiles, Module);
         }
 
         private void fileHistoryDiffToolstripMenuItem_Click(object sender, EventArgs e)
@@ -154,9 +159,9 @@ namespace GitUI.CommandsDialogs
                 IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions();
 
                 if (revisions.Count == 0 || GitRevision.IsArtificial(revisions[0].Guid))
-                    UICommands.StartFileHistoryDialog(this, item.Name);
-                else
-                    UICommands.StartFileHistoryDialog(this, item.Name, revisions[0], false);
+                    UICommands.StartFileHistoryDialog(this, item.Name, revision: null);
+                //else
+                //    UICommands.StartFileHistoryDialog(this, item.Name, revisions[0], false);
             }
         }
 
@@ -170,8 +175,8 @@ namespace GitUI.CommandsDialogs
 
                 if (revisions.Count == 0 || GitRevision.IsArtificial(revisions[0].Guid))
                     UICommands.StartFileHistoryDialog(this, item.Name, null, false, true);
-                else
-                    UICommands.StartFileHistoryDialog(this, item.Name, revisions[0], true, true);
+                //else
+                //    UICommands.StartFileHistoryDialog(this, item.Name, revisions[0], true, true);
             }
         }
 

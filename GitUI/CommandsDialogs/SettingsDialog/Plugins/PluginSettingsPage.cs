@@ -5,15 +5,18 @@ using System.Linq;
 using System.Windows.Forms;
 using GitUIPluginInterfaces;
 using GitCommands.Settings;
+using System.Diagnostics;
 
 namespace GitUI.CommandsDialogs.SettingsDialog.Plugins
 {
-    public partial class PluginSettingsPage : IDisposable // : AutoLayoutSettingsPage
+    public partial class PluginSettingsPage : ISettingsPage, IDisposable // : AutoLayoutSettingsPage
     {
         private IGitPlugin _gitPlugin;
         private GitPluginSettingsContainer settingsCointainer;
 
-        public PluginSettingsPage()
+        public Control GuiControl { get; protected set; }
+
+        public PluginSettingsPage(Control ui = null)
         {
             InitializeComponent();
             // Translate();
@@ -37,12 +40,17 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Plugins
             // Translate();
         }
 
-        //public static PluginSettingsPage CreateSettingsPageFromPlugin(ISettingsPageHost aPageHost, IGitPlugin gitPlugin)
-        //{
-        //    var result = SettingsPageBase.Create<PluginSettingsPage>(aPageHost);
-        //    result.Init(gitPlugin);
-        //    return result;
-        //}
+        // CreateSettingsPageFromPlugin(this, gitPlugin);
+        public static PluginSettingsPage CreateSettingsPageFromPlugin(ISettingsPageHost aPageHost, IGitPlugin gitPlugin)
+        {
+            //var result = SettingsPageBase.Create<PluginSettingsPage>(aPageHost);
+            //result.Init(gitPlugin);
+            //return result;
+
+            Debugger.Break();  // TODO
+
+            return null;
+        }
 
         //protected override ISettingsSource GetCurrentSettings()
         //{
@@ -88,5 +96,19 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Plugins
             tableLayoutPanel1.Dispose();
             labelNoSettings.Dispose();
         }
+
+        public void OnPageShown() { }
+        public void LoadSettings() { }
+        public void SaveSettings() { }
+
+        public string GetTitle() { return null; }
+
+        /// <summary>
+        /// true if the page cannot properly react to cancel or discard
+        /// </summary>
+        public bool IsInstantSavePage { get; protected set; }
+
+        public IEnumerable<string> GetSearchKeywords() { return null; }
+
     }
 }

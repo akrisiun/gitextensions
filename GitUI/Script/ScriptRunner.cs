@@ -32,7 +32,13 @@ namespace GitUI.Script
             return anyScriptExecuted;
         }
 
-        public static bool RunScript(IWin32Window owner, GitModule aModule, string script, RevisionGrid revisionGrid)
+        public static bool RunScript(IWin32Window owner, GitModule aModule, ScriptInfo scriptInfo, IRevisionGrid revisionGrid)
+        {
+            var script = scriptInfo.Name;
+            return RunScript(owner, aModule, script, revisionGrid);
+        }
+
+        public static bool RunScript(IWin32Window owner, GitModule aModule, string script, IRevisionGrid revisionGrid)
         {
             if (string.IsNullOrEmpty(script))
                 return false;
@@ -62,7 +68,7 @@ namespace GitUI.Script
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            return RunScript(owner, aModule, scriptInfo, revisionGrid);
+            return RunScriptInternal(owner, aModule, scriptInfo, revisionGrid);
         }
 
         private static string GetRemotePath(string url)
@@ -79,13 +85,13 @@ namespace GitUI.Script
             return path;
         }
 
-        internal static bool RunScript(IWin32Window owner, GitModule aModule, ScriptInfo scriptInfo, RevisionGrid revisionGrid)
+        internal static bool RunScriptInternal(IWin32Window owner, GitModule aModule, ScriptInfo scriptInfo, IRevisionGrid revisionGrid)
         {
             string originalCommand = scriptInfo.Command;
             string argument = scriptInfo.Arguments;
 
             string command = OverrideCommandWhenNecessary(originalCommand);
-            var allSelectedRevisions = new List<GitRevision>();
+            IList<GitRevision> allSelectedRevisions = new List<GitRevision>();
 
             GitRevision selectedRevision = null;
             GitRevision currentRevision = null;
@@ -340,10 +346,12 @@ namespace GitUI.Script
            
         }
 
-        private static GitRevision CalculateSelectedRevision(RevisionGrid revisionGrid, List<GitRef> selectedRemoteBranches,
+        private static GitRevision CalculateSelectedRevision(IRevisionGrid revisionGridI, List<GitRef> selectedRemoteBranches,
                                                              List<string> selectedRemotes, List<GitRef> selectedLocalBranches,
                                                              List<GitRef> selectedBranches, List<GitRef> selectedTags)
         {
+            var revisionGrid = revisionGridI as RevisionGrid;
+
             GitRevision selectedRevision = revisionGrid.GetRevision(revisionGrid.LastRowIndex);
             foreach (GitRef head in selectedRevision.Refs)
             {
@@ -366,7 +374,7 @@ namespace GitUI.Script
             return selectedRevision;
         }
 
-        private static GitRevision GetCurrentRevision(GitModule aModule, RevisionGrid RevisionGrid, List<GitRef> currentTags, List<GitRef> currentLocalBranches,
+        private static GitRevision GetCurrentRevision(GitModule aModule, IRevisionGrid RevisionGrid, List<GitRef> currentTags, List<GitRef> currentLocalBranches,
                                                       List<GitRef> currentRemoteBranches, List<GitRef> currentBranches,
                                                       GitRevision currentRevision)
         {

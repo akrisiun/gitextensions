@@ -6,7 +6,7 @@ using System.Text;
 
 namespace GitUI.UserControls.RevisionGridClasses
 {
-    class GitRefListsForRevision
+    public class GitRefListsForRevision
     {
         private GitRef[] _allBranches;
         private GitRef[] _localBranches;

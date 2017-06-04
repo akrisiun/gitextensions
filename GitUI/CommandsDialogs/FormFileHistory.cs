@@ -53,7 +53,8 @@ namespace GitUI.CommandsDialogs
 #if SKIN
             throw new NotImplementedException();
 #else
-            _formBrowseMenus = new FormBrowseMenus(FileHistoryContextMenu);
+            ContextMenuStrip fileHistoryContextMenu = FileHistoryContextMenu;
+            _formBrowseMenus = new FormBrowseMenus(fileHistoryContextMenu);
             _formBrowseMenus.ResetMenuCommandSets();
             _formBrowseMenus.AddMenuCommandSet(MainMenuItem.NavigateMenu, FileChanges.MenuCommands.GetNavigateMenuCommands());
             _formBrowseMenus.AddMenuCommandSet(MainMenuItem.ViewMenu, FileChanges.MenuCommands.GetViewMenuCommands());

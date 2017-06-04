@@ -15,7 +15,22 @@ namespace GitUI.Script
         AfterCheckout
     }
 
-    public class ScriptInfo
+    public interface IScriptInfo
+    {
+        bool Enabled { get; set; }
+        string Name { get; set; }
+        string Command { get; set; }
+        string Arguments { get; set; }
+        bool AddToRevisionGridContextMenu { get; set; }
+
+        ScriptEvent OnEvent { get; set; }
+        bool AskConfirmation { get; set; }
+        bool RunInBackground { get; set; }
+        bool IsPowerShell { get; set; }
+        int HotkeyCommandIdentifier { get; set; }
+    }
+
+    public class ScriptInfo : IScriptInfo
     {
         private string _Icon;
 

@@ -4,6 +4,11 @@ using SmartFormat;
 
 namespace ResourceManager
 {
+#if !TRANS
+    public class StringsResource : Strings      // -> GitCommands.Strings
+    {
+    }
+#else
     /// <summary>Contains common string literals which are translated.</summary>
     public class Strings : Translate
     {
@@ -169,4 +174,5 @@ namespace ResourceManager
         private readonly TranslationString _monthsAgo  = new TranslationString("{0} {1:month|months} ago");
         private readonly TranslationString _yearsAgo   = new TranslationString("{0} {1:year|years} ago");
     }
+#endif
 }

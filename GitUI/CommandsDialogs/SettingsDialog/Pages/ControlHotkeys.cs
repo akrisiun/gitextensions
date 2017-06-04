@@ -65,6 +65,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
 
         #region Methods
 
+#if !SKIN   // ORIGIN git
         public void SaveSettings()
         {
             HotkeySettingsManager.SaveSettings(this.Settings);
@@ -74,7 +75,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
         {
             this.Settings = HotkeySettingsManager.LoadSettings();
         }
-
+#endif
         private void UpdateCombobox(HotkeySettings[] settings)
         {
             this.SelectedHotkeySettings = null;
@@ -113,7 +114,10 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
         {
             if (DesignMode)
                 return;
+
+#if !SKIN   // ORIGIN git
             ReloadSettings();
+#endif
         }
 
         private void cmbSettings_SelectedIndexChanged(object sender, EventArgs e)
@@ -159,9 +163,11 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
 
         private void bResetToDefaults_Click(object sender, EventArgs e)
         {
+#if !SKIN   // ORIGIN git
             this.Settings = HotkeySettingsManager.CreateDefaultSettings();
+#endif
         }
 
-        #endregion
+#endregion
     }
 }
