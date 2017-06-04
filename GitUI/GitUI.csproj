@@ -46,7 +46,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET45;__MonoCS__;WIN;NOAPICODE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;NET45;__MonoCS__;WIN;NOAPICODE;TRANS;NOSKIN;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -266,9 +266,57 @@
     <Compile Include="Helpers\SystemExtensions.cs" />
     <Compile Include="Helpers\TreeViewExtensions.cs" />
     <Compile Include="Hotkey\KeysExtensions.cs" />
+    <Compile Include="Notifications\NotificationFeed.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Notifications\NotificationList.cs" />
+    <Compile Include="Notifications\NotificationManager.cs" />
+    <Compile Include="Notifications\NotificationPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Notifications\NotificationPopup.Designer.cs">
+      <DependentUpon>NotificationPopup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Notifications\NotificationsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Notifications\NotificationsForm.Designer.cs">
+      <DependentUpon>NotificationsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Notifications\NotifierHelpers.cs" />
     <Compile Include="RepoHosts.cs" />
     <Compile Include="AutoCompletion\AutoCompleteWord.cs" />
     <Compile Include="RepoObjectsTree\IRepoObjectsTree.cs" />
+    <Compile Include="RepoObjectsTree\RepoObjectsTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\RepoObjectsTree.Designer.cs">
+      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.ContextActions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.DragDrops.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Branches.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Remotes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Stashes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Submodules.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Tags.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <!-- 
     <Compile Include="RepoObjectsTree\RepoObjectsTree.cs" />
     <Compile Include="RepoObjectsTree\RepoObjectsTree.Designer.cs">
@@ -327,6 +375,7 @@
     <Compile Include="UserControls\GotoUserManualControl.Designer.cs">
       <DependentUpon>GotoUserManualControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\IRevisionGrid.cs" />
     <Compile Include="UserControls\RevisionGridClasses\CopyToClipboardMenuHelper.cs" />
     <Compile Include="UserControls\RevisionGridClasses\CaptionCustomMenuRenderer.cs" />
     <Compile Include="UserControls\RevisionGridClasses\FollowParentRewriter.cs" />
@@ -335,6 +384,7 @@
     <Compile Include="UserControls\RevisionGridClasses\NavigationHistory.cs" />
     <Compile Include="UserControls\RevisionGridClasses\ParentChildNavigationHistory.cs" />
     <Compile Include="UserControls\AuthorEmailBasedRevisionHighlighting.cs" />
+    <Compile Include="UserControls\RevisionGridUtils.cs" />
     <Compile Include="UserControls\TextEventArgs.cs" />
     <Compile Include="UserControls\WebBrowserCtrl.cs">
       <SubType>Component</SubType>
@@ -1129,6 +1179,12 @@
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Plugins\PluginRootIntroductionPage.resx">
       <DependentUpon>PluginRootIntroductionPage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Notifications\NotificationPopup.resx">
+      <DependentUpon>NotificationPopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RepoObjectsTree\RepoObjectsTree.resx">
+      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
+    </EmbeddedResource>
     <!-- 
     <EmbeddedResource Include="RepoObjectsTree\RepoObjectsTree.resx">
       <DependentUpon>RepoObjectsTree.cs</DependentUpon>
@@ -1698,6 +1754,7 @@
     <!--
 	<Content Include="RepoObjectsTree\BlankIcon.png" />
 	-->
+    <Content Include="RepoObjectsTree\BlankIcon.png" />
     <Content Include="Translation\Czech.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

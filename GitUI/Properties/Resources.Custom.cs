@@ -12,15 +12,19 @@
     /// </summary>
     internal partial class Resources
     {
-        public static System.Drawing.Bitmap loadingpanel
-        {
-            get
-            {
-                if(GitCommands.Utils.EnvUtils.IsMonoRuntime())
+        public static System.Drawing.Bitmap loadingpanel {
+            get {
+                if (GitCommands.Utils.EnvUtils.IsMonoRuntime())
                     return loadingpanel_static;
                 else
                     return loadingpanel_animated;
 
+            }
+        }
+
+        public static System.Drawing.Bitmap IconBlank {
+            get {
+                return BlankIcon;
             }
         }
     }

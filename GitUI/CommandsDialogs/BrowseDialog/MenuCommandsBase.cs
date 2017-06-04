@@ -7,7 +7,7 @@ using System.Text;
 
 namespace GitUI.CommandsDialogs.BrowseDialog
 {
-    abstract class MenuCommandsBase : ITranslate
+    public abstract class MenuCommandsBase : ITranslate
     {
         //for translation category
         protected string TranslationCategoryName { get; set; }

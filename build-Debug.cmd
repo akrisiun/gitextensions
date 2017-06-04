@@ -5,6 +5,6 @@ nuget restore GitExtensions.VS2017.sln
 @if not exist %msbuild% @set msbuild="%ProgramFiles(x86)%\MSBuild\12.0\Bin\MSBuild.exe"
 @if not exist %msbuild% @set msbuild="%ProgramFiles%\MSBuild\12.0\Bin\MSBuild.exe"
 
-%msbuild% /m /nr:false /p:Configuration=Release /p:Platform="Any CPU" /v:M /fl GitExtensions.VS2017.sln
+%msbuild% /m /nr:false /p:Configuration=Debug /p:Platform="Any CPU" /v:M /fl GitExtensions.VS2017.sln
 
 @PAUSE

@@ -1,4 +1,5 @@
 ﻿using GitUI.Properties;
+using GitUIPluginInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -171,7 +172,7 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
                 {
                     if (Directory.Exists(workTree.Path))
                     {
-                        ((IFormBrowse)Owner).SetWorkingDir(System.IO.Path.GetFullPath(workTree.Path));
+                        ((IBrowseRepo)Owner).SetWorkingDir(System.IO.Path.GetFullPath(workTree.Path));
                         Close();
                     }
                 }

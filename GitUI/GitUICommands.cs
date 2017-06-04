@@ -10,15 +10,15 @@ using GitUI.CommandsDialogs;
 using GitUI.CommandsDialogs.RepoHosting;
 using GitUI.CommandsDialogs.SettingsDialog;
 using GitUI.Blame;
-//using GitUI.Notifications;
+using GitUI.Notifications;
 using GitUIPluginInterfaces;
 using GitUIPluginInterfaces.Notifications;
 using GitUIPluginInterfaces.RepositoryHosts;
 using Gravatar;
 
 using JetBrains.Annotations;
-
 using Settings = GitCommands.AppSettings;
+using GitUI.UserControls;
 
 namespace GitUI
 {
@@ -1499,6 +1499,10 @@ namespace GitUI
         {
             if (!InvokeEvent(owner, PreBrowse))
                 return false;
+
+            FormBrowse.Tree = new Lazy<UserControls.IRepoObjectsTree>(
+                () => new RepoObjectsTree());
+
             var form = new FormBrowse(this, filter);
 
             if (Application.MessageLoop)

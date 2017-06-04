@@ -19,11 +19,14 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
             {
                 _KeyData = value;
                 //TODO: do not change text color on already assigned keys, which occur only once
+#if !SKIN   // ORIGIN git
                 this.ForeColor = (HotkeySettingsManager.IsUniqueKey(_KeyData)) ? System.Drawing.Color.Red : System.Drawing.Color.Black;
+#endif
+
                 this.Text = value.ToText() ?? _hotkeyNotSet.Text;
             }
         }
-        #endregion
+#endregion
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {

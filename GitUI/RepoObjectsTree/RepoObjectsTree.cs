@@ -11,7 +11,7 @@ using ResourceManager;
 namespace GitUI.UserControls
 {
     /// <summary>Tree-like structure for a repo's objects.</summary>
-    public partial class RepoObjectsTree : GitModuleControl
+    public partial class RepoObjectsTree : GitModuleControl, IRepoObjectsTree
     {
         List<Tree> rootNodes = new List<Tree>();
         /// <summary>Image key for a head branch.</summary>
@@ -145,6 +145,24 @@ namespace GitUI.UserControls
         private List<TreeNode> _searchResult;
         private bool _searchCriteriaChanged = false;
         private Task[] _tasks;
+
+        public TreeView TreeView => throw new NotImplementedException();
+
+        public TreeView TreeMain => throw new NotImplementedException();
+
+        ContextMenuStrip IRepoObjectsTree.menuBranch => throw new NotImplementedException();
+
+        TableLayoutPanel IRepoObjectsTree.repoTreePanel => throw new NotImplementedException();
+
+        TableLayoutPanel IRepoObjectsTree.branchFilterPanel => throw new NotImplementedException();
+
+        Label IRepoObjectsTree.lblSearchBranch => throw new NotImplementedException();
+
+        Button IRepoObjectsTree.btnSearch => throw new NotImplementedException();
+
+        Button IRepoObjectsTree.btnSettings => throw new NotImplementedException();
+
+        ContextMenuStrip IRepoObjectsTree.menuSettings => throw new NotImplementedException();
 
         private void CancelBackgroundTasks()
         {
@@ -308,6 +326,16 @@ namespace GitUI.UserControls
                 OnBtnSearchClicked(null, null);
                 e.Handled = true;
             }
+        }
+
+        public Task Reload(object caller)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateRevision(GitModuleRevisionEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

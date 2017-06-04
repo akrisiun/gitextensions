@@ -170,7 +170,9 @@ namespace GitUI.Editor
 
         protected override void OnRuntimeLoad(EventArgs e)
         {
+#if !SKIN   // ORIGIN git
             this.Hotkeys = HotkeySettingsManager.LoadHotkeys(HotkeySettingsName);
+#endif
             Font = AppSettings.DiffFont;
         }
 
@@ -907,7 +909,7 @@ namespace GitUI.Editor
             IgnoreWhitespaceChangesToolStripMenuItemClick(null, null);
         }
 
-        #region Hotkey commands
+#region Hotkey commands
 
         public const string HotkeySettingsName = "FileViewer";
 
@@ -943,7 +945,7 @@ namespace GitUI.Editor
             return true;
         }
 
-        #endregion
+#endregion
 
         public void Clear()
         {

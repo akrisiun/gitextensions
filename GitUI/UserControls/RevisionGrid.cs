@@ -28,28 +28,12 @@ using GitUI.UserControls;
 
 namespace GitUI
 {
-    public enum RevisionGridLayout
-    {
-        FilledBranchesSmall = 1,
-        FilledBranchesSmallWithGraph = 2,
-        Small = 3,
-        SmallWithGraph = 4,
-        Card = 5,
-        CardWithGraph = 6,
-        LargeCard = 7,
-        LargeCardWithGraph = 8
-    }
-
-    public enum RevisionGraphDrawStyleEnum
-    {
-        Normal,
-        DrawNonRelativesGray,
-        HighlightSelected
-    }
-
+   
     [DefaultEvent("DoubleClick")]
-    public sealed partial class RevisionGrid : GitModuleControl
+    public sealed partial class RevisionGrid : GitModuleControl, IRevisionGrid, IGitModuleControl
     {
+        #region Private
+
         private readonly TranslationString _droppingFilesBlocked = new TranslationString("For you own protection dropping more than 10 patch files at once is blocked!");
         private readonly TranslationString _cannotHighlightSelectedBranch = new TranslationString("Cannot highlight selected branch when revision graph is loading.");
         private readonly TranslationString _noRevisionFoundError = new TranslationString("No revision found.");
@@ -80,7 +64,7 @@ namespace GitUI
         public event EventHandler<GitModuleEventArgs> GitModuleChanged;
         public event EventHandler<DoubleClickRevisionEventArgs> DoubleClickRevision;
         public Action OnToggleLeftPanelRequested;
-        public event EventHandler<EventArgs> ShowFirstParentsToggled;
+        // public event EventHandler<EventArgs> ShowFirstParentsToggled;
 
         private readonly RevisionGridMenuCommands _revisionGridMenuCommands;
 
@@ -91,6 +75,7 @@ namespace GitUI
         private readonly ParentChildNavigationHistory _parentChildNavigationHistory;
         private readonly NavigationHistory _navigationHistory = new NavigationHistory();
         private AuthorEmailBasedRevisionHighlighting _revisionHighlighting;
+        #endregion
 
         private GitRevision _baseCommitToCompare = null;
 
@@ -2749,7 +2734,7 @@ namespace GitUI
 
             var handler = ShowFirstParentsToggled;
             if (handler != null)
-                handler(this, e);
+                handler(this, this);
 
             ForceRefreshRevisions();
         }
@@ -3218,7 +3203,8 @@ namespace GitUI
         private void compareToBaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var headCommit = GetSelectedRevisions().First();
-            using (var diffForm = new FormDiff(UICommands, this, _baseCommitToCompare.Guid, headCommit.Guid,
+            using (var diffForm = new FormDiff(UICommands, this,
+                _baseCommitToCompare.Guid, headCommit.Guid,
                 _baseCommitToCompare.Subject, headCommit.Subject))
             {
                 diffForm.ShowDialog(this);
@@ -3234,6 +3220,33 @@ namespace GitUI
         {
             string url = UserManual.UserManual.UrlFor("modify_history", "using-autosquash-rebase-feature");
             OsShellUtil.OpenUrlInDefaultBrowser(url);
+        }
+
+        // TODO
+        public event EventHandler<IRevisionGrid> ShowFirstParentsToggled;
+        //    add { this.ShowFirstParentsToggled += value; } remove { }
+        //}
+
+        public int TrySearchRevision(string initRevision) { return 0; }
+
+        void IRevisionGrid.RevisionsCellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public float DrawRef(GitUI.DrawRefArgs drawRefArgs, float offset, string name, Color headColor, GitUI.ArrowType arrowType)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IRevisionGrid.ShowFirstParent_ToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        IList<GitRevision> IRevisionGrid.GetSelectedRevisions()
+        {
+            throw new NotImplementedException();
         }
     }
 }

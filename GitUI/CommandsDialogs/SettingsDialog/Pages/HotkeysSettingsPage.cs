@@ -9,6 +9,7 @@
             Translate();
         }
 
+#if !SKIN   // ORIGIN git
         protected override void SettingsToPage()
         {
             controlHotkeys.ReloadSettings();
@@ -18,5 +19,7 @@
         {
             controlHotkeys.SaveSettings();
         }
+#endif
+
     }
 }

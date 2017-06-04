@@ -103,48 +103,54 @@ namespace GitUI
 
         private void ApplyFilter()
         {
-            string revListArgs;
-            string inMemMessageFilter;
-            string inMemCommitterFilter;
-            string inMemAuthorFilter;
+            string revListArgs = null;
+            string inMemMessageFilter = null;
+            string inMemCommitterFilter = null;
+            string inMemAuthorFilter = null;
             var filterParams = new bool[4];
+
             filterParams[0] = commitToolStripMenuItem.Checked;
             filterParams[1] = committerToolStripMenuItem.Checked;
             filterParams[2] = authorToolStripMenuItem.Checked;
             filterParams[3] = diffContainsToolStripMenuItem.Checked;
 
-            Debugger.Break();
+            var revisionGrid = _NO_TRANSLATE_revisionGrid as RevisionGrid;
+            if (revisionGrid != null)
+                FormatQuickFilter(revisionGrid, filterParams,
+                    ref revListArgs, ref inMemMessageFilter, ref inMemCommitterFilter, ref inMemAuthorFilter);
+        }
+        
+        public void FormatQuickFilter(RevisionGrid _NO_TRANSLATE_revisionGrid, bool[] filterParams,
+                ref string revListArgs, ref string inMemMessageFilter, ref string inMemCommitterFilter, ref string inMemAuthorFilter)
+        { 
+            try
+            {
+                _NO_TRANSLATE_revisionGrid.FormatQuickFilter(_NO_TRANSLATE_textBox.Text,
+                                               filterParams,
+                                               out revListArgs,
+                                               out inMemMessageFilter,
+                                               out inMemCommitterFilter,
+                                               out inMemAuthorFilter);
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(_NO_TRANSLATE_form, ex.Message, "Filter error");
+                _NO_TRANSLATE_textBox.Text = "";
+                return;
+            }
 
-            //try
-            //{
-            //    _NO_TRANSLATE_revisionGrid.FormatQuickFilter(_NO_TRANSLATE_textBox.Text,
-            //                                   filterParams,
-            //                                   out revListArgs,
-            //                                   out inMemMessageFilter,
-            //                                   out inMemCommitterFilter,
-            //                                   out inMemAuthorFilter);
-            //}
-            //catch (InvalidOperationException ex)
-            //{
-            //    MessageBox.Show(_NO_TRANSLATE_form, ex.Message, "Filter error");
-            //    _NO_TRANSLATE_textBox.Text = "";
-            //    return;
-            //}
-
-            // TODO:
-
-            //if ((_NO_TRANSLATE_revisionGrid.QuickRevisionFilter == revListArgs) &&
-            //    (_NO_TRANSLATE_revisionGrid.InMemMessageFilter == inMemMessageFilter) &&
-            //    (_NO_TRANSLATE_revisionGrid.InMemCommitterFilter == inMemCommitterFilter) &&
-            //    (_NO_TRANSLATE_revisionGrid.InMemAuthorFilter == inMemAuthorFilter) &&
-            //    (_NO_TRANSLATE_revisionGrid.InMemFilterIgnoreCase))
-            //    return;
-            //_NO_TRANSLATE_revisionGrid.QuickRevisionFilter = revListArgs;
-            //_NO_TRANSLATE_revisionGrid.InMemMessageFilter = inMemMessageFilter;
-            //_NO_TRANSLATE_revisionGrid.InMemCommitterFilter = inMemCommitterFilter;
-            //_NO_TRANSLATE_revisionGrid.InMemAuthorFilter = inMemAuthorFilter;
-            //_NO_TRANSLATE_revisionGrid.InMemFilterIgnoreCase = true;
-            //_NO_TRANSLATE_revisionGrid.Visible = true;
+            if ((_NO_TRANSLATE_revisionGrid.QuickRevisionFilter == revListArgs) &&
+                (_NO_TRANSLATE_revisionGrid.InMemMessageFilter == inMemMessageFilter) &&
+                (_NO_TRANSLATE_revisionGrid.InMemCommitterFilter == inMemCommitterFilter) &&
+                (_NO_TRANSLATE_revisionGrid.InMemAuthorFilter == inMemAuthorFilter) &&
+                (_NO_TRANSLATE_revisionGrid.InMemFilterIgnoreCase))
+                return;
+            _NO_TRANSLATE_revisionGrid.QuickRevisionFilter = revListArgs;
+            _NO_TRANSLATE_revisionGrid.InMemMessageFilter = inMemMessageFilter;
+            _NO_TRANSLATE_revisionGrid.InMemCommitterFilter = inMemCommitterFilter;
+            _NO_TRANSLATE_revisionGrid.InMemAuthorFilter = inMemAuthorFilter;
+            _NO_TRANSLATE_revisionGrid.InMemFilterIgnoreCase = true;
+            _NO_TRANSLATE_revisionGrid.Visible = true;
             _NO_TRANSLATE_revisionGrid.ForceRefreshRevisions();
         }
 
