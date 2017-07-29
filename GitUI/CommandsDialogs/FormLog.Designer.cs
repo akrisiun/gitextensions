@@ -33,7 +33,7 @@ namespace GitUI.CommandsDialogs
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.RevisionGrid = new GitUI.RevisionGrid();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.DiffFiles = new GitUI.FileStatusList();
+            //this.DiffFiles = new GitUI.FileStatusList();
             this.diffViewer = new GitUI.Editor.FileViewer();
 
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -88,7 +88,7 @@ namespace GitUI.CommandsDialogs
             // 
             // splitContainer3.Panel1
             // 
-            this.splitContainer3.Panel1.Controls.Add(this.DiffFiles);
+            //this.splitContainer3.Panel1.Controls.Add(this.DiffFiles);
             // 
             // splitContainer3.Panel2
             // 
@@ -99,12 +99,12 @@ namespace GitUI.CommandsDialogs
             // 
             // DiffFiles
             // 
-            this.DiffFiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DiffFiles.Location = new System.Drawing.Point(0, 0);
-            this.DiffFiles.Name = "DiffFiles";
-            this.DiffFiles.Size = new System.Drawing.Size(188, 320);
-            this.DiffFiles.TabIndex = 0;
-            this.DiffFiles.SelectedIndexChanged += new System.EventHandler(this.DiffFilesSelectedIndexChanged);
+            //this.DiffFiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            //this.DiffFiles.Location = new System.Drawing.Point(0, 0);
+            //this.DiffFiles.Name = "DiffFiles";
+            //this.DiffFiles.Size = new System.Drawing.Size(188, 320);
+            //this.DiffFiles.TabIndex = 0;
+            //this.DiffFiles.SelectedIndexChanged += new System.EventHandler(this.DiffFilesSelectedIndexChanged);
             // 
             // diffViewer
             // 
@@ -146,7 +146,7 @@ namespace GitUI.CommandsDialogs
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer3;
-        private FileStatusList DiffFiles;
+        public IFileStatusList DiffFiles;
         private RevisionGrid RevisionGrid;
         private FileViewer diffViewer;
     }

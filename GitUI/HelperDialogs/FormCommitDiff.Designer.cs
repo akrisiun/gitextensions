@@ -31,7 +31,7 @@ namespace GitUI.HelperDialogs
         private void InitializeComponent()
         {
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.DiffFiles = new GitUI.FileStatusList();
+            //this.DiffFiles = new GitUI.FileStatusList();
             this.DiffText = new GitUI.Editor.FileViewer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.commitInfo = new GitUI.CommitInfo.CommitInfo();
@@ -57,7 +57,7 @@ namespace GitUI.HelperDialogs
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.DiffFiles);
+            //this.splitContainer2.Panel1.Controls.Add(this.DiffFiles);
             // 
             // splitContainer2.Panel2
             // 
@@ -68,13 +68,13 @@ namespace GitUI.HelperDialogs
             // 
             // DiffFiles
             // 
-            this.DiffFiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DiffFiles.Location = new System.Drawing.Point(0, 0);
-            this.DiffFiles.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.DiffFiles.Name = "DiffFiles";
-            this.DiffFiles.Size = new System.Drawing.Size(238, 365);
-            this.DiffFiles.TabIndex = 0;
-            this.DiffFiles.SelectedIndexChanged += new System.EventHandler(this.DiffFiles_SelectedIndexChanged);
+            //this.DiffFiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            //this.DiffFiles.Location = new System.Drawing.Point(0, 0);
+            //this.DiffFiles.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            //this.DiffFiles.Name = "DiffFiles";
+            //this.DiffFiles.Size = new System.Drawing.Size(238, 365);
+            //this.DiffFiles.TabIndex = 0;
+            //this.DiffFiles.SelectedIndexChanged += new System.EventHandler(this.DiffFiles_SelectedIndexChanged);
             // 
             // DiffText
             // 
@@ -145,7 +145,7 @@ namespace GitUI.HelperDialogs
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private FileStatusList DiffFiles;
+        public IFileStatusList DiffFiles;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private FileViewer DiffText;
         private CommitInfo.CommitInfo commitInfo;

@@ -44,7 +44,7 @@ namespace GitUI.CommandsDialogs
             this.StashMessage = new System.Windows.Forms.RichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.Loading = new System.Windows.Forms.PictureBox();
-            this.Stashed = new GitUI.FileStatusList();
+            //this.Stashed = new GitUI.FileStatusList();
             this.toolStrip1 = new GitUI.ToolStripEx();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -222,7 +222,8 @@ namespace GitUI.CommandsDialogs
             // panel1
             // 
             this.panel1.Controls.Add(this.Loading);
-            this.panel1.Controls.Add(this.Stashed);
+            //this.panel1.Controls.Add(this.Stashed);
+
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(4, 32);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
@@ -246,13 +247,13 @@ namespace GitUI.CommandsDialogs
             // 
             // Stashed
             // 
-            this.Stashed.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Stashed.Location = new System.Drawing.Point(0, 0);
-            this.Stashed.Margin = new System.Windows.Forms.Padding(5);
-            this.Stashed.Name = "Stashed";
-            this.Stashed.Size = new System.Drawing.Size(272, 352);
-            this.Stashed.TabIndex = 2;
-            this.Stashed.SelectedIndexChanged += new System.EventHandler(this.StashedSelectedIndexChanged);
+            //this.Stashed.Dock = System.Windows.Forms.DockStyle.Fill;
+            //this.Stashed.Location = new System.Drawing.Point(0, 0);
+            //this.Stashed.Margin = new System.Windows.Forms.Padding(5);
+            //this.Stashed.Name = "Stashed";
+            //this.Stashed.Size = new System.Drawing.Size(272, 352);
+            //this.Stashed.TabIndex = 2;
+            //this.Stashed.SelectedIndexChanged += new System.EventHandler(this.StashedSelectedIndexChanged);
             // 
             // toolStrip1
             // 
@@ -371,7 +372,7 @@ namespace GitUI.CommandsDialogs
         private System.Windows.Forms.Button Stash;
         private System.Windows.Forms.Button Apply;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private FileStatusList Stashed;
+        public IFileStatusList Stashed;
         private System.Windows.Forms.BindingSource gitStashBindingSource;
         private System.Windows.Forms.RichTextBox StashMessage;
         private FileViewer View;

@@ -58,7 +58,8 @@ namespace GitUI.CommandsDialogs.RepoHosting
 
         private void ViewPullRequestsForm_Load(object sender, EventArgs e)
         {
-            _fileStatusList.SelectedIndexChanged += _fileStatusList_SelectedIndexChanged;
+            if (_fileStatusList != null)
+               _fileStatusList.SelectedIndexChanged += _fileStatusList_SelectedIndexChanged;
             _discussionWB.DocumentCompleted += _discussionWB_DocumentCompleted;
 
             Init();
@@ -165,7 +166,8 @@ namespace GitUI.CommandsDialogs.RepoHosting
         {
             _discussionWB.DocumentText = "";
             _diffViewer.ViewPatch("");
-            _fileStatusList.GitItemStatuses = null;
+            if (_fileStatusList != null)
+                _fileStatusList.GitItemStatuses = null;
 
             _pullRequestsList.Items.Clear();
             var lvi = new ListViewItem("");
@@ -211,7 +213,8 @@ namespace GitUI.CommandsDialogs.RepoHosting
                 return;
             _discussionWB.DocumentText = DiscussionHtmlCreator.CreateFor(_currentPullRequestInfo);
             _diffViewer.ViewPatch("");
-            _fileStatusList.GitItemStatuses = null;
+            if (_fileStatusList != null)
+                _fileStatusList.GitItemStatuses = null;
 
             LoadDiffPatch();
             LoadDiscussion();
@@ -283,7 +286,8 @@ namespace GitUI.CommandsDialogs.RepoHosting
                 _diffCache.Add(gis.Name, match.Groups[3].Value);
             }
 
-            _fileStatusList.GitItemStatuses = giss;
+            if (_fileStatusList != null)
+                _fileStatusList.GitItemStatuses = giss;
         }
 
         private void _fetchBtn_Click(object sender, EventArgs e)
@@ -359,7 +363,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
 
         void _fileStatusList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var gis = _fileStatusList.SelectedItem;
+            var gis = _fileStatusList?.SelectedItem;
             if (gis == null)
                 return;
 

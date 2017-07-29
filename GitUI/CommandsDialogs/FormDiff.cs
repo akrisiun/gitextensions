@@ -108,7 +108,12 @@ namespace GitUI.CommandsDialogs
             PopulateDiffFiles();
         }
 
-        private void openWithDifftoolToolStripMenuItem_Click(object sender, EventArgs e)
+        public void copyFilenameToClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (Debugger.IsAttached)
+                Debugger.Break();
+        }
+        public void openWithDifftoolToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (DiffFiles.SelectedItem == null)
                 return;

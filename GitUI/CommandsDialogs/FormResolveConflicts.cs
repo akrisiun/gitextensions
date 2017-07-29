@@ -8,6 +8,7 @@ using GitCommands.Utils;
 using GitUI.CommandsDialogs.ResolveConflictsDialog;
 using GitUI.Hotkey;
 using ResourceManager;
+using System.Diagnostics;
 
 namespace GitUI.CommandsDialogs
 {
@@ -112,7 +113,10 @@ namespace GitUI.CommandsDialogs
             merge.Select();
 
             this.HotkeysEnabled = true;
-            this.Hotkeys = HotkeySettingsManager.LoadHotkeys(HotkeySettingsName);
+
+            Debugger.Break();
+            // TODO: Hotkeys
+            // this.Hotkeys = HotkeySettingsManager.LoadHotkeys(HotkeySettingsName);
         }
 
         private void Mergetool_Click(object sender, EventArgs e)
