@@ -24,9 +24,6 @@ using IWin32Window = GitUI.IWin32Window;
 
 namespace GitUI
 {
-    public interface IWin32Window : GitUIPluginInterfaces.IWin32Window, System.Windows.Forms.IWin32Window
-    { }
-
     /// <summary>Contains methods to invoke GitEx forms, dialogs, etc.</summary>
     public sealed class GitUICommands : IGitUICommands
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using GitCommands.Core;
-using GitCommands.Remote;
+// using GitCommands.Remote;
 
 namespace GitCommands.GitExtLinks
 {

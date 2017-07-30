@@ -3,6 +3,8 @@ namespace GitUIPluginInterfaces
 {
     public interface IFormBrowse
     {
+        bool StartBrowseDialog(string args);
+        void FormCommit_Shown();
         void DoStartCommit(string path);
         ITree Tree { get; set; }
 

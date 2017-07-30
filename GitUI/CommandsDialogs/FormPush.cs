@@ -623,7 +623,7 @@ namespace GitUI.CommandsDialogs
                             return;
                         }
 
-                        if (branch.TrackingRemote.Equals(_NO_TRANSLATE_Remotes.Text.Trim()))
+                        if (branch.TrackingRemote != null && branch.TrackingRemote.Equals(_NO_TRANSLATE_Remotes.Text.Trim()))
                         {
                             RemoteBranch.Text = branch.MergeWith;
                             if (!string.IsNullOrEmpty(RemoteBranch.Text))

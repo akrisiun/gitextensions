@@ -3,7 +3,7 @@ using GitUI.CommandsDialogs;
 using GitUIPluginInterfaces;
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
+// using System.Windows.Forms;
 
 namespace GitUI
 {

@@ -268,7 +268,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog.DashboardControl
         {
             try
             {
-                int deviceDpi = GetCurrentDeviceDpi();
+                int deviceDpi = 96; // GetCurrentDeviceDpi();
                 int dashboardDpi = 96; // Settings.Default.Dashboard_DeviceDpi;
                 int mainSplitterDistance = Settings.Default.Dashboard_MainSplitContainer_SplitterDistance;
                 int commonSplitterDistance = Settings.Default.Dashboard_CommonSplitContainer_SplitterDistance;

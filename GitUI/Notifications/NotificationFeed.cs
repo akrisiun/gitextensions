@@ -94,14 +94,14 @@ namespace GitUI.Notifications
 
                 Enabled = true;
                 ShowDropDownArrow = true;
-                Image = Resources.NotifyInfo;
+                //Image = Resources.NotifyInfo;
             }
             else
             {// (no notifications)
                 Enabled = false;
                 ShowDropDownArrow = false;
                 Text = string.Empty;
-                Image = Resources.Information;
+                //Image = Resources.Information;
             }
         }
 
