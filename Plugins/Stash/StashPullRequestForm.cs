@@ -59,10 +59,10 @@ namespace Stash
                 }
                 catch (System.InvalidOperationException)
                 {
-                    return;
                 }
             });
         }
+
         private void StashViewPullRequestFormLoad(object sender, EventArgs e)
         {
             if (_settings == null)

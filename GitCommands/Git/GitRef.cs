@@ -174,7 +174,7 @@ namespace GitCommands
             if (IsRemote)
             {
                 Name = CompleteName.Substring(CompleteName.LastIndexOf("remotes/") + 8);
-            } 
+            }
             else if (IsTag)
             {
                 // we need the one containing ^{}, because it contains the reference
@@ -190,8 +190,15 @@ namespace GitCommands
                 Name = CompleteName.Substring(CompleteName.LastIndexOf("heads/") + 6);
             }
             else
+            {
                 //if we don't know ref type then we don't know if '/' is a valid ref character
                 Name = CompleteName.SkipStr("refs/");
+            }
+
+            if (Name.IsNullOrWhiteSpace())
+            {
+                Name = CompleteName;
+            }
         }
     }
 }

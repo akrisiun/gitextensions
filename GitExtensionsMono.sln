@@ -63,6 +63,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBug", "Externals\NBug\NBug\NBug.csproj", "{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitExtensions.Mono", "GitExtensions\GitExtensions.Mono.csproj", "{F15A69AF-7EBD-4F69-A026-5071FA3EC61B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7C106FAC-CB81-4D37-BE98-E7F6A5BDD143} = {7C106FAC-CB81-4D37-BE98-E7F6A5BDD143}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitExtensionsTest", "GitExtensionsTest\GitExtensionsTest.csproj", "{AC8FDEDF-6390-4F87-BBC3-1A974810B589}"
 EndProject
