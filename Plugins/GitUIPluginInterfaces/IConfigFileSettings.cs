@@ -1,3 +1,4 @@
+//using GitCommands.Config;
 using System.Collections.Generic;
 
 namespace GitUIPluginInterfaces

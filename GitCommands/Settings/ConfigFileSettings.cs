@@ -87,10 +87,10 @@ namespace GitCommands.Settings
             SetValue(setting, ConfigSection.FixPath(value));
         }
 
-        public IList<ConfigSection> GetConfigSections()
-        {
-            return SettingsCache.GetConfigSections();
-        }
+        //public IList<ConfigSection> GetConfigSections()
+        //{
+        //    return null; // SettingsCache.GetConfigSections();
+        //}
 
         public void RemoveConfigSection(string configSectionName)
         {

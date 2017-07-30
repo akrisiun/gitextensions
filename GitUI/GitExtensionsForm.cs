@@ -18,7 +18,7 @@ namespace GitUI
     /// <remarks>
     /// Includes support for font, hotkey, icon, translation, and position restore.
     /// </remarks></summary>
-    public class GitExtensionsForm : GitExtensionsFormBase
+    public class GitExtensionsForm : GitExtensionsFormBase, GitUI.IWin32Window
     {
         internal static Icon ApplicationIcon = GetApplicationIcon(Settings.IconStyle, Settings.IconColor);
 
@@ -320,9 +320,9 @@ namespace GitUI
                         rectangle.Location = windowPosition.Rect.Location;
                 }
 
-                var position = new WindowPosition(rectangle, formWindowState, name);
-                _windowPositionList.AddOrUpdate(position);
-                _windowPositionList.Save();
+                //var position = new WindowPosition(rectangle, formWindowState, name);
+                //_windowPositionList.AddOrUpdate(position);
+                //_windowPositionList.Save();
             }
             catch (Exception)
             {

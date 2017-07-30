@@ -474,21 +474,21 @@ namespace GitCommands
         public IList<string> GetSubmodulesLocalPaths(bool recursive = true)
         {
             var configFile = GetSubmoduleConfigFile();
-            var submodules = configFile.ConfigSections.Select(configSection => configSection.GetPathValue("path").Trim()).ToList();
+            //var submodules = configFile.ConfigSections.Select(configSection => configSection.GetPathValue("path").Trim()).ToList();
             if (recursive)
             {
-                for (int i = 0; i < submodules.Count; i++)
-                {
-                    var submodule = GetSubmodule(submodules[i]);
-                    var submoduleConfigFile = submodule.GetSubmoduleConfigFile();
-                    var subsubmodules = submoduleConfigFile.ConfigSections.Select(configSection => configSection.GetPathValue("path").Trim()).ToList();
-                    for (int j = 0; j < subsubmodules.Count; j++)
-                        subsubmodules[j] = submodules[i] + '/' + subsubmodules[j];
-                    submodules.InsertRange(i + 1, subsubmodules);
-                    i += subsubmodules.Count;
-                }
+                //for (int i = 0; i < submodules.Count; i++)
+                //{
+                //    var submodule = GetSubmodule(submodules[i]);
+                //    var submoduleConfigFile = submodule.GetSubmoduleConfigFile();
+                //    var subsubmodules = submoduleConfigFile.ConfigSections.Select(configSection => configSection.GetPathValue("path").Trim()).ToList();
+                //    for (int j = 0; j < subsubmodules.Count; j++)
+                //        subsubmodules[j] = submodules[i] + '/' + subsubmodules[j];
+                //    submodules.InsertRange(i + 1, subsubmodules);
+                //    i += subsubmodules.Count;
+                //}
             }
-            return submodules;
+            return null; // submodules;
         }
 
         public static string FindGitWorkingDir(string startDir)
@@ -1264,9 +1264,9 @@ namespace GitCommands
         public string GetSubmoduleNameByPath(string localPath)
         {
             var configFile = GetSubmoduleConfigFile();
-            var submodule = configFile.ConfigSections.FirstOrDefault(configSection => configSection.GetPathValue("path").Trim() == localPath);
-            if (submodule != null)
-                return submodule.SubSection.Trim();
+            //var submodule = configFile.ConfigSections.FirstOrDefault(configSection => configSection.GetPathValue("path").Trim() == localPath);
+            //if (submodule != null)
+            //    return submodule.SubSection.Trim();
             return null;
         }
 
@@ -1386,14 +1386,14 @@ namespace GitCommands
             {
                 submodulePath = currentPath.Substring(superprojectPath.Length).ToPosixPath();
                 var configFile = new ConfigFile(superprojectPath + ".gitmodules", true);
-                foreach (ConfigSection configSection in configFile.ConfigSections)
-                {
-                    if (configSection.GetPathValue("path") == submodulePath.ToPosixPath())
-                    {
-                        submoduleName = configSection.SubSection;
-                        return superprojectPath;
-                    }
-                }
+                //foreach (ConfigSection configSection in configFile.ConfigSections)
+                //{
+                //    if (configSection.GetPathValue("path") == submodulePath.ToPosixPath())
+                //    {
+                //        submoduleName = configSection.SubSection;
+                //        return superprojectPath;
+                //    }
+                //}
             }
 
             return null;
@@ -3512,17 +3512,17 @@ namespace GitCommands
         public string GetLocalTrackingBranchName(string remoteName, string branch)
         {
             var branchName = remoteName.Length > 0 ? branch.Substring(remoteName.Length + 1) : branch;
-            foreach (var section in LocalConfigFile.GetConfigSections())
-            {
-                if (section.SectionName == "branch" && section.GetValue("remote") == remoteName)
-                {
-                    var remoteBranch = section.GetValue("merge").Replace("refs/heads/", string.Empty);
-                    if (remoteBranch == branchName)
-                    {
-                        return section.SubSection;
-                    }
-                }
-            }
+            //foreach (var section in LocalConfigFile.GetConfigSections())
+            //{
+            //    if (section.SectionName == "branch" && section.GetValue("remote") == remoteName)
+            //    {
+            //        var remoteBranch = section.GetValue("merge").Replace("refs/heads/", string.Empty);
+            //        if (remoteBranch == branchName)
+            //        {
+            //            return section.SubSection;
+            //        }
+            //    }
+            //}
             return branchName;
         }
 

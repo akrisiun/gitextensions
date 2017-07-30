@@ -15,7 +15,7 @@ using ResourceManager;
 
 namespace GitUI.CommandsDialogs.BrowseDialog.DashboardControl
 {
-    public partial class Dashboard : GitModuleControl
+    public partial class Dashboard : GitModuleControl, GitUI.IWin32Window
     {
         private readonly TranslationString cloneFork = new TranslationString("Clone {0} repository");
         private readonly TranslationString cloneRepository = new TranslationString("Clone repository");
@@ -84,7 +84,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog.DashboardControl
             {
                 IRepositoryHostPlugin gitHoster = el;
                 var di = new DashboardItem(Resources.IconCloneRepoGithub, string.Format(cloneFork.Text, el.Description));
-                di.Click += (repoSender, eventArgs) => UICommands.StartCloneForkFromHoster(this, gitHoster, GitModuleChanged);
+                //di.Click += (repoSender, eventArgs) => UICommands.StartCloneForkFromHoster(this, gitHoster, GitModuleChanged);
                 CommonActions.AddItem(di);
             }
 
@@ -161,7 +161,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog.DashboardControl
         {
             try
             {
-                Settings.Default.Dashboard_DeviceDpi = GetCurrentDeviceDpi();
+                //Settings.Default.Dashboard_DeviceDpi = GetCurrentDeviceDpi();
                 Settings.Default.Dashboard_MainSplitContainer_SplitterDistance = mainSplitContainer.SplitterDistance;
                 Settings.Default.Dashboard_CommonSplitContainer_SplitterDistance = commonSplitContainer.SplitterDistance;
                 Settings.Default.Save();
@@ -269,7 +269,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog.DashboardControl
             try
             {
                 int deviceDpi = GetCurrentDeviceDpi();
-                int dashboardDpi = Settings.Default.Dashboard_DeviceDpi;
+                int dashboardDpi = 96; // Settings.Default.Dashboard_DeviceDpi;
                 int mainSplitterDistance = Settings.Default.Dashboard_MainSplitContainer_SplitterDistance;
                 int commonSplitterDistance = Settings.Default.Dashboard_CommonSplitContainer_SplitterDistance;
 
@@ -406,17 +406,17 @@ namespace GitUI.CommandsDialogs.BrowseDialog.DashboardControl
 
         private void cloneItem_Click(object sender, EventArgs e)
         {
-            UICommands.StartCloneDialog(this, null, false, OnModuleChanged);
+            //UICommands.StartCloneDialog(this, null, false, OnModuleChanged);
         }
 
         private void cloneSvnItem_Click(object sender, EventArgs e)
         {
-            UICommands.StartSvnCloneDialog(this, OnModuleChanged);
+            //UICommands.StartSvnCloneDialog(this, OnModuleChanged);
         }
 
         private void createItem_Click(object sender, EventArgs e)
         {
-            UICommands.StartInitializeDialog(this, Module.WorkingDir, OnModuleChanged);
+            //UICommands.StartInitializeDialog(this, Module.WorkingDir, OnModuleChanged);
         }
 
         private static void DonateItem_Click(object sender, EventArgs e)
@@ -466,7 +466,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog.DashboardControl
                 string url = lines[0];
                 if (!string.IsNullOrEmpty(url))
                 {
-                    UICommands.StartCloneDialog(this, url, false, OnModuleChanged);
+                    //UICommands.StartCloneDialog(this, url, false, OnModuleChanged);
                 }
             }
         }

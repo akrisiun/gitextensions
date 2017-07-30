@@ -46,9 +46,10 @@ namespace GitCommands
             {
                 textWriter.Write(commitMessageText);
             }
-            if(AppSettings.RememberAmendCommitState && amendCommit)
-                File.WriteAllText(GetAmendPath(module), true.ToString());
-            else if(File.Exists(GetAmendPath(module)))
+            //if(AppSettings.RememberAmendCommitState && amendCommit)
+            //    File.WriteAllText(GetAmendPath(module), true.ToString());
+            //else
+            if(File.Exists(GetAmendPath(module)))
                 File.Delete(GetAmendPath(module));
         }
 
@@ -80,18 +81,18 @@ namespace GitCommands
         public static bool GetAmendState(GitModule module)
         {
             bool amendState = false;
-            if (AppSettings.RememberAmendCommitState && File.Exists(CommitHelper.GetAmendPath(module)))
-            {
-                var amendSaveStateFilePath = CommitHelper.GetAmendPath(module);
-                bool.TryParse(File.ReadAllText(amendSaveStateFilePath), out amendState);
-                try
-                {
-                    File.Delete(amendSaveStateFilePath);
-                }
-                catch (Exception)
-                {
-                }
-            }
+            //if (AppSettings.RememberAmendCommitState && File.Exists(CommitHelper.GetAmendPath(module)))
+            //{
+            //    var amendSaveStateFilePath = CommitHelper.GetAmendPath(module);
+            //    bool.TryParse(File.ReadAllText(amendSaveStateFilePath), out amendState);
+            //    try
+            //    {
+            //        File.Delete(amendSaveStateFilePath);
+            //    }
+            //    catch (Exception)
+            //    {
+            //    }
+            //}
 
             return amendState;
         }

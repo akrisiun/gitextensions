@@ -50,7 +50,7 @@ namespace ResourceManager
             string body = "\n" + WebUtility.HtmlEncode(data.Body.Trim());
 
             if (showRevisionsAsLinks)
-                body = GitRevision.Sha1HashShortRegex.Replace(body, match => ProcessHashCandidate(module, linkFactory, hash: match.Value));
+                body = GitRevision.Sha1HashRegex.Replace(body, match => ProcessHashCandidate(module, linkFactory, hash: match.Value));
             return new CommitInformation(header, body);
         }
 
@@ -58,9 +58,10 @@ namespace ResourceManager
         {
             if (module == null)
                 return hash;
-            string fullHash;
-            if (!module.IsExistingCommitHash(hash, out fullHash))
-                return hash;
+            string fullHash = null;
+            //if (!module.IsExistingCommitHash(hash, out fullHash))
+            //    return hash;
+
             return linkFactory.CreateCommitLink(guid: fullHash, linkText: hash, preserveGuidInLinkText: true);
         }
     }

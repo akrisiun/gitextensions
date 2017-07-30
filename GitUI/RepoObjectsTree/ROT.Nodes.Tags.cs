@@ -36,12 +36,12 @@ namespace GitUI.UserControls
             /// <summary>Create a local branch from the remote branch.</summary>
             public void CreateBranch()
             {
-                UICommands.StartCreateBranchDialog(TreeViewNode.TreeView, new GitRevision(Module, _tagInfo.Guid));
+                //UICommands.StartCreateBranchDialog(TreeViewNode.TreeView, new GitRevision(Module, _tagInfo.Guid));
             }
 
             public void Delete()
             {
-                UICommands.StartDeleteTagDialog(TreeViewNode.TreeView, _tagInfo.Name);
+                //UICommands.StartDeleteTagDialog(TreeViewNode.TreeView, _tagInfo.Name);
             }
 
             protected override void ApplyStyle()

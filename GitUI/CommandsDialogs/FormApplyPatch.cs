@@ -182,7 +182,7 @@ namespace GitUI.CommandsDialogs
 
         private void Mergetool_Click(object sender, EventArgs e)
         {
-            UICommands.StartResolveConflictsDialog(this);
+            UICommands.StartResolveConflictsDialog(this as GitUI.IWin32Window); // System.Windows.Forms.IWin32Window);
             EnableButtons();
         }
 

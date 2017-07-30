@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GitUIPluginInterfaces;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
@@ -98,7 +99,7 @@ namespace GitCommands
             return items;
         }
 
-        public static List<IGitItem> CreateIGitItemsFromString(GitModule aModule, string tree)
+        public static IList<IGitItem> CreateIGitItemsFromString(GitModule aModule, string tree)
         {
             var items = new List<IGitItem>();
 

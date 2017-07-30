@@ -235,7 +235,7 @@ namespace GitUI.UserControls
 
             public IWin32Window ParentWindow()
             {
-                return TreeViewNode.TreeView.FindForm();
+                return TreeViewNode.TreeView.FindForm() as IWin32Window;
             }
 
             public virtual string DisplayText()

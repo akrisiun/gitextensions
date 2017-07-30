@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using GitUIPluginInterfaces.BuildServerIntegration;
 using JetBrains.Annotations;
+using GitUIPluginInterfaces;
 
 namespace GitCommands
 {
@@ -23,6 +24,8 @@ namespace GitCommands
         private readonly List<GitRef> _refs = new List<GitRef>();
         private readonly GitModule _module;
         private BuildInfo _buildStatus;
+
+        public IGitModule Module { get; set; }
 
         public GitRevision(GitModule aModule, string guid)
         {

@@ -1,15 +1,21 @@
 ﻿using System;
-using System.Windows.Forms;
-using GitUI;
+// using System.Windows.Forms;
+// using GitUI;
 
 namespace GitUIPluginInterfaces
 {
+    public interface ICheckBox : IControl
+    {
+        bool  ThreeState { get; set; }
+        bool? IsChecked { get; set; }
+    }
+
     public class BoolSetting: ISetting
     {
         public BoolSetting(string aName, bool aDefaultValue)
-            : this(aName, aName, aDefaultValue)
-        {
-        }
+            : this(aName, aName, aDefaultValue) { }
+
+        public static Func<ICheckBox> CreateCheckBox { get; set; }
 
         public BoolSetting(string aName, string aCaption, bool aDefaultValue)
         {
@@ -45,20 +51,20 @@ namespace GitUIPluginInterfaces
             return this[settings] ?? DefaultValue;
         }
 
-        private class CheckBoxBinding : SettingControlBinding<BoolSetting, CheckBox>
+
+        private class CheckBoxBinding : SettingControlBinding<BoolSetting, ICheckBox>
         {
             public CheckBoxBinding(BoolSetting aSetting)
-                : base(aSetting)
-            { }
+                 : base(aSetting, BoolSetting.CreateCheckBox()) { }
 
-            public override CheckBox CreateControl()
+            public override ICheckBox CreateControl()
             {
-                CheckBox result = new CheckBox();
+                ICheckBox result = BoolSetting.CreateCheckBox(); // =  new CheckBox();
                 result.ThreeState = true;
                 return result;
             }
 
-            public override void LoadSetting(ISettingsSource settings, bool areSettingsEffective, CheckBox control)
+            public override void LoadSetting(ISettingsSource settings, bool areSettingsEffective, ICheckBox control)
             {
                 bool? settingVal;
                 if (areSettingsEffective)
@@ -70,15 +76,15 @@ namespace GitUIPluginInterfaces
                     settingVal = Setting[settings];
                 }
 
-                control.SetNullableChecked(settingVal, (c, val) => 
-                    control.CheckState  = val == null ? CheckState.Indeterminate : 
-                        val ?? true ? CheckState.Checked : CheckState.Unchecked);
+                //control.SetNullableChecked(settingVal, (c, val) => 
+                //    control.CheckState  = val == null ? CheckState.Indeterminate : 
+                //        val ?? true ? CheckState.Checked : CheckState.Unchecked);
             }
 
-            public override void SaveSetting(ISettingsSource settings, CheckBox control)
+            public override void SaveSetting(ISettingsSource settings, bool areSettingsEffective, ICheckBox control)
             {
-                bool? isChecked = (control.CheckState == CheckState.Indeterminate) ? (bool?)null : (control.CheckState == CheckState.Checked);
-                Setting[settings] = UIExtensions.GetNullableChecked(control, isChecked);
+                bool? isChecked = control.IsChecked; // (control.CheckState == CheckState.Indeterminate) ? (bool?)null : (control.CheckState == CheckState.Checked);
+                //Setting[settings] = UIExtensions.GetNullableChecked(control, isChecked);
             }
         }
     }

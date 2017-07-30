@@ -269,7 +269,7 @@ namespace GitUI.CommandsDialogs
             else
                 cmd.LocalChanges = LocalChangesAction.DontChange;
 
-            IWin32Window owner = Visible ? this : Owner;
+            IWin32Window owner = Visible ? this as IWin32Window : Owner as IWin32Window;
 
             bool stash = false;
             if (changes == LocalChangesAction.Stash)

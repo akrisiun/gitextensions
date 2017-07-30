@@ -188,7 +188,7 @@
       <Name>GitExtUtils</Name>
     </ProjectReference>
     <ProjectReference Include="..\Plugins\GitUIPluginInterfaces\GitUIPluginInterfaces.csproj">
-      <Project>{27559302-F35E-4B62-A6EC-11FF21A5FA6F}</Project>
+      <Project>{27559302-f35e-4b62-a6ec-11ff21a5fa6f}</Project>
       <Name>GitUIPluginInterfaces</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1041,7 +1041,7 @@ namespace GitCommands
                         gitItemStatusX = GitItemStatusFromStatusCharacter(fileName, x);
 
                     gitItemStatusX.IsStaged = true;
-                    if (Submodules.Contains(gitItemStatusX.Name))
+                    if (Submodules != null && Submodules.Contains(gitItemStatusX.Name))
                         gitItemStatusX.IsSubmodule = true;
                     diffFiles.Add(gitItemStatusX);
                 }
@@ -1058,7 +1058,8 @@ namespace GitCommands
                 else
                     gitItemStatusY = GitItemStatusFromStatusCharacter(fileName, y);
                 gitItemStatusY.IsStaged = false;
-                if (Submodules.Contains(gitItemStatusY.Name))
+
+                if (Submodules != null && Submodules.Contains(gitItemStatusY.Name))
                     gitItemStatusY.IsSubmodule = true;
                 diffFiles.Add(gitItemStatusY);
             }

@@ -80,14 +80,14 @@ namespace GitCommands.Settings
             });
         }
 
-        public IList<ConfigSection> GetConfigSections()
-        {
-            return LockedAction(() =>
-            {
-                EnsureSettingsAreUpToDate();
-                return _configFile.Value.ConfigSections;
-            });
-        }
+        //public IList<ConfigSection> GetConfigSections()
+        //{
+        //    return LockedAction(() =>
+        //    {
+        //        EnsureSettingsAreUpToDate();
+        //        return _configFile.Value.ConfigSections;
+        //    });
+        //}
 
         public void RemoveConfigSection(string configSectionName)
         {
@@ -103,7 +103,7 @@ namespace GitCommands.Settings
             return LockedAction < IEnumerable<ConfigSection>>(() =>
             {
                 EnsureSettingsAreUpToDate();
-                return _configFile.Value.GetConfigSections(configSectionName);
+                return null; // _configFile.Value.GetConfigSections(configSectionName);
             });
         }
     }

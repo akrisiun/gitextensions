@@ -269,8 +269,8 @@ namespace GitUI.CommandsDialogs
 
             // Do not remember commit message of fixup or squash commits, since they have
             // a special meaning, and can be dangerous if used inappropriately.
-            if (CommitKind.Normal == _commitKind)
-                GitCommands.CommitHelper.SetCommitMessage(Module, Message.Text);
+            //if (CommitKind.Normal == _commitKind)
+            //    GitCommands.CommitHelper.SetCommitMessage(Module, Message.Text);
 
             AppSettings.CommitDialogSplitter = splitMain.SplitterDistance;
             AppSettings.CommitDialogRightSplitter = splitRight.SplitterDistance;
@@ -967,7 +967,7 @@ namespace GitUI.CommandsDialogs
                 ScriptManager.RunEventScripts(this, ScriptEvent.AfterCommit);
 
                 Message.Text = string.Empty;
-                CommitHelper.SetCommitMessage(Module, string.Empty);
+                //CommitHelper.SetCommitMessage(Module, string.Empty);
 
                 bool pushCompleted = true;
                 if (push)

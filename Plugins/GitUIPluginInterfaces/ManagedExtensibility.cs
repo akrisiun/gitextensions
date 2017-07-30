@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Windows.Forms;
+//using System.Windows.Forms;
 
 namespace GitUIPluginInterfaces
 {
@@ -25,14 +25,15 @@ namespace GitUIPluginInterfaces
                 if (_compositionContainers == null)
                 {
                     _compositionContainers = new List<CompositionContainer>();
-                    var pluginsDir = new DirectoryInfo(Directory.GetParent(Application.ExecutablePath).FullName + Path.DirectorySeparatorChar + "Plugins");
-                    if (pluginsDir.Exists)
-                    {
-                        foreach (var dll in pluginsDir.EnumerateFiles("*.dll"))
-                        {
-                            _compositionContainers.Add(new CompositionContainer(new DirectoryCatalog(dll.DirectoryName, dll.Name)));
-                        }
-                    }
+
+                    //var pluginsDir = new DirectoryInfo(Directory.GetParent(Application.ExecutablePath).FullName + Path.DirectorySeparatorChar + "Plugins");
+                    //if (pluginsDir.Exists)
+                    //{
+                    //    foreach (var dll in pluginsDir.EnumerateFiles("*.dll"))
+                    //    {
+                    //        _compositionContainers.Add(new CompositionContainer(new DirectoryCatalog(dll.DirectoryName, dll.Name)));
+                    //    }
+                    //}
                 }
 
                 return _compositionContainers;

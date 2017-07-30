@@ -9,10 +9,10 @@ namespace GitUI.CommandsDialogs
         {
             if (aCommands.Module.InTheMiddleOfConflictedMerge())
             {
-                if (AppSettings.DontConfirmResolveConflicts || MessageBoxes.UnresolvedMergeConflicts(owner))
-                {
-                    SolveMergeConflicts(aCommands, owner, offerCommit);
-                }
+                //if (AppSettings.DontConfirmResolveConflicts || MessageBoxes.UnresolvedMergeConflicts(owner))
+                //{
+                //    SolveMergeConflicts(aCommands, owner, offerCommit);
+                //}
                 return true;
             }
 

@@ -185,7 +185,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog
         public BoolCheckBoxAdapter(BoolNullableSetting aSetting, CheckBox aCheckBox)
             : base(aSetting.FullPath, aSetting.DefaultValue.Value)
         {
-            CustomControl = aCheckBox;
+            //CustomControl = aCheckBox;
         }
     }
 
@@ -194,7 +194,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog
         public StringComboBoxAdapter(GitCommands.Settings.StringSetting aSetting, ComboBox aComboBox)
             : base(aSetting.FullPath, aComboBox.Items.Cast<string>().ToList(), aSetting.DefaultValue)
         {
-            CustomControl = aComboBox;
+            //CustomControl = aComboBox;
         }
     }
 
@@ -203,7 +203,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog
         public IntTextBoxAdapter(IntNullableSetting aSetting, TextBox aControl)
             : base(aSetting.FullPath, aSetting.DefaultValue.Value)
         {
-            CustomControl = aControl;
+            //CustomControl = aControl;
         }
     }
 }

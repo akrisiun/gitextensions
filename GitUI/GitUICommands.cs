@@ -20,9 +20,13 @@ using Gravatar;
 using JetBrains.Annotations;
 using Settings = GitCommands.AppSettings;
 using GitUI.UserControls;
+using IWin32Window = GitUI.IWin32Window;
 
 namespace GitUI
 {
+    public interface IWin32Window : GitUIPluginInterfaces.IWin32Window, System.Windows.Forms.IWin32Window
+    { }
+
     /// <summary>Contains methods to invoke GitEx forms, dialogs, etc.</summary>
     public sealed class GitUICommands : IGitUICommands
     {
@@ -424,9 +428,9 @@ namespace GitUI
 
         public void InvokeEventOnClose(Form form, GitUIEventHandler ev)
         {
-            form.FormClosed += (object o, FormClosedEventArgs ea) =>
+            (form as Form).FormClosed += (object o, FormClosedEventArgs ea) =>
             {
-                InvokeEvent(form == null ? null : form.Owner, ev);
+                InvokeEvent(form == null ? null : form.Owner as IWin32Window, ev);
             };
 
         }
@@ -570,6 +574,12 @@ namespace GitUI
         #endregion Checkout
 
         #region Start dialogs
+
+        public bool StartEditGitIgnoreDialog(bool localExcludes)
+        {
+            Debugger.Break();
+            return false;
+        }
 
         public bool StartCompareRevisionsDialog(IWin32Window owner)
         {
@@ -1275,7 +1285,7 @@ namespace GitUI
         {
             Func<bool> action = () =>
             {
-                using (var form = new FormGitIgnore(this))
+                using (var form = new FormGitIgnore(this, true))
                     form.ShowDialog(owner);
 
                 return true;
@@ -1294,7 +1304,7 @@ namespace GitUI
 
             Func<bool> action = () =>
             {
-                using (var frm = new FormAddToGitIgnore(this, filePattern))
+                using (var frm = new FormAddToGitIgnore(this, localExclude: false, filePatterns: filePattern))
                     frm.ShowDialog(owner);
 
                 return true;

@@ -12,6 +12,8 @@ using ResourceManager;
 
 namespace GitUI.CommandsDialogs.BrowseDialog
 {
+    using IWin32Window = GitUIPluginInterfaces.IWin32Window;
+
     public partial class FormUpdates : GitExtensionsForm
     {
         #region Translation
@@ -49,7 +51,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
             OwnerWindow = aOwnerWindow;
             new Thread(SearchForUpdates).Start();
             if (alwaysShow)
-                ShowDialog(aOwnerWindow);
+                ShowDialog(aOwnerWindow as System.Windows.Forms.IWin32Window);
         }
 
         private void SearchForUpdates()
@@ -121,13 +123,19 @@ namespace GitUI.CommandsDialogs.BrowseDialog
                     linkChangeLog.Visible = true;
 
                     if (!Visible)
-                        ShowDialog(OwnerWindow);
+                        ShowDialog(OwnerWindow as IWin32Window);
                 }
                 else
                 {
                     UpdateLabel.Text = _noUpdatesFound.Text;
                 }
             }, this);
+        }
+
+        public void ShowDialog(IWin32Window w)
+        {
+            if (w is System.Windows.Forms.IWin32Window)
+                base.ShowDialog(w as System.Windows.Forms.IWin32Window);
         }
 
         private void linkChangeLog_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

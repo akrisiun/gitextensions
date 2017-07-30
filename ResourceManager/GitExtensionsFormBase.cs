@@ -7,7 +7,7 @@ using GitCommands;
 
 namespace ResourceManager
 {
-    public class GitExtensionsFormBase : Form, ITranslate
+    public class GitExtensionsFormBase : Form, ITranslate, IWin32Window
     {
         /// <summary>indicates whether the <see cref="Form"/> has been translated</summary>
         private bool _translated;

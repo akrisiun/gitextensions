@@ -68,7 +68,7 @@ namespace GitUI.UserControls.RevisionGridClasses
                     GitIndexWatcher.IncludeSubdirectories = false;
                     GitIndexWatcher.EnableRaisingEvents = enabled;
 
-                    RefsWatcher.Path = Path.Combine(Module.GitCommonDirectory, "refs");
+                    //RefsWatcher.Path = Path.Combine(Module.GitCommonDirectory, "refs");
                     RefsWatcher.IncludeSubdirectories = true;
                     RefsWatcher.EnableRaisingEvents = enabled;
                 }

@@ -2,21 +2,22 @@
 using System.Collections.Generic;
 using GitCommands.Config;
 using GitCommands.Settings;
+using GitUIPluginInterfaces;
 
 namespace GitCommands
 {
-    public interface IGitRef : IGitItem
-    {
-        GitModule Module { get; }
-        string LocalName { get; }
-    }
+    //public interface IGitRef : IGitItem
+    //{
+    //    GitModule Module { get; }
+    //    string LocalName { get; }
+    //}
 
     public class GitRef : IGitRef, IGitItem
     {
         private readonly string _mergeSettingName;
         private readonly string _remoteSettingName;
         private IList<IGitItem> _subItems;
-       
+
         /// <summary>"refs/tags/"</summary>
         public static readonly string RefsTagsPrefix = "refs/tags/";
         /// <summary>"refs/heads/"</summary>
@@ -27,11 +28,14 @@ namespace GitCommands
         public static readonly string RefsBisectPrefix = "refs/bisect/";
         /// <summary>"^{}"</summary>
         public static readonly string TagDereferenceSuffix = "^{}";
-       
-        public GitModule Module { get; private set; }
 
-        public GitRef(GitModule module, string guid, string completeName)
-            : this(module, guid, completeName, string.Empty) { }
+        public IGitModule Module { get; private set; }
+        public string GetTrackingRemote(ISettingsValueGetter configFile) => null;
+        public string GetMergeWith(ISettingsValueGetter configFile) => null;
+
+
+        public GitRef(IGitModule module, string guid, string completeName)
+            : this(module as GitModule, guid, completeName, string.Empty) { }
 
         public GitRef(GitModule module, string guid, string completeName, string remote)
         {
@@ -88,19 +92,19 @@ namespace GitCommands
         {
             get
             {
-                return GetTrackingRemote(Module.LocalConfigFile);
+                return null; // GetTrackingRemote(Module.LocalConfigFile);
             }
             set
             {
-                if (String.IsNullOrEmpty(value))
-                    Module.UnsetSetting(_remoteSettingName);
-                else
-                {
-                    Module.SetSetting(_remoteSettingName, value);
+                //if (String.IsNullOrEmpty(value))
+                //    Module.UnsetSetting(_remoteSettingName);
+                //else
+                //{
+                //    Module.SetSetting(_remoteSettingName, value);
 
-                    if (MergeWith == "")
-                        MergeWith = Name;
-                }
+                //    if (MergeWith == "")
+                //        MergeWith = Name;
+                //}
             }
         }
 
@@ -124,14 +128,14 @@ namespace GitCommands
         {
             get
             {
-                return GetMergeWith(Module.LocalConfigFile);
+                return null; // GetMergeWith(Module.LocalConfigFile);
             }
             set
             {
-                if (String.IsNullOrEmpty(value))
-                    Module.UnsetSetting(_mergeSettingName);
-                else
-                    Module.SetSetting(_mergeSettingName, GitCommandHelpers.GetFullBranchName(value));
+                //if (String.IsNullOrEmpty(value))
+                //    Module.UnsetSetting(_mergeSettingName);
+                //else
+                //    Module.SetSetting(_mergeSettingName, GitCommandHelpers.GetFullBranchName(value));
             }
         }
 
@@ -159,7 +163,7 @@ namespace GitCommands
 
         public IEnumerable<IGitItem> SubItems
         {
-            get { return _subItems ?? (_subItems = Module.GetTree(Guid, false)); }
+            get { return _subItems ?? (_subItems = (Module as GitModule)?.GetTree(Guid, false)); }
         }
 
         #endregion

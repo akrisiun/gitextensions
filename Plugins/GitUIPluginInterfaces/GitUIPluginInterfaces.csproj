@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GitUIPluginInterfaces</RootNamespace>
     <AssemblyName>GitUIPluginInterfaces</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -33,7 +33,8 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <ReleaseVersion>2.48</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -45,6 +46,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -54,8 +56,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GitCommands">
+      <HintPath>..\..\GitCommands\bin\Debug\GitCommands.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Drawing" />
@@ -63,7 +69,6 @@
       <HintPath>..\..\packages\Rx-Interfaces.2.2.5\lib\net40\System.Reactive.Interfaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\CommonAssemblyInfo.cs">
@@ -82,9 +87,14 @@
     <Compile Include="GitCmdResult.cs" />
     <Compile Include="GitUIPostActionEventArgs.cs" />
     <Compile Include="IBrowseRepo.cs" />
+    <Compile Include="IConfigFileSettings.cs" />
+    <Compile Include="IConfigSection.cs" />
+    <Compile Include="IGitItem.cs" />
     <Compile Include="IGitPluginForRepository.cs" />
     <Compile Include="IGitModule.cs" />
+    <Compile Include="IGitRef.cs" />
     <Compile Include="IGitRemoteCommand.cs" />
+    <Compile Include="ISettingsValueGetter.cs" />
     <Compile Include="Notifications\ContextAction.cs" />
     <Compile Include="Notifications\INotifications.cs" />
     <Compile Include="Notifications\Notification.cs" />
@@ -129,12 +139,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\GitExtUtils\GitExtUtils.csproj">
-      <Project>{0f1f1168-a4b2-4fa2-b17b-735140d17f39}</Project>
-      <Name>GitExtUtils</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="..\..\FxCop.targets" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

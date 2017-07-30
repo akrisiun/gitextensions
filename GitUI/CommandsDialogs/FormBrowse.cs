@@ -37,7 +37,7 @@ using Microsoft.WindowsAPICodePack.Taskbar;
 
 namespace GitUI.CommandsDialogs
 {
-    public partial class FormBrowse : GitModuleForm, IBrowseRepo, IFormBrowse
+    public partial class FormBrowse : GitModuleForm, IBrowseRepo, IFormBrowse, GitUI.IWin32Window
     {
         #region Translation
 
@@ -513,7 +513,7 @@ namespace GitUI.CommandsDialogs
             {
                 Settings.LastUpdateCheck = DateTime.Now;
                 var updateForm = new FormUpdates(Module.AppVersion);
-                updateForm.SearchForUpdatesAndShow(Owner, false);
+                updateForm.SearchForUpdatesAndShow(Owner as IWin32Window, false);
             }
 
             bool bareRepository = Module.IsBareRepository();
@@ -1426,9 +1426,9 @@ namespace GitUI.CommandsDialogs
 
         private void OpenToolStripMenuItemClick(object sender, EventArgs e)
         {
-            GitModule module = FormOpenDirectory.OpenModule(this);
-            if (module != null)
-                SetGitModule(this, new GitModuleEventArgs(module));
+            //GitModule module = FormOpenDirectory.OpenModule(this);
+            //if (module != null)
+            //    SetGitModule(this, new GitModuleEventArgs(module));
         }
 
         private void CheckoutToolStripMenuItemClick(object sender, EventArgs e)
@@ -1678,7 +1678,7 @@ namespace GitUI.CommandsDialogs
 
         private void EditGitignoreToolStripMenuItem1Click(object sender, EventArgs e)
         {
-            UICommands.StartEditGitIgnoreDialog(this);
+            UICommands.StartEditGitIgnoreDialog(); // (this);
         }
 
         private void ArchiveToolStripMenuItemClick(object sender, EventArgs e)
@@ -3321,7 +3321,9 @@ namespace GitUI.CommandsDialogs
                 SubmoduleInfoResult result = new SubmoduleInfoResult();
 
                 // Add all submodules inside the current repository:
-                foreach (var submodule in threadModule.GetSubmodulesLocalPaths().OrderBy(submoduleName => submoduleName))
+                var modules = threadModule.GetSubmodulesLocalPaths();
+                if (modules != null)
+                foreach (var submodule in modules.OrderBy(submoduleName => submoduleName))
                 {
                     cancelToken.ThrowIfCancellationRequested();
                     var name = submodule;
@@ -3531,7 +3533,7 @@ namespace GitUI.CommandsDialogs
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var updateForm = new FormUpdates(Module.AppVersion);
-            updateForm.SearchForUpdatesAndShow(Owner, true);
+            updateForm.SearchForUpdatesAndShow(Owner as IWin32Window, true);
         }
 
         private void toolStripButtonPull_DropDownOpened(object sender, EventArgs e)

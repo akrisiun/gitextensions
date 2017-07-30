@@ -92,7 +92,7 @@ namespace GitUI.CommandsDialogs
                 }
                 else
                 {
-                    return Path.Combine(Module.ResolveGitInternalPath("info"), "exclude");
+                    return null; // Path.Combine(Module.ResolveGitInternalPath("info"), "exclude");
                 }
             }
         }
@@ -214,8 +214,9 @@ namespace GitUI.CommandsDialogs
         private void AddPattern_Click(object sender, EventArgs e)
         {
             SaveGitIgnore();
-            UICommands.StartAddToGitIgnoreDialog(this, _localExclude, "*.dll");
-            LoadGitIgnore();
+            Debugger.Break();
+            //UICommands.StartAddToGitIgnoreDialog(this, _localExclude, "*.dll");
+            //LoadGitIgnore();
         }
 
         private bool HasUnsavedChanges()

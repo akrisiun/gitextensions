@@ -31,6 +31,15 @@ namespace GitUI.UserControls
             _timer.Start();
         }
 
+        // public override void StartProcess(string command, string arguments, string workdir, Dictionary<string, string> envVariables)
+        public override void StartProcess([NotNull] string command, string arguments, string workdir)
+        {
+            // TODO
+            Debugger.Break();
+
+            this.StartProcess(command, arguments, workdir, envVariables: null);
+        }
+
         public override int ExitCode
         {
             get
@@ -78,7 +87,8 @@ namespace GitUI.UserControls
             _editbox.Visible = false;
         }
 
-        public override void StartProcess(string command, string arguments, string workdir, Dictionary<string, string> envVariables)
+        // override
+        public void StartProcess(string command, string arguments, string workdir, Dictionary<string, string> envVariables)
         {
             try
             {
@@ -98,9 +108,13 @@ namespace GitUI.UserControls
                 var process = new Process();
                 ProcessStartInfo startInfo = GitCommandHelpers.CreateProcessStartInfo(command, arguments, workdir, GitModule.SystemEncoding);
                 startInfo.CreateNoWindow = (!ssh && !AppSettings.ShowGitCommandLine);
-                foreach (var envVariable in envVariables)
+
+                if (envVariables != null)
                 {
-                    startInfo.EnvironmentVariables.Add(envVariable.Key, envVariable.Value);
+                    foreach (var envVariable in envVariables)
+                    {
+                        startInfo.EnvironmentVariables.Add(envVariable.Key, envVariable.Value);
+                    }
                 }
                 process.StartInfo = startInfo;
 

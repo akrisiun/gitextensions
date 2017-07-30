@@ -89,27 +89,27 @@ namespace GitCommands.Remote
         [SuppressMessage("ReSharper", "RedundantArgumentDefaultValue")]
         public void ConfigureRemotes(string remoteName)
         {
-            var localConfig = _module.LocalConfigFile;
+            //var localConfig = _module.LocalConfigFile;
 
-            foreach (var remoteHead in _module.GetRefs(true, true))
-            {
-                foreach (var localHead in _module.GetRefs(true, true))
-                {
-                    if (!remoteHead.IsRemote ||
-                        localHead.IsRemote ||
-                        !string.IsNullOrEmpty(localHead.GetTrackingRemote(localConfig)) ||
-                        remoteHead.IsTag ||
-                        localHead.IsTag ||
-                        !remoteHead.Name.ToLower().Contains(localHead.Name.ToLower()) ||
-                        !remoteHead.Name.ToLower().Contains(remoteName.ToLower()))
-                    {
-                        continue;
-                    }
+            //foreach (var remoteHead in _module.GetRefs(true, true))
+            //{
+            //    foreach (var localHead in _module.GetRefs(true, true))
+            //    {
+            //        if (!remoteHead.IsRemote ||
+            //            localHead.IsRemote ||
+            //            !string.IsNullOrEmpty(localHead.GetTrackingRemote(localConfig)) ||
+            //            remoteHead.IsTag ||
+            //            localHead.IsTag ||
+            //            !remoteHead.Name.ToLower().Contains(localHead.Name.ToLower()) ||
+            //            !remoteHead.Name.ToLower().Contains(remoteName.ToLower()))
+            //        {
+            //            continue;
+            //        }
 
-                    localHead.TrackingRemote = remoteName;
-                    localHead.MergeWith = localHead.Name;
-                }
-            }
+            //        localHead.TrackingRemote = remoteName;
+            //        localHead.MergeWith = localHead.Name;
+            //    }
+            //}
         }
 
         /// <summary>
@@ -147,10 +147,11 @@ namespace GitCommands.Remote
         /// </summary>
         public string[] GetDisabledRemotes()
         {
-            return _module.LocalConfigFile.GetConfigSections()
-                                          .Where(s => s.SectionName == $"{DisabledSectionPrefix}remote")
-                                          .Select(s => s.SubSection)
-                                          .ToArray();
+            return new string[] { };
+            //_module.LocalConfigFile.GetConfigSections()
+            //                              .Where(s => s.SectionName == $"{DisabledSectionPrefix}remote")
+            //                              .Select(s => s.SubSection)
+            //                              .ToArray();
         }
 
         /// <summary>
@@ -194,13 +195,13 @@ namespace GitCommands.Remote
                 throw new ArgumentNullException(nameof(remote));
             }
 
-            if (!remote.Disabled)
-            {
-                return _module.RemoveRemote(remote.Name);
-            }
+            //if (!remote.Disabled)
+            //{
+            //    return _module.RemoveRemote(remote.Name);
+            //}
 
-            var sectionName = $"{DisabledSectionPrefix}{SectionRemote}.{remote.Name}";
-            _module.LocalConfigFile.RemoveConfigSection(sectionName, true);
+            //var sectionName = $"{DisabledSectionPrefix}{SectionRemote}.{remote.Name}";
+            //_module.LocalConfigFile.RemoveConfigSection(sectionName, true);
             return string.Empty;
         }
 
@@ -237,8 +238,8 @@ namespace GitCommands.Remote
             bool remoteDisabled = false;
             if (creatingNew)
             {
-                output = _module.AddRemote(remoteName, remoteUrl);
-                updateRemoteRequired = true;
+                //output = _module.AddRemote(remoteName, remoteUrl);
+                //updateRemoteRequired = true;
             }
             else
             {
@@ -254,7 +255,7 @@ namespace GitCommands.Remote
                 if (!string.Equals(remote.Name, remoteName, StringComparison.OrdinalIgnoreCase))
                 {
                     // the name of the remote changed - perform rename
-                    output = _module.RenameRemote(remote.Name, remoteName);
+                    //output = _module.RenameRemote(remote.Name, remoteName);
                 }
 
                 if (!string.Equals(remote.Url, remoteUrl, StringComparison.OrdinalIgnoreCase))
@@ -266,7 +267,7 @@ namespace GitCommands.Remote
 
             UpdateSettings(remoteName, remoteDisabled, SettingKeyString.RemoteUrl, remoteUrl);
             UpdateSettings(remoteName, remoteDisabled, SettingKeyString.RemotePushUrl, remotePushUrl);
-            UpdateSettings(remoteName, remoteDisabled, SettingKeyString.RemotePuttySshKey, remotePuttySshKey);
+            //UpdateSettings(remoteName, remoteDisabled, SettingKeyString.RemotePuttySshKey, remotePuttySshKey);
 
             return new GitRemoteSaveResult(output, updateRemoteRequired);
         }
@@ -286,39 +287,39 @@ namespace GitCommands.Remote
             // disabled is the new state, so if the new state is 'false' (=enabled), then the existing state is 'true' (=disabled, i.e. '-remote')
             var sectionName = (disabled ? "" : DisabledSectionPrefix) + SectionRemote;
 
-            var sections = _module.LocalConfigFile.GetConfigSections();
-            var section = sections.FirstOrDefault(s => s.SectionName == sectionName && s.SubSection == remoteName);
+            //var sections = _module.LocalConfigFile.GetConfigSections();
+            object section = null; // var section = sections.FirstOrDefault(s => s.SectionName == sectionName && s.SubSection == remoteName);
             if (section == null)
             {
                 // we didn't find it, nothing we can do
                 return;
             }
 
-            if (disabled)
-            {
-                _module.RemoveRemote(remoteName);
-            }
-            else
-            {
-                _module.LocalConfigFile.RemoveConfigSection($"{sectionName}.{remoteName}");
-            }
+            //if (disabled)
+            //{
+            //    _module.RemoveRemote(remoteName);
+            //}
+            //else
+            //{
+            //    _module.LocalConfigFile.RemoveConfigSection($"{sectionName}.{remoteName}");
+            //}
 
-            // rename the remote
-            section.SectionName = (disabled ? DisabledSectionPrefix : "") + SectionRemote;
+            //// rename the remote
+            //section.SectionName = (disabled ? DisabledSectionPrefix : "") + SectionRemote;
 
-            _module.LocalConfigFile.AddConfigSection(section);
-            _module.LocalConfigFile.Save();
+            //_module.LocalConfigFile.AddConfigSection(section);
+            //_module.LocalConfigFile.Save();
         }
 
 
         private void GetRemotes(List<GitRemote> allRemotes, bool enabled)
         {
             Func<string[]> func;
-            if (enabled)
-            {
-                func = _module.GetRemotes;
-            }
-            else
+            //if (enabled)
+            //{
+            //    func = _module.GetRemotes;
+            //}
+            //else
             {
                 func = GetDisabledRemotes;
             }
@@ -332,9 +333,9 @@ namespace GitCommands.Remote
                     Disabled = !enabled,
                     Name = remote,
                     Url = _module.GetSetting(GetSettingKey(SettingKeyString.RemoteUrl, remote, enabled)),
-                    Push = _module.GetSettings(GetSettingKey(SettingKeyString.RemotePush, remote, enabled)).ToList(),
                     PushUrl = _module.GetSetting(GetSettingKey(SettingKeyString.RemotePushUrl, remote, enabled)),
-                    PuttySshKey = _module.GetSetting(GetSettingKey(SettingKeyString.RemotePuttySshKey, remote, enabled)),
+                    //Push = _module.GetSettings(GetSettingKey(SettingKeyString.RemotePush, remote, enabled)).ToList(),
+                    //PuttySshKey = _module.GetSetting(GetSettingKey(SettingKeyString.RemotePuttySshKey, remote, enabled)),
                 }));
             }
         }
@@ -350,14 +351,14 @@ namespace GitCommands.Remote
             var preffix = remoteDisabled ? DisabledSectionPrefix : string.Empty;
             var fullSettingName = preffix + string.Format(settingName, remoteName);
 
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                _module.SetSetting(fullSettingName, value);
-            }
-            else
-            {
-                _module.UnsetSetting(fullSettingName);
-            }
+            //if (!string.IsNullOrWhiteSpace(value))
+            //{
+            //    _module.SetSetting(fullSettingName, value);
+            //}
+            //else
+            //{
+            //    _module.UnsetSetting(fullSettingName);
+            //}
         }
     }
 }
