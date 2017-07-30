@@ -692,13 +692,14 @@ namespace GitUI
         {
             Func<bool> action = () =>
             {
-                using (var form = new FormCommit(this))
-                {
-                    if (showOnlyWhenChanges)
-                        form.ShowDialogWhenChanges(owner);
-                    else
-                        form.ShowDialog(owner);
-                }
+                try {
+                    using (var form = new FormCommit (this)) {
+                        if (showOnlyWhenChanges)
+                            form.ShowDialogWhenChanges (owner);
+                        else
+                            form.ShowDialog (owner);
+                    }
+                } catch (Exception ex) { MessageBox.Show ($"Winforms error {ex.Message}"); }
                 return true;
             };
 

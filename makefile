@@ -9,7 +9,7 @@ help:
 	@echo	"make run | restore | msbuild | xbuild | build | build-test"
 
 run:
-    mono GitExtensions/bin/Debug/GitExtensions.exe & 
+	mono GitExtensions/bin/Debug/GitExtensions.exe & 
 restore:
 	nuget restore GitExtensionsMono.sln
 msbuild:

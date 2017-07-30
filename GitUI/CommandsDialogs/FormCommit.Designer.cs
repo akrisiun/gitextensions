@@ -1,3 +1,4 @@
+using System;
 using System.Windows.Forms;
 using GitUI.Editor;
 using GitUI.SpellChecker;
@@ -616,7 +617,7 @@ namespace GitUI.CommandsDialogs
             this.toolStripContainer1.ContentPanel.Controls.Add(this.Loading);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.Unstaged);
             this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(397, 249);
-            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            // this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
             this.toolStripContainer1.Size = new System.Drawing.Size(397, 274);
@@ -668,7 +669,7 @@ namespace GitUI.CommandsDialogs
             this.toolbarUnstaged.Location = new System.Drawing.Point(0, 0);
             this.toolbarUnstaged.Name = "toolbarUnstaged";
             this.toolbarUnstaged.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.toolbarUnstaged.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            // this.toolbarUnstaged.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolbarUnstaged.Size = new System.Drawing.Size(397, 25);
             this.toolbarUnstaged.Stretch = true;
             this.toolbarUnstaged.TabIndex = 12;
@@ -1343,35 +1344,41 @@ namespace GitUI.CommandsDialogs
             this.splitLeft.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitLeft)).EndInit();
             this.splitLeft.ResumeLayout(false);
-            this.toolStripContainer1.ContentPanel.ResumeLayout(false);
-            this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
-            this.toolStripContainer1.TopToolStripPanel.PerformLayout();
-            this.toolStripContainer1.ResumeLayout(false);
-            this.toolStripContainer1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Loading)).EndInit();
-            this.toolbarUnstaged.ResumeLayout(false);
-            this.toolbarUnstaged.PerformLayout();
-            this.toolbarSelectionFilter.ResumeLayout(false);
-            this.toolbarSelectionFilter.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.LoadingStaged)).EndInit();
-            this.toolbarStaged.ResumeLayout(false);
-            this.toolbarStaged.PerformLayout();
-            this.splitRight.Panel1.ResumeLayout(false);
-            this.splitRight.Panel1.PerformLayout();
-            this.splitRight.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitRight)).EndInit();
-            this.splitRight.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.flowCommitButtons.ResumeLayout(false);
-            this.flowCommitButtons.PerformLayout();
-            this.toolbarCommit.ResumeLayout(false);
-            this.toolbarCommit.PerformLayout();
-            this.commitStatusStrip.ResumeLayout(false);
-            this.commitStatusStrip.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+
+            try {
+                this.toolStripContainer1.ContentPanel.ResumeLayout (false);
+                this.toolStripContainer1.TopToolStripPanel.ResumeLayout (false);
+
+                this.toolStripContainer1.TopToolStripPanel.PerformLayout ();
+
+                this.toolStripContainer1.ResumeLayout (false);
+                this.toolStripContainer1.PerformLayout ();
+                ((System.ComponentModel.ISupportInitialize)(this.Loading)).EndInit ();
+                this.toolbarUnstaged.ResumeLayout (false);
+                this.toolbarUnstaged.PerformLayout ();
+                this.toolbarSelectionFilter.ResumeLayout (false);
+                this.toolbarSelectionFilter.PerformLayout ();
+
+                ((System.ComponentModel.ISupportInitialize)(this.LoadingStaged)).EndInit ();
+                this.toolbarStaged.ResumeLayout (false);
+                this.toolbarStaged.PerformLayout ();
+                this.splitRight.Panel1.ResumeLayout (false);
+                this.splitRight.Panel1.PerformLayout ();
+                this.splitRight.Panel2.ResumeLayout (false);
+                ((System.ComponentModel.ISupportInitialize)(this.splitRight)).EndInit ();
+                this.splitRight.ResumeLayout (false);
+                this.tableLayoutPanel1.ResumeLayout (false);
+                this.tableLayoutPanel1.PerformLayout ();
+                this.panel1.ResumeLayout (false);
+                this.flowCommitButtons.ResumeLayout (false);
+                this.flowCommitButtons.PerformLayout ();
+                this.toolbarCommit.ResumeLayout (false);
+                this.toolbarCommit.PerformLayout ();
+                this.commitStatusStrip.ResumeLayout (false);
+                this.commitStatusStrip.PerformLayout ();
+                this.ResumeLayout (false);
+                this.PerformLayout ();
+            } catch (Exception ex) { Console.Write($"FormCommit load error: {ex.Message}");  }
 
         }
 

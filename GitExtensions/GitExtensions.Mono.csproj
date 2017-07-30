@@ -35,6 +35,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <ReleaseVersion>2.48</ReleaseVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,9 +49,14 @@
     <ConsolePause>false</ConsolePause>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="copy_plugins.sh  ${SolutionDir} ${ProjectConfigName}" workingdir="${TargetDir}" />
+        <Command>
+          <type>AfterBuild</type>
+          <command>copy_plugins.sh  ${SolutionDir} ${ProjectConfigName}</command>
+          <workingdir>${TargetDir}</workingdir>
+        </Command>
       </CustomCommands>
     </CustomCommands>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -62,9 +68,14 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="copy_plugins.sh  ${SolutionDir} ${ProjectConfigName}" workingdir="${TargetDir}" />
+        <Command>
+          <type>AfterBuild</type>
+          <command>copy_plugins.sh  ${SolutionDir} ${ProjectConfigName}</command>
+          <workingdir>${TargetDir}</workingdir>
+        </Command>
       </CustomCommands>
     </CustomCommands>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -72,7 +83,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
@@ -112,7 +122,7 @@
       <Name>NBug</Name>
     </ProjectReference>
     <ProjectReference Include="..\GitUI\GitUI.csproj">
-      <Project>{CF5B22E7-230F-4E50-BE88-C4F7023CED2C}</Project>
+      <Project>{A19AF7D5-2BD9-470D-A4D0-0519C2694258}</Project>
       <Name>GitUI</Name>
     </ProjectReference>
     <ProjectReference Include="..\Plugins\AutoCompileSubmodules\AutoCompileSubmodules.csproj">
