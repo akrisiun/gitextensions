@@ -141,7 +141,7 @@ namespace GitUI.CommandsDialogs
         }
 
 #if !SKIN
-        private void copyFilenameToClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
+        void copyFilenameToClipboardToolStripMenuItem1_Click2(object sender, EventArgs e)
         {
             FormBrowse.CopyFullPathToClipboard(DiffFiles, Module);
         }
