@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Gerrit</RootNamespace>
     <AssemblyName>Gerrit</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -105,9 +105,8 @@
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\GitUI\GitUI.csproj">
-      <Project>{A19AF7D5-2BD9-470D-A4D0-0519C2694258}</Project>
+      <Project>{a19af7d5-2bd9-470d-a4d0-0519c2694258}</Project>
       <Name>GitUI</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\ResourceManager\ResourceManager.csproj">
       <Project>{D3440FD7-AFC5-4351-8741-6CDBF15CE944}</Project>

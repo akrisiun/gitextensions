@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Windows.Forms;
 using GitCommands;
+using GitUIPluginInterfaces;
 
 namespace GitUI
 {
@@ -10,6 +10,10 @@ namespace GitUI
     public class GitModuleForm : GitExtensionsForm, IGitUICommandsSource
     {
         private GitUICommands _uiCommands;
+
+        [Browsable(false)]
+        public IGitUICommands ICommands { get { return UICommands; } }
+
         /// <summary>Gets a <see cref="GitUICommands"/> reference.</summary>
         [Browsable(false)]
         public GitUICommands UICommands

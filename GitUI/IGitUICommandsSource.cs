@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GitUIPluginInterfaces;
+using System;
 
 namespace GitUI
 {
@@ -29,5 +30,6 @@ namespace GitUI
         event EventHandler<GitUICommandsChangedEventArgs> GitUICommandsChanged;
         /// <summary>Gets the <see cref="GitUICommands"/> value.</summary>
         GitUICommands UICommands { get; }
+        IGitUICommands ICommands { get; }
     }
 }

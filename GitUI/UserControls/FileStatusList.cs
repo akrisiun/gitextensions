@@ -19,7 +19,7 @@ namespace GitUI
 {
     using GitItemsWithParents = IDictionary<string, IList<GitItemStatus>>;
 
-    public sealed partial class FileStatusList : GitModuleControl
+    public sealed partial class FileStatusList : GitModuleControl, IFileStatusList
     {
         private readonly TranslationString _UnsupportedMultiselectAction =
             new TranslationString("Operation not supported");
@@ -37,7 +37,8 @@ namespace GitUI
 
         public FileStatusList()
         {
-            InitializeComponent(); Translate();
+            InitializeComponent();
+            Translate();
             FilterVisible = false;
 
             selectedIndexChangeSubscription = Observable.FromEventPattern(
@@ -770,6 +771,8 @@ namespace GitUI
                 ResumeLayout(true);
             }
         }
+
+        void IFileStatusList.SetDiffs(IList<GitRevision> revisions) { SetDiffs(revisions as List<GitRevision>); }
 
         public void SetDiffs(List<GitRevision> revisions)
         {

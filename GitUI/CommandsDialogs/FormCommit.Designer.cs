@@ -617,7 +617,6 @@ namespace GitUI.CommandsDialogs
             this.toolStripContainer1.ContentPanel.Controls.Add(this.Loading);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.Unstaged);
             this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(397, 249);
-            // this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
             this.toolStripContainer1.Size = new System.Drawing.Size(397, 274);
@@ -631,9 +630,11 @@ namespace GitUI.CommandsDialogs
             // 
             // Loading
             // 
+            this.Loading.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Loading.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.Loading.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.Loading.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Loading.Location = new System.Drawing.Point(0, 0);
             this.Loading.Name = "Loading";
             this.Loading.Size = new System.Drawing.Size(397, 249);
@@ -644,6 +645,7 @@ namespace GitUI.CommandsDialogs
             // Unstaged
             // 
             this.Unstaged.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Unstaged.FilterVisible = false;
             this.Unstaged.Location = new System.Drawing.Point(0, 0);
             this.Unstaged.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Unstaged.Name = "Unstaged";
@@ -669,7 +671,6 @@ namespace GitUI.CommandsDialogs
             this.toolbarUnstaged.Location = new System.Drawing.Point(0, 0);
             this.toolbarUnstaged.Name = "toolbarUnstaged";
             this.toolbarUnstaged.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            // this.toolbarUnstaged.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolbarUnstaged.Size = new System.Drawing.Size(397, 25);
             this.toolbarUnstaged.Stretch = true;
             this.toolbarUnstaged.TabIndex = 12;
@@ -714,14 +715,14 @@ namespace GitUI.CommandsDialogs
             // showIgnoredFilesToolStripMenuItem
             // 
             this.showIgnoredFilesToolStripMenuItem.Name = "showIgnoredFilesToolStripMenuItem";
-            this.showIgnoredFilesToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.showIgnoredFilesToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.showIgnoredFilesToolStripMenuItem.Text = "Show ignored files";
             this.showIgnoredFilesToolStripMenuItem.Click += new System.EventHandler(this.ShowIgnoredFilesToolStripMenuItemClick);
             // 
             // showAssumeUnchangedFilesToolStripMenuItem
             // 
             this.showAssumeUnchangedFilesToolStripMenuItem.Name = "showAssumeUnchangedFilesToolStripMenuItem";
-            this.showAssumeUnchangedFilesToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.showAssumeUnchangedFilesToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.showAssumeUnchangedFilesToolStripMenuItem.Text = "Show assumed-unchanged files";
             this.showAssumeUnchangedFilesToolStripMenuItem.Click += new System.EventHandler(this.ShowAssumeUnchangedFilesToolStripMenuItemClick);
             // 
@@ -730,26 +731,26 @@ namespace GitUI.CommandsDialogs
             this.showUntrackedFilesToolStripMenuItem.Checked = true;
             this.showUntrackedFilesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.showUntrackedFilesToolStripMenuItem.Name = "showUntrackedFilesToolStripMenuItem";
-            this.showUntrackedFilesToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.showUntrackedFilesToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.showUntrackedFilesToolStripMenuItem.Text = "Show untracked files";
             this.showUntrackedFilesToolStripMenuItem.Click += new System.EventHandler(this.ShowUntrackedFilesToolStripMenuItemClick);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(230, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(239, 6);
             // 
             // deleteSelectedFilesToolStripMenuItem
             // 
             this.deleteSelectedFilesToolStripMenuItem.Name = "deleteSelectedFilesToolStripMenuItem";
-            this.deleteSelectedFilesToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.deleteSelectedFilesToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.deleteSelectedFilesToolStripMenuItem.Text = "Delete selected files";
             this.deleteSelectedFilesToolStripMenuItem.Click += new System.EventHandler(this.DeleteSelectedFilesToolStripMenuItemClick);
             // 
             // resetSelectedFilesToolStripMenuItem
             // 
             this.resetSelectedFilesToolStripMenuItem.Name = "resetSelectedFilesToolStripMenuItem";
-            this.resetSelectedFilesToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.resetSelectedFilesToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.resetSelectedFilesToolStripMenuItem.Text = "Reset selected files";
             this.resetSelectedFilesToolStripMenuItem.Click += new System.EventHandler(this.ResetSelectedFilesToolStripMenuItemClick);
             // 
@@ -757,7 +758,7 @@ namespace GitUI.CommandsDialogs
             // 
             this.resetUnstagedChangesToolStripMenuItem.Image = global::GitUI.Properties.Resources.IconResetWorkingDirChanges;
             this.resetUnstagedChangesToolStripMenuItem.Name = "resetUnstagedChangesToolStripMenuItem";
-            this.resetUnstagedChangesToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.resetUnstagedChangesToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.resetUnstagedChangesToolStripMenuItem.Text = "Reset unstaged changes";
             this.resetUnstagedChangesToolStripMenuItem.Click += new System.EventHandler(this.resetUnstagedChangesToolStripMenuItem_Click);
             // 
@@ -765,40 +766,40 @@ namespace GitUI.CommandsDialogs
             // 
             this.resetAlltrackedChangesToolStripMenuItem.Image = global::GitUI.Properties.Resources.IconResetWorkingDirChanges;
             this.resetAlltrackedChangesToolStripMenuItem.Name = "resetAlltrackedChangesToolStripMenuItem";
-            this.resetAlltrackedChangesToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.resetAlltrackedChangesToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.resetAlltrackedChangesToolStripMenuItem.Text = "Reset all (tracked) changes";
             this.resetAlltrackedChangesToolStripMenuItem.Click += new System.EventHandler(this.ResetAlltrackedChangesToolStripMenuItemClick);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(230, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(239, 6);
             // 
             // editGitIgnoreToolStripMenuItem
             // 
             this.editGitIgnoreToolStripMenuItem.Image = global::GitUI.Properties.Resources.IconEditGitIgnore;
             this.editGitIgnoreToolStripMenuItem.Name = "editGitIgnoreToolStripMenuItem";
-            this.editGitIgnoreToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.editGitIgnoreToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.editGitIgnoreToolStripMenuItem.Text = "Edit ignored files";
             this.editGitIgnoreToolStripMenuItem.Click += new System.EventHandler(this.EditGitIgnoreToolStripMenuItemClick);
             // 
             // deleteAllUntrackedFilesToolStripMenuItem
             // 
             this.deleteAllUntrackedFilesToolStripMenuItem.Name = "deleteAllUntrackedFilesToolStripMenuItem";
-            this.deleteAllUntrackedFilesToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.deleteAllUntrackedFilesToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.deleteAllUntrackedFilesToolStripMenuItem.Text = "Delete all untracked files";
             this.deleteAllUntrackedFilesToolStripMenuItem.Click += new System.EventHandler(this.DeleteAllUntrackedFilesToolStripMenuItemClick);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(230, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(239, 6);
             // 
             // selectionFilterToolStripMenuItem
             // 
             this.selectionFilterToolStripMenuItem.CheckOnClick = true;
             this.selectionFilterToolStripMenuItem.Name = "selectionFilterToolStripMenuItem";
-            this.selectionFilterToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.selectionFilterToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.selectionFilterToolStripMenuItem.Text = "Selection filter";
             this.selectionFilterToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ToogleShowSelectionFilter);
             // 
@@ -853,6 +854,7 @@ namespace GitUI.CommandsDialogs
             // 
             this.Staged.ContextMenuStrip = this.StagedFileContext;
             this.Staged.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Staged.FilterVisible = false;
             this.Staged.Location = new System.Drawing.Point(0, 28);
             this.Staged.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Staged.Name = "Staged";
@@ -1344,41 +1346,35 @@ namespace GitUI.CommandsDialogs
             this.splitLeft.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitLeft)).EndInit();
             this.splitLeft.ResumeLayout(false);
-
-            try {
-                this.toolStripContainer1.ContentPanel.ResumeLayout (false);
-                this.toolStripContainer1.TopToolStripPanel.ResumeLayout (false);
-
-                this.toolStripContainer1.TopToolStripPanel.PerformLayout ();
-
-                this.toolStripContainer1.ResumeLayout (false);
-                this.toolStripContainer1.PerformLayout ();
-                ((System.ComponentModel.ISupportInitialize)(this.Loading)).EndInit ();
-                this.toolbarUnstaged.ResumeLayout (false);
-                this.toolbarUnstaged.PerformLayout ();
-                this.toolbarSelectionFilter.ResumeLayout (false);
-                this.toolbarSelectionFilter.PerformLayout ();
-
-                ((System.ComponentModel.ISupportInitialize)(this.LoadingStaged)).EndInit ();
-                this.toolbarStaged.ResumeLayout (false);
-                this.toolbarStaged.PerformLayout ();
-                this.splitRight.Panel1.ResumeLayout (false);
-                this.splitRight.Panel1.PerformLayout ();
-                this.splitRight.Panel2.ResumeLayout (false);
-                ((System.ComponentModel.ISupportInitialize)(this.splitRight)).EndInit ();
-                this.splitRight.ResumeLayout (false);
-                this.tableLayoutPanel1.ResumeLayout (false);
-                this.tableLayoutPanel1.PerformLayout ();
-                this.panel1.ResumeLayout (false);
-                this.flowCommitButtons.ResumeLayout (false);
-                this.flowCommitButtons.PerformLayout ();
-                this.toolbarCommit.ResumeLayout (false);
-                this.toolbarCommit.PerformLayout ();
-                this.commitStatusStrip.ResumeLayout (false);
-                this.commitStatusStrip.PerformLayout ();
-                this.ResumeLayout (false);
-                this.PerformLayout ();
-            } catch (Exception ex) { Console.Write($"FormCommit load error: {ex.Message}");  }
+            this.toolStripContainer1.ContentPanel.ResumeLayout(false);
+            this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer1.TopToolStripPanel.PerformLayout();
+            this.toolStripContainer1.ResumeLayout(false);
+            this.toolStripContainer1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Loading)).EndInit();
+            this.toolbarUnstaged.ResumeLayout(false);
+            this.toolbarUnstaged.PerformLayout();
+            this.toolbarSelectionFilter.ResumeLayout(false);
+            this.toolbarSelectionFilter.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LoadingStaged)).EndInit();
+            this.toolbarStaged.ResumeLayout(false);
+            this.toolbarStaged.PerformLayout();
+            this.splitRight.Panel1.ResumeLayout(false);
+            this.splitRight.Panel1.PerformLayout();
+            this.splitRight.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitRight)).EndInit();
+            this.splitRight.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.flowCommitButtons.ResumeLayout(false);
+            this.flowCommitButtons.PerformLayout();
+            this.toolbarCommit.ResumeLayout(false);
+            this.toolbarCommit.PerformLayout();
+            this.commitStatusStrip.ResumeLayout(false);
+            this.commitStatusStrip.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

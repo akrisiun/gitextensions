@@ -4,10 +4,12 @@ using System.Windows.Forms;
 using GitCommands;
 using System;
 using System.Threading.Tasks;
+using GitUIPluginInterfaces;
 
 namespace GitUI.UserControls
 {
-    public interface IRepoObjectsTree : IWin32Window, IComponent, IDisposable
+
+    public interface IRepoObjectsTree : ITree, IWin32Window, IComponent, IDisposable
     {
         IGitUICommandsSource UICommandsSource { get; set; } // -> GitModuleForm
         void Reload();

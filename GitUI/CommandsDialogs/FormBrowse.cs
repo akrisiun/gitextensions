@@ -37,7 +37,7 @@ using Microsoft.WindowsAPICodePack.Taskbar;
 
 namespace GitUI.CommandsDialogs
 {
-    public partial class FormBrowse : GitModuleForm, IBrowseRepo
+    public partial class FormBrowse : GitModuleForm, IBrowseRepo, IFormBrowse
     {
         #region Translation
 
@@ -138,6 +138,7 @@ namespace GitUI.CommandsDialogs
             new TranslationString("Exactly one revision must be selected. Abort.");
         #endregion
 
+        #region Private 
         private Dashboard _dashboard;
         private ToolStripItem _rebase;
         private ToolStripItem _bisect;
@@ -172,15 +173,21 @@ namespace GitUI.CommandsDialogs
             RecoverSplitterContainerLayout();
         }
 
-        public static Lazy<IRepoObjectsTree> Tree { get; set; }
+        #endregion
+
+        public static Lazy<IRepoObjectsTree> LazyTree { get; set; }
+        public static Action<string> StartCommit { get; set; }
+        public ITree Tree { get; set; } // IRepoObjectsTree
+        IGitUICommands IFormBrowse.UICommands { get { return UICommands; } } // -> GitModuleForm
 
         public FormBrowse(GitUICommands aCommands, string filter)
             : base(true, aCommands)
         {
-            if (Tree == null)
+            if (LazyTree == null)
                 throw new ArgumentNullException("Repository Tree interface error");
 
             InitializeComponent();
+            Tree = repoObjectsTree;
 
             // set tab page images
             {
@@ -200,6 +207,7 @@ namespace GitUI.CommandsDialogs
                 RevisionGrid.UICommandsSource = this;
                 repoObjectsTree.UICommandsSource = this;
             }
+
             Repositories.LoadRepositoryHistoryAsync();
             Task.Factory.StartNew(PluginLoader.Load)
                 .ContinueWith((task) => RegisterPlugins(), TaskScheduler.FromCurrentSynchronizationContext());
@@ -278,6 +286,13 @@ namespace GitUI.CommandsDialogs
             RecoverSplitterContainerLayout();
         }
 
+        public GitUI.RevisionGrid RevisionsGrid {  get { return this.RevisionGrid; } }
+
+        public void DoStartCommit(string path)
+        {
+            StartCommit?.Invoke(path);
+        }
+
         private new void Translate()
         {
             base.Translate();
@@ -323,6 +338,8 @@ namespace GitUI.CommandsDialogs
         }
 
         #endregion
+
+        #region Methods
 
         private void ShowDashboard()
         {
@@ -3674,5 +3691,8 @@ namespace GitUI.CommandsDialogs
             MainSplitContainer.SplitterDistance = settings.FormBrowse_MainSplitContainer_SplitterDistance;
             MainSplitContainer.Panel1Collapsed = settings.FormBrowse_LeftPanel_Collapsed;
         }
+
+        #endregion
+
     }
 }

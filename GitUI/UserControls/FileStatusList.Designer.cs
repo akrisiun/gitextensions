@@ -129,7 +129,7 @@ namespace GitUI
 
         #endregion
 
-        private ExListView FileStatusListView;
+        public ExListView FileStatusListView;
         //This property cannot be private because this will break compilation in monodevelop
         private System.Windows.Forms.Label NoFiles;
         private System.Windows.Forms.ColumnHeader columnHeader1;

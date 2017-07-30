@@ -4,13 +4,14 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Diagnostics;
 using GitCommands;
 using GitCommands.Settings;
 using GitUI.CommandsDialogs;
 using GitUI.CommandsDialogs.RepoHosting;
 using GitUI.CommandsDialogs.SettingsDialog;
-using GitUI.Blame;
-using GitUI.Notifications;
+//using GitUI.Blame;
+//using GitUI.Notifications;
 using GitUIPluginInterfaces;
 using GitUIPluginInterfaces.Notifications;
 using GitUIPluginInterfaces.RepositoryHosts;
@@ -177,6 +178,20 @@ namespace GitUI
 
         #endregion
 
+        #region Properties
+
+        public GitModule Module {
+            [DebuggerStepThrough]
+            get; private set;
+        }
+
+        public IGitModule GitModule {
+            [DebuggerStepThrough]
+            get {
+                return Module;
+            }
+        }
+
         public string GitCommand(string arguments)
         {
             return Module.RunGitCmd(arguments);
@@ -238,6 +253,10 @@ namespace GitUI
 
         /// <summary>Gets notifications implementation.</summary>
         public INotifications Notifications { get; private set; }
+
+        #endregion
+
+        #region Start events
 
         public bool StartBatchFileProcessDialog(object owner, string batchFile)
         {
@@ -399,6 +418,10 @@ namespace GitUI
             return DoActionOnRepo(owner, true, true, null, null, action);
         }
 
+        #endregion
+
+        #region DoAction
+
         public void InvokeEventOnClose(Form form, GitUIEventHandler ev)
         {
             form.FormClosed += (object o, FormClosedEventArgs ea) =>
@@ -436,6 +459,16 @@ namespace GitUI
                 form.ShowDialog();
         }
 
+        public bool DoActionOnRepo(IWin32Window owner, bool requiresValidWorkingDir, bool changesRepo,
+                Func<bool> action)
+        {
+            GitUIEventHandler preEvent = this.PreCommit;
+            GitUIPostActionEventHandler postEvent = this.PostCommit;
+
+            bool result = DoActionOnRepo(owner, requiresValidWorkingDir, changesRepo, preEvent, postEvent, action);
+            return result;
+        }
+
         /// <summary>
         ///
         /// </summary>
@@ -447,7 +480,7 @@ namespace GitUI
         /// <param name="action">Action to do. Return true to indicate that the action was successfully done.</param>
         /// <returns>true if action was successfully done, false otherwise</returns>
         public bool DoActionOnRepo(IWin32Window owner, bool requiresValidWorkingDir, bool changesRepo,
-            GitUIEventHandler preEvent, GitUIPostActionEventHandler postEvent, Func<bool> action)
+               GitUIEventHandler preEvent, GitUIPostActionEventHandler postEvent, Func<bool> action)
         {
             bool actionDone = false;
             RepoChangedNotifier.Lock();
@@ -489,6 +522,8 @@ namespace GitUI
         {
             return DoActionOnRepo(null, false, true, null, null, action);
         }
+
+        #endregion
 
         #region Checkout
 
@@ -533,6 +568,8 @@ namespace GitUI
         }
 
         #endregion Checkout
+
+        #region Start dialogs
 
         public bool StartCompareRevisionsDialog(IWin32Window owner)
         {
@@ -690,16 +727,26 @@ namespace GitUI
 
         public bool StartCommitDialog(IWin32Window owner, bool showOnlyWhenChanges)
         {
+            if (FormBrowse.StartCommit != null)
+            {
+                var dir = this.GitModule.WorkingDir;
+                FormBrowse.StartCommit.Invoke(dir);
+                return true;
+            }
+
             Func<bool> action = () =>
             {
-                try {
-                    using (var form = new FormCommit (this)) {
+                try
+                {
+                    using (var form = new FormCommit(this))
+                    {
                         if (showOnlyWhenChanges)
-                            form.ShowDialogWhenChanges (owner);
+                            form.ShowDialogWhenChanges(owner);
                         else
-                            form.ShowDialog (owner);
+                            form.ShowDialog(owner);
                     }
-                } catch (Exception ex) { MessageBox.Show ($"Winforms error {ex.Message}"); }
+                }
+                catch (Exception ex) { MessageBox.Show($"Winforms error {ex.Message}"); }
                 return true;
             };
 
@@ -929,7 +976,7 @@ namespace GitUI
         {
             Func<bool> action = () =>
             {
-                using(var form = new FormSparseWorkingCopy(this))
+                using (var form = new FormSparseWorkingCopy(this))
                     form.ShowDialog(owner);
 
                 return true;
@@ -1015,7 +1062,7 @@ namespace GitUI
             if (resetAction == FormResetChanges.ActionEnum.Cancel)
             {
                 return false;
-        }
+            }
 
             Cursor.Current = Cursors.WaitCursor;
 
@@ -1049,7 +1096,7 @@ namespace GitUI
 
         public bool StartResetChangesDialog()
         {
-            return StartResetChangesDialog((IWin32Window) null);
+            return StartResetChangesDialog((IWin32Window)null);
         }
 
         public bool StartRevertCommitDialog(IWin32Window owner, GitRevision revision)
@@ -1501,7 +1548,7 @@ namespace GitUI
             if (!InvokeEvent(owner, PreBrowse))
                 return false;
 
-            FormBrowse.Tree = new Lazy<UserControls.IRepoObjectsTree>(
+            FormBrowse.LazyTree = new Lazy<UserControls.IRepoObjectsTree>(
                 () => new RepoObjectsTree());
 
             var form = new FormBrowse(this, filter);
@@ -1661,19 +1708,11 @@ namespace GitUI
             return StartEditGitAttributesDialog(null);
         }
 
-        private bool InvokeEvent(IWin32Window ownerForm, GitUIEventHandler gitUIEventHandler)
+        #endregion
+
+        public bool InvokeEvent(IWin32Window ownerForm, GitUIEventHandler gitUIEventHandler)
         {
             return InvokeEvent(this, ownerForm, gitUIEventHandler);
-        }
-
-        public GitModule Module { get; private set; }
-
-        public IGitModule GitModule
-        {
-            get
-            {
-                return Module;
-            }
         }
 
         private void InvokePostEvent(IWin32Window ownerForm, bool actionDone, GitUIPostActionEventHandler gitUIEventHandler)
@@ -1702,6 +1741,8 @@ namespace GitUI
             }
             return true;
         }
+
+        #region Blame, Pull request
 
         public bool StartBlameDialog(IWin32Window owner, string fileName)
         {
@@ -1767,7 +1808,7 @@ namespace GitUI
             WrapRepoHostingCall("View pull requests", gitHoster,
                                 gh =>
                                 {
-                                    var frm = new ViewPullRequestsForm(this, gitHoster) {ShowInTaskbar = true};
+                                    var frm = new ViewPullRequestsForm(this, gitHoster) { ShowInTaskbar = true };
                                     frm.Show();
                                 });
         }
@@ -1857,6 +1898,7 @@ namespace GitUI
             RunCommandBasedOnArgument(args, arguments);
         }
 
+        #endregion
 
         // Please update FormCommandlineHelp if you add or change commands
         private void RunCommandBasedOnArgument(string[] args, Dictionary<string, string> arguments)
@@ -2009,6 +2051,8 @@ namespace GitUI
             configFileGlobalSettings.Save();
         }
 
+        #region Run commands: Merge, Browse
+
         private void RunMergeCommand(Dictionary<string, string> arguments)
         {
             string branch = null;
@@ -2148,6 +2192,10 @@ namespace GitUI
             return candidates.Where(fileName => fileName.ToLower().Contains(nameAsLower)).ToList();
         }
 
+        #endregion
+
+        #region Commit, Push, Pull with arguments
+
         private void Commit(Dictionary<string, string> arguments)
         {
             StartCommitDialog(arguments.ContainsKey("quiet"));
@@ -2201,6 +2249,10 @@ namespace GitUI
             if (BrowseRepo != null)
                 BrowseRepo.GoToRef(refName, showNoRevisionMsg);
         }
+
+        #endregion
+
+        #region Remote
 
         public IGitRemoteCommand CreateRemoteCommand()
         {
@@ -2265,6 +2317,8 @@ namespace GitUI
                 return e.Handled;
             }
         }
+
+        #endregion
 
         public override bool Equals(object obj)
         {

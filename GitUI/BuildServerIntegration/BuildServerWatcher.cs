@@ -298,8 +298,8 @@ namespace GitUI.BuildServerIntegration
                             return null;
                         }
                         var buildServerAdapter = export.Value;
-                        buildServerAdapter.Initialize(this, Module.EffectiveSettings.BuildServer.TypeSettings);
-                        return buildServerAdapter;
+                        // buildServerAdapter.Initialize(this, Module.EffectiveSettings.BuildServer.TypeSettings);
+                        return null; //  buildServerAdapter;
                     }
                     catch (InvalidOperationException ex)
                     {

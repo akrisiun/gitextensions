@@ -1,15 +1,8 @@
 using GitCommands;
-using GitCommands.Settings;
 using GitUI.CommandsDialogs;
-using GitUI.CommandsDialogs.RepoHosting;
-using GitUI.CommandsDialogs.SettingsDialog;
 using GitUIPluginInterfaces;
-using GitUIPluginInterfaces.RepositoryHosts;
-using GitUIPluginInterfaces.Notifications;
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace GitUI
@@ -17,7 +10,12 @@ namespace GitUI
     public interface IFormCommit
     {
         void Show();
+        IFormBrowse Caller { get; set; }
         bool DoActionOnRepo(IWin32Window owner, bool requiresValidWorkingDir, bool changesRepo, Func<bool> action);
+
+        IFileStatusList Unstaged { get; }
+        IFileStatusList Staged { get; }
+        IFileStatusList CurrentFilesList { get; }
     }
 
     public interface IFileStatusList

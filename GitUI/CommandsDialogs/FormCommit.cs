@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -21,10 +20,11 @@ using GitUI.Script;
 using PatchApply;
 using ResourceManager;
 using Timer = System.Windows.Forms.Timer;
+using GitUIPluginInterfaces;
 
 namespace GitUI.CommandsDialogs
 {
-    public sealed partial class FormCommit : GitModuleForm //, IHotkeyable
+    public partial class FormCommit : GitModuleForm, IFormCommit
     {
         #region Translation
         private readonly TranslationString _amendCommit =
@@ -118,6 +118,14 @@ namespace GitUI.CommandsDialogs
         private readonly TranslationString _commitCommitterToolTip = new TranslationString("Click to change committer information.");
         #endregion
 
+        public IFileStatusList CurrentFilesList { get { return _currentFilesList; } }
+        IFileStatusList IFormCommit.Unstaged { get { return this.Unstaged; } }
+        IFileStatusList IFormCommit.Staged { get { return this.Staged; } }
+
+        public IFormBrowse Caller { get; set; }
+
+        #region Private
+
         private FileStatusList _currentFilesList;
         private bool _skipUpdate;
         private readonly TaskScheduler _taskScheduler;
@@ -147,6 +155,7 @@ namespace GitUI.CommandsDialogs
         public FormCommit(GitUICommands aCommands)
             : this(aCommands, CommitKind.Normal, null)
         { }
+        #endregion
 
         public FormCommit(GitUICommands aCommands, CommitKind commitKind, GitRevision editedCommit)
             : base(true, aCommands)
@@ -181,6 +190,7 @@ namespace GitUI.CommandsDialogs
 
             Unstaged.SetNoFilesText(_noUnstagedChanges.Text);
             Unstaged.FilterVisible = true;
+
             Staged.SetNoFilesText(_noStagedChanges.Text);
 
             Message.Enabled = _useFormCommitMessage;
@@ -211,14 +221,16 @@ namespace GitUI.CommandsDialogs
             toolStripMenuItem6.ShortcutKeyDisplayString = GetShortcutKeys((int)Commands.ShowHistory).ToShortcutKeyDisplayString();
             commitAuthorStatus.ToolTipText = _commitCommitterToolTip.Text;
             toolAuthor.Control.PreviewKeyDown += ToolAuthor_PreviewKeyDown;
+
         }
+
+        #region Load, Close
 
         void ToolAuthor_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.Alt)
                 e.IsInputKey = true;
         }
-
         private void FormCommit_Load(object sender, EventArgs e)
         {
             if (AppSettings.CommitDialogSplitter != -1)
@@ -229,13 +241,26 @@ namespace GitUI.CommandsDialogs
             Reset.Visible = AppSettings.ShowResetAllChanges;
             ResetUnStaged.Visible = AppSettings.ShowResetUnstagedChanges;
             CommitAndPush.Visible = AppSettings.ShowCommitAndPush;
+
+            Unstaged.FileStatusListView.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
             AdjustCommitButtonPanelHeight();
+        }
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+
+            Unstaged.Width = this.Staged.Width;
+            Unstaged.BackColor = Color.Red;
+            Unstaged.FilterVisible = true;
+            Unstaged.FileStatusListView.Width = Unstaged.Width;
         }
 
         private void AdjustCommitButtonPanelHeight()
         {
             splitRight.Panel2MinSize = Math.Max(splitRight.Panel2MinSize, flowCommitButtons.PreferredSize.Height);
             splitRight.SplitterDistance = Math.Min(splitRight.SplitterDistance, splitRight.Height - splitRight.Panel2MinSize);
+
         }
 
         private void FormCommitFormClosing(object sender, FormClosingEventArgs e)
@@ -256,6 +281,8 @@ namespace GitUI.CommandsDialogs
             _stageSelectedLinesToolStripMenuItem.Enabled = SelectedDiff.HasAnyPatches() || _currentItem != null && _currentItem.IsNew;
             _resetSelectedLinesToolStripMenuItem.Enabled = _stageSelectedLinesToolStripMenuItem.Enabled;
         }
+
+        #endregion
 
         #region Hotkey commands
 
@@ -411,6 +438,13 @@ namespace GitUI.CommandsDialogs
         }
 
         #endregion
+
+
+        public bool DoActionOnRepo(IWin32Window owner, bool requiresValidWorkingDir, bool changesRepo, Func<bool> action)
+        {
+            var cmd = UICommands;
+            return cmd.DoActionOnRepo(owner, requiresValidWorkingDir, changesRepo, action);
+        }
 
         public void ShowDialogWhenChanges()
         {

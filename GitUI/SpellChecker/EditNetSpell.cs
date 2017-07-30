@@ -913,11 +913,15 @@ namespace GitUI.SpellChecker
             var pos = TextBox.SelectionStart;
 
             _disableAutoCompleteTriggerOnTextUpdate = true;
-            Text = Text.Remove(pos - word.Length, word.Length);
-            Text = Text.Insert(pos - word.Length, completionWord.Word);
-            _disableAutoCompleteTriggerOnTextUpdate = false;
-            TextBox.SelectionStart = pos + completionWord.Word.Length - word.Length;
-            CloseAutoComplete();
+            try
+            {
+                Text = Text.Remove(pos - word.Length, word.Length);
+                Text = Text.Insert(pos - word.Length, completionWord.Word);
+                _disableAutoCompleteTriggerOnTextUpdate = false;
+                TextBox.SelectionStart = pos + completionWord.Word.Length - word.Length;
+                CloseAutoComplete();
+            }
+            catch { }  // non fatal errors posible
         }
 
         private void UpdateOrShowAutoComplete (bool calledByUser)

@@ -7,10 +7,13 @@ using GitCommands.Utils;
 using GitUI;
 using GitUI.CommandsDialogs.SettingsDialog;
 using GitUI.CommandsDialogs.SettingsDialog.Pages;
+using System.Reflection;
+using System.Diagnostics;
+using GitUI.CommandsDialogs;
 
 namespace GitExtensions
 {
-    internal static class Program
+    public static class Program
     {
         /// <summary>
         /// The main entry point for the application.
@@ -115,10 +118,16 @@ namespace GitExtensions
             FormSplash.HideSplash();
 
             if (EnvUtils.RunningOnWindows())
+            {
                 MouseWheelRedirector.Active = true;
+            }
+            else
+            {
+                FormBrowse.StartCommit =
+                    (path) => Program.StartCommit(path);
+            }
 
             GitUICommands uCommands = new GitUICommands(GetWorkingDir(args));
-
             if (args.Length <= 1)
             {
                 uCommands.StartBrowseDialog();
@@ -129,6 +138,27 @@ namespace GitExtensions
             }
 
             AppSettings.SaveSettings();
+        }
+
+        public static void StartCommit(string path)
+        {
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            var exe = baseDir + Assembly.GetEntryAssembly().ManifestModule.Name;
+
+            if (EnvUtils.RunningOnWindows())
+            {
+                var dir = path;
+                var mono = "mono";
+
+                var proc = new Process
+                {
+                    StartInfo =
+                    new ProcessStartInfo { Arguments = exe + " COMMIT", WorkingDirectory = path, FileName = mono }
+                };
+
+                if (File.Exists(exe))
+                    proc.Start();
+            }
         }
 
         private static string GetWorkingDir(string[] args)

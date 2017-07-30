@@ -59,7 +59,7 @@ namespace GitUI.CommandsDialogs
             this.ShowFirstParent = new System.Windows.Forms.ToolStripButton();
             this.toolStripRevisionFilterDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.MainSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.repoObjectsTree = Tree.Value; // interface for : new GitUI.UserControls.RepoObjectsTree();
+            this.repoObjectsTree = LazyTree.Value; // interface for : new GitUI.UserControls.RepoObjectsTree();
 
             this.RightSplitContainer = new System.Windows.Forms.SplitContainer();
             this.RevisionGrid = new GitUI.RevisionGrid();
