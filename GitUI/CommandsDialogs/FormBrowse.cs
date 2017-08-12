@@ -3691,5 +3691,20 @@ namespace GitUI.CommandsDialogs
 
         #endregion
 
+        public bool StartBrowseDialog(string args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void FormCommit_Shown(IFormCommit form)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool StartCommitDialog(GitUIPluginInterfaces.IWin32Window owner, bool showOnlyWhenChanges)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

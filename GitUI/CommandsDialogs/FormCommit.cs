@@ -119,8 +119,8 @@ namespace GitUI.CommandsDialogs
         #endregion
 
         public IFileStatusList CurrentFilesList { get { return _currentFilesList; } }
-        IFileStatusList IFormCommit.Unstaged { get { return this.Unstaged; } }
-        IFileStatusList IFormCommit.Staged { get { return this.Staged; } }
+        //IFileStatusList IFormCommit2.Unstaged { get { return this.Unstaged; } }
+        //IFileStatusList IFormCommit2.Staged { get { return this.Staged; } }
 
         public IFormBrowse Caller { get; set; }
 
@@ -440,6 +440,7 @@ namespace GitUI.CommandsDialogs
         #endregion
 
 
+
         public bool DoActionOnRepo(IWin32Window owner, bool requiresValidWorkingDir, bool changesRepo, Func<bool> action)
         {
             var cmd = UICommands;
@@ -450,6 +451,7 @@ namespace GitUI.CommandsDialogs
         {
             ShowDialogWhenChanges(null);
         }
+
 
         private void ComputeUnstagedFiles(Action<IList<GitItemStatus>> onComputed, bool DoAsync)
         {
@@ -615,6 +617,8 @@ namespace GitUI.CommandsDialogs
             ResetUnStaged.Enabled = Unstaged.AllItems.Any();
         }
 
+        #region Init
+
         private bool _initialized;
 
         private void Initialize(bool loadUnstaged)
@@ -682,6 +686,8 @@ namespace GitUI.CommandsDialogs
         private event Action OnStageAreaLoaded;
 
         private bool _loadUnstagedOutputFirstTime = true;
+
+        #endregion
 
         /// <summary>
         ///   Loads the unstaged output.
@@ -830,6 +836,8 @@ namespace GitUI.CommandsDialogs
             }
             return length;
         }
+
+        #region Clicks
 
         private void llShowPreview_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -2557,6 +2565,13 @@ namespace GitUI.CommandsDialogs
                     components.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        #endregion
+
+        public bool DoActionOnRepo(GitUIPluginInterfaces.IWin32Window owner, bool requiresValidWorkingDir, bool changesRepo, Func<bool> action)
+        {
+            throw new NotImplementedException();
         }
     }
 

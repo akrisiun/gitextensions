@@ -74,13 +74,13 @@ namespace GitCommands.GitExtLinks
                 LowerPriority.RemoveLinkDef(linkDef);
         }
 
-        public IEnumerable<GitExtLink> Parse(GitRevision revision)
-        {
-            return EffectiveLinkDefs.
-                Where(linkDef => linkDef.Enabled).
-                Select(linkDef => linkDef.Parse(revision)).
-                Unwrap();
-        }
+        //public IEnumerable<GitExtLink> Parse(GitRevision revision)
+        //{
+        //    return EffectiveLinkDefs.
+        //        Where(linkDef => linkDef.Enabled).
+        //        Select(linkDef => linkDef.Parse(revision)).
+        //        Unwrap();
+        //}
 
         public void LoadFromSettings()
         {

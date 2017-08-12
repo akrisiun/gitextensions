@@ -4,6 +4,8 @@ using GitUIPluginInterfaces;
 
 namespace GitUI.CommandsDialogs.BrowseDialog
 {
+    using IGitItem = GitUIPluginInterfaces.IGitItem;
+
     public class GitFileTreeComparer : IComparer<IGitItem>
     {
         public int Compare(IGitItem x, IGitItem y)

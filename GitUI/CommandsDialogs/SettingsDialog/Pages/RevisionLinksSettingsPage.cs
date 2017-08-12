@@ -55,13 +55,14 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
         private void ReloadCategories()
         {
             _NO_TRANSLATE_Categories.DataSource = null;
-            if (parser != null)
-            {
-                _NO_TRANSLATE_Categories.DisplayMember = "Name";
-                _NO_TRANSLATE_Categories.DataSource = parser.EffectiveLinkDefs;
-            }
+            //if (parser != null)
+            //{
+            //    _NO_TRANSLATE_Categories.DisplayMember = "Name";
+            //    _NO_TRANSLATE_Categories.DataSource = parser.EffectiveLinkDefs;
+            //}
         }
 
+        private object  SelectedCategory { get => null; }
         //private GitExtLinkDef SelectedCategory
         //{
         //    get
@@ -110,27 +111,31 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
 
         private void Add_Click(object sender, EventArgs e)
         {
+            /* TODO
             //GitExtLinkDef newCategory = new GitExtLinkDef();
             newCategory.Name = "<new>";
            // newCategory.SearchInParts.Add(GitExtLinkDef.RevisionPart.Message);
-         //   newCategory.RemoteSearchInParts.Add(GitExtLinkDef.RemotePart.URL);
+            //   newCategory.RemoteSearchInParts.Add(GitExtLinkDef.RemotePart.URL);
             newCategory.Enabled = true;
             newCategory.UseRemotesPattern = "upstream|origin";
             newCategory.UseOnlyFirstRemote = true;
-           // parser.AddLinkDef(newCategory);
+            // parser.AddLinkDef(newCategory);
+           
             ReloadCategories();
             _NO_TRANSLATE_Categories.SelectedItem = newCategory;
+            */
             CategoryChanged();           
         }
 
         private void Remove_Click(object sender, EventArgs e)
         {
-            if (SelectedCategory == null)
-                return;
+            //if (SelectedCategory == null)
+            //    return;
 
             int idx = _NO_TRANSLATE_Categories.SelectedIndex;
 
-            parser.RemoveLinkDef(SelectedCategory);
+            // TODO
+            // parser.RemoveLinkDef(SelectedCategory);
             ReloadCategories();
 
             if (idx >= 0)
@@ -146,7 +151,8 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
             if (SelectedCategory != null)
             {
                 var selected = SelectedCategory;
-                selected.Name = _NO_TRANSLATE_Name.Text;
+                // TODO
+                // selected.Name = _NO_TRANSLATE_Name.Text;
                 ReloadCategories();
                 _NO_TRANSLATE_Categories.SelectedItem = selected;
             }
@@ -156,7 +162,8 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
         {
             if (SelectedCategory != null)
             {
-                SelectedCategory.Enabled = EnabledChx.Checked;
+                // TODO
+                // SelectedCategory.Enabled = EnabledChx.Checked;
             }
         }
 
@@ -167,11 +174,13 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
             {
                 if (MessageChx.Checked)
                 {
-                    SelectedCategory.SearchInParts.Add(GitExtLinkDef.RevisionPart.Message);
+                    // TODO
+                    // SelectedCategory.SearchInParts.Add(GitExtLinkDef.RevisionPart.Message);
                 }
                 else
                 {
-                    SelectedCategory.SearchInParts.Remove(GitExtLinkDef.RevisionPart.Message);
+                    // TODO
+                    // SelectedCategory.SearchInParts.Remove(GitExtLinkDef.RevisionPart.Message);
                 }
             }
         }
@@ -180,7 +189,8 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
         {
             if (SelectedCategory != null)
             {
-                SelectedCategory.SearchPattern = _NO_TRANSLATE_SearchPatternEdit.Text.Trim();
+                // TODO
+                // SelectedCategory.SearchPattern = _NO_TRANSLATE_SearchPatternEdit.Text.Trim();
             }
         }
 
@@ -188,7 +198,8 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
         {
             if (SelectedCategory != null)
             {
-                SelectedCategory.NestedSearchPattern = _NO_TRANSLATE_NestedPatternEdit.Text.Trim();
+                // TODO
+                // SelectedCategory.NestedSearchPattern = _NO_TRANSLATE_NestedPatternEdit.Text.Trim();
             }
         }
 
@@ -198,11 +209,13 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
             {
                 if (LocalBranchChx.Checked)
                 {
-                    SelectedCategory.SearchInParts.Add(GitExtLinkDef.RevisionPart.LocalBranches);
+                    // TODO
+                    // SelectedCategory.SearchInParts.Add(GitExtLinkDef.RevisionPart.LocalBranches);
                 }
                 else
                 {
-                    SelectedCategory.SearchInParts.Remove(GitExtLinkDef.RevisionPart.LocalBranches);
+                    // TODO
+                    // SelectedCategory.SearchInParts.Remove(GitExtLinkDef.RevisionPart.LocalBranches);
                 }
             }
         }
@@ -213,11 +226,13 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
             {
                 if (RemoteBranchChx.Checked)
                 {
-                    SelectedCategory.SearchInParts.Add(GitExtLinkDef.RevisionPart.RemoteBranches);
+                    // TODO
+                    // SelectedCategory.SearchInParts.Add(GitExtLinkDef.RevisionPart.RemoteBranches);
                 }
                 else
                 {
-                    SelectedCategory.SearchInParts.Remove(GitExtLinkDef.RevisionPart.RemoteBranches);
+                    // TODO
+                    // SelectedCategory.SearchInParts.Remove(GitExtLinkDef.RevisionPart.RemoteBranches);
                 }
             }
         }
@@ -226,7 +241,8 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
         {
             if (SelectedCategory != null)
             {
-                SelectedCategory.RemoteSearchPattern = _NO_TRANSLATE_RemotePatern.Text.Trim();
+                // TODO
+                // SelectedCategory.RemoteSearchPattern = _NO_TRANSLATE_RemotePatern.Text.Trim();
             }
         }
 
@@ -236,11 +252,13 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
             {
                 if (chxURL.Checked)
                 {
-                    SelectedCategory.RemoteSearchInParts.Add(GitExtLinkDef.RemotePart.URL);
+                    // TODO
+                    // SelectedCategory.RemoteSearchInParts.Add(GitExtLinkDef.RemotePart.URL);
                 }
                 else
                 {
-                    SelectedCategory.RemoteSearchInParts.Remove(GitExtLinkDef.RemotePart.URL);
+                    // TODO
+                    // SelectedCategory.RemoteSearchInParts.Remove(GitExtLinkDef.RemotePart.URL);
                 }
             }
         }
@@ -251,11 +269,13 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
             {
                 if (chxPushURL.Checked)
                 {
-                    SelectedCategory.RemoteSearchInParts.Add(GitExtLinkDef.RemotePart.PushURL);
+                    // TODO
+                    // SelectedCategory.RemoteSearchInParts.Add(GitExtLinkDef.RemotePart.PushURL);
                 }
                 else
                 {
-                    SelectedCategory.RemoteSearchInParts.Remove(GitExtLinkDef.RemotePart.PushURL);
+                    // TODO
+                    //  SelectedCategory.RemoteSearchInParts.Remove(GitExtLinkDef.RemotePart.PushURL);
                 }
             }
         }
@@ -264,7 +284,8 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
         {
             if (SelectedCategory != null)
             {
-                SelectedCategory.UseRemotesPattern = _NO_TRANSLATE_UseRemotes.Text.Trim();
+                // TODO
+                // SelectedCategory.UseRemotesPattern = _NO_TRANSLATE_UseRemotes.Text.Trim();
             }
         }
 
@@ -272,7 +293,8 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
         {
             if (SelectedCategory != null)
             {
-                SelectedCategory.UseOnlyFirstRemote = chkOnlyFirstRemote.Checked;
+                // TODO
+                // SelectedCategory.UseOnlyFirstRemote = chkOnlyFirstRemote.Checked;
             }
         }
     }
