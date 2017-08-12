@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.Linq;
 using GitCommands;
 using GitCommands.Config;
@@ -76,27 +77,27 @@ namespace GitUI.Objects
         // TODO: moved verbatim from FormRemotes.cs, perhaps needs refactoring
         public void ConfigureRemotes(string remoteName)
         {
-            var localConfig = _module.LocalConfigFile;
+            //var localConfig = _module.LocalConfigFile;
 
-            foreach (var remoteHead in _module.GetRefs(true, true))
-            {
-                foreach (var localHead in _module.GetRefs(true, true))
-                {
-                    if (!remoteHead.IsRemote ||
-                        localHead.IsRemote ||
-                        !string.IsNullOrEmpty(localHead.GetTrackingRemote(localConfig)) ||
-                        remoteHead.IsTag ||
-                        localHead.IsTag ||
-                        !remoteHead.Name.ToLower().Contains(localHead.Name.ToLower()) ||
-                        !remoteHead.Name.ToLower().Contains(remoteName.ToLower()))
-                    {
-                        continue;
-                    }
+            //foreach (var remoteHead in _module.GetRefs(true, true))
+            //{
+            //    foreach (var localHead in _module.GetRefs(true, true))
+            //    {
+            //        if (!remoteHead.IsRemote ||
+            //            localHead.IsRemote ||
+            //            !string.IsNullOrEmpty(localHead.GetTrackingRemote(localConfig)) ||
+            //            remoteHead.IsTag ||
+            //            localHead.IsTag ||
+            //            !remoteHead.Name.ToLower().Contains(localHead.Name.ToLower()) ||
+            //            !remoteHead.Name.ToLower().Contains(remoteName.ToLower()))
+            //        {
+            //            continue;
+            //        }
 
-                    localHead.TrackingRemote = remoteName;
-                    localHead.MergeWith = localHead.Name;
-                }
-            }
+            //        localHead.TrackingRemote = remoteName;
+            //        localHead.MergeWith = localHead.Name;
+            //    }
+            //}
         }
 
         /// <summary>
@@ -144,16 +145,16 @@ namespace GitUI.Objects
             {
                 Remotes.Clear();
 
-                var gitRemotes = _module.GetRemotes().Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+                IEnumerable<GitRemote> gitRemotes = null; // _module.GetRemotes().Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
                 if (gitRemotes.Any())
                 {
                     var remotes = gitRemotes.Select(remote => new GitRemote
                     {
-                        Name = remote,
+                        // Name = remote,
                         Url = _module.GetSetting(string.Format(SettingKeyString.RemoteUrl, remote)),
-                        Push = _module.GetSettings(string.Format(SettingKeyString.RemotePush, remote)).ToList(),
                         PushUrl = _module.GetSetting(string.Format(SettingKeyString.RemotePushUrl, remote)),
-                        PuttySshKey = _module.GetSetting(string.Format(SettingKeyString.RemotePuttySshKey, remote)),
+                        //Push = _module.GetSettings(string.Format(SettingKeyString.RemotePush, remote)).ToList(),
+                        //PuttySshKey = _module.GetSetting(string.Format(SettingKeyString.RemotePuttySshKey, remote)),
                     }).ToList();
 
                     Remotes.AddAll(remotes.OrderBy(x => x.Name));
@@ -172,7 +173,7 @@ namespace GitUI.Objects
             {
                 throw new ArgumentNullException("remote");
             }
-            return _module.RemoveRemote(remote.Name);
+            return null; // _module.RemoveRemote(remote.Name);
         }
 
         /// <summary>
@@ -207,7 +208,7 @@ namespace GitUI.Objects
             bool creatingNew = remote == null;
             if (creatingNew)
             {
-                output = _module.AddRemote(remoteName, remoteUrl);
+                //output = _module.AddRemote(remoteName, remoteUrl);
                 updateRemoteRequired = true;
             }
             else
@@ -215,7 +216,7 @@ namespace GitUI.Objects
                 if (!string.Equals(remote.Name, remoteName, StringComparison.OrdinalIgnoreCase))
                 {
                     // the name of the remote changed - perform rename
-                    output = _module.RenameRemote(remote.Name, remoteName);
+                    //output = _module.RenameRemote(remote.Name, remoteName);
                 }
 
                 if (!string.Equals(remote.Url, remoteUrl, StringComparison.OrdinalIgnoreCase))
@@ -227,7 +228,7 @@ namespace GitUI.Objects
 
             UpdateSettings(string.Format(SettingKeyString.RemoteUrl, remoteName), remoteUrl);
             UpdateSettings(string.Format(SettingKeyString.RemotePushUrl, remoteName), remotePushUrl);
-            UpdateSettings(string.Format(SettingKeyString.RemotePuttySshKey, remoteName), remotePuttySshKey);
+            //UpdateSettings(string.Format(SettingKeyString.RemotePuttySshKey, remoteName), remotePuttySshKey);
 
             return new GitRemoteSaveResult(output, updateRemoteRequired);
         }
@@ -235,14 +236,14 @@ namespace GitUI.Objects
 
         private void UpdateSettings(string settingName, string value)
         {
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                _module.SetSetting(settingName, value);
-            }
-            else
-            {
-                _module.UnsetSetting(settingName);
-            }
+            //if (!string.IsNullOrWhiteSpace(value))
+            //{
+            //    _module.SetSetting(settingName, value);
+            //}
+            //else
+            //{
+            //    _module.UnsetSetting(settingName);
+            //}
         }
     }
 }

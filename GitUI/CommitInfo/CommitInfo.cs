@@ -503,14 +503,14 @@ namespace GitUI.CommitInfo
 
         private string GetLinksForRevision(GitRevision revision)
         {
-            GitExtLinksParser parser = new GitExtLinksParser(Module.EffectiveSettings);
-            var links = parser.Parse(revision).Distinct();
             var linksString = string.Empty;
+            //var parser = new GitExtLinksParser(Module.EffectiveSettings);
+            //var links = parser.Parse(revision).Distinct();
 
-            foreach (var link in links)
-            {
-                linksString = linksString.Combine(", ", _linkFactory.CreateLink(link.Caption, link.URI));
-            }
+            //foreach (var link in links)
+            //{
+            //    linksString = linksString.Combine(", ", _linkFactory.CreateLink(link.Caption, link.URI));
+            //}
 
             if (linksString.IsNullOrEmpty())
                 return string.Empty;
