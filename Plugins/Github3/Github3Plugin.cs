@@ -100,11 +100,11 @@ namespace Github3
             if (string.IsNullOrEmpty(GithubLoginInfo.OAuthToken))
             {
                 using (var frm = new OAuth())
-                    frm.ShowDialog(gitUiCommands.OwnerForm);
+                    frm.ShowDialog(gitUiCommands.OwnerForm as Form);
             }
             else
             {
-                MessageBox.Show(gitUiCommands.OwnerForm, "You already have an OAuth token. To get a new one, delete your old one in Plugins > Settings first.");
+                MessageBox.Show(gitUiCommands.OwnerForm as Form, "You already have an OAuth token. To get a new one, delete your old one in Plugins > Settings first.");
             }
             return false;
         }

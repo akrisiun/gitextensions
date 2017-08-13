@@ -82,3 +82,5 @@ vendor/bin/
 *.pfx
 .vs*/
 *.txt
+
+*.log
