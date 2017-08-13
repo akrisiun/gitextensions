@@ -19,10 +19,10 @@ namespace GitUIPluginInterfaces
 
         IGitUICommands UICommands { get; } // -> GitModuleForm
 
-        // IFormBrowse.
-        IRevisionGrid RevisionsGrid { get; }
-        Stack<string> LastSelectedNodes { get; }
-        void RevisionGrid_ContextMenuOpening(CancelEventArgs e);
+        //IFormBrowse.
+        //IRevisionGrid RevisionsGrid { get; }
+        //Stack<string> LastSelectedNodes { get; }
+        //void RevisionGrid_ContextMenuOpening(CancelEventArgs e);
     }
 
     public interface ITree
