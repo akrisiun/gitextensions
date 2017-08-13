@@ -27,11 +27,11 @@ namespace GitCommands
 
         public IGitModule Module { get; set; }
 
-        public GitRevision(GitModule aModule, string guid)
+        public GitRevision(IGitModule aModule, string guid)
         {
             Guid = guid;
             Subject = "";
-            _module = aModule;
+            _module = aModule as GitModule;
         }
 
         public List<GitRef> Refs { get { return _refs; } }

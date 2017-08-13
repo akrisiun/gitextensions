@@ -1032,10 +1032,53 @@ namespace GitCommands
             }
         }
 
+        public Process RunConsole(string bashCommand = null, params string[] parm)
+        {
+            if (EnvUtils.RunningOnUnix())
+            {
+                return RunBash(bashCommand, "bash");
+            }
 
+            // Windows
+            return RunExternalCmdDetachedShowConsole("cmd.exe", @"/K echo cmd.exe command error!");
+        }
+
+        public Process RunBashExe(string bashCommand = null, params string[] parm)
+        {
+            if (EnvUtils.RunningOnUnix())
+            {
+                return RunBash(bashCommand, "bash");
+            }
+
+            // Windows
+            return RunExternalCmdDetachedShowConsole(@"C:\Windows\System32\bash.exe", @"/K echo System32\bash.exe command error!");
+        }
+
+        public Process RunConsolePS(string bashCommand = null, params string[] parm)
+        {
+            if (EnvUtils.RunningOnUnix())
+            {
+                return RunBash(bashCommand, "powershell");
+            }
+
+            // Windows: @powershell
+            return RunExternalCmdDetachedShowConsole("powershell", @"/K echo cmd.exe command error!");
+        }
+
+        // TODO:
+        public Process RunConsoleConEmu(string bashCommand = null, params string[] parm)
+        {
+            if (EnvUtils.RunningOnUnix())
+            {
+                return RunBash(bashCommand);
+            }
+
+            // Windows
+            return RunExternalCmdDetachedShowConsole("conemu.exe", @"/K echo conemu.exe not found! :( Please add a folder containing 'conemu.exe' to your PATH...");
+        }
 
         /// <summary>Runs a bash or shell command.</summary>
-        public Process RunBash(string bashCommand = null)
+        public Process RunBash(string bashCommand = null, string term = null)
         {
             if (EnvUtils.RunningOnUnix())
             {
@@ -1048,7 +1091,7 @@ namespace GitCommands
                 };
 
                 string args = "";
-                string cmd = termEmuCmds.FirstOrDefault(termEmuCmd => !string.IsNullOrEmpty(RunCmd("which", termEmuCmd)));
+                string cmd = term ?? termEmuCmds.FirstOrDefault(termEmuCmd => !string.IsNullOrEmpty(RunCmd("which", termEmuCmd)));
 
                 if (string.IsNullOrEmpty(cmd))
                 {
