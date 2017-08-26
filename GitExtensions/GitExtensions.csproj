@@ -148,18 +148,34 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Externals\Git.hub\Git.hub\Git.hub.csproj">
+      <Project>{f50b1dbf-1c9f-4437-87ec-7aba805cc446}</Project>
+      <Name>Git.hub</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Externals\NBugLib.csproj">
       <Project>{14e7137b-7f0e-44d2-af0b-cdaec9bf9a6d}</Project>
       <Name>NBugLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GitExtUtils\GitExtUtils.csproj">
+      <Project>{0f1f1168-a4b2-4fa2-b17b-735140d17f39}</Project>
+      <Name>GitExtUtils</Name>
     </ProjectReference>
     <ProjectReference Include="..\GitUI\GitUI.csproj">
       <Project>{CF5B22E7-230F-4E50-BE88-C4F7023CED2C}</Project>
       <Name>GitUI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Gravatar\Gravatar.csproj">
+      <Project>{4041b976-50d0-4c6e-abaf-7e67458a1264}</Project>
+      <Name>Gravatar</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Plugins\BackgroundFetch\BackgroundFetch.csproj">
       <Project>{F261BCD1-F5F7-4664-A230-E52032E6E9FD}</Project>
       <Name>BackgroundFetch</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Github3\Github3.csproj">
+      <Project>{b1b0c273-ab3f-48bf-92c7-de0be90d5870}</Project>
+      <Name>Github3</Name>
     </ProjectReference>
     <ProjectReference Include="..\Plugins\GitUIPluginInterfaces\GitUIPluginInterfaces.csproj">
       <Project>{27559302-F35E-4B62-A6EC-11FF21A5FA6F}</Project>
