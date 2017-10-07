@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26711.1
+VisualStudioVersion = 15.0.26823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{3D5CA0E0-EF51-4488-A8B7-86CC330D7AD8}"
 EndProject
@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitExtensions", "GitExtensi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitUI", "GitUI\GitUI.csproj", "{A19AF7D5-2BD9-470D-A4D0-0519C2694258}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitCommands", "GitCommands\GitCommands.csproj", "{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitCommandsLib", "GitCommands\GitCommandsLib.csproj", "{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitUIPluginInterfaces", "Plugins\GitUIPluginInterfaces\GitUIPluginInterfaces.csproj", "{27559302-F35E-4B62-A6EC-11FF21A5FA6F}"
 EndProject
@@ -35,11 +35,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildServerIntegration", "B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Externals", "Externals", "{0E859634-B3DF-46AC-A73C-D49734F19D6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Git.hub", "Externals\Git.hub\Git.hub\Git.hub.csproj", "{F50B1DBF-1C9F-4437-87EC-7ABA805CC446}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Git.hub", "Externals\Git.hub\Git.hub\Git.hub.csproj", "{F50B1DBF-1C9F-4437-87EC-7ABA805CC446}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitExtUtils", "GitExtUtils\GitExtUtils.csproj", "{0F1F1168-A4B2-4FA2-B17B-735140D17F39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBugLib", "Externals\NBugLib.csproj", "{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBugLib", "Externals\NBugLib.csproj", "{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitExtUtilsLib", "GitExtUtils\GitExtUtilsLib.csproj", "{B40620DE-005A-49AE-9A0E-9504813D2157}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitUIPluginInterfacesLib", "Plugins\GitUIPluginInterfaces\GitUIPluginInterfacesLib.csproj", "{569AA141-87A2-4B9C-B4B0-5AF26EC264D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,14 +83,14 @@ Global
 		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.ReleaseTC|Any CPU.ActiveCfg = Release|Any CPU
-		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.ReleaseTC|Any CPU.Build.0 = Release|Any CPU
-		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.ReleaseTC|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.ReleaseTC|Mixed Platforms.Build.0 = Release|Any CPU
+		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.ReleaseTC|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.ReleaseTC|Any CPU.Build.0 = Debug|Any CPU
+		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.ReleaseTC|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}.ReleaseTC|Mixed Platforms.Build.0 = Debug|Any CPU
 		{27559302-F35E-4B62-A6EC-11FF21A5FA6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{27559302-F35E-4B62-A6EC-11FF21A5FA6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27559302-F35E-4B62-A6EC-11FF21A5FA6F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -195,6 +199,30 @@ Global
 		{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}.ReleaseTC|Any CPU.Build.0 = Release|Any CPU
 		{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}.ReleaseTC|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}.ReleaseTC|Mixed Platforms.Build.0 = Release|Any CPU
+		{B40620DE-005A-49AE-9A0E-9504813D2157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B40620DE-005A-49AE-9A0E-9504813D2157}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B40620DE-005A-49AE-9A0E-9504813D2157}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B40620DE-005A-49AE-9A0E-9504813D2157}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B40620DE-005A-49AE-9A0E-9504813D2157}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B40620DE-005A-49AE-9A0E-9504813D2157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B40620DE-005A-49AE-9A0E-9504813D2157}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B40620DE-005A-49AE-9A0E-9504813D2157}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B40620DE-005A-49AE-9A0E-9504813D2157}.ReleaseTC|Any CPU.ActiveCfg = Release|Any CPU
+		{B40620DE-005A-49AE-9A0E-9504813D2157}.ReleaseTC|Any CPU.Build.0 = Release|Any CPU
+		{B40620DE-005A-49AE-9A0E-9504813D2157}.ReleaseTC|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B40620DE-005A-49AE-9A0E-9504813D2157}.ReleaseTC|Mixed Platforms.Build.0 = Release|Any CPU
+		{569AA141-87A2-4B9C-B4B0-5AF26EC264D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{569AA141-87A2-4B9C-B4B0-5AF26EC264D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{569AA141-87A2-4B9C-B4B0-5AF26EC264D2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{569AA141-87A2-4B9C-B4B0-5AF26EC264D2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{569AA141-87A2-4B9C-B4B0-5AF26EC264D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{569AA141-87A2-4B9C-B4B0-5AF26EC264D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{569AA141-87A2-4B9C-B4B0-5AF26EC264D2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{569AA141-87A2-4B9C-B4B0-5AF26EC264D2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{569AA141-87A2-4B9C-B4B0-5AF26EC264D2}.ReleaseTC|Any CPU.ActiveCfg = Release|Any CPU
+		{569AA141-87A2-4B9C-B4B0-5AF26EC264D2}.ReleaseTC|Any CPU.Build.0 = Release|Any CPU
+		{569AA141-87A2-4B9C-B4B0-5AF26EC264D2}.ReleaseTC|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{569AA141-87A2-4B9C-B4B0-5AF26EC264D2}.ReleaseTC|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -206,6 +234,8 @@ Global
 		{F1B97F5D-CA42-4280-94A1-CE412BEA20DF} = {3D5CA0E0-EF51-4488-A8B7-86CC330D7AD8}
 		{F50B1DBF-1C9F-4437-87EC-7ABA805CC446} = {0E859634-B3DF-46AC-A73C-D49734F19D6A}
 		{62CED1D5-F603-40DE-8BF5-3E49D3A392F4} = {0E859634-B3DF-46AC-A73C-D49734F19D6A}
+		{B40620DE-005A-49AE-9A0E-9504813D2157} = {0E859634-B3DF-46AC-A73C-D49734F19D6A}
+		{569AA141-87A2-4B9C-B4B0-5AF26EC264D2} = {0E859634-B3DF-46AC-A73C-D49734F19D6A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9AAC93BE-03EA-4161-A934-C4CDCCB8760C}

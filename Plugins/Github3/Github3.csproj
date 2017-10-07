@@ -68,7 +68,7 @@
       <Project>{f50b1dbf-1c9f-4437-87ec-7aba805cc446}</Project>
       <Name>Git.hub</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GitCommands\GitCommands.csproj">
+    <ProjectReference Include="..\..\GitCommands\GitCommandsLib.csproj">
       <Project>{bd6aa2a2-997d-4aff-acc7-b64f6e51d181}</Project>
       <Name>GitCommands</Name>
     </ProjectReference>

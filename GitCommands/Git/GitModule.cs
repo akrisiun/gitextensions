@@ -85,6 +85,7 @@ namespace GitCommands
     /// <summary>Provides manipulation with git module.
     /// <remarks>Several instances may be created for submodules.</remarks></summary>
     [DebuggerDisplay("GitModule ( {_workingDir} )")]
+    [CLSCompliant(true)]
     public sealed class GitModule : IGitModule
     {
         /// <summary>'/' : ref path separator</summary>
@@ -488,7 +489,8 @@ namespace GitCommands
                 //    i += subsubmodules.Count;
                 //}
             }
-            return null; // submodules;
+            return // submodules ?? 
+                   new List<string>(); 
         }
 
         public static string FindGitWorkingDir(string startDir)

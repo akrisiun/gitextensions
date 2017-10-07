@@ -45,7 +45,7 @@
     <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;TRANS;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -121,7 +121,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GitCommands\GitCommands.csproj">
+    <ProjectReference Include="..\GitCommands\GitCommandsLib.csproj">
       <Project>{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}</Project>
       <Name>GitCommands</Name>
     </ProjectReference>

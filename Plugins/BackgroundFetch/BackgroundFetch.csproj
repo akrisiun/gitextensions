@@ -71,7 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\GitCommands\GitCommands.csproj">
+    <ProjectReference Include="..\..\GitCommands\GitCommandsLib.csproj">
       <Project>{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}</Project>
       <Name>GitCommands</Name>
       <Private>False</Private>

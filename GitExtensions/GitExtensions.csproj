@@ -156,6 +156,10 @@
       <Project>{14e7137b-7f0e-44d2-af0b-cdaec9bf9a6d}</Project>
       <Name>NBugLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GitCommands\GitCommandsLib.csproj">
+      <Project>{bd6aa2a2-997d-4aff-acc7-b64f6e51d181}</Project>
+      <Name>GitCommandsLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GitExtUtils\GitExtUtils.csproj">
       <Project>{0f1f1168-a4b2-4fa2-b17b-735140d17f39}</Project>
       <Name>GitExtUtils</Name>
@@ -177,13 +181,9 @@
       <Project>{b1b0c273-ab3f-48bf-92c7-de0be90d5870}</Project>
       <Name>Github3</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Plugins\GitUIPluginInterfaces\GitUIPluginInterfaces.csproj">
-      <Project>{27559302-F35E-4B62-A6EC-11FF21A5FA6F}</Project>
-      <Name>GitUIPluginInterfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GitCommands\GitCommands.csproj">
-      <Project>{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}</Project>
-      <Name>GitCommands</Name>
+    <ProjectReference Include="..\Plugins\GitUIPluginInterfaces\GitUIPluginInterfacesLib.csproj">
+      <Project>{569aa141-87a2-4b9c-b4b0-5af26ec264d2}</Project>
+      <Name>GitUIPluginInterfacesLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ResourceManager\ResourceManager.csproj">
       <Project>{D3440FD7-AFC5-4351-8741-6CDBF15CE944}</Project>
