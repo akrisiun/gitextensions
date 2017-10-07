@@ -4,6 +4,7 @@ using GitUIPluginInterfaces;
 namespace GitUI
 {
     // using IWin32Window = GitUIPluginInterfaces.IWin32Window;
+    // GitUI.IWin32Window
     public interface IWin32Window : GitUIPluginInterfaces.IWin32Window, System.Windows.Forms.IWin32Window
     { }
 

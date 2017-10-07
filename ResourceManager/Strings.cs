@@ -1,21 +1,35 @@
 using System;
-using GitCommands;
 using SmartFormat;
+using GitCommands;
 
 namespace ResourceManager
 {
-#if !TRANS
-    public class StringsResource : Strings      // -> GitCommands.Strings
+    public class TranslationString
     {
+        public string Text { get; set; }
+
+        public TranslationString(string t)
+        {
+            Text = t;
+        }
+             
     }
-#else
+
+//#if !TRANS
+//    public class StringsResource : Strings      // -> GitCommands.Strings
+//    {
+//    }
+//#endif
+
+#if !TRANS2
     /// <summary>Contains common string literals which are translated.</summary>
     public class Strings : Translate
     {
         // public only because of FormTranslate
         public Strings()
         {
-            Translator.Translate(this, AppSettings.CurrentTranslation);
+            // just English
+            // Translator.Translate(this, AppSettings.CurrentTranslation);
         }
 
         private static Lazy<Strings> _instance = new Lazy<Strings>();
@@ -174,5 +188,6 @@ namespace ResourceManager
         private readonly TranslationString _monthsAgo  = new TranslationString("{0} {1:month|months} ago");
         private readonly TranslationString _yearsAgo   = new TranslationString("{0} {1:year|years} ago");
     }
+
 #endif
 }

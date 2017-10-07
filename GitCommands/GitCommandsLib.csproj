@@ -167,10 +167,7 @@
   </ItemGroup>
    
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\PriceNet\GitextensionsTree\src\GitUIPluginInterfaces\GitUIPluginInterfacesLib.csproj" />
-    <ProjectReference Include="..\GitExtUtils\GitExtUtilsLib.csproj">
-      <Project>{0f1f1168-a4b2-4fa2-b17b-735140d17f39}</Project>
-      <Name>GitExtUtilsLib</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\GitExtUtils\GitExtUtilsLib.csproj" />
+    <ProjectReference Include="..\Plugins\GitUIPluginInterfaces\GitUIPluginInterfacesLib.csproj" />
   </ItemGroup>
 </Project>

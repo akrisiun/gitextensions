@@ -1,13 +1,14 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using GitCommands;
 using GitUIPluginInterfaces;
+using System.Windows.Forms;
 
 namespace GitUI
 {
     /// <summary>Base class for a <see cref="Form"/> requiring
     /// <see cref="GitModule"/> and <see cref="GitUICommands"/>.</summary>
-    public class GitModuleForm : GitExtensionsForm, IGitUICommandsSource
+    public class GitModuleForm : GitExtensionsForm , IGitUICommandsSource
     {
         private GitUICommands _uiCommands;
 
@@ -69,12 +70,26 @@ namespace GitUI
         {
             if (ExecuteScriptCommand(command))
                 return true;
+
             return base.ExecuteCommand(command);
         }
 
         protected bool ExecuteScriptCommand(int command)
         {
             return Script.ScriptRunner.ExecuteScriptCommand(this, Module, command);
+        }
+    }
+
+    public class GitExtensionsForm2 : Form, GitUI.IWin32Window // GitExtensionsForm
+    {
+        public GitExtensionsForm2(object parent = null)
+        {
+
+        }
+
+        protected virtual bool ExecuteCommand(int command)
+        {
+            return false;
         }
     }
 }
