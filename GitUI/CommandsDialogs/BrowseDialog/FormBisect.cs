@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using GitCommands;
 using GitCommands.Git;
+using GitUIPluginInterfaces;
 using ResourceManager;
 
 namespace GitUI.CommandsDialogs.BrowseDialog
@@ -28,7 +29,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
         }
 
         public FormBisect(IRevisionGrid revisionGrid)
-            : this(revisionGrid.UICommands)
+            : this(revisionGrid.ICommands as GitUICommands)
         {
             _revisionGrid = revisionGrid;
             UpdateButtonsState();
@@ -49,7 +50,8 @@ namespace GitUI.CommandsDialogs.BrowseDialog
             FormProcess.ShowDialog(this, GitCommandHelpers.StartBisectCmd());
             UpdateButtonsState();
 
-            IList<GitRevision> revisions = _revisionGrid.GetSelectedRevisions();
+            // GitRevision -> IGitItem
+            IList<IGitItem> revisions = _revisionGrid.GetSelectedRevisions();
             if (revisions.Count > 1)
             {
                 if (MessageBox.Show(this, _bisectStart.Text, Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)

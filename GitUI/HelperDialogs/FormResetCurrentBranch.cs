@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using GitCommands;
+using GitUIPluginInterfaces;
 using ResourceManager;
 
 namespace GitUI.HelperDialogs
@@ -11,10 +12,10 @@ namespace GitUI.HelperDialogs
         readonly TranslationString resetHardWarning = new TranslationString("You are about to discard ALL local changes, are you sure?");
         readonly TranslationString resetCaption = new TranslationString("Reset branch");
 
-        public FormResetCurrentBranch(GitUICommands aCommands, GitRevision Revision, bool isSoftReset)
+        public FormResetCurrentBranch(GitUICommands aCommands, IGitItem Revision, bool isSoftReset)
             : base(aCommands)
         {
-            this.Revision = Revision;
+            this.Revision = Revision as GitRevision;
 
             InitializeComponent(); Translate();
             this.checkNoAsk.Checked = false;    // default

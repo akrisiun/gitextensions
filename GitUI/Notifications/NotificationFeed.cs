@@ -36,9 +36,9 @@ namespace GitUI.Notifications
             {
                 subscription.Dispose();
             }
-            if (iGitUICommandsSource.UICommands != null)
+            if (iGitUICommandsSource.ICommands != null)
             {
-                subscription = iGitUICommandsSource.UICommands.Notifications.Notifications.Subscribe(OnNewNotification);
+                subscription = iGitUICommandsSource.ICommands.Notifications.Notifications.Subscribe(OnNewNotification);
             }
         }
 

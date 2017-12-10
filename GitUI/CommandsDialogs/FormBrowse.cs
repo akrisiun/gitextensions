@@ -1138,7 +1138,7 @@ namespace GitUI.CommandsDialogs
 
             _selectedRevisionUpdatedTargets |= UpdateTargets.DiffList;
 
-            var revisions = RevisionGrid.GetSelectedRevisions();
+            var revisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
 
             DiffText.SaveCurrentScrollPos();
 
@@ -1187,7 +1187,7 @@ namespace GitUI.CommandsDialogs
             if (RevisionGrid.GetSelectedRevisions().Count == 0)
                 return;
 
-            var revision = RevisionGrid.GetSelectedRevisions()[0];
+            var revision = RevisionGrid.GetSelectedRevisions()[0] as GitRevision;
 
             var children = RevisionGrid.GetRevisionChildren(revision.Guid);
             RevisionInfo.SetRevisionWithChildren(revision, children);
@@ -1201,7 +1201,7 @@ namespace GitUI.CommandsDialogs
                 return;
 
             var selectedRevisions = RevisionGrid.GetSelectedRevisions();
-            var revision = selectedRevisions.Count == 1 ? selectedRevisions.Single() : null;
+            var revision = selectedRevisions.Count == 1 ? selectedRevisions.Single() as GitRevision : null;
 
             if (BuildReportTabPageExtension == null)
                 BuildReportTabPageExtension = new BuildReportTabPageExtension(CommitInfoTabControl);
@@ -1216,7 +1216,7 @@ namespace GitUI.CommandsDialogs
             if (item == null)
                 return;
 
-            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions();
+            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
 
             if (revisions.Count == 0 || GitRevision.IsArtificial(revisions[0].Guid))
                 UICommands.StartFileHistoryDialog(this, item.FileName);
@@ -1231,7 +1231,7 @@ namespace GitUI.CommandsDialogs
             if (item == null)
                 return;
 
-            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions();
+            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
 
             if (revisions.Count == 0 || GitRevision.IsArtificial(revisions[0].Guid))
                 UICommands.StartFileHistoryDialog(this, item.FileName, null, false, true);
@@ -1292,7 +1292,8 @@ namespace GitUI.CommandsDialogs
 
         private IList<string> FindFileMatches(string name)
         {
-            var candidates = Module.GetFullTree(RevisionGrid.GetSelectedRevisions()[0].TreeGuid);
+            var rev = RevisionGrid.GetSelectedRevisions().First() as GitRevision; // [0]
+            var candidates = Module.GetFullTree(rev.TreeGuid);
 
             string nameAsLower = name.ToLower();
 
@@ -1609,7 +1610,7 @@ namespace GitUI.CommandsDialogs
         {
             var revisions = RevisionGrid.GetSelectedRevisions(System.DirectoryServices.SortDirection.Descending);
 
-            UICommands.StartCherryPickDialog(this, revisions);
+            UICommands.StartCherryPickDialog(this, revisions.First() as GitRevision);
         }
 
         private void MergeBranchToolStripMenuItemClick(object sender, EventArgs e)
@@ -1683,7 +1684,7 @@ namespace GitUI.CommandsDialogs
 
         private void ArchiveToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var revisions = RevisionGrid.GetSelectedRevisions();
+            var revisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
             if (revisions.Count > 2)
             {
                 MessageBox.Show(this, "Select only one or two revisions. Abort.", "Archive revision");
@@ -1725,7 +1726,7 @@ namespace GitUI.CommandsDialogs
 
         private void RebaseToolStripMenuItemClick(object sender, EventArgs e)
         {
-            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions();
+            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
             if (2 == revisions.Count)
             {
                 string to = null;
@@ -1784,7 +1785,9 @@ namespace GitUI.CommandsDialogs
                 return;
             }
 
-            IList<GitRevision> items = RevisionGrid.GetSelectedRevisions();
+            var revItems = RevisionGrid.GetSelectedRevisions();
+            IList<GitRevision> items = revItems.Cast<GitRevision>().ToList();
+
             if (items.Count() == 1)
             {
                 items.Add(new GitRevision(Module, DiffFiles.SelectedItemParent));
@@ -1804,7 +1807,7 @@ namespace GitUI.CommandsDialogs
                     return;
                 }
             }
-            DiffText.ViewChanges(items, DiffFiles.SelectedItem, String.Empty);
+            DiffText.ViewChanges(revItems, DiffFiles.SelectedItem, String.Empty);
         }
 
         private void ChangelogToolStripMenuItemClick(object sender, EventArgs e)
@@ -2155,7 +2158,7 @@ namespace GitUI.CommandsDialogs
 
         private void ResetToThisRevisionOnClick(object sender, EventArgs e)
         {
-            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions();
+            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
 
             if (!revisions.Any() || revisions.Count != 1)
             {
@@ -2185,7 +2188,8 @@ namespace GitUI.CommandsDialogs
 
         private void CreateBranchToolStripMenuItemClick(object sender, EventArgs e)
         {
-            UICommands.StartCreateBranchDialog(this, RevisionGrid.GetSelectedRevisions().FirstOrDefault());
+            UICommands.StartCreateBranchDialog(this,
+                RevisionGrid.GetSelectedRevisions().FirstOrDefault() as GitRevision);
         }
 
         private void GitBashClick(object sender, EventArgs e)
@@ -2251,7 +2255,7 @@ namespace GitUI.CommandsDialogs
 
         private void saveAsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions();
+            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
 
             if (revisions.Count == 0)
                 return;
@@ -2318,7 +2322,7 @@ namespace GitUI.CommandsDialogs
 
             if (item.IsTracked)
             {
-                IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions();
+                IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
 
                 if (revisions.Count == 0 || GitRevision.IsArtificial(revisions[0].Guid))
                     UICommands.StartFileHistoryDialog(this, item.Name);
@@ -2333,7 +2337,7 @@ namespace GitUI.CommandsDialogs
 
             if (item.IsTracked)
             {
-                IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions();
+                IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
 
                 if (revisions.Count == 0 || GitRevision.IsArtificial(revisions[0].Guid))
                     UICommands.StartFileHistoryDialog(this, item.Name, null, false, true);
@@ -2732,7 +2736,8 @@ namespace GitUI.CommandsDialogs
             }
 
             var gitItem = (GitItem)GitTree.SelectedNode.Tag;
-            UICommands.StartArchiveDialog(this, selectedRevisions.First(), null, gitItem.FileName);
+            UICommands.StartArchiveDialog(this, selectedRevisions.First() as GitRevision
+                , null, gitItem.FileName);
         }
 
         private void fileTreeCleanWorkingTreeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2745,7 +2750,7 @@ namespace GitUI.CommandsDialogs
         {
             bool artificialRevSelected;
 
-            IList<GitRevision> selectedRevisions = RevisionGrid.GetSelectedRevisions();
+            IList<GitRevision> selectedRevisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
 
             if (selectedRevisions.Count == 0)
                 artificialRevSelected = false;
@@ -3011,7 +3016,7 @@ namespace GitUI.CommandsDialogs
 
         private void resetFileToToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions();
+            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
             int selectedRevsCount = revisions.Count;
 
             if (selectedRevsCount == 1)
@@ -3081,7 +3086,7 @@ namespace GitUI.CommandsDialogs
 
         private void resetFileToFirstToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions();
+            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
 
             if (revisions.Count != 2 || !DiffFiles.SelectedItems.Any())
             {
@@ -3093,7 +3098,7 @@ namespace GitUI.CommandsDialogs
 
         private void resetFileToSecondToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions();
+            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
 
             if (revisions.Count != 2 || !DiffFiles.SelectedItems.Any())
             {
@@ -3105,7 +3110,7 @@ namespace GitUI.CommandsDialogs
 
         private void resetFileToParentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions();
+            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
 
             if (revisions.Count != 1 || !DiffFiles.SelectedItems.Any())
             {
@@ -3122,7 +3127,7 @@ namespace GitUI.CommandsDialogs
 
         private void resetFileToSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions();
+            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
 
             if (revisions.Count != 1 || !DiffFiles.SelectedItems.Any())
             {
@@ -3461,7 +3466,7 @@ namespace GitUI.CommandsDialogs
             bool enableDiffDropDown = true;
             bool showParentItems = false;
 
-            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions();
+            IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
 
             if (revisions.Count > 0)
             {

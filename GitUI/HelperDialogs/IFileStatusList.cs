@@ -15,7 +15,7 @@ namespace GitUI
         event EventHandler SelectedIndexChanged;
 
         void Focus();
-        void SetDiffs(IList<GitRevision> revs);
+        void SetDiffs(IList<IGitItem> revs);
         void SetDiff(GitRevision revision);
     }
 }

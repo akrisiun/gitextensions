@@ -48,6 +48,7 @@ namespace GitUI
         [Browsable(false)]
         public GitModule Module { get { return _uiCommands != null ? _uiCommands.Module : null; } }
 
+        // public event EventHandler<GitUICommandsChangedEventArgs>
         public event EventHandler<GitUICommandsChangedEventArgs> GitUICommandsChanged;
 
         protected GitModuleForm()

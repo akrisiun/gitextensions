@@ -126,14 +126,14 @@ namespace GitUI.CommandsDialogs
             {
                 if (revisions.Count == 1)
                 {
-                    var parents = revisions[0].ParentGuids;
+                    var parents = (revisions[0] as GitRevision).ParentGuids;
                     rev1 = parents.Length > 0 ? parents[0] : "";
                     rev2 = revisions[0].Guid;
                     result = Module.FormatPatch(rev1, rev2, savePatchesToDir);
                 }
                 else if (revisions.Count == 2)
                 {
-                    var parents = revisions[0].ParentGuids;
+                    var parents = (revisions[0] as GitRevision).ParentGuids;
                     rev1 = parents.Length > 0 ? parents[0] : "";
                     rev2 = revisions[1].Guid;
                     result = Module.FormatPatch(rev1, rev2, savePatchesToDir);

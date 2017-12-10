@@ -224,7 +224,7 @@ namespace GitUI.CommandsDialogs
             var selectedRows = FileChanges.GetSelectedRevisions();
             if (selectedRows.Count > 0)
             {
-                GitRevision revision = selectedRows[0];
+                GitRevision revision = selectedRows[0] as GitRevision;
                 if (revision.IsArtificial())
                     tabControl1.RemoveIfExists(BlameTab);
                 else
@@ -248,7 +248,7 @@ namespace GitUI.CommandsDialogs
 
             if (selectedRows.Count == 0) return;
 
-            GitRevision revision = selectedRows[0];
+            GitRevision revision = selectedRows[0] as GitRevision;
             var children = FileChanges.GetRevisionChildren(revision.Guid);
 
             var fileName = revision.Name;
@@ -371,7 +371,7 @@ namespace GitUI.CommandsDialogs
             var selectedRevisions = FileChanges.GetSelectedRevisions();
             if (selectedRevisions.Count == 1)
             {
-                UICommands.StartCherryPickDialog(this, selectedRevisions[0]);
+                UICommands.StartCherryPickDialog(this, selectedRevisions[0] as GitRevision);
             }
         }
 
@@ -380,7 +380,7 @@ namespace GitUI.CommandsDialogs
             var selectedRevisions = FileChanges.GetSelectedRevisions();
             if (selectedRevisions.Count == 1)
             {
-                UICommands.StartRevertCommitDialog(this, selectedRevisions[0]);
+                UICommands.StartRevertCommitDialog(this, selectedRevisions[0] as GitRevision);
             }
         }
 

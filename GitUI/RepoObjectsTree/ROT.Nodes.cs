@@ -114,7 +114,7 @@ namespace GitUI.UserControls
         {
             public readonly Nodes Nodes;
             private readonly IGitUICommandsSource UICommandsSource;
-            public GitUICommands UICommands { get { return UICommandsSource.UICommands; } }
+            public GitUICommands UICommands { get { return UICommandsSource.ICommands as GitUICommands; } }
             public GitModule Module { get { return UICommands.Module; } }
             public TreeNode TreeViewNode { get; private set; }
             public Action<List<string>> OnBranchesAdded;

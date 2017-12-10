@@ -1,4 +1,7 @@
-﻿namespace GitUI.Properties
+﻿using System.Drawing;
+using System.Globalization;
+
+namespace GitUI.Properties
 {
     /// <summary>
     /// DESIGNER USAGE INFO!
@@ -10,7 +13,7 @@
     ///
     /// As soon as the preprocessor if statements are no longer necessary this class can / should be removed.
     /// </summary>
-    internal partial class Resources
+    public partial class Resources
     {
         public static System.Drawing.Bitmap loadingpanel {
             get {
@@ -27,5 +30,171 @@
                 return BlankIcon;
             }
         }
+    }
+
+    public partial class ResourcesUI
+    {
+        static System.Resources.ResourceManager ResourceManager => Resources.ResourceManager;
+        static CultureInfo resourceCulture => Resources.Culture;
+
+        public static System.Drawing.Bitmap arrow_refresh {
+            get {
+                object obj = ResourceManager.GetObject("arrow_refresh", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap ArrowUp {
+            get {
+                object obj = ResourceManager.GetObject("ArrowUp", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap CommitTemplates {
+            get {
+                object obj = ResourceManager.GetObject("CommitTemplates", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap Icon_50 {
+            get {
+                object obj = ResourceManager.GetObject("Icon_50", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+
+        public static System.Drawing.Bitmap IconAddToGitIgnore {
+            get {
+                object obj = ResourceManager.GetObject("IconAddToGitIgnore", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap IconBrowseFileExplorer {
+            get {
+                object obj = ResourceManager.GetObject("IconBrowseFileExplorer", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+
+        public static System.Drawing.Bitmap IconClean {
+            get {
+                object obj = ResourceManager.GetObject("IconClean", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap IconCopyToClipboard {
+            get {
+                object obj = ResourceManager.GetObject("IconCopyToClipboard", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap IconDiffTool {
+            get {
+                object obj = ResourceManager.GetObject("IconDiffTool", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap IconEditFile {
+            get {
+                object obj = ResourceManager.GetObject("IconEditFile", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap IconEditGitIgnore {
+            get {
+                object obj = ResourceManager.GetObject("IconEditGitIgnore", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap IconFileHistory {
+            get {
+                object obj = ResourceManager.GetObject("IconFileHistory", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap IconResetWorkingDirChanges {
+            get {
+                object obj = ResourceManager.GetObject("IconResetWorkingDirChanges", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap IconStage {
+            get {
+                object obj = ResourceManager.GetObject("IconStage", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap IconStageAll {
+            get {
+                object obj = ResourceManager.GetObject("IconStageAll", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap IconUnstage {
+            get {
+                object obj = ResourceManager.GetObject("IconUnstage", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap IconUnstageAll {
+            get {
+                object obj = ResourceManager.GetObject("IconUnstageAll", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap WorkingDirChanges {
+            get {
+                object obj = ResourceManager.GetObject("WorkingDirChanges", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static Image Icon_77 { get { return null; } }
+
     }
 }

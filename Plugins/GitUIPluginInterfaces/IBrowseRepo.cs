@@ -71,15 +71,20 @@ namespace GitUI
 
         IEnumerable<IGitItem> Revisions();
         int LastRowIndex { get; }
+
+        // GitRevision
+        IGitItem GetCurrentRevision();
+        IGitItem GetRevision(int aRow);
+        IList<IGitItem> GetSelectedRevisions();
     }
 
-    /// <summary>Provides <see cref="GitUICommands"/> and a change notification.</summary>
+        /// <summary>Provides <see cref="GitUICommands"/> and a change notification.</summary>
     public interface IGitUICommandsSource
     {
         /// <summary>Raised after <see cref="UICommands"/> changes.</summary>
         event EventHandler<GitUICommandsChangedEventArgs> GitUICommandsChanged;
-        /// <summary>Gets the <see cref="GitUICommands"/> value.</summary>
 
+        /// <summary>Gets the <see cref="GitUICommands"/> value.</summary>
         // IGitUICommands UICommands { get; }
         IGitUICommands ICommands { get; }
     }

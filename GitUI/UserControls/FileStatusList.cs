@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -13,6 +14,7 @@ using System.Windows.Forms;
 using GitCommands;
 using GitUI.Properties;
 using GitUI.UserControls;
+using GitUIPluginInterfaces;
 using ResourceManager;
 
 namespace GitUI
@@ -41,15 +43,36 @@ namespace GitUI
             Translate();
             FilterVisible = false;
 
-            selectedIndexChangeSubscription = Observable.FromEventPattern(
-                h => FileStatusListView.SelectedIndexChanged += h,
-                h => FileStatusListView.SelectedIndexChanged -= h)
-                .Throttle(SelectedIndexChangeThrottleDuration)
-                .ObserveOn(SynchronizationContext.Current)
-                .Subscribe(_ => FileStatusListView_SelectedIndexChanged());
+            try
+            {
+                // System.Reactive.Linq
+                selectedIndexChangeSubscription =
+                    Observe.FromEventPattern(
+                        h1: (h) => FileStatusListView.SelectedIndexChanged += h,
+                        h2: (h) => FileStatusListView.SelectedIndexChanged -= h,
+                        dueTime: SelectedIndexChangeThrottleDuration,
+                        observer: _ => FileStatusListView_SelectedIndexChanged()
+                        );
 
+                /*  selectedIndexChangeSubscription = Observable.FromEventPattern(
+                    h => FileStatusListView.SelectedIndexChanged += h,
+                    h => FileStatusListView.SelectedIndexChanged -= h)
+                    .Throttle(SelectedIndexChangeThrottleDuration)
+                    .ObserveOn(SynchronizationContext.Current)
+                    .Subscribe(_ => FileStatusListView_SelectedIndexChanged());
+
+                Reactive Observable fails: System.TypeLoadException: GenericArguments[1], 'TEventArgs'
+                    , on 'System.Reactive.IEventPattern`2[TSender,TEventArgs]' violates the constraint of type parameter 'TEventArgs'.
+                    at GitUI.Observe.FromEventPattern(Action`1 h1, Action`1 h2, TimeSpan dueTime, Action`1 observer)
+                    at GitUI.FileStatusList..ctor() in d:\Beta\GitExt2.Dark\GitUI\UserControls\FileStatusList.cs:line 48
+
+                */
+            }
+            catch (Exception ex) { Console.WriteLine($"Reactive Observable fails: {ex}"); }
             SelectFirstItemOnSetItems = true;
             _noDiffFilesChangesDefaultText = NoFiles.Text;
+
+
 #if !__MonoCS__ // TODO Drag'n'Drop doesn't work on Mono/Linux
             FileStatusListView.MouseMove += FileStatusListView_MouseMove;
             FileStatusListView.MouseDown += FileStatusListView_MouseDown;
@@ -85,7 +108,7 @@ namespace GitUI
 
         protected override void DisposeCustomResources()
         {
-            selectedIndexChangeSubscription.Dispose();
+            selectedIndexChangeSubscription?.Dispose();
         }
 
         private static ImageList _images;
@@ -772,7 +795,7 @@ namespace GitUI
             }
         }
 
-        void IFileStatusList.SetDiffs(IList<GitRevision> revisions) { SetDiffs(revisions as List<GitRevision>); }
+        void IFileStatusList.SetDiffs(IList<IGitItem> revisions) { SetDiffs(revisions as List<GitRevision>); }
 
         public void SetDiffs(List<GitRevision> revisions)
         {
@@ -988,4 +1011,25 @@ namespace GitUI
         #endregion Filtering
     }
 
+    public class Observe
+    {
+        public static IDisposable FromEventPattern(
+                Action<EventHandler> h1, Action<EventHandler> h2,
+                TimeSpan dueTime,
+                Action<object> observer) // where T : EventArgs
+        {
+
+            var part1 = Observable.FromEventPattern(
+                                h => h1(h),
+                                h => h2(h));
+
+            var part2 = part1.Throttle(dueTime)
+                                .ObserveOn(SynchronizationContext.Current)
+                                .Subscribe(_ => observer(_)  // FileStatusListView_SelectedIndexChanged()
+                                );
+            var selectedIndexChangeSubscription = part2;
+
+            return selectedIndexChangeSubscription as IDisposable;
+        }
+    }
 }

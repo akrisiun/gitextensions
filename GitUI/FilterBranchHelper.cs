@@ -14,7 +14,7 @@ namespace GitUI
         private ToolStripMenuItem localToolStripMenuItem;
         private ToolStripMenuItem tagsToolStripMenuItem;
         private ToolStripMenuItem remoteToolStripMenuItem;
-        private GitModule Module { get { return _NO_TRANSLATE_RevisionGrid.Module; } }
+        private GitModule Module { get { return _NO_TRANSLATE_RevisionGrid.Module as GitModule; } }
 
         public FilterBranchHelper()
         {

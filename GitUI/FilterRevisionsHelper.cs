@@ -92,7 +92,7 @@ namespace GitUI
             this._NO_TRANSLATE_textBox.Leave += this.ToolStripTextBoxFilterLeave;
             this._NO_TRANSLATE_textBox.KeyPress += this.ToolStripTextBoxFilterKeyPress;
             
-            this._NO_TRANSLATE_revisionGrid.ShowFirstParentsToggled += this.RevisionGridShowFirstParentsToggled;
+            // this._NO_TRANSLATE_revisionGrid.ShowFirstParentsToggled += this.RevisionGridShowFirstParentsToggled;
         }
 
         public void SetFilter(string filter)

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using GitCommands;
 using GitUI.HelperDialogs;
+using GitUIPluginInterfaces;
 using ResourceManager;
 
 namespace GitUI.CommandsDialogs
@@ -90,7 +91,7 @@ namespace GitUI.CommandsDialogs
             }
             var baseCommit = ckCompareToMergeBase.Checked ? _mergeBase : _baseRevision;
 
-            IList<GitRevision> items = new List<GitRevision> { _headRevision, baseCommit };
+            IList<IGitItem> items = new List<IGitItem> { _headRevision, baseCommit };
             if (items.Count() == 1)
                 items.Add(new GitRevision(Module, DiffFiles.SelectedItemParent));
             DiffText.ViewChanges(items, DiffFiles.SelectedItem, String.Empty);
@@ -161,7 +162,7 @@ namespace GitUI.CommandsDialogs
 
             if (item.IsTracked)
             {
-                IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions();
+                IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions().Cast<GitRevision>().ToList();
 
                 if (revisions.Count == 0 || GitRevision.IsArtificial(revisions[0].Guid))
                     UICommands.StartFileHistoryDialog(this, item.Name, revision: null);
@@ -176,7 +177,7 @@ namespace GitUI.CommandsDialogs
 
             if (item.IsTracked)
             {
-                IList<GitRevision> revisions = RevisionGrid.GetSelectedRevisions();
+                IList<IGitItem> revisions = RevisionGrid.GetSelectedRevisions();
 
                 if (revisions.Count == 0 || GitRevision.IsArtificial(revisions[0].Guid))
                     UICommands.StartFileHistoryDialog(this, item.Name, null, false, true);

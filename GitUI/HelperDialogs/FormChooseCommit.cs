@@ -52,7 +52,7 @@ namespace GitUI.HelperDialogs
             var revisions = revisionGrid.GetSelectedRevisions();
             if (1 == revisions.Count)
             {
-                SelectedRevision = revisions[0];
+                SelectedRevision = revisions[0] as GitRevision;
                 DialogResult = DialogResult.OK;
 
                 Close();
@@ -86,7 +86,7 @@ namespace GitUI.HelperDialogs
             {
                 return;
             }
-            SelectedRevision = revisions[0];
+            SelectedRevision = revisions[0] as GitRevision;
 
             flowLayoutPanelParents.Visible = SelectedRevision.ParentGuids.Length != 0;
 

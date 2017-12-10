@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using GitCommands;
 using GitCommands.Git;
+using GitUIPluginInterfaces;
 using ResourceManager;
 
 namespace GitUI.CommandsDialogs
@@ -18,7 +19,7 @@ namespace GitUI.CommandsDialogs
         private readonly GitBranchNameOptions _gitBranchNameOptions = new GitBranchNameOptions(AppSettings.AutoNormaliseSymbol);
 
 
-        public FormCreateBranch(GitUICommands aCommands, GitRevision revision, IGitBranchNameNormaliser branchNameNormaliser = null)
+        public FormCreateBranch(GitUICommands aCommands, IGitItem revision, IGitBranchNameNormaliser branchNameNormaliser = null)
             : base(aCommands)
         {
             _branchNameNormaliser = branchNameNormaliser ?? new GitBranchNameNormaliser();

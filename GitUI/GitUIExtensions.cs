@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using GitCommands;
 using GitUI.Editor;
+using GitUIPluginInterfaces;
 using ICSharpCode.TextEditor.Util;
 using ResourceManager;
 
@@ -37,7 +39,7 @@ namespace GitUI
 
         public static void OpenWithDifftool(this RevisionGrid grid, string fileName, string oldFileName, DiffWithRevisionKind diffKind, string parentGuid)
         {
-            IList<GitRevision> revisions = grid.GetSelectedRevisions();
+            IList<GitRevision> revisions = grid.GetSelectedRevisions().Cast<GitRevision>().ToList();
 
             if (revisions.Count == 0 || revisions.Count > 2)
                 return;
@@ -157,7 +159,7 @@ namespace GitUI
 
         public static string GetSelectedPatch(this FileViewer diffViewer, IRevisionGrid grid, GitItemStatus file)
         {
-            IList<GitRevision> revisions = grid.GetSelectedRevisions();
+            IList<IGitItem> revisions = grid.GetSelectedRevisions();
             string firstRevision = revisions.Count > 0 ? revisions[0].Guid : null;
             string secondRevision = revisions.Count == 2 ? revisions[1].Guid : null;
             return GetSelectedPatch(diffViewer, firstRevision, secondRevision, file);
@@ -198,9 +200,9 @@ namespace GitUI
             return patch.Text;
         }
 
-        public static void ViewChanges(this FileViewer diffViewer, IList<GitRevision> revisions, GitItemStatus file, string defaultText)
+        public static void ViewChanges(this FileViewer diffViewer, IList<IGitItem> revisions, GitItemStatus file, string defaultText)
         {
-            var firstRevision = revisions.Count > 0 ? revisions[0] : null;
+            var firstRevision = revisions.Count > 0 ? revisions[0] as GitRevision : null;
             string firstRevisionGuid = firstRevision == null ? null : firstRevision.Guid;
             string parentRevisionGuid = revisions.Count == 2 ? revisions[1].Guid : null;
             if (parentRevisionGuid == null && firstRevision != null && firstRevision.ParentGuids != null && firstRevision.ParentGuids.Length > 0)

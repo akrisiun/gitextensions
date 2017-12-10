@@ -3,6 +3,7 @@ using System.Linq;
 using GitCommands;
 using GitCommands.Config;
 using GitCommands.Git;
+using GitUIPluginInterfaces;
 
 namespace GitUI.UserControls
 {
@@ -18,12 +19,12 @@ namespace GitUI.UserControls
 
         public string AuthorEmailToHighlight { get; private set; }
 
-        public SelectionChangeAction ProcessRevisionSelectionChange(GitModule currentModule, ICollection<GitRevision> selectedRevisions)
+        public SelectionChangeAction ProcessRevisionSelectionChange(GitModule currentModule, ICollection<IGitItem> selectedRevisions)
         {
             if (selectedRevisions.Count > 1)
                 return SelectionChangeAction.NoAction;
 
-            var newSelectedRevision = selectedRevisions.FirstOrDefault();
+            var newSelectedRevision = selectedRevisions.FirstOrDefault() as GitRevision;
             bool differentRevisionAuthorSelected =
                 !AuthorEmailEqualityComparer.Instance.Equals(_currentSelectedRevision, newSelectedRevision);
  

@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using GitCommands;
 using GitCommands.Config;
 using GitUI.HelperDialogs;
+using GitUIPluginInterfaces;
 
 namespace GitUI.Script
 {
@@ -91,7 +92,7 @@ namespace GitUI.Script
             string argument = scriptInfo.Arguments;
 
             string command = OverrideCommandWhenNecessary(originalCommand);
-            IList<GitRevision> allSelectedRevisions = new List<GitRevision>();
+            IList<IGitItem> allSelectedRevisions = new List<IGitItem>(); // as GitRevision>();
 
             GitRevision selectedRevision = null;
             GitRevision currentRevision = null;
@@ -352,7 +353,7 @@ namespace GitUI.Script
         {
             var revisionGrid = revisionGridI as RevisionGrid;
 
-            GitRevision selectedRevision = revisionGrid.GetRevision(revisionGrid.LastRowIndex);
+            GitRevision selectedRevision = revisionGrid.GetRevision(revisionGrid.LastRowIndex) as GitRevision;
             foreach (GitRef head in selectedRevision.Refs)
             {
                 if (head.IsTag)
@@ -389,7 +390,7 @@ namespace GitUI.Script
                 }
                 else
                 {
-                    currentRevision = RevisionGrid.GetCurrentRevision();
+                    currentRevision = RevisionGrid.GetCurrentRevision() as GitRevision;
                     refs = currentRevision.Refs;
                 }
 

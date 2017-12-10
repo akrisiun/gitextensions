@@ -41,7 +41,7 @@ namespace GitUI
         public IGitUICommandsSource UICommandsSource { get; private set; }
     }
 
-    public interface IGitModuleControl
+    public interface IGitModuleControl2
     {
         bool UICommandsSourceParentSearch { get; }
 
@@ -52,15 +52,16 @@ namespace GitUI
         GitModule Module { get; }
     }
 
-    public interface IRevisionGrid : IGitModuleControl, IWin32Window
+    public interface IRevisionGrid2 : IRevisionGrid // IGitModuleControl, IWin32Window
     {
+        /*
         int TrySearchRevision(string initRevision);
 
         void RevisionsCellPainting(object sender, DataGridViewCellPaintingEventArgs e);
         float DrawRef(DrawRefArgs drawRefArgs, float offset, string name,
             Color headColor, ArrowType arrowType); // , bool dashedLine = false, bool fill = false)
 
-        event EventHandler<IRevisionGrid> ShowFirstParentsToggled;
+        event EventHandler<IRevisionGrid2> ShowFirstParentsToggled;
 
         bool SetAndApplyBranchFilter(string text);
         void ForceRefreshRevisions();
@@ -68,9 +69,11 @@ namespace GitUI
         void SetLimit(int limit);
 
         IList<GitRevision> GetSelectedRevisions();
+        int LastRowIndex { get; }
+        GitRevision : IGitItem
         GitRevision GetCurrentRevision();
         GitRevision GetRevision(int aRow);
-        int LastRowIndex { get; }
+        */
     }
 
 

@@ -25,7 +25,7 @@ using IWin32Window = GitUI.IWin32Window;
 namespace GitUI
 {
     /// <summary>Contains methods to invoke GitEx forms, dialogs, etc.</summary>
-    public sealed class GitUICommands : IGitUICommands
+    public class GitUICommands : IGitUICommands
     {
         public GitUICommands(GitModule module)
         {
@@ -718,11 +718,11 @@ namespace GitUI
             return DoActionOnRepo(action);
         }
 
-        public bool StartFixupCommitDialog(IWin32Window owner, GitRevision revision)
+        public bool StartFixupCommitDialog(IWin32Window owner, IGitItem revision)
         {
             Func<bool> action = () =>
             {
-                using (var form = new FormCommit(this, CommitKind.Fixup, revision))
+                using (var form = new FormCommit(this, CommitKind.Fixup, revision as GitRevision))
                 {
                     form.ShowDialog(owner);
                 }
@@ -732,7 +732,7 @@ namespace GitUI
             return DoActionOnRepo(action);
         }
 
-        public bool StartCommitDialog(IWin32Window owner, bool showOnlyWhenChanges)
+        public virtual bool StartCommitDialog(IWin32Window owner, bool showOnlyWhenChanges)
         {
             if (FormBrowse.StartCommit != null)
             {

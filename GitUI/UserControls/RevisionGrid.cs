@@ -25,6 +25,7 @@ using ResourceManager;
 using GitUI.UserControls.RevisionGridClasses;
 using GitUI.CommandsDialogs.BrowseDialog;
 using GitUI.UserControls;
+using GitUIPluginInterfaces;
 
 namespace GitUI
 {
@@ -78,6 +79,17 @@ namespace GitUI
         #endregion
 
         private GitRevision _baseCommitToCompare = null;
+
+        IGitModule IGitModuleControl.Module { get => base.Module; }
+        IGitUICommands IGitModuleControl.ICommands { get => this.UICommands; }
+
+        IList<IGitItem> IRevisionGrid.GetSelectedRevisions() => null;
+        IEnumerable<IGitItem> IRevisionGrid.Revisions()
+        {
+            // foreach (var rev in this.Revisions)
+            //    yield return rev;
+            yield break;
+        }
 
         public RevisionGrid()
         {
@@ -177,6 +189,8 @@ namespace GitUI
                 }
             }
         }
+
+        #region Properties
 
         [Browsable(false)]
         public Font HeadFont { get; private set; }
@@ -334,6 +348,10 @@ namespace GitUI
             _quickSearchLabel.AutoSize = true;
         }
 
+        #endregion
+
+        #region Methods: tick, keys, filter
+
         private void HideQuickSearchString()
         {
             if (_quickSearchLabel != null)
@@ -482,14 +500,14 @@ namespace GitUI
 
             for (index = startIndex; index < Revisions.RowCount; ++index)
             {
-                if (GetRevision(index).MatchesSearchString(searchString))
+                if ((GetRevision(index) as GitRevision).MatchesSearchString(searchString))
                     return index;
             }
 
             // We didn't find it so start searching from the top
             for (index = 0; index < startIndex; ++index)
             {
-                if (GetRevision(index).MatchesSearchString(searchString))
+                if ((GetRevision(index) as GitRevision).MatchesSearchString(searchString))
                     return index;
             }
 
@@ -505,14 +523,14 @@ namespace GitUI
 
             for (index = startIndex; index >= 0; --index)
             {
-                if (GetRevision(index).MatchesSearchString(searchString))
+                if ((GetRevision(index) as GitRevision).MatchesSearchString(searchString))
                     return index;
             }
 
             // We didn't find it so start searching from the bottom
             for (index = Revisions.RowCount - 1; index > startIndex; --index)
             {
-                if (GetRevision(index).MatchesSearchString(searchString))
+                if ((GetRevision(index) as GitRevision).MatchesSearchString(searchString))
                     return index;
             }
 
@@ -588,6 +606,8 @@ namespace GitUI
             _revisionFilter.SetLimit(limit);
         }
 
+        #endregion
+
         public override void Refresh()
         {
             if (IsDisposed)
@@ -621,6 +641,8 @@ namespace GitUI
                 ReloadHotkeys();
             ForceRefreshRevisions();
         }
+
+        #region Selection
 
         public event EventHandler SelectionChanged;
 
@@ -704,6 +726,8 @@ namespace GitUI
             Revisions.HighlightBranch(aId);
         }
 
+        #endregion
+
         private void RevisionsSelectionChanged(object sender, EventArgs e)
         {
             _parentChildNavigationHistory.RevisionsSelectionChanged();
@@ -741,12 +765,13 @@ namespace GitUI
             }
         }
 
-        public List<GitRevision> GetSelectedRevisions()
+        // List<GitRevision>
+        public IList<IGitItem> GetSelectedRevisions()
         {
             return GetSelectedRevisions(null);
         }
 
-        public List<GitRevision> GetSelectedRevisions(SortDirection? direction)
+        public IList<IGitItem> GetSelectedRevisions(SortDirection? direction)
         {
             var rows = Revisions
                 .SelectedRows
@@ -770,12 +795,17 @@ namespace GitUI
             return Revisions.GetRevisionChildren(revision);
         }
 
-        public GitRevision GetRevision(int aRow)
+        public IGitItem GetRevision(int aRow)
         {
             return Revisions.GetRowData(aRow);
         }
 
-        public GitRevision GetCurrentRevision()
+        public GitRevision GetRevision2(int aRow)
+        {
+            return Revisions.GetRowData(aRow);
+        }
+
+        public IGitItem GetCurrentRevision() // as GitRevision 
         {
             var revision = Module.GetRevision(CurrentCheckout, true);
             var refs = Module.GetRefs(true, true);
@@ -1356,7 +1386,7 @@ namespace GitUI
             if (Revisions.RowCount <= e.RowIndex)
                 return;
 
-            var revision = GetRevision(e.RowIndex);
+            var revision = GetRevision(e.RowIndex) as GitRevision;
             if (revision == null)
                 return;
 
@@ -1678,7 +1708,7 @@ namespace GitUI
             if (Revisions.RowCount <= e.RowIndex)
                 return;
 
-            var revision = GetRevision(e.RowIndex);
+            var revision = GetRevision(e.RowIndex) as GitRevision;
             if (revision == null)
                 return;
 
@@ -1940,7 +1970,7 @@ namespace GitUI
             if (DoubleClickRevision != null)
             {
                 var selectedRevisions = GetSelectedRevisions();
-                DoubleClickRevision(this, new DoubleClickRevisionEventArgs(selectedRevisions.FirstOrDefault()));
+                DoubleClickRevision(this, new DoubleClickRevisionEventArgs(selectedRevisions.FirstOrDefault() as GitRevision));
             }
 
             if (!DoubleClickDoesNotOpenCommitInfo)
@@ -1978,7 +2008,7 @@ namespace GitUI
             if (Revisions.RowCount <= LastRowIndex || LastRowIndex < 0)
                 return;
 
-            using (var frm = new FormCreateTag(UICommands, GetRevision(LastRowIndex)))
+            using (var frm = new FormCreateTag(UICommands, GetRevision(LastRowIndex) as GitRevision))
             {
                 if (frm.ShowDialog(this) == DialogResult.OK)
                 {
@@ -2118,7 +2148,7 @@ namespace GitUI
             if (Revisions.RowCount <= LastRowIndex || LastRowIndex < 0)
                 return;
 
-            UICommands.StartRevertCommitDialog(this, GetRevision(LastRowIndex));
+            UICommands.StartRevertCommitDialog(this, GetRevision(LastRowIndex) as GitRevision);
         }
 
         internal void FilterToolStripMenuItemClick(object sender, EventArgs e)
@@ -2146,7 +2176,7 @@ namespace GitUI
             bisectSeparator.Visible = inTheMiddleOfBisect;
             compareWithCurrentBranchToolStripMenuItem.Visible = Module.GetSelectedBranch().IsNotNullOrWhitespace();
 
-            var revision = GetRevision(LastRowIndex);
+            var revision = GetRevision(LastRowIndex) as GitRevision;
 
             var deleteTagDropDown = new ContextMenuStrip();
             var deleteBranchDropDown = new ContextMenuStrip();
@@ -2381,10 +2411,10 @@ namespace GitUI
                 return;
             }
 
-            GitRevision mainRevision = selectedRevisions.First();
+            GitRevision mainRevision = selectedRevisions.First() as GitRevision;
             GitRevision diffRevision = null;
             if (selectedRevisions.Count == 2)
-                diffRevision = selectedRevisions.Last();
+                diffRevision = selectedRevisions.Last() as GitRevision;
 
             UICommands.StartArchiveDialog(this, mainRevision, diffRevision);
         }
@@ -2428,7 +2458,7 @@ namespace GitUI
         private void CherryPickCommitToolStripMenuItemClick(object sender, EventArgs e)
         {
             var revisions = GetSelectedRevisions(SortDirection.Descending);
-            UICommands.StartCherryPickDialog(this, revisions);
+            UICommands.StartCherryPickDialog(this, revisions.FirstOrDefault() as GitRevision);
         }
 
         private void FixupCommitToolStripMenuItemClick(object sender, EventArgs e)
@@ -2436,7 +2466,7 @@ namespace GitUI
             if (Revisions.RowCount <= LastRowIndex || LastRowIndex < 0)
                 return;
 
-            UICommands.StartFixupCommitDialog(this, GetRevision(LastRowIndex));
+            UICommands.StartFixupCommitDialog(this, GetRevision2(LastRowIndex));
         }
 
         private void SquashCommitToolStripMenuItemClick(object sender, EventArgs e)
@@ -2444,7 +2474,7 @@ namespace GitUI
             if (Revisions.RowCount <= LastRowIndex || LastRowIndex < 0)
                 return;
 
-            UICommands.StartSquashCommitDialog(this, GetRevision(LastRowIndex));
+            UICommands.StartSquashCommitDialog(this, GetRevision2(LastRowIndex));
         }
 
         internal void ShowRelativeDate_ToolStripMenuItemClick(object sender, EventArgs e)
@@ -2548,22 +2578,22 @@ namespace GitUI
 
         private void MessageToolStripMenuItemClick(object sender, EventArgs e)
         {
-            Clipboard.SetText(GetRevision(LastRowIndex).Subject);
+            Clipboard.SetText(GetRevision2(LastRowIndex).Subject);
         }
 
         private void AuthorToolStripMenuItemClick(object sender, EventArgs e)
         {
-            Clipboard.SetText(GetRevision(LastRowIndex).Author);
+            Clipboard.SetText(GetRevision2(LastRowIndex).Author);
         }
 
         private void DateToolStripMenuItemClick(object sender, EventArgs e)
         {
-            Clipboard.SetText(GetRevision(LastRowIndex).CommitDate.ToString());
+            Clipboard.SetText(GetRevision2(LastRowIndex).CommitDate.ToString());
         }
 
         private void HashToolStripMenuItemClick(object sender, EventArgs e)
         {
-            Clipboard.SetText(GetRevision(LastRowIndex).Guid);
+            Clipboard.SetText(GetRevision2(LastRowIndex).Guid);
         }
 
         private void MarkRevisionAsBadToolStripMenuItemClick(object sender, EventArgs e)
@@ -3074,7 +3104,7 @@ namespace GitUI
 
         private void goToParentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var r = GetRevision(LastRowIndex);
+            var r = GetRevision2(LastRowIndex);
             if (r != null)
             {
                 if (_parentChildNavigationHistory.HasPreviousParent)
@@ -3100,7 +3130,7 @@ namespace GitUI
 
         private void copyToClipboardToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
         {
-            var r = GetRevision(LastRowIndex);
+            var r = GetRevision2(LastRowIndex);
             if (r != null)
             {
                 CopyToClipboardMenuHelper.AddOrUpdateTextPostfix(hashCopyToolStripMenuItem, CopyToClipboardMenuHelper.StrLimitWithElipses(r.Guid, 15));
@@ -3167,7 +3197,7 @@ namespace GitUI
 
         private void CompareToBranchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var headCommit = this.GetSelectedRevisions().First();
+            var headCommit = this.GetSelectedRevisions().First() as GitRevision;
             using (var form = new FormCompareToBranch(UICommands, headCommit.Guid))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
@@ -3184,7 +3214,8 @@ namespace GitUI
 
         private void CompareWithCurrentBranchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var baseCommit = this.GetSelectedRevisions().First();
+            var baseCommit = this.GetSelectedRevisions().First()
+                          as GitRevision ?? throw new ArgumentNullException("GetSelectedRevision");
             var headBranch = Module.GetSelectedBranch();
             var headBranchName = Module.RevParse(headBranch);
             using (var diffForm = new FormDiff(UICommands, this, baseCommit.Guid, headBranchName,
@@ -3196,13 +3227,13 @@ namespace GitUI
 
         private void selectAsBaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _baseCommitToCompare = GetSelectedRevisions().First();
+            _baseCommitToCompare = GetSelectedRevisions().First() as GitRevision;
             compareToBaseToolStripMenuItem.Enabled = true;
         }
 
         private void compareToBaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var headCommit = GetSelectedRevisions().First();
+            var headCommit = GetSelectedRevisions().First() as GitRevision;
             using (var diffForm = new FormDiff(UICommands, this,
                 _baseCommitToCompare.Guid, headCommit.Guid,
                 _baseCommitToCompare.Subject, headCommit.Subject))
@@ -3229,10 +3260,12 @@ namespace GitUI
 
         public int TrySearchRevision(string initRevision) { return 0; }
 
+        /*
         void IRevisionGrid.RevisionsCellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             throw new NotImplementedException();
         }
+        */
 
         public float DrawRef(GitUI.DrawRefArgs drawRefArgs, float offset, string name, Color headColor, GitUI.ArrowType arrowType)
         {
@@ -3244,9 +3277,9 @@ namespace GitUI
             throw new NotImplementedException();
         }
 
-        IList<GitRevision> IRevisionGrid.GetSelectedRevisions()
+        /* IList<GitRevision> IRevisionGrid.GetSelectedRevisions()
         {
             throw new NotImplementedException();
-        }
+        } */
     }
 }
