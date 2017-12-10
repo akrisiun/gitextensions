@@ -1163,7 +1163,7 @@ namespace GitUI
             }
         }
 
-        internal bool FilterIsApplied(bool inclBranchFilter)
+        public bool FilterIsApplied(bool inclBranchFilter)
         {
             return (inclBranchFilter && !string.IsNullOrEmpty(BranchFilter)) ||
                    !(string.IsNullOrEmpty(QuickRevisionFilter) &&
@@ -2093,7 +2093,7 @@ namespace GitUI
         }
 
         // internal because used by RevisonGridMenuCommands
-        internal void ShowAllBranches_ToolStripMenuItemClick(object sender, EventArgs e)
+        public void ShowAllBranches_ToolStripMenuItemClick(object sender, EventArgs e)
         {
             if (_showAllBranchesToolStripMenuItemChecked)
                 return;
@@ -3193,7 +3193,8 @@ namespace GitUI
             return Hotkeys.FirstOrDefault(h => h.CommandCode == commandCode);
         }
 
-        internal RevisionGridMenuCommands MenuCommands { get { return _revisionGridMenuCommands; } }
+        // internal
+        public RevisionGridMenuCommands MenuCommands { get { return _revisionGridMenuCommands; } }
 
         private void CompareToBranchToolStripMenuItem_Click(object sender, EventArgs e)
         {

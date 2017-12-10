@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using GitUI.Properties;
-using ResourceManager;
+
 using Settings = GitCommands.AppSettings;
 #if !__MonoCS__
 using Microsoft.WindowsAPICodePack.Taskbar;
@@ -14,11 +14,13 @@ using Microsoft.WindowsAPICodePack.Taskbar;
 
 namespace GitUI
 {
+    // using ResourceManager; // GitExtensionsFormBase
+
     /// <summary>Base class for a Git Extensions <see cref="Form"/>.
     /// <remarks>
     /// Includes support for font, hotkey, icon, translation, and position restore.
     /// </remarks></summary>
-    public class GitExtensionsForm : GitExtensionsFormBase, GitUI.IWin32Window
+    public class GitExtensionsForm : GitUI.GitExtensionsFormBase, GitUI.IWin32Window
     {
         internal static Icon ApplicationIcon = GetApplicationIcon(Settings.IconStyle, Settings.IconColor);
 
@@ -69,6 +71,10 @@ namespace GitUI
             }
 #endif
         }
+
+#if NOTRANS
+        public virtual void Translate() { }
+#endif
 
         #region icon
 
@@ -219,6 +225,8 @@ namespace GitUI
 
         }
 
+        #region Position
+
         private bool _windowCentred;
 
         /// <summary>
@@ -366,5 +374,7 @@ namespace GitUI
 
             return null;
         }
+
+        #endregion
     }
 }

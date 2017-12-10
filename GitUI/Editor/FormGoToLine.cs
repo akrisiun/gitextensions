@@ -1,5 +1,4 @@
 ﻿using System;
-using ResourceManager;
 
 namespace GitUI.Editor
 {
@@ -8,7 +7,9 @@ namespace GitUI.Editor
         public FormGoToLine()
         {
             InitializeComponent();
+#if TRANS
             Translate();
+#endif
         }
 
         public int GetLineNumber()

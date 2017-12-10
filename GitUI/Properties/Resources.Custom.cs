@@ -34,12 +34,33 @@ namespace GitUI.Properties
 
     public partial class ResourcesUI
     {
-        static System.Resources.ResourceManager ResourceManager => Resources.ResourceManager;
-        static CultureInfo resourceCulture => Resources.Culture;
+        public static System.Resources.ResourceManager ResourceManager => Resources.ResourceManager;
+        public static CultureInfo resourceCulture => Resources.Culture;
 
         public static System.Drawing.Bitmap arrow_refresh {
             get {
                 object obj = ResourceManager.GetObject("arrow_refresh", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap arrow_refresh_dirty {
+            get {
+                object obj = ResourceManager.GetObject("arrow_refresh_dirty", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap IconRepoOpen {
+            get {
+                object obj = ResourceManager.GetObject("IconRepoOpen", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap IconBranchCreate {
+            get {
+                object obj = ResourceManager.GetObject("IconBranchCreate", resourceCulture);
                 return obj as System.Drawing.Bitmap;
             }
         }
@@ -195,6 +216,111 @@ namespace GitUI.Properties
         }
 
         public static Image Icon_77 { get { return null; } }
+        public static Image Icon_4 { get { return null; } }
 
+        public static System.Drawing.Bitmap PullFetch {
+            get {
+                object obj = ResourceManager.GetObject("PullFetch", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap PullRebase {
+            get {
+                object obj = ResourceManager.GetObject("PullRebase", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap PullFetchAll {
+            get {
+                object obj = ResourceManager.GetObject("PullFetchAll", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap PullMerge {
+            get {
+                object obj = ResourceManager.GetObject("PullMerge", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap IconCommit {
+            get {
+                object obj = ResourceManager.GetObject("IconCommit", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap IconFileTree {
+            get {
+                object obj = ResourceManager.GetObject("IconFileTree", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap IconDiff {
+            get {
+                object obj = ResourceManager.GetObject("IconDiff", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap New {
+            get {
+                object obj = ResourceManager.GetObject("New", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap Folder {
+            get {
+                object obj = ResourceManager.GetObject("Folder", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap IconFolderSubmodule {
+            get {
+                object obj = ResourceManager.GetObject("IconFolderSubmodule", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap Modified {
+            get {
+                object obj = ResourceManager.GetObject("Modified", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap IconSubmoduleDirty {
+            get {
+                object obj = ResourceManager.GetObject("IconSubmoduleDirty", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap IconFind {
+            get {
+                object obj = ResourceManager.GetObject("IconFind", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap IconRepoCreate {
+            get {
+                object obj = ResourceManager.GetObject("IconRepoCreate", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
+
+        public static System.Drawing.Bitmap RecentRepositories {
+            get {
+                object obj = ResourceManager.GetObject("RecentRepositories", resourceCulture);
+                return obj as System.Drawing.Bitmap;
+            }
+        }
     }
 }

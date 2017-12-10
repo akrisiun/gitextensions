@@ -74,8 +74,9 @@ namespace GitUI.AutoCompletion
                 return File.ReadLines(path);
 
             Stream s = Assembly.GetEntryAssembly().GetManifestResourceStream("GitExtensions.AutoCompleteRegexes.txt");
+            s = s ?? Assembly.GetEntryAssembly().GetManifestResourceStream("GitExtensions.Commit.AutoCompleteRegexes.txt");
             if (s == null)
-                {
+            {
                     throw new NotImplementedException("Please add AutoCompleteRegexes.txt file into .csproj");
             }
             using (var sr = new StreamReader (s))

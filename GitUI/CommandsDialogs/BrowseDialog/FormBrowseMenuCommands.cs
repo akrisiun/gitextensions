@@ -1,23 +1,27 @@
 ﻿using GitUI.CommandsDialogs.BrowseDialog;
+using GitUIPluginInterfaces;
+using System;
 using System.Collections.Generic;
 
 namespace GitUI.CommandsDialogs
 {
-    public class FormBrowseMenuCommands : MenuCommandsBase
+    public class FormBrowseMenuCommands : MenuCommandsBase, IDisposable
     {
-        FormBrowse _formBrowse;
-        GitUICommands UICommands { get { return _formBrowse.UICommands; } }
+        IFormBrowse _formBrowse;
+        GitUICommands UICommands { get { return _formBrowse?.UICommands as GitUICommands; } }
 
         // must be created only once because of translation
         IEnumerable<MenuCommand> _navigateMenuCommands;
 
-        public FormBrowseMenuCommands(FormBrowse formBrowse)
+        public FormBrowseMenuCommands(IFormBrowse formBrowse)
         {
             TranslationCategoryName = "FormBrowse";
             Translate();
 
             _formBrowse = formBrowse;
         }
+
+        public void Dispose() { _formBrowse = null; }
 
         public IEnumerable<MenuCommand> GetNavigateMenuCommands()
         {

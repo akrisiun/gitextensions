@@ -83,6 +83,10 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.DirectoryServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Extensions">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net40\System.Net.Http.Extensions.dll</HintPath>
     </Reference>
@@ -95,7 +99,18 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="FormBrowseDark.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBrowseDark.Designer.cs">
+      <DependentUpon>FormBrowseDark.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GitUICommandsThread.cs" />
     <Compile Include="Program.cs" />
+    <EmbeddedResource Include="FormBrowseDark.resx">
+      <DependentUpon>FormBrowseDark.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -109,7 +124,6 @@
     </Compile>
     <None Include="app.config" />
     <None Include="app.manifest" />
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -124,6 +138,10 @@
     <ProjectReference Include="..\Externals\Git.hub\Git.hub\Git.hub.csproj">
       <Project>{f50b1dbf-1c9f-4437-87ec-7aba805cc446}</Project>
       <Name>Git.hub</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Externals\MaterialSkin\MaterialSkin\MaterialSkinLib.csproj">
+      <Project>{8eb7611b-68cd-4b8b-987a-11717e2b250c}</Project>
+      <Name>MaterialSkinLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\Externals\NBugLib.csproj">
       <Project>{14e7137b-7f0e-44d2-af0b-cdaec9bf9a6d}</Project>

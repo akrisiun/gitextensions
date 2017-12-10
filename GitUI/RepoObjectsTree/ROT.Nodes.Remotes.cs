@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -306,11 +307,13 @@ namespace GitUI.UserControls
 
             public void Pull()
             {
-                bool pullCompleted = false;
+                var pullCompleted = false;
+                Debugger.Break();
                 var remoteBranchInfo = GetRemoteBranchInfo();
-                //UICommands.StartPullDialog(this.TreeViewNode.TreeView, pullOnShow: false,
-                //    remoteBranch: remoteBranchInfo.BranchName, remote: remoteBranchInfo.Remote,
-                //    pullCompleted: out pullCompleted, fetchAll: false);
+
+                UICommands.StartPullDialog(this.TreeViewNode.TreeView, pullOnShow: false,
+                   remoteBranch: remoteBranchInfo.BranchName, remote: remoteBranchInfo.Remote,
+                   pullCompleted: out pullCompleted, fetchAll: false);
             }
 
             /// <summary>Create a local branch from the remote branch.</summary>

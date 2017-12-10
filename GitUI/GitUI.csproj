@@ -47,7 +47,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;NET45;__MonoCS__;WIN;NOAPICODE;TRANS;NOSKIN;</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET45;__MonoCS__;WIN;NOAPICODE;NOTRANS;SKIN;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -113,6 +113,9 @@
     </Compile>
     <Compile Include="AutoCompletion\CommitAutoCompleteProvider.cs" />
     <Compile Include="AutoCompletion\IAutoCompleteProvider.cs" />
+    <Compile Include="BaseForm\GitExtensionsFormBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="BuildServerIntegration\BuildInfoDrawingLogic.cs" />
     <Compile Include="BuildServerIntegration\BuildServerWatcher.cs" />
     <Compile Include="CommandsDialogs\AboutBox.cs">
@@ -1038,7 +1041,7 @@
     <Compile Include="CommandsDialogs\FormVerify.Designer.cs">
       <DependentUpon>FormVerify.cs</DependentUpon>
     </Compile>
-    <Compile Include="GitExtensionsForm.cs">
+    <Compile Include="BaseForm\GitExtensionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CommandsDialogs\BrowseDialog\FormGitLog.cs">
@@ -1604,6 +1607,10 @@
     <ProjectReference Include="..\Externals\Git.hub\Git.hub\Git.hub.csproj">
       <Project>{f50b1dbf-1c9f-4437-87ec-7aba805cc446}</Project>
       <Name>Git.hub</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Externals\MaterialSkin\MaterialSkin\MaterialSkinLib.csproj">
+      <Project>{8eb7611b-68cd-4b8b-987a-11717e2b250c}</Project>
+      <Name>MaterialSkinLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\GitCommands\GitCommands.csproj">
       <Project>{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}</Project>

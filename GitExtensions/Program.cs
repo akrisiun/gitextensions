@@ -21,8 +21,11 @@ namespace GitExtensions
         [STAThread]
         private static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            if (EnvUtils.RunningOnWindows())
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+            }
 
             if (!EnvUtils.IsMonoRuntime())
             {
@@ -57,10 +60,12 @@ namespace GitExtensions
 
             string[] args = Environment.GetCommandLineArgs();
             FormSplash.ShowSplash();
+
             //Store here SynchronizationContext.Current, because later sometimes it can be null
             //see http://stackoverflow.com/questions/11621372/synchronizationcontext-current-is-null-in-continuation-on-the-main-ui-thread
             GitUIExtensions.UISynchronizationContext = SynchronizationContext.Current;
-            Application.DoEvents();
+            if (EnvUtils.RunningOnWindows())
+                Application.DoEvents();
 
             AppSettings.LoadSettings();
             if (EnvUtils.RunningOnWindows())
@@ -69,21 +74,18 @@ namespace GitExtensions
 
               //Quick HOME check:
                 FormSplash.SetAction("Checking home path...");
-                Application.DoEvents();
+                if (EnvUtils.RunningOnWindows())
+                    Application.DoEvents();
 
                 FormFixHome.CheckHomePath();
             }
+
             //Register plugins
             FormSplash.SetAction("Loading plugins...");
-            Application.DoEvents();
+            if (EnvUtils.RunningOnWindows())
+                Application.DoEvents();
 
-            if (string.IsNullOrEmpty(AppSettings.Translation))
-            {
-                using (var formChoose = new FormChooseTranslation())
-                {
-                    formChoose.ShowDialog();
-                }
-            }
+            AppSettings.Translation = "English";
 
             try
             {
@@ -92,7 +94,8 @@ namespace GitExtensions
                     || !File.Exists(AppSettings.GitCommandValue))
                 {
                     FormSplash.SetAction("Checking settings...");
-                    Application.DoEvents();
+                    if (EnvUtils.RunningOnWindows())
+                        Application.DoEvents();
 
                     GitUICommands uiCommands = new GitUICommands(string.Empty);
                     var commonLogic = new CommonLogic(uiCommands.Module);
@@ -127,10 +130,10 @@ namespace GitExtensions
                     (path) => Program.StartCommit(path);
             }
 
-            GitUICommands uCommands = new GitUICommands(GetWorkingDir(args));
+            GitUICommands uCommands = new GitUICommandsThread(GetWorkingDir(args));
             if (args.Length <= 1)
             {
-                uCommands.StartBrowseDialog();
+                uCommands.StartBrowseDialog("");
             }
             else  // if we are here args.Length > 1
             {

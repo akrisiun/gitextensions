@@ -31,13 +31,12 @@ using Microsoft.Win32;
 using ResourceManager;
 using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 using Settings = GitCommands.AppSettings;
-#if !__MonoCS__
-using Microsoft.WindowsAPICodePack.Taskbar;
-#endif
+using System.Globalization;
 
 namespace GitUI.CommandsDialogs
 {
-    public partial class FormBrowse : GitModuleForm, IBrowseRepo, IFormBrowse, GitUI.IWin32Window
+    [CLSCompliant(false)]
+    public partial class FormBrowseDark : GitModuleForm, IBrowseRepo, IFormBrowse, GitUI.IWin32Window
     {
         #region Translation
 
@@ -145,9 +144,9 @@ namespace GitUI.CommandsDialogs
         private ToolStripItem _warning;
 
 #if !__MonoCS__
-        private ThumbnailToolBarButton _commitButton;
-        private ThumbnailToolBarButton _pushButton;
-        private ThumbnailToolBarButton _pullButton;
+        //private ThumbnailToolBarButton _commitButton;
+        //private ThumbnailToolBarButton _pushButton;
+        //private ThumbnailToolBarButton _pullButton;
         private bool _toolbarButtonsCreated;
 #endif
         private bool _dontUpdateOnIndexChange;
@@ -158,6 +157,7 @@ namespace GitUI.CommandsDialogs
         private string _diffTabPageTitleBase = "";
 
         private readonly FormBrowseMenus _formBrowseMenus;
+
         ConEmuControl terminal = null;
 #pragma warning disable 0414
         private readonly FormBrowseMenuCommands _formBrowseMenuCommands;
@@ -166,7 +166,7 @@ namespace GitUI.CommandsDialogs
         /// <summary>
         /// For VS designer
         /// </summary>
-        private FormBrowse()
+        private FormBrowseDark()
         {
             InitializeComponent();
             Translate();
@@ -180,7 +180,7 @@ namespace GitUI.CommandsDialogs
         public ITree Tree { get; set; } // IRepoObjectsTree
         IGitUICommands IFormBrowse.UICommands { get { return UICommands; } } // -> GitModuleForm
 
-        public FormBrowse(GitUICommands aCommands, string filter)
+        public FormBrowseDark(GitUICommands aCommands, string filter)
             : base(true, aCommands)
         {
             if (LazyTree == null)
@@ -194,9 +194,12 @@ namespace GitUI.CommandsDialogs
                 var imageList = new ImageList();
                 CommitInfoTabControl.ImageList = imageList;
                 imageList.ColorDepth = ColorDepth.Depth8Bit;
-                imageList.Images.Add(global::GitUI.Properties.Resources.IconCommit);
-                imageList.Images.Add(global::GitUI.Properties.Resources.IconFileTree);
-                imageList.Images.Add(global::GitUI.Properties.Resources.IconDiff);
+                if (ResourcesUI.IconCommit != null)
+                {
+                    imageList.Images.Add(ResourcesUI.IconCommit);
+                    imageList.Images.Add(ResourcesUI.IconFileTree);
+                    imageList.Images.Add(ResourcesUI.IconDiff);
+                }
                 CommitInfoTabControl.TabPages[0].ImageIndex = 0;
                 CommitInfoTabControl.TabPages[1].ImageIndex = 1;
                 CommitInfoTabControl.TabPages[2].ImageIndex = 2;
@@ -245,9 +248,9 @@ namespace GitUI.CommandsDialogs
             DiffText.SetFileLoader(getNextPatchFile);
 
             GitTree.ImageList = new ImageList();
-            GitTree.ImageList.Images.Add(Properties.Resources.New); //File
-            GitTree.ImageList.Images.Add(Properties.Resources.Folder); //Folder
-            GitTree.ImageList.Images.Add(Properties.Resources.IconFolderSubmodule); //Submodule
+            GitTree.ImageList.Images.Add(ResourcesUI.New); //File
+            GitTree.ImageList.Images.Add(ResourcesUI.Folder); //Folder
+            GitTree.ImageList.Images.Add(ResourcesUI.IconFolderSubmodule); //Submodule
 
             GitTree.MouseDown += GitTree_MouseDown;
             GitTree.MouseMove += GitTree_MouseMove;
@@ -380,12 +383,12 @@ namespace GitUI.CommandsDialogs
 
         private void BrowseLoad(object sender, EventArgs e)
         {
-#if !__MonoCS__
-            if (EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
-            {
-                TaskbarManager.Instance.ApplicationId = "GitExtensions";
-            }
-#endif
+//#if !__MonoCS__
+//            if (EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
+//            {
+//                TaskbarManager.Instance.ApplicationId = "GitExtensions";
+//            }
+//#endif
             HideVariableMainMenuItems();
 
             RevisionGrid.Load();
@@ -404,12 +407,19 @@ namespace GitUI.CommandsDialogs
             {
                 if (Settings.PlaySpecialStartupSound)
                 {
-                    using (var cowMoo = Resources.cow_moo)
+                    using (var cowMoo = Resources_cow_moo)
                         new System.Media.SoundPlayer(cowMoo).Play();
                 }
             }
             catch // This code is just for fun, we do not want the program to crash because of it.
             {
+            }
+        }
+
+        static CultureInfo resourceCulture => ResourcesUI.resourceCulture;
+        internal static System.IO.UnmanagedMemoryStream Resources_cow_moo {
+            get {
+                return ResourcesUI.ResourceManager.GetStream("cow_moo", resourceCulture);
             }
         }
 
@@ -419,8 +429,8 @@ namespace GitUI.CommandsDialogs
             this.InvokeAsync(() =>
             {
                 RefreshButton.Image = indexChanged && Settings.UseFastChecks && Module.IsValidGitWorkingDir()
-                                          ? Resources.arrow_refresh_dirty
-                                          : Resources.arrow_refresh;
+                                          ? ResourcesUI.arrow_refresh_dirty
+                                          : ResourcesUI.arrow_refresh;
             });
         }
 
@@ -519,6 +529,7 @@ namespace GitUI.CommandsDialogs
             bool bareRepository = Module.IsBareRepository();
             bool validWorkingDir = Module.IsValidGitWorkingDir();
             bool hasWorkingDir = !string.IsNullOrEmpty(Module.WorkingDir);
+
             branchSelect.Text = validWorkingDir ? Module.GetSelectedBranch() : "";
             if (hasWorkingDir)
                 HideDashboard();
@@ -755,7 +766,7 @@ namespace GitUI.CommandsDialogs
         private void UpdateJumplist(bool validWorkingDir)
         {
 #if !__MonoCS__
-            if (!EnvUtils.RunningOnWindows() || !TaskbarManager.IsPlatformSupported)
+            if (!EnvUtils.RunningOnWindows()) // || !TaskbarManager.IsPlatformSupported)
                 return;
 
             try
@@ -778,15 +789,13 @@ namespace GitUI.CommandsDialogs
 
                     string path = Path.Combine(baseFolder, String.Format("{0}.{1}", sb, "gitext"));
                     File.WriteAllText(path, Module.WorkingDir);
-                    JumpList.AddToRecent(path);
+                    // JumpList.AddToRecent(path);
 
-                    var JList = JumpList.CreateJumpListForIndividualWindow(TaskbarManager.Instance.ApplicationId, Handle);
-                    JList.ClearAllUserTasks();
-
-                    //to control which category Recent/Frequent is displayed
-                    JList.KnownCategoryToDisplay = JumpListKnownCategoryType.Recent;
-
-                    JList.Refresh();
+                    //var JList = JumpList.CreateJumpListForIndividualWindow(TaskbarManager.Instance.ApplicationId, Handle);
+                    //JList.ClearAllUserTasks();
+                    ////to control which category Recent/Frequent is displayed
+                    //JList.KnownCategoryToDisplay = JumpListKnownCategoryType.Recent;
+                    //JList.Refresh();
                 }
 
                 CreateOrUpdateTaskBarButtons(validWorkingDir);
@@ -801,8 +810,9 @@ namespace GitUI.CommandsDialogs
 #if !__MonoCS__
         private void CreateOrUpdateTaskBarButtons(bool validRepo)
         {
-            if (EnvUtils.RunningOnWindows() && TaskbarManager.IsPlatformSupported)
+            if (EnvUtils.RunningOnWindows()) //  && TaskbarManager.IsPlatformSupported)
             {
+                /*
                 if (!_toolbarButtonsCreated)
                 {
                     _commitButton = new ThumbnailToolBarButton(MakeIcon(toolStripButton1.Image, 48, true), toolStripButton1.Text);
@@ -824,6 +834,7 @@ namespace GitUI.CommandsDialogs
                 _commitButton.Enabled = validRepo;
                 _pushButton.Enabled = validRepo;
                 _pullButton.Enabled = validRepo;
+                */
             }
         }
 #endif
@@ -2973,27 +2984,27 @@ namespace GitUI.CommandsDialogs
             switch (Module.LastPullAction)
             {
                 case Settings.PullAction.Fetch:
-                    toolStripButtonPull.Image = Properties.Resources.PullFetch;
+                    toolStripButtonPull.Image = ResourcesUI.PullFetch;
                     toolStripButtonPull.ToolTipText = _pullFetch.Text;
                     break;
 
                 case Settings.PullAction.FetchAll:
-                    toolStripButtonPull.Image = Properties.Resources.PullFetchAll;
+                    toolStripButtonPull.Image = ResourcesUI.PullFetchAll;
                     toolStripButtonPull.ToolTipText = _pullFetchAll.Text;
                     break;
 
                 case Settings.PullAction.Merge:
-                    toolStripButtonPull.Image = Properties.Resources.PullMerge;
+                    toolStripButtonPull.Image = ResourcesUI.PullMerge;
                     toolStripButtonPull.ToolTipText = _pullMerge.Text;
                     break;
 
                 case Settings.PullAction.Rebase:
-                    toolStripButtonPull.Image = Properties.Resources.PullRebase;
+                    toolStripButtonPull.Image = ResourcesUI.PullRebase;
                     toolStripButtonPull.ToolTipText = _pullRebase.Text;
                     break;
 
                 default:
-                    toolStripButtonPull.Image = Properties.Resources.Icon_4;
+                    toolStripButtonPull.Image = ResourcesUI.Icon_4;
                     toolStripButtonPull.ToolTipText = _pullOpenDialog.Text;
                     break;
             }
@@ -3264,7 +3275,8 @@ namespace GitUI.CommandsDialogs
         private static Image GetItemImage(SubmoduleInfo info)
         {
             if (info.Status == null)
-                return Resources.IconFolderSubmodule;
+                return ResourcesUI.IconFolderSubmodule;
+            /* TODO
             if (info.Status == SubmoduleStatus.FastForward)
                 return info.IsDirty ? Resources.IconSubmoduleRevisionUpDirty : Resources.IconSubmoduleRevisionUp;
             if (info.Status == SubmoduleStatus.Rewind)
@@ -3273,8 +3285,8 @@ namespace GitUI.CommandsDialogs
                 return info.IsDirty ? Resources.IconSubmoduleRevisionSemiUpDirty : Resources.IconSubmoduleRevisionSemiUp;
             if (info.Status == SubmoduleStatus.OlderTime)
                 return info.IsDirty ? Resources.IconSubmoduleRevisionSemiDownDirty : Resources.IconSubmoduleRevisionSemiDown;
-
-            return info.IsDirty ? Resources.IconSubmoduleDirty : Resources.Modified;
+            */
+            return info.IsDirty ? ResourcesUI.IconSubmoduleDirty : ResourcesUI.Modified;
         }
 
         private static void GetSubmoduleStatusAsync(SubmoduleInfo info, CancellationToken cancelToken)
@@ -3579,7 +3591,7 @@ namespace GitUI.CommandsDialogs
 			    return; // ConEmu only works on WinNT
 		    TabPage tabpage;
 		    string sImageKey = "Resources.IconConsole";
-		    CommitInfoTabControl.ImageList.Images.Add(sImageKey, Resources.IconConsole);
+		    // CommitInfoTabControl.ImageList.Images.Add(sImageKey, ResourcesUI.IconConsole);
 		    CommitInfoTabControl.Controls.Add(tabpage = new TabPage("Console"));
 		    tabpage.ImageKey = sImageKey; // After adding page
 
@@ -3650,14 +3662,14 @@ namespace GitUI.CommandsDialogs
         {
             if (disposing)
             {
-#if !__MonoCS__
-                if (_commitButton != null)
-                    _commitButton.Dispose();
-                if (_pushButton != null)
-                    _pushButton.Dispose();
-                if (_pullButton != null)
-                    _pullButton.Dispose();
-#endif
+//#if !__MonoCS__
+//                if (_commitButton != null)
+//                    _commitButton.Dispose();
+//                if (_pushButton != null)
+//                    _pushButton.Dispose();
+//                if (_pullButton != null)
+//                    _pullButton.Dispose();
+//#endif
                 _submodulesStatusCTS.Dispose();
                 if (_formBrowseMenus != null)
                     _formBrowseMenus.Dispose();

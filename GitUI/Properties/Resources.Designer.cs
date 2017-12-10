@@ -1787,21 +1787,21 @@ namespace GitUI.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap PullFetch {
+        public static System.Drawing.Bitmap PullFetch {
             get {
                 object obj = ResourceManager.GetObject("PullFetch", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap PullFetchAll {
+        public static System.Drawing.Bitmap PullFetchAll {
             get {
                 object obj = ResourceManager.GetObject("PullFetchAll", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));

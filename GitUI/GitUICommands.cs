@@ -460,13 +460,14 @@ namespace GitUI
                 form.ShowDialog();
         }
 
-        public bool DoActionOnRepo(IWin32Window owner, bool requiresValidWorkingDir, bool changesRepo,
+        public bool DoActionOnRepo(System.Windows.Forms.IWin32Window owner,
+                bool requiresValidWorkingDir, bool changesRepo,
                 Func<bool> action)
         {
             GitUIEventHandler preEvent = this.PreCommit;
             GitUIPostActionEventHandler postEvent = this.PostCommit;
 
-            bool result = DoActionOnRepo(owner, requiresValidWorkingDir, changesRepo, preEvent, postEvent, action);
+            bool result = DoActionOnRepo(owner as GitUI.IWin32Window, requiresValidWorkingDir, changesRepo,      preEvent, postEvent, action);
             return result;
         }
 
@@ -480,7 +481,8 @@ namespace GitUI
         /// <param name="postEvent">Event invoked after performing action</param>
         /// <param name="action">Action to do. Return true to indicate that the action was successfully done.</param>
         /// <returns>true if action was successfully done, false otherwise</returns>
-        public bool DoActionOnRepo(IWin32Window owner, bool requiresValidWorkingDir, bool changesRepo,
+        public bool DoActionOnRepo(GitUI.IWin32Window owner,
+               bool requiresValidWorkingDir, bool changesRepo,
                GitUIEventHandler preEvent, GitUIPostActionEventHandler postEvent, Func<bool> action)
         {
             bool actionDone = false;
@@ -862,7 +864,8 @@ namespace GitUI
         /// <param name="pullOnShow"></param>
         /// <param name="pullCompleted">true if pull completed with no errors</param>
         /// <returns>if revision grid should be refreshed</returns>
-        public bool StartPullDialog(IWin32Window owner, bool pullOnShow, string remoteBranch, string remote, out bool pullCompleted, bool fetchAll)
+        public bool StartPullDialog(System.Windows.Forms.IWin32Window owner,
+            bool pullOnShow, string remoteBranch, string remote, out bool pullCompleted, bool fetchAll)
         {
             var pulled = false;
 
@@ -875,7 +878,7 @@ namespace GitUI
 
                     DialogResult dlgResult;
                     if (pullOnShow)
-                        dlgResult = formPull.PullAndShowDialogWhenFailed(owner);
+                        dlgResult = formPull.PullAndShowDialogWhenFailed(null); // owner
                     else
                         dlgResult = formPull.ShowDialog(owner);
 
@@ -888,7 +891,9 @@ namespace GitUI
                 }
             };
 
-            bool done = DoActionOnRepo(owner, true, true, PrePull, PostPull, action);
+            Form ownerForm = null;
+            bool done = DoActionOnRepo(ownerForm as GitUI.IWin32Window,
+                 true, true, PrePull, PostPull, action);
 
             pullCompleted = pulled;
 
@@ -1550,7 +1555,7 @@ namespace GitUI
             return StartSettingsDialog(owner, GitUI.CommandsDialogs.SettingsDialog.Pages.GitConfigSettingsPage.GetPageReference());
         }
 
-        public bool StartBrowseDialog(IWin32Window owner, string filter)
+        public virtual bool StartBrowseDialog(IWin32Window owner, string filter)
         {
             if (!InvokeEvent(owner, PreBrowse))
                 return false;
@@ -1573,7 +1578,7 @@ namespace GitUI
             return true;
         }
 
-        public bool StartBrowseDialog(string filter)
+        public virtual bool StartBrowseDialog(string filter)
         {
             return StartBrowseDialog(null, filter);
         }
@@ -1810,7 +1815,7 @@ namespace GitUI
             });
         }
 
-        internal void StartPullRequestsDialog(IWin32Window owner, IRepositoryHostPlugin gitHoster)
+        public void StartPullRequestsDialog(IWin32Window owner, IRepositoryHostPlugin gitHoster)
         {
             WrapRepoHostingCall("View pull requests", gitHoster,
                                 gh =>
@@ -2236,17 +2241,17 @@ namespace GitUI
                 Settings.AutoStash = true;
         }
 
-        internal void RaisePreBrowseInitialize(IWin32Window owner)
+        public void RaisePreBrowseInitialize(IWin32Window owner)
         {
             InvokeEvent(owner, PreBrowseInitialize);
         }
 
-        internal void RaisePostBrowseInitialize(IWin32Window owner)
+        public void RaisePostBrowseInitialize(IWin32Window owner)
         {
             InvokeEvent(owner, PostBrowseInitialize);
         }
 
-        internal void RaisePostRegisterPlugin(IWin32Window owner)
+        public void RaisePostRegisterPlugin(IWin32Window owner)
         {
             InvokeEvent(owner, PostRegisterPlugin);
         }
