@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace GitUI.CommandsDialogs
 {
-    public abstract class FormBrowse : GitModuleForm, IBrowseRepo, IWin32Window2
+    public abstract class FormBrowse : GitModuleForm, IBrowseRepo, IWin32Window
     {
         public FormBrowse(GitUICommands aCommands, string filter) : this(true, aCommands, filter) { }
         public FormBrowse(bool positionRestore, GitUICommands aCommands, string filter)
@@ -17,6 +17,8 @@ namespace GitUI.CommandsDialogs
         { }
 
         public static Lazy<IRepoObjectsTree> LazyTree { get; set; }
+        public static Lazy<IBrowseRepo> LazyBrowse { get; set; }
+
         public static Action<string> StartCommit { get; set; }
         public ITree Tree { get; set; } // IRepoObjectsTree
         // IGitUICommands IFormBrowse.UICommands { get { return UICommands; } } // -> GitModuleForm

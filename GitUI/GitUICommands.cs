@@ -1563,7 +1563,10 @@ namespace GitUI
             FormBrowse.LazyTree = new Lazy<UserControls.IRepoObjectsTree>(
                 () => new RepoObjectsTree());
 
-            var form = new FormBrowse(this, filter);
+            var form = FormBrowse.LazyBrowse?.Value as Form;
+            // var form = new FormBrowse(this, filter);
+            if (form == null)
+                return false;
 
             if (Application.MessageLoop)
             {

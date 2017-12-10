@@ -69,8 +69,9 @@
     <StartupObject>GitExtensions.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ConEmu.WinForms">
-      <HintPath>..\packages\ConEmu.Control.WinForms.1.0.20160313.1\lib\net40\ConEmu.WinForms.dll</HintPath>
+    <Reference Include="ConEmu.WinForms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=00340228797aafb8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Externals\bin\ConEmu.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.TextEditor">
       <HintPath>..\Bin\ICSharpCode.TextEditor.dll</HintPath>

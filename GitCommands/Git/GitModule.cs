@@ -76,8 +76,7 @@ namespace GitCommands
         public ConflictedFileData Local;
         public ConflictedFileData Remote;
 
-        public string Filename
-        {
+        public string Filename {
             get { return Local.Filename ?? Base.Filename ?? Remote.Filename; }
         }
     }
@@ -117,35 +116,27 @@ namespace GitCommands
         private readonly string _workingDir;
 
         [NotNull]
-        public string WorkingDir
-        {
-            get
-            {
+        public string WorkingDir {
+            get {
                 return _workingDir;
             }
         }
 
         /// <summary>Gets the path to the git application executable.</summary>
-        public string GitCommand
-        {
-            get
-            {
+        public string GitCommand {
+            get {
                 return AppSettings.GitCommand;
             }
         }
 
-        public Version AppVersion
-        {
-            get
-            {
+        public Version AppVersion {
+            get {
                 return AppSettings.AppVersion;
             }
         }
 
-        public string GravatarCacheDir
-        {
-            get
-            {
+        public string GravatarCacheDir {
+            get {
                 return AppSettings.GravatarCachePath;
             }
         }
@@ -159,28 +150,22 @@ namespace GitCommands
         private string _submoduleName;
         private string _submodulePath;
 
-        public string SubmoduleName
-        {
-            get
-            {
+        public string SubmoduleName {
+            get {
                 InitSuperproject();
                 return _submoduleName;
             }
         }
 
-        public string SubmodulePath
-        {
-            get
-            {
+        public string SubmodulePath {
+            get {
                 InitSuperproject();
                 return _submodulePath;
             }
         }
 
-        public GitModule SuperprojectModule
-        {
-            get
-            {
+        public GitModule SuperprojectModule {
+            get {
                 InitSuperproject();
                 return _superprojectModule;
             }
@@ -211,10 +196,8 @@ namespace GitCommands
         }
 
         private RepoDistSettings _effectiveSettings;
-        public RepoDistSettings EffectiveSettings
-        {
-            get
-            {
+        public RepoDistSettings EffectiveSettings {
+            get {
                 lock (_lock)
                 {
                     if (_effectiveSettings == null)
@@ -231,10 +214,8 @@ namespace GitCommands
         }
 
         private RepoDistSettings _distributedSettings;
-        public RepoDistSettings DistributedSettings
-        {
-            get
-            {
+        public RepoDistSettings DistributedSettings {
+            get {
                 lock (_lock)
                 {
                     if (_distributedSettings == null)
@@ -246,10 +227,8 @@ namespace GitCommands
         }
 
         private RepoDistSettings _localSettings;
-        public RepoDistSettings LocalSettings
-        {
-            get
-            {
+        public RepoDistSettings LocalSettings {
+            get {
                 lock (_lock)
                 {
                     if (_localSettings == null)
@@ -261,10 +240,8 @@ namespace GitCommands
         }
 
         private ConfigFileSettings _effectiveConfigFile;
-        public ConfigFileSettings EffectiveConfigFile
-        {
-            get
-            {
+        public ConfigFileSettings EffectiveConfigFile {
+            get {
                 lock (_lock)
                 {
                     if (_effectiveConfigFile == null)
@@ -275,20 +252,16 @@ namespace GitCommands
             }
         }
 
-        public ConfigFileSettings LocalConfigFile
-        {
-            get
-            {
+        public ConfigFileSettings LocalConfigFile {
+            get {
                 return new ConfigFileSettings(null, EffectiveConfigFile.SettingsCache);
             }
         }
 
         //encoding for files paths
         private static Encoding _systemEncoding;
-        public static Encoding SystemEncoding
-        {
-            get
-            {
+        public static Encoding SystemEncoding {
+            get {
                 if (_systemEncoding == null)
                 {
                     //check whether GitExtensions works with standard msysgit or msysgit-unicode
@@ -325,10 +298,8 @@ namespace GitCommands
         //4) branch, tag name, errors, warnings, hints encoded in system default encoding
         public static readonly Encoding LosslessEncoding = Encoding.GetEncoding("ISO-8859-1");//is any better?
 
-        public Encoding FilesEncoding
-        {
-            get
-            {
+        public Encoding FilesEncoding {
+            get {
                 Encoding result = EffectiveConfigFile.FilesEncoding;
                 if (result == null)
                     result = new UTF8Encoding(false);
@@ -336,10 +307,8 @@ namespace GitCommands
             }
         }
 
-        public Encoding CommitEncoding
-        {
-            get
-            {
+        public Encoding CommitEncoding {
+            get {
                 Encoding result = EffectiveConfigFile.CommitEncoding;
                 if (result == null)
                     result = new UTF8Encoding(false);
@@ -350,10 +319,8 @@ namespace GitCommands
         /// <summary>
         /// Encoding for commit header (message, notes, author, commiter, emails)
         /// </summary>
-        public Encoding LogOutputEncoding
-        {
-            get
-            {
+        public Encoding LogOutputEncoding {
+            get {
                 Encoding result = EffectiveConfigFile.LogOutputEncoding;
                 if (result == null)
                     result = CommitEncoding;
@@ -366,8 +333,7 @@ namespace GitCommands
 
         private static readonly string[] DetachedPrefixes = { "(no branch", "(detached from ", "(HEAD detached at " };
 
-        public AppSettings.PullAction LastPullAction
-        {
+        public AppSettings.PullAction LastPullAction {
             get { return AppSettings.GetEnum("LastPullAction_" + WorkingDir, AppSettings.PullAction.None); }
             set { AppSettings.SetEnum("LastPullAction_" + WorkingDir, value); }
         }
@@ -520,11 +486,11 @@ namespace GitCommands
             var executionStartTimestamp = DateTime.Now;
 
             var startInfo = new ProcessStartInfo
-                                {
-                                    FileName = fileName,
-                                    Arguments = arguments,
-                                    WorkingDirectory = workingDir
-                                };
+            {
+                FileName = fileName,
+                Arguments = arguments,
+                WorkingDirectory = workingDir
+            };
             if (!showConsole)
             {
                 startInfo.UseShellExecute = false;
@@ -1032,15 +998,15 @@ namespace GitCommands
             }
         }
 
-        public Process RunConsole(string bashCommand = null, params string[] parm)
+        public Process RunConsole(IConsoleHelper helper, string bashCommand = null, params string[] parm)
         {
             if (EnvUtils.RunningOnUnix())
             {
-                return RunBash(bashCommand, "bash");
+                return helper.RunBash(bashCommand, "bash");
             }
 
             // Windows
-            return RunExternalCmdDetachedShowConsole("cmd.exe", @"/K echo cmd.exe command error!");
+            return helper.RunExternalCmdDetachedShowConsole("cmd.exe", @"/K echo cmd.exe command error!");
         }
 
         public Process RunBashExe(string bashCommand = null, params string[] parm)
@@ -1051,30 +1017,32 @@ namespace GitCommands
             }
 
             // Windows
-            return RunExternalCmdDetachedShowConsole(@"C:\Windows\System32\bash.exe", @"/K echo System32\bash.exe command error!");
+            return RunExternalCmdDetachedShowConsole(@"bash.cmd", // C:\Windows\System32\bash.exe",
+                @"/K echo System32\bash.exe command error!");
         }
 
-        public Process RunConsolePS(string bashCommand = null, params string[] parm)
+        public Process RunConsolePS(IConsoleHelper helper, string bashCommand = null, params string[] parm)
         {
             if (EnvUtils.RunningOnUnix())
             {
-                return RunBash(bashCommand, "powershell");
+                return helper.RunBash(bashCommand, "powershell");
             }
 
             // Windows: @powershell
-            return RunExternalCmdDetachedShowConsole("powershell", @"/K echo cmd.exe command error!");
+            return helper.RunExternalCmdDetachedShowConsole("powershell", @"/K echo cmd.exe command error!");
         }
 
         // TODO:
-        public Process RunConsoleConEmu(string bashCommand = null, params string[] parm)
+        public Process RunConsoleConEmu(IConsoleHelper helper, string bashCommand = null, params string[] parm)
         {
             if (EnvUtils.RunningOnUnix())
             {
-                return RunBash(bashCommand);
+                return helper.RunBash(bashCommand, null);
             }
 
             // Windows
-            return RunExternalCmdDetachedShowConsole("conemu.exe", @"/K echo conemu.exe not found! :( Please add a folder containing 'conemu.exe' to your PATH...");
+            return helper.RunExternalCmdDetachedShowConsole("conemu.exe",
+                @"/K echo conemu.exe not found! :( Please add a folder containing 'conemu.exe' to your PATH...");
         }
 
         /// <summary>Runs a bash or shell command.</summary>
@@ -1692,7 +1660,7 @@ namespace GitCommands
 
             string arguments = fetchTags == true ? " --tags" : fetchTags == false ? " --no-tags" : "";
 
-            if(isUnshallow)
+            if (isUnshallow)
                 arguments += " --unshallow";
 
             return "\"" + remote.Trim() + "\" " + remoteBranchArguments + localBranchArguments + arguments;
@@ -1852,7 +1820,7 @@ namespace GitCommands
         public const string LockError = "index.lock': File exists.";
 
         public void AbortOtherOperations(Form uiForm)
-        { 
+        {
             // "index.lock': File exists."))
             // TODO:
             AbortAll = true;
@@ -2068,12 +2036,12 @@ namespace GitCommands
 
                 var patchFile =
                     new PatchFile
-                        {
-                            Name = file,
-                            FullName = fullFileName,
-                            IsNext = n == next,
-                            IsSkipped = n < next
-                        };
+                    {
+                        Name = file,
+                        FullName = fullFileName,
+                        IsNext = n == next,
+                        IsSkipped = n < next
+                    };
 
                 if (File.Exists(GetRebaseDir() + file))
                 {
@@ -2979,7 +2947,7 @@ namespace GitCommands
         /// </summary>
         public string GetTagMessage(string tag)
         {
-            if( string.IsNullOrWhiteSpace(tag))
+            if (string.IsNullOrWhiteSpace(tag))
                 return null;
 
             tag = tag.Trim();
@@ -3579,7 +3547,7 @@ namespace GitCommands
                 return ret;
             }
 
-            var files = fileList.Split(new []{'\0'}, StringSplitOptions.RemoveEmptyEntries);
+            var files = fileList.Split(new[] { '\0' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var file in files)
             {
                 var item = new GitItemStatus
@@ -3606,7 +3574,7 @@ namespace GitCommands
                 revisionOfMergeCommit.Guid,
                 AppSettings.UsePatienceDiffAlgorithm ? "--patience" : "",
                 filePath,
-                AppSettings.OmitUninterestingDiff? "--cc" : "-c -p");
+                AppSettings.OmitUninterestingDiff ? "--cc" : "-c -p");
 
             var patchManager = new PatchManager();
             var patch = RunCacheableCmd(AppSettings.GitCommand, cmd, LosslessEncoding);
@@ -3620,4 +3588,19 @@ namespace GitCommands
             return GetPatch(patchManager, filePath, filePath).Text;
         }
     }
+
+    public interface IConsoleHelper
+    {
+        GitUIPluginInterfaces.IWin32Window Window { get; set; }
+        GitUIPluginInterfaces.IGitUICommands UICommands { get; set; }
+        string WorkingDir { get; }
+
+        Process RunConsolePS(string bashCommand = null, params string[] parm);
+        Process RunBash(string cmd, string arguments);
+        Process StartProccess(string cmd, string arguments, string workingDir, bool showConsole);
+
+        Process RunExternalCmdDetachedShowConsole(string cmd, string arguments);
+        void FillTerminalTab(Control terminalCtrl, GitUIPluginInterfaces.IGitModule Module);
+    }
+
 }

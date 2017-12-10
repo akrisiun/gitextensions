@@ -11,7 +11,7 @@ namespace GitUI
 {
     public class ConsoleHelper : IConsoleHelper
     {
-        public static IConsoleHelper Instance { get; protected set; }
+        public static ConsoleHelper Instance { get; protected set; }
         static ConsoleHelper()
         {
             Instance = Instance ?? new ConsoleHelper();

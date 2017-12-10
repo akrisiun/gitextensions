@@ -71,8 +71,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ConEmu.WinForms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=00340228797aafb8, processorArchitecture=MSIL">
-      <HintPath>..\packages\ConEmu.Control.WinForms.1.0.20160313.1\lib\net40\ConEmu.WinForms.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Externals\bin\ConEmu.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="PSTaskDialog">
       <HintPath>..\Bin\PSTaskDialog.dll</HintPath>
@@ -271,6 +271,10 @@
     <Compile Include="Helpers\SystemExtensions.cs" />
     <Compile Include="Helpers\TreeViewExtensions.cs" />
     <Compile Include="Hotkey\KeysExtensions.cs" />
+    <Compile Include="MainDialogs\ConsoleHelper.cs" />
+    <Compile Include="MainDialogs\FormBrowse.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Notifications\NotificationFeed.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -601,12 +605,6 @@
     </Compile>
     <Compile Include="FormSplash.Designer.cs">
       <DependentUpon>FormSplash.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CommandsDialogs\FormBrowse.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CommandsDialogs\FormBrowse.Designer.cs">
-      <DependentUpon>FormBrowse.cs</DependentUpon>
     </Compile>
     <Compile Include="Editor\ColorHelper.cs" />
     <Compile Include="CommandsDialogs\FormCommit.cs">
@@ -1275,10 +1273,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\FormGitAttributes.resx">
       <DependentUpon>FormGitAttributes.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CommandsDialogs\FormBrowse.resx">
-      <DependentUpon>FormBrowse.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\FormCommit.resx">
