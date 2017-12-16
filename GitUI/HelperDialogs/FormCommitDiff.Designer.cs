@@ -145,7 +145,7 @@ namespace GitUI.HelperDialogs
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer2;
-        public IFileStatusList DiffFiles;
+        public  FileStatusList DiffFiles;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private FileViewer DiffText;
         private CommitInfo.CommitInfo commitInfo;

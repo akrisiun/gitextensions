@@ -43,7 +43,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
         #endregion
 
         #region SelectedHotkeyCommand
-        private HotkeyCommand _SelectedHotkeyCommand;
+        /* private HotkeyCommand _SelectedHotkeyCommand;
         private HotkeyCommand SelectedHotkeyCommand
         {
             get { return _SelectedHotkeyCommand; }
@@ -53,6 +53,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
                 UpdateTextBox(value);
             }
         }
+        */
         #endregion
 
         #endregion
@@ -88,27 +89,29 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
 
         private void UpdateListViewItems(HotkeySettings setting)
         {
-            this.SelectedHotkeyCommand = null;
+            //this.SelectedHotkeyCommand = null;
 
-            this.listMappings.Items.Clear();
-            if (setting != null)
-            {
-                foreach (var cmd in setting.Commands)
-                {
-                    if (cmd != null)
-                    {
-                        var item = new ListViewItem(new[] {cmd.Name, cmd.KeyData.ToText() ?? _hotkeyNotSet.Text});
-                        item.Tag = cmd;
-                        this.listMappings.Items.Add(item);
-                    }
-                }
-            }
+            //this.listMappings.Items.Clear();
+            //if (setting != null)
+            //{
+            //    foreach (var cmd in setting.Commands)
+            //    {
+            //        if (cmd != null)
+            //        {
+            //            var item = new ListViewItem(new[] {cmd.Name, cmd.KeyData.ToText() ?? _hotkeyNotSet.Text});
+            //            item.Tag = cmd;
+            //            this.listMappings.Items.Add(item);
+            //        }
+            //    }
+            //}
         }
 
+        /*
         private void UpdateTextBox(HotkeyCommand command)
         {
             txtHotkey.KeyData = (command != null) ? command.KeyData : Keys.None;
         }
+        */
 
         private void ControlHotkeys_Load(object sender, EventArgs e)
         {
@@ -131,40 +134,40 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
             if (lvi != null)
             {
                 var hotkey = lvi.Tag as HotkeyCommand;
-                this.SelectedHotkeyCommand = hotkey;
+                // this.SelectedHotkeyCommand = hotkey;
             }
         }
 
         private void bApply_Click(object sender, EventArgs e)
         {
-            var hotkey = this.SelectedHotkeyCommand;
-            if (hotkey != null)
-            {
-                // Update the KeyData with the chosen one
-                hotkey.KeyData = txtHotkey.KeyData;
+            //var hotkey = this.SelectedHotkeyCommand;
+            //if (hotkey != null)
+            //{
+            //    // Update the KeyData with the chosen one
+            //    hotkey.KeyData = txtHotkey.KeyData;
 
-                // Refresh the ListView
-                UpdateListViewItems(this.SelectedHotkeySettings);
-            }
+            //    // Refresh the ListView
+            //    UpdateListViewItems(this.SelectedHotkeySettings);
+            //}
         }
 
         private void bClear_Click(object sender, EventArgs e)
         {
-            var hotkey = this.SelectedHotkeyCommand;
-            if (hotkey != null)
-            {
-                // Update the KeyData with the chosen one
-                hotkey.KeyData = Keys.None;
-                // Refresh the ListView
-                UpdateListViewItems(this.SelectedHotkeySettings);
-                txtHotkey.KeyData = hotkey.KeyData;
-            }
+            //var hotkey = this.SelectedHotkeyCommand;
+            //if (hotkey != null)
+            //{
+            //    // Update the KeyData with the chosen one
+            //    hotkey.KeyData = Keys.None;
+            //    // Refresh the ListView
+            //    UpdateListViewItems(this.SelectedHotkeySettings);
+            //    txtHotkey.KeyData = hotkey.KeyData;
+            //}
         }
 
         private void bResetToDefaults_Click(object sender, EventArgs e)
         {
 #if !SKIN   // ORIGIN git
-            this.Settings = HotkeySettingsManager.CreateDefaultSettings();
+            // this.Settings = HotkeySettingsManager.CreateDefaultSettings();
 #endif
         }
 

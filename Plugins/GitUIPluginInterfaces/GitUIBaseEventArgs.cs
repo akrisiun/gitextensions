@@ -1,11 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
-//using System.Windows.Forms;
+using System.Windows.Forms;
 
 
 namespace GitUIPluginInterfaces
 {
-    public interface IWin32Window
+    public interface IWin32Window1
     {
         IntPtr Handle { get; }
     }

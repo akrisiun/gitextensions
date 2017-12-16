@@ -113,7 +113,7 @@ namespace GitUI.Script
                     continue;
                 if (option.StartsWith("{c") && currentRevision == null)
                 {
-                    currentRevision = GetCurrentRevision(aModule, revisionGrid, currentTags, currentLocalBranches, currentRemoteBranches, currentBranches, currentRevision);
+                    currentRevision = GetCurrentRevision(aModule, revisionGrid as RevisionGrid, currentTags, currentLocalBranches, currentRemoteBranches, currentBranches, currentRevision);
 
                     if (currentLocalBranches.Count == 1)
                         currentRemote = aModule.GetSetting(string.Format("branch.{0}.remote", currentLocalBranches[0].Name));
@@ -127,7 +127,7 @@ namespace GitUI.Script
                 }
                 else if (option.StartsWith("{s") && selectedRevision == null && revisionGrid != null)
                 {
-                    allSelectedRevisions = revisionGrid.GetSelectedRevisions();
+                    allSelectedRevisions = (revisionGrid as RevisionGrid).GetSelectedRevisions();
                     allSelectedRevisions.Reverse(); // Put first clicked revisions first
                     selectedRevision = CalculateSelectedRevision(revisionGrid, selectedRemoteBranches, selectedRemotes, selectedLocalBranches, selectedBranches, selectedTags);
                 }
@@ -329,7 +329,7 @@ namespace GitUI.Script
             command = ExpandCommandVariables(command,aModule);
 
             if (!scriptInfo.RunInBackground)
-                FormProcess.ShowDialog(owner, command, argument, aModule.WorkingDir, null, true);
+                FormProcess.ShowDialog(owner as Form, command, argument, aModule.WorkingDir, null, true);
             else
             {
                 if (originalCommand.Equals("{openurl}", StringComparison.CurrentCultureIgnoreCase))
@@ -374,7 +374,7 @@ namespace GitUI.Script
             return selectedRevision;
         }
 
-        private static GitRevision GetCurrentRevision(GitModule aModule, IRevisionGrid RevisionGrid, List<GitRef> currentTags, List<GitRef> currentLocalBranches,
+        private static GitRevision GetCurrentRevision(GitModule aModule, RevisionGrid RevisionGrid, List<GitRef> currentTags, List<GitRef> currentLocalBranches,
                                                       List<GitRef> currentRemoteBranches, List<GitRef> currentBranches,
                                                       GitRevision currentRevision)
         {

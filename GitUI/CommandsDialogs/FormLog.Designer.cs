@@ -146,7 +146,7 @@ namespace GitUI.CommandsDialogs
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer3;
-        public IFileStatusList DiffFiles;
+        public  FileStatusList DiffFiles;
         private RevisionGrid RevisionGrid;
         private FileViewer diffViewer;
     }

@@ -64,7 +64,7 @@ namespace GitUIPluginInterfaces
         
         /// <summary>Gets notifications implementation.</summary>
         INotifications Notifications { get; }
-        IBrowseRepo BrowseRepo { get; }
+        IBrowseRepo BrowseRepo { get; set;  }
 
         /// <summary>
         /// RepoChangedNotifier.Notify() should be called after each action that changess repo state

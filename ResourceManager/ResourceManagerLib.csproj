@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ResourceManager</RootNamespace>
     <AssemblyName>ResourceManagerLib</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -91,6 +91,7 @@
     <Compile Include="GitExtensionsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="GitPluginBase.cs" />
     <Compile Include="HotkeyCommand.cs" />
     <Compile Include="ITranslate.cs" />
     <Compile Include="LinkFactory.cs" />

@@ -374,7 +374,8 @@ namespace GitUI.CommandsDialogs
         private System.Windows.Forms.Button Stash;
         private System.Windows.Forms.Button Apply;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        public IFileStatusList Stashed;
+        // IFileStatusList
+        public  FileStatusList Stashed;
         private System.Windows.Forms.BindingSource gitStashBindingSource;
         private System.Windows.Forms.RichTextBox StashMessage;
         private FileViewer View;

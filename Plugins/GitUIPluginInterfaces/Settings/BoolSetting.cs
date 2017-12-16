@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 // using System.Windows.Forms;
 // using GitUI;
 
@@ -15,7 +16,7 @@ namespace GitUIPluginInterfaces
         public BoolSetting(string aName, bool aDefaultValue)
             : this(aName, aName, aDefaultValue) { }
 
-        public static Func<ICheckBox> CreateCheckBox { get; set; }
+        public static Func<CheckBox> CreateCheckBox { get; set; }
 
         public BoolSetting(string aName, string aCaption, bool aDefaultValue)
         {
@@ -52,19 +53,19 @@ namespace GitUIPluginInterfaces
         }
 
 
-        private class CheckBoxBinding : SettingControlBinding<BoolSetting, ICheckBox>
+        private class CheckBoxBinding : SettingControlBinding<BoolSetting, CheckBox>
         {
             public CheckBoxBinding(BoolSetting aSetting)
                  : base(aSetting, BoolSetting.CreateCheckBox()) { }
 
-            public override ICheckBox CreateControl()
+            public override CheckBox CreateControl()
             {
-                ICheckBox result = BoolSetting.CreateCheckBox(); // =  new CheckBox();
+                CheckBox result = BoolSetting.CreateCheckBox(); // =  new CheckBox();
                 result.ThreeState = true;
                 return result;
             }
 
-            public override void LoadSetting(ISettingsSource settings, bool areSettingsEffective, ICheckBox control)
+            public override void LoadSetting(ISettingsSource settings, bool areSettingsEffective, CheckBox control)
             {
                 bool? settingVal;
                 if (areSettingsEffective)
@@ -81,9 +82,10 @@ namespace GitUIPluginInterfaces
                 //        val ?? true ? CheckState.Checked : CheckState.Unchecked);
             }
 
-            public override void SaveSetting(ISettingsSource settings, bool areSettingsEffective, ICheckBox control)
+            public override void SaveSetting(ISettingsSource settings, bool areSettingsEffective, CheckBox control)
             {
-                bool? isChecked = control.IsChecked; // (control.CheckState == CheckState.Indeterminate) ? (bool?)null : (control.CheckState == CheckState.Checked);
+                bool? isChecked = // control.IsChecked; //
+                        (control.CheckState == CheckState.Indeterminate) ? (bool?)null : (control.CheckState == CheckState.Checked);
                 //Setting[settings] = UIExtensions.GetNullableChecked(control, isChecked);
             }
         }

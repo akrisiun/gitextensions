@@ -172,7 +172,8 @@ namespace ResourceManager
         }
     }
 
-    internal class TranslationString
+    // internal 
+    public class TranslationString
     {
         public TranslationString(object str)
         {

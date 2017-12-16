@@ -63,7 +63,7 @@ namespace GitUI
         {
             get
             {
-                return UICommandsSource.UICommands;
+                return UICommandsSource.ICommands as GitUICommands;
             }
         }
 

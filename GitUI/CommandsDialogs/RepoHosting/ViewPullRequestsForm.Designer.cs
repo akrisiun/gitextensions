@@ -428,7 +428,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.SplitContainer splitContainer3;
-        public IFileStatusList _fileStatusList;
+        public FileStatusList _fileStatusList;
         private Editor.FileViewer _diffViewer;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

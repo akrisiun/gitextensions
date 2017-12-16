@@ -7,14 +7,14 @@ namespace GitUI.CommandsDialogs.SettingsDialog
     /// <summary>
     /// Page to group other pages
     /// </summary>
-    public abstract class GroupSettingsPage : Translate, ISettingsPage
+    public abstract class GroupSettingsPage : ISettingsPage // Translate
     {
         public string Title { get; private set; }
 
         protected GroupSettingsPage(string aTitle)
         {
             Title = aTitle;
-            Translator.Translate(this, GitCommands.AppSettings.CurrentTranslation);
+            // Translator.Translate(this, GitCommands.AppSettings.CurrentTranslation);
         }
 
         public string GetTitle()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 //using System.Windows.Forms;
 
 namespace GitUIPluginInterfaces
@@ -23,25 +24,25 @@ namespace GitUIPluginInterfaces
         public string Name { get; private set; }
         public string Caption { get; private set; }
         public T DefaultValue { get; set; }
-        public ITextBox CustomControl { get; set; }
+        public TextBox CustomControl { get; set; }
 
         public ISettingControlBinding CreateControlBinding()
         {
             return new TextBoxBinding(this, CustomControl);
     }
 
-        private class TextBoxBinding : SettingControlBinding<NumberSetting<T>, ITextBox>
+        private class TextBoxBinding : SettingControlBinding<NumberSetting<T>, TextBox>
         {
-            public TextBoxBinding(NumberSetting<T> aSetting, ITextBox aCustomControl)
+            public TextBoxBinding(NumberSetting<T> aSetting, TextBox aCustomControl)
                 : base(aSetting, aCustomControl)
             { }
 
-            public override ITextBox CreateControl()
+            public override TextBox CreateControl()
             {
                 return StringSetting.CreateTextBox(); // new TextBox();
             }
 
-            public override void LoadSetting(ISettingsSource settings, bool areSettingsEffective, ITextBox control)
+            public override void LoadSetting(ISettingsSource settings, bool areSettingsEffective, TextBox control)
             {
                 object settingVal;
                 if (areSettingsEffective)
@@ -56,7 +57,7 @@ namespace GitUIPluginInterfaces
                 control.Text = ConvertToString(settingVal);
             }
 
-            public override void SaveSetting(ISettingsSource settings, bool areSettingsEffective, ITextBox control)
+            public override void SaveSetting(ISettingsSource settings, bool areSettingsEffective, TextBox control)
             {
                 var controlValue = control.Text;
                 if (areSettingsEffective)

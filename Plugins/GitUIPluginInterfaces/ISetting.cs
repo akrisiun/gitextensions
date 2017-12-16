@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 //using System.Windows.Forms;
 
 namespace GitUIPluginInterfaces
@@ -28,7 +29,7 @@ namespace GitUIPluginInterfaces
         /// Control should take care of scalability and resizability of its subcontrols
         /// </summary>
         /// <returns></returns>
-        IControl GetControl();
+        Control GetControl();
 
         /// <summary>
         /// Loads setting value from settings to Control
@@ -51,7 +52,7 @@ namespace GitUIPluginInterfaces
         ISetting GetSetting();        
     }
 
-    public abstract class SettingControlBinding<S, T> : ISettingControlBinding where T : IControl where S : ISetting
+    public abstract class SettingControlBinding<S, T> : ISettingControlBinding where T : Control where S : ISetting
     {
         private T _control;
         protected readonly S Setting;
@@ -73,7 +74,7 @@ namespace GitUIPluginInterfaces
             }
         }
 
-        public IControl GetControl()
+        public Control GetControl()
         {
             return Control;
         }

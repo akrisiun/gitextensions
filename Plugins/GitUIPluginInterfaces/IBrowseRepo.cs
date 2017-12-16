@@ -2,25 +2,30 @@
 using GitUIPluginInterfaces;
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace GitUIPluginInterfaces
 {
     using GitUI;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Windows.Forms;
 
     public interface IFormBrowse
     {
         bool StartBrowseDialog(string args);
-        void FormCommit_Shown(IFormCommit form);
-        void DoStartCommit(string path);
-        ITree Tree { get; set; }
-        bool StartCommitDialog(IWin32Window owner, bool showOnlyWhenChanges);
+        bool StartCommitDialog(object owner, bool showOnlyWhenChanges);
+        // void FormCommit_Shown(IFormCommit form);
+        // void DoStartCommit(string path);
 
-        IGitUICommands UICommands { get; } // -> GitModuleForm
+        ITree Tree { get; set; }
+        System.Windows.Forms.TreeView GitTreeObj { get; }
+
+
+        IGitUICommands ICommands { get; } // -> GitModuleForm
 
         //IFormBrowse.
-        //IRevisionGrid RevisionsGrid { get; }
+        IRevisionGrid RevisionGridObj { get; }
         //Stack<string> LastSelectedNodes { get; }
         //void RevisionGrid_ContextMenuOpening(CancelEventArgs e);
     }
@@ -69,7 +74,7 @@ namespace GitUI
         void ShowFirstParent_ToolStripMenuItemClick(object sender, EventArgs e);
         void SetLimit(int limit);
 
-        IEnumerable<IGitItem> Revisions();
+        IEnumerable<IGitItem> GetRevisions();
         int LastRowIndex { get; }
     }
 
@@ -88,6 +93,7 @@ namespace GitUI
     {
         void Show();
         IFormBrowse Caller { get; set; }
-        bool DoActionOnRepo(GitUIPluginInterfaces.IWin32Window owner, bool requiresValidWorkingDir, bool changesRepo, Func<bool> action);
+        bool DoActionOnRepo(// GitUIPluginInterfaces.
+             IWin32Window owner, bool requiresValidWorkingDir, bool changesRepo, Func<bool> action);
     }
 }

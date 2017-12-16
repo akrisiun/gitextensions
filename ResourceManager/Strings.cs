@@ -4,13 +4,13 @@ using GitCommands;
 
 namespace ResourceManager
 {
-    public class TranslationString
+    public class TranslationString2 : TranslationString  // git commands
     {
-        public string Text { get; set; }
+        // public string Text { get; set; }
 
-        public TranslationString(string t)
+        public TranslationString2(string str) : base(str)
         {
-            Text = t;
+            // Text = t;
         }
              
     }

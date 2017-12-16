@@ -38,7 +38,7 @@ namespace GitUI.CommandsDialogs
 
         private void ViewSelectedFileDiff()
         {
-            var list = DiffFiles as IFileStatusList;
+            var list = DiffFiles as FileStatusList;
             if (list.SelectedItem == null)
             {
                 diffViewer.ViewPatch("");

@@ -29,7 +29,7 @@ namespace GitUI.CommandsDialogs
             : base(aCommands)
         {
             InitializeComponent();
-            Loading.Image = global::GitUI.Properties.Resources.loadingpanel;
+            // Loading.Image = global::GitUI.Properties.Resources.loadingpanel;
             Translate();
             View.ExtraDiffArgumentsChanged += ViewExtraDiffArgumentsChanged;
         }

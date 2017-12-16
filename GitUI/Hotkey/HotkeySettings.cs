@@ -11,8 +11,8 @@ namespace GitUI.Hotkey
     [Serializable]
     public class HotkeySettings
     {
-        [XmlArray]
-        public HotkeyCommand[] Commands { get; set; }
+        // [XmlArray]
+        // public HotkeyCommand[] Commands { get; set; }
 
         [XmlAttribute]
         public string Name { get; set; }
@@ -20,22 +20,22 @@ namespace GitUI.Hotkey
         public HotkeySettings()
         {
         }
-        public HotkeySettings(string name, params HotkeyCommand[] commands)
+        public HotkeySettings(string name) // , params HotkeyCommand[] commands)
         {
             this.Name = name;
-            this.Commands = commands;
+            // this.Commands = commands;
         }
 
-        public override bool Equals(object obj)
-        {
-            HotkeySettings other = obj as HotkeySettings;
-            if (other == null)
-            {
-                return false;
-            }
+        //public override bool Equals(object obj)
+        //{
+        //    HotkeySettings other = obj as HotkeySettings;
+        //    if (other == null)
+        //    {
+        //        return false;
+        //    }
 
-            return Commands.SequenceEqual(other.Commands);
-        }
+        //    return Commands.SequenceEqual(other.Commands);
+        //}
 
         public override int GetHashCode()
         {

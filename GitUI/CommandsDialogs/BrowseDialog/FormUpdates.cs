@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
-using Git.hub;
+// using Git.hub;
 using GitCommands.Config;
 using GitCommands;
 using GitUIPluginInterfaces;
@@ -12,9 +12,9 @@ using ResourceManager;
 
 namespace GitUI.CommandsDialogs.BrowseDialog
 {
-    using IWin32Window = GitUIPluginInterfaces.IWin32Window;
+    // using IWin32Window = GitUIPluginInterfaces.IWin32Window;
 
-    public partial class FormUpdates : GitExtensionsForm
+    public partial class FormUpdates : GitExtensionsForm, IWin32Window
     {
         #region Translation
         private readonly TranslationString _newVersionAvailable =
@@ -23,7 +23,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
             new TranslationString("No updates found");
         #endregion
 
-        public IWin32Window OwnerWindow;
+        public System.Windows.Forms.IWin32Window OwnerWindow;
         public Version CurrentVersion;
         public bool UpdateFound;
         public string UpdateUrl;
@@ -46,7 +46,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
             Close();
         }
 
-        public void SearchForUpdatesAndShow(IWin32Window aOwnerWindow, bool alwaysShow)
+        public void SearchForUpdatesAndShow(System.Windows.Forms.IWin32Window aOwnerWindow, bool alwaysShow)
         {
             OwnerWindow = aOwnerWindow;
             new Thread(SearchForUpdates).Start();
@@ -54,8 +54,9 @@ namespace GitUI.CommandsDialogs.BrowseDialog
                 ShowDialog(aOwnerWindow as System.Windows.Forms.IWin32Window);
         }
 
-        private void SearchForUpdates()
+        public virtual void SearchForUpdates()
         {
+            /*
             try
             {
                 Client github = new Client();
@@ -88,7 +89,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
                     }, null);
                 Done();
             }
-
+            */
         }
 
         void CheckForNewerVersion(string releases)

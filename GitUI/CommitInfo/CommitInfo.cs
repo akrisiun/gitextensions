@@ -44,8 +44,8 @@ namespace GitUI.CommitInfo
 
         private void RevisionInfoLinkClicked(object sender, LinkClickedEventArgs e)
         {
-            string link = _linkFactory.ParseLink(e.LinkText);
-            HandleLink(link, sender);
+            //string link = _linkFactory.ParseLink(e.LinkText);
+            //HandleLink(link, sender);
         }
 
         private void HandleLink(string link, object sender)
@@ -155,11 +155,11 @@ namespace GitUI.CommitInfo
                 ThreadPool.QueueUserWorkItem(_ => loadSortedRefs());
 
             data.ChildrenGuids = _children;
-            CommitInformation commitInformation = CommitInformation.GetCommitInfo(data, _linkFactory, CommandClick != null, Module);
+            // CommitInformation commitInformation = CommitInformation.GetCommitInfo(data, _linkFactory, CommandClick != null, Module);
 
-            _RevisionHeader.SetXHTMLText(commitInformation.Header);
+            //_RevisionHeader.SetXHTMLText(commitInformation.Header);
             _RevisionHeader.Height = GetRevisionHeaderHeight();
-            _revisionInfo = commitInformation.Body;
+            //_revisionInfo = commitInformation.Body;
             updateText();
             LoadAuthorImage(data.Author ?? data.Committer);
 
@@ -419,7 +419,7 @@ namespace GitUI.CommitInfo
             _branches = null;
             _annotatedTagsMessages = null;
             _tags = null;
-            _linkFactory.Clear();
+            // _linkFactory.Clear();
             updateText();
             gravatar1.Visible = AppSettings.ShowAuthorGravatar;
             if (AppSettings.ShowAuthorGravatar)
@@ -476,9 +476,9 @@ namespace GitUI.CommitInfo
                 if ((branchIsLocal && allowLocal) || (!branchIsLocal && allowRemote))
                 {
                     string branchText;
-                    if (showBranchesAsLinks)
-                        branchText = _linkFactory.CreateBranchLink(noPrefixBranch);
-                    else
+                    //if (showBranchesAsLinks)
+                    //    branchText = _linkFactory.CreateBranchLink(noPrefixBranch);
+                    //else
                         branchText = WebUtility.HtmlEncode(noPrefixBranch);
                     links.Add(branchText);
                 }
@@ -494,7 +494,10 @@ namespace GitUI.CommitInfo
         private string GetTagsWhichContainsThisCommit(IEnumerable<string> tags, bool showBranchesAsLinks)
         {
             var tagString = tags
-                .Select(s => showBranchesAsLinks ? _linkFactory.CreateTagLink(s) : WebUtility.HtmlEncode(s)).Join(", ");
+                .Select(s =>
+                    // showBranchesAsLinks ? _linkFactory.CreateTagLink(s) :
+                    WebUtility.HtmlEncode(s)
+                ).Join(", ");
 
             if (!String.IsNullOrEmpty(tagString))
                 return Environment.NewLine + WebUtility.HtmlEncode(containedInTags.Text) + " " + tagString;

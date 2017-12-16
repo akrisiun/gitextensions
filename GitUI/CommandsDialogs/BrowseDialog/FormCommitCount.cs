@@ -12,7 +12,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
             : base(aCommands)
         {
             InitializeComponent();
-            this.Loading.Image = global::GitUI.Properties.Resources.loadingpanel;
+            // this.Loading.Image = global::GitUI.Properties.Resources.loadingpanel;
             Translate();
         }
 

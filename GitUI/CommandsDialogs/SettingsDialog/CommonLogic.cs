@@ -11,7 +11,7 @@ using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 
 namespace GitUI.CommandsDialogs.SettingsDialog
 {
-    public class CommonLogic : Translate
+    public class CommonLogic // : Translate
     {
         private readonly TranslationString _cantReadRegistry =
             new TranslationString("GitExtensions has insufficient permissions to check the registry.");

@@ -155,7 +155,7 @@ namespace GitUI
                     diffArgs, encoding, cacheResult);
         }
 
-        public static string GetSelectedPatch(this FileViewer diffViewer, IRevisionGrid grid, GitItemStatus file)
+        public static string GetSelectedPatch(this FileViewer diffViewer, RevisionGrid grid, GitItemStatus file)
         {
             IList<GitRevision> revisions = grid.GetSelectedRevisions();
             string firstRevision = revisions.Count > 0 ? revisions[0].Guid : null;
@@ -276,7 +276,7 @@ namespace GitUI
         {
             public MaskPanel()
             {
-                Image = Properties.Resources.loadingpanel;
+                // Image = Properties.Resources.loadingpanel;
                 SizeMode = PictureBoxSizeMode.CenterImage;
                 BackColor = SystemColors.AppWorkspace;
             }

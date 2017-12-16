@@ -171,7 +171,7 @@ namespace GitUI.Editor
         protected override void OnRuntimeLoad(EventArgs e)
         {
 #if !SKIN   // ORIGIN git
-            this.Hotkeys = HotkeySettingsManager.LoadHotkeys(HotkeySettingsName);
+            // this.Hotkeys = HotkeySettingsManager.LoadHotkeys(HotkeySettingsName);
 #endif
             Font = AppSettings.DiffFont;
         }

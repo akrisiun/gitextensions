@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 //using System.Windows.Forms;
 
 namespace GitUIPluginInterfaces
@@ -34,23 +35,23 @@ namespace GitUIPluginInterfaces
         public string Caption { get; private set; }
         public string DefaultValue { get; set; }
         public IList<string> Values { get; set; }
-        public IComboBox CustomControl { get; set; }
+        public ComboBox CustomControl { get; set; }
 
         public ISettingControlBinding CreateControlBinding()
         {
             return new ComboBoxBinding(this, CustomControl);
         }
 
-        public static Func<IComboBox> CreateComboBox { get; set; }
+        public static Func<ComboBox> CreateComboBox { get; set; }
 
-        private class ComboBoxBinding : SettingControlBinding<ChoiceSetting, IComboBox>
+        private class ComboBoxBinding : SettingControlBinding<ChoiceSetting, ComboBox>
         {
 
-            public ComboBoxBinding(ChoiceSetting aSetting, IComboBox aCustomControl)
+            public ComboBoxBinding(ChoiceSetting aSetting, ComboBox aCustomControl)
                 : base(aSetting, aCustomControl)
             { }
 
-            public override IComboBox CreateControl()
+            public override ComboBox CreateControl()
             {
                 var comboBox = ChoiceSetting.CreateComboBox();
                 // var comboBox = new ComboBox { DropDownStyle = ComboBoxStyle.DropDownList};
@@ -58,7 +59,7 @@ namespace GitUIPluginInterfaces
                 return comboBox;
             }
 
-            public override void LoadSetting(ISettingsSource settings, bool areSettingsEffective, IComboBox control)
+            public override void LoadSetting(ISettingsSource settings, bool areSettingsEffective, ComboBox control)
             {
                 string settingVal;
                 if (areSettingsEffective)
@@ -77,7 +78,7 @@ namespace GitUIPluginInterfaces
                 }
             }
 
-            public override void SaveSetting(ISettingsSource settings, bool areSettingsEffective, IComboBox control)
+            public override void SaveSetting(ISettingsSource settings, bool areSettingsEffective, ComboBox control)
             {
                 var controlValue = control.SelectedItem?.ToString();
                 if (areSettingsEffective)

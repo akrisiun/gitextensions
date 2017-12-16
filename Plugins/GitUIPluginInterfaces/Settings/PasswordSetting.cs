@@ -1,5 +1,7 @@
 ﻿//using System.Windows.Forms;
 
+using System.Windows.Forms;
+
 namespace GitUIPluginInterfaces
 {
     public class PasswordSetting : ISetting
@@ -19,20 +21,20 @@ namespace GitUIPluginInterfaces
         public string Name { get; private set; }
         public string Caption { get; private set; }
         public string DefaultValue { get; set; }
-        public ITextBox CustomControl { get; set; }
+        public TextBox CustomControl { get; set; }
 
         public ISettingControlBinding CreateControlBinding()
         {
             return new TextBoxBinding(this, CustomControl);
         }
 
-        private class TextBoxBinding : SettingControlBinding<PasswordSetting, ITextBox>
+        private class TextBoxBinding : SettingControlBinding<PasswordSetting, TextBox>
         {
-            public TextBoxBinding(PasswordSetting aSetting, ITextBox aCustomControl)
+            public TextBoxBinding(PasswordSetting aSetting, TextBox aCustomControl)
                 : base(aSetting, aCustomControl)
             { }
 
-            public override ITextBox CreateControl()
+            public override TextBox CreateControl()
             {
                 var box = StringSetting.CreateTextBox();
                 // new TextBox {PasswordChar = '\u25CF'};
@@ -40,7 +42,7 @@ namespace GitUIPluginInterfaces
                 return box;
             }
 
-            public override void LoadSetting(ISettingsSource settings, bool areSettingsEffective, ITextBox control)
+            public override void LoadSetting(ISettingsSource settings, bool areSettingsEffective, TextBox control)
             {
                 string settingVal;
                 if (areSettingsEffective)
@@ -55,7 +57,7 @@ namespace GitUIPluginInterfaces
                 control.Text = settingVal;
             }
 
-            public override void SaveSetting(ISettingsSource settings, bool areSettingsEffective, ITextBox control)
+            public override void SaveSetting(ISettingsSource settings, bool areSettingsEffective, TextBox control)
             {
                 var controlValue = control.Text;
                 if (areSettingsEffective)

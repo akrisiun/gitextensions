@@ -24,7 +24,7 @@ namespace GitUI.UserControls.RevisionGridClasses
         {
             get
             {
-                return UICommandsSource.UICommands;
+                return UICommandsSource.ICommands as GitUICommands;
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿//using System.Windows.Forms;
 
 using System;
+using System.Windows.Forms;
 
 namespace GitUIPluginInterfaces
 {
@@ -33,27 +34,27 @@ namespace GitUIPluginInterfaces
         public string Caption { get; private set; }
         public string DefaultValue { get; set; }
 
-        public ITextBox CustomControl { get; set; }
+        public TextBox CustomControl { get; set; }
 
-        public static Func<ITextBox> CreateTextBox { get; set; }
+        public static Func<TextBox> CreateTextBox { get; set; }
 
         public ISettingControlBinding CreateControlBinding()
         {
             return new TextBoxBinding(this, CustomControl);
     }
 
-        private class TextBoxBinding : SettingControlBinding<StringSetting, ITextBox>
+        private class TextBoxBinding : SettingControlBinding<StringSetting, TextBox>
         {
-            public TextBoxBinding(StringSetting aSetting, ITextBox aCustomControl)
+            public TextBoxBinding(StringSetting aSetting, TextBox aCustomControl)
                 : base(aSetting, aCustomControl)
             { }
 
-            public override ITextBox CreateControl()
+            public override TextBox CreateControl()
             {
                 return StringSetting.CreateTextBox();
             }
 
-            public override void LoadSetting(ISettingsSource settings, bool areSettingsEffective, ITextBox control)
+            public override void LoadSetting(ISettingsSource settings, bool areSettingsEffective, TextBox control)
             {
                 string settingVal;
                 if (areSettingsEffective)
@@ -68,7 +69,7 @@ namespace GitUIPluginInterfaces
                 control.Text = settingVal;
             }
 
-            public override void SaveSetting(ISettingsSource settings, bool areSettingsEffective, ITextBox control)
+            public override void SaveSetting(ISettingsSource settings, bool areSettingsEffective, TextBox control)
             {
                 var controlValue = control.Text;
                 if (areSettingsEffective)

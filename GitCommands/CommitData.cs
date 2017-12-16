@@ -8,7 +8,8 @@ using System.Text;
 
 namespace GitCommands
 {
-    [CLSCompliant(true)]
+    [CLSCompliant(false)]
+#pragma warning disable CS3021
     public class CommitData
     {
         /// <summary>
@@ -45,7 +46,11 @@ namespace GitCommands
         /// <summary>
         /// Gets the commit info for submodule.
         /// </summary>
-        public static void UpdateCommitMessage(CommitData data, GitModule module, string sha1, ref string error)
+
+        [CLSCompliant(false)]
+#pragma warning disable CS3021
+        public static void UpdateCommitMessage(CommitData data,
+            GitModule module, string sha1, ref string error)
         {
             if (module == null)
                 throw new ArgumentNullException("module");
@@ -82,6 +87,8 @@ namespace GitCommands
         /// <summary>
         /// Gets the commit info for submodule.
         /// </summary>
+        [CLSCompliant(true)]
+#pragma warning disable CS3014
         public static CommitData GetCommitData(GitModule module, string sha1, ref string error)
         {
             if (module == null)
@@ -126,6 +133,8 @@ namespace GitCommands
         /// </summary>
         /// <param name="data">Formated commit data from git.</param>
         /// <returns>CommitData object populated with parsed info from git string.</returns>
+        [CLSCompliant(false)]
+#pragma warning disable CS3021
         public static CommitData CreateFromFormatedData(string data, GitModule aModule)
         {
             if (data == null)
@@ -170,6 +179,8 @@ namespace GitCommands
         /// </summary>
         /// <param name="data">Formated commit data from git.</param>
         /// <returns>CommitData object populated with parsed info from git string.</returns>
+        [CLSCompliant(true)]
+#pragma warning disable CS3014 // Type or member cannot be marked as CLS-compliant because the assembly does not have
         public static void UpdateBodyInCommitData(CommitData commitData, string data, GitModule aModule)
         {
             if (data == null)
@@ -215,6 +226,8 @@ namespace GitCommands
         /// </summary>
         /// <param name="revision">Git commit.</param>
         /// <returns>CommitData object populated with parsed info from git string.</returns>
+        [CLSCompliant(true)]
+#pragma warning disable CS3014
         public static CommitData CreateFromRevision(GitRevision revision)
         {
             if (revision == null)
