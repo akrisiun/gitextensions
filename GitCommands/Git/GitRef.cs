@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GitCommands.Config;
 using GitCommands.Settings;
 using GitUIPluginInterfaces;
 
@@ -12,6 +11,7 @@ namespace GitCommands
     //    string LocalName { get; }
     //}
 
+    //[CLSCompliant(false)]
     public class GitRef : IGitRef, IGitItem
     {
         private readonly string _mergeSettingName;
@@ -76,26 +76,21 @@ namespace GitCommands
         /// </summary>
         public bool IsDereference { get; private set; }
 
-        public bool IsOther
-        {
+        public bool IsOther {
             get { return !IsHead && !IsRemote && !IsTag; }
         }
 
-        public string LocalName
-        {
+        public string LocalName {
             get { return IsRemote ? Name.Substring(Remote.Length + 1) : Name; }
         }
 
         public string Remote { get; private set; }
 
-        public string TrackingRemote
-        {
-            get
-            {
+        public string TrackingRemote {
+            get {
                 return null; // GetTrackingRemote(Module.LocalConfigFile);
             }
-            set
-            {
+            set {
                 //if (String.IsNullOrEmpty(value))
                 //    Module.UnsetSetting(_remoteSettingName);
                 //else
@@ -124,14 +119,11 @@ namespace GitCommands
             return configFile.GetValue(_remoteSettingName);
         }
 
-        public string MergeWith
-        {
-            get
-            {
+        public string MergeWith {
+            get {
                 return null; // GetMergeWith(Module.LocalConfigFile);
             }
-            set
-            {
+            set {
                 //if (String.IsNullOrEmpty(value))
                 //    Module.UnsetSetting(_mergeSettingName);
                 //else
@@ -161,8 +153,7 @@ namespace GitCommands
         public string Guid { get; private set; }
         public string Name { get; private set; }
 
-        public IEnumerable<IGitItem> SubItems
-        {
+        public IEnumerable<IGitItem> SubItems {
             get { return _subItems ?? (_subItems = (Module as GitModule)?.GetTree(Guid, false)); }
         }
 

@@ -1,3 +1,5 @@
+using System;
+
 namespace GitUI.CommandsDialogs.RepoHosting
 {
     partial class ViewPullRequestsForm
@@ -428,6 +430,8 @@ namespace GitUI.CommandsDialogs.RepoHosting
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.SplitContainer splitContainer3;
+
+        [CLSCompliant(false)]
         public FileStatusList _fileStatusList;
         private Editor.FileViewer _diffViewer;
         private System.Windows.Forms.TabPage tabPage2;

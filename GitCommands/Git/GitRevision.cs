@@ -9,6 +9,7 @@ using GitUIPluginInterfaces;
 
 namespace GitCommands
 {
+    // [CLSCompliant(false)]
     public sealed class GitRevision : IGitItem, INotifyPropertyChanged
     {
         /// <summary>40 characters of 0's</summary>
@@ -33,6 +34,9 @@ namespace GitCommands
             Subject = "";
             _module = aModule as GitModule;
         }
+
+        #pragma warning disable 3014 // CS3014 off
+        // [CLSCompliant(true)]
 
         public List<GitRef> Refs { get { return _refs; } }
 

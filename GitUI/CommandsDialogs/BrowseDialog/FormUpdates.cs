@@ -133,7 +133,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
             }, this);
         }
 
-        public void ShowDialog(IWin32Window w)
+        public new void ShowDialog(IWin32Window w)
         {
             if (w is System.Windows.Forms.IWin32Window)
                 base.ShowDialog(w as System.Windows.Forms.IWin32Window);

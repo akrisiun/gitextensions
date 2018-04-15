@@ -69,6 +69,9 @@ namespace GitUI.CommandsDialogs.BrowseDialog
             return directories.Distinct().ToList();
         }
 
+        #pragma warning disable 3002 // CS3002 off
+        // [CLSCompliant(true)]
+
         public static GitModule OpenModule(IWin32Window owner, GitModule currentModule)
         {
             using (var open = new FormOpenDirectory(currentModule))
