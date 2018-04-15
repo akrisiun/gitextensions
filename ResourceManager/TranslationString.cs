@@ -1,13 +1,15 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace ResourceManager
 {
     /// <summary>Provides translated text.</summary>
     [DebuggerDisplay("{Text}")]
-    public class TranslationString2 : TranslationString
+    [CLSCompliant(false)]
+    public class TranslationString3 : TranslationString
     {
         /// <summary>Creates a new <see cref="TranslationString"/> with the specified <paramref name="text"/>.</summary>
-        public TranslationString2(string text) : base(text)
+        public TranslationString3(string text) : base(text)
         {
             // Text = text;
         }

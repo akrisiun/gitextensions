@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.IO.Abstractions;
+// using System.IO.Abstractions;
 using System.Linq;
 
 namespace GitCommands.Git
@@ -23,18 +23,17 @@ namespace GitCommands.Git
     /// </summary>
     public sealed class GitDirectoryResolver : IGitDirectoryResolver
     {
-        private readonly IFileSystem _fileSystem;
+        // private readonly IFileSystem _fileSystem;
 
-
-        public GitDirectoryResolver(IFileSystem fileSystem)
+        public GitDirectoryResolver() // IFileSystem fileSystem)
         {
-            _fileSystem = fileSystem;
+            //_fileSystem = fileSystem;
         }
 
-        public GitDirectoryResolver()
-            : this(new FileSystem())
-        {
-        }
+        //public GitDirectoryResolver()
+        //    : this(new FileSystem())
+        //{
+        //}
 
 
         /// <summary>
@@ -76,9 +75,9 @@ namespace GitCommands.Git
             }
 
             var gitpath = Path.Combine(repositoryPath, ".git");
-            if (_fileSystem.File.Exists(gitpath))
+            if (File.Exists(gitpath))
             {
-                var line = _fileSystem.File.ReadLines(gitpath).FirstOrDefault(l => l.StartsWith("gitdir:"));
+                var line = File.ReadLines(gitpath).FirstOrDefault(l => l.StartsWith("gitdir:"));
                 if (line != null)
                 {
                     string path = line.Substring(7).Trim().ToNativePath();
@@ -91,7 +90,8 @@ namespace GitCommands.Git
             }
 
             gitpath = gitpath.EnsureTrailingPathSeparator();
-            return !_fileSystem.Directory.Exists(gitpath) ? repositoryPath : gitpath;
+            return !  // _fileSystem.
+                Directory.Exists(gitpath) ? repositoryPath : gitpath;
         }
     }
 }

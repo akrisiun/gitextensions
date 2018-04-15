@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.IO.Abstractions;
+// using System.IO.Abstractions;
 using System.Linq;
 using GitUIPluginInterfaces;
 
@@ -32,18 +32,17 @@ namespace GitCommands.Git
         private const string IndexLock = "index.lock";
         private readonly IGitModule _module;
         private readonly IGitDirectoryResolver _gitDirectoryResolver;
-        private readonly IFileSystem _fileSystem;
+        // private readonly IFileSystem _fileSystem;
 
-
-        public IndexLockManager(IGitModule module, IGitDirectoryResolver gitDirectoryResolver, IFileSystem fileSystem)
+        public IndexLockManager(IGitModule module, IGitDirectoryResolver gitDirectoryResolver) // , IFileSystem fileSystem)
         {
             _module = module;
             _gitDirectoryResolver = gitDirectoryResolver;
-            _fileSystem = fileSystem;
+            // _fileSystem = fileSystem;
         }
 
         public IndexLockManager(IGitModule module)
-            : this(module, new GitDirectoryResolver(), new FileSystem())
+            : this(module, new GitDirectoryResolver()) // , new FileSystem())
         {
         }
 
@@ -55,7 +54,8 @@ namespace GitCommands.Git
         public bool IsIndexLocked()
         {
             var indexLockFile = Path.Combine(_gitDirectoryResolver.Resolve(_module.WorkingDir), IndexLock);
-            return _fileSystem.File.Exists(indexLockFile);
+            return // _fileSystem.
+                 File.Exists(indexLockFile);
         }
 
         /// <summary>
@@ -92,14 +92,15 @@ namespace GitCommands.Git
 
         private void DeleteIndexLock(string fileName)
         {
-            if (!_fileSystem.File.Exists(fileName))
+            if (!// _fileSystem.
+                 File.Exists(fileName))
             {
                 return;
             }
 
             try
             {
-                _fileSystem.File.Delete(fileName);
+                File.Delete(fileName);
             }
             catch (Exception ex)
             {

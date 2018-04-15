@@ -237,8 +237,7 @@
   </ItemGroup>
 
     <!--<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />-->
-    <PropertyGroup>
-<!--
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'"><!--
     <PostBuildEvent Condition="$(OS) == 'WINDOWS_NT'">if $(ConfigurationName)==Release (
 xcopy "$(TargetPath)" "$(SolutionDir)packages\NBug\lib\net40-client\" /Y
 xcopy "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)packages\NBug\lib\net40-client\" /Y
@@ -247,7 +246,10 @@ xcopy "$(TargetPath)" "$(SolutionDir)packages\NBug\tools\" /Y
 xcopy "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)packages\NBug\tools\" /Y
 )</PostBuildEvent>
 -->
-  </PropertyGroup>
+  
+      <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+      <LangVersion>7</LangVersion>
+    </PropertyGroup>
   <!-- 
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   To modify your build process, add your task inside one of the targets below and uncomment it. 

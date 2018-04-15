@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.IO.Abstractions;
+// using System.IO.Abstractions;
 using System.Threading.Tasks;
 
 namespace Gravatar
 {
-    public interface IImageCache
+    public interface IImageCache2
     {
         /// <summary>
         /// Occurs whenever the cache is invalidated.
@@ -48,28 +48,28 @@ namespace Gravatar
         Task<Image> GetImageAsync(string imageFileName, Bitmap defaultBitmap);
     }
 
-    public sealed class DirectoryImageCache : IImageCache
+    public sealed class DirectoryImageCache // : IImageCache
     {
         private const int DefaultCacheDays = 30;
         private readonly string _cachePath;
         private readonly int _cacheDays;
-        private readonly IFileSystem _fileSystem;
+        // private readonly IFileSystem _fileSystem;
 
-        public DirectoryImageCache(string cachePath, int cacheDays, IFileSystem fileSystem)
+        public DirectoryImageCache(string cachePath, int? cacheDays = null) // , IFileSystem fileSystem)
         {
             _cachePath = cachePath;
-            _fileSystem = fileSystem;
-            _cacheDays = cacheDays;
+            // _fileSystem = fileSystem;
+            _cacheDays = cacheDays ?? DefaultCacheDays;
             if (_cacheDays < 1)
             {
                 _cacheDays = DefaultCacheDays;
             }
         }
 
-        public DirectoryImageCache(string cachePath, int cacheDays)
-            : this(cachePath, cacheDays, new FileSystem())
-        {
-        }
+        //public DirectoryImageCache(string cachePath, int cacheDays)
+        //    : this(cachePath, cacheDays, new FileSystem())
+        //{
+        //}
 
         /// <summary>
         /// Occurs whenever the cache is invalidated.
@@ -88,9 +88,9 @@ namespace Gravatar
                 return;
             }
 
-            if (!_fileSystem.Directory.Exists(_cachePath))
+            if (!Directory.Exists(_cachePath))
             {
-                _fileSystem.Directory.CreateDirectory(_cachePath);
+                Directory.CreateDirectory(_cachePath);
             }
 
             try
@@ -114,18 +114,18 @@ namespace Gravatar
         /// </summary>
         public async Task ClearAsync()
         {
-            if (!_fileSystem.Directory.Exists(_cachePath))
+            if (!Directory.Exists(_cachePath))
             {
                 return;
             }
 
             await Task.Run(() =>
             {
-                foreach (var file in _fileSystem.Directory.GetFiles(_cachePath))
+                foreach (var file in Directory.GetFiles(_cachePath))
                 {
                     try
                     {
-                        _fileSystem.File.Delete(file);
+                        File.Delete(file);
                     }
                     catch
                     {
@@ -148,14 +148,14 @@ namespace Gravatar
             }
 
             string file = Path.Combine(_cachePath, imageFileName);
-            if (!_fileSystem.File.Exists(file))
+            if (!File.Exists(file))
             {
                 return;
             }
 
             try
             {
-                await Task.Run(() => _fileSystem.File.Delete(file));
+                await Task.Run(() => File.Delete(file));
             }
             catch
             {
@@ -210,13 +210,15 @@ namespace Gravatar
 
         private bool HasExpired(string fileName)
         {
-            var file = _fileSystem.FileInfo.FromFileName(fileName);
-            if (!file.Exists)
+            // var file = _fileSystem.FileInfo.FromFileName(fileName);
+            var file = Path.GetFullPath(fileName);
+            if (!File.Exists(file))
             {
                 return true;
             }
 
-            return file.LastWriteTime < DateTime.Now.AddDays(-_cacheDays);
+            var fi = new FileInfo(fileName);
+            return fi.LastWriteTime < DateTime.Now.AddDays(-_cacheDays);
         }
 
         private void OnInvalidated(EventArgs e)

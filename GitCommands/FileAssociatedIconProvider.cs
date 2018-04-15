@@ -2,7 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Drawing;
 using System.IO;
-using System.IO.Abstractions;
+// using System.IO.Abstractions;
 using GitCommands.Utils;
 
 namespace GitCommands
@@ -23,18 +23,18 @@ namespace GitCommands
 
     public sealed class FileAssociatedIconProvider : IFileAssociatedIconProvider
     {
-        private readonly IFileSystem _fileSystem;
+        // private readonly IFileSystem _fileSystem;
         private static readonly ConcurrentDictionary<string, Icon> LoadedFileIcons = new ConcurrentDictionary<string, Icon>(StringComparer.OrdinalIgnoreCase);
 
-        public FileAssociatedIconProvider(IFileSystem fileSystem)
+        public FileAssociatedIconProvider() // IFileSystem fileSystem)
         {
-            _fileSystem = fileSystem;
+            // _fileSystem = fileSystem;
         }
 
-        public FileAssociatedIconProvider()
-            : this(new FileSystem())
-        {
-        }
+        //public FileAssociatedIconProvider()
+        //    : this(new FileSystem())
+        //{
+        //}
 
         // unit tests only
         internal int CacheCount => LoadedFileIcons.Count;
@@ -78,7 +78,8 @@ namespace GitCommands
                     // significantly higher maintenance overhead.
 
                     var fullPath = Path.Combine(workingDirectory, relativeFilePath);
-                    if (!_fileSystem.File.Exists(fullPath))
+                    if (!// _fileSystem.
+                         File.Exists(fullPath))
                     {
                         tempFile = CreateTempFile(Path.GetFileName(fullPath));
                         fullPath = tempFile;
@@ -104,7 +105,7 @@ namespace GitCommands
         private string CreateTempFile(string fileName)
         {
             var tempFile = Path.Combine(Path.GetTempPath(), fileName);
-            _fileSystem.File.WriteAllText(tempFile, string.Empty);
+            // _fileSystem.File.WriteAllText(tempFile, string.Empty);
             return tempFile;
         }
 
@@ -112,7 +113,8 @@ namespace GitCommands
         {
             try
             {
-                _fileSystem.File.Delete(path);
+                // _fileSystem.
+                File.Delete(path);
             }
             catch
             {

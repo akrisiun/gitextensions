@@ -48,7 +48,7 @@ namespace GitCommands
 
     public static class GitCommandHelpers
     {
-        private static readonly ISshPathLocator SshPathLocatorInstance = new SshPathLocator();
+        // private static readonly ISshPathLocator SshPathLocatorInstance = new SshPathLocator();
 
         public static void SetEnvironmentVariable(bool reload = false)
         {
@@ -168,11 +168,11 @@ namespace GitCommands
             return startProcess;
         }
 
-        public static bool UseSsh(string arguments)
-        {
-            var x = !Plink() && GetArgumentsRequiresSsh(arguments);
-            return x || arguments.Contains("plink");
-        }
+        //public static bool UseSsh(string arguments)
+        //{
+        //    var x = !Plink() && GetArgumentsRequiresSsh(arguments);
+        //    return x || arguments.Contains("plink");
+        //}
 
         private static bool GetArgumentsRequiresSsh(string arguments)
         {
@@ -616,12 +616,12 @@ namespace GitCommands
         }
 
         /// <summary>Indicates whether the git SSH command uses Plink.</summary>
-        public static bool Plink()
-        {
-            var sshString = SshPathLocatorInstance.Find(AppSettings.GitBinDir);
+        //public static bool Plink()
+        //{
+        //    var sshString = SshPathLocatorInstance.Find(AppSettings.GitBinDir);
 
-            return sshString.EndsWith("plink.exe", StringComparison.CurrentCultureIgnoreCase);
-        }
+        //    return sshString.EndsWith("plink.exe", StringComparison.CurrentCultureIgnoreCase);
+        //}
 
         /// <summary>Pushes multiple sets of local branches to remote branches.</summary>
         public static string PushMultipleCmd(string remote, IEnumerable<GitPushAction> pushActions)
@@ -1170,13 +1170,15 @@ namespace GitCommands
         }
 
 
-        public static string MergeBranchCmd(string branch, bool allowFastForward, bool squash, bool noCommit, string strategy)
+        public static string MergeBranchCmd(string branch, bool allowFastForward, bool squash, bool noCommit,
+               string message, string strategy = null)
         // public static string MergeBranchCmd(string branch, bool allowFastForward, bool squash, bool noCommit, string strategy, bool allowUnrelatedHistories, string message, int? log)
         {
             StringBuilder command = new StringBuilder("merge");
 
             if (!allowFastForward)
                 command.Append(" --no-ff");
+
             if (!string.IsNullOrEmpty(strategy))
             {
                 command.Append(" --strategy=");
@@ -1190,8 +1192,8 @@ namespace GitCommands
             if (!string.IsNullOrEmpty(message))
                 command.AppendFormat(" -m {0}", message.Quote());
 
-            if (log.HasValue)
-                command.AppendFormat(" --log={0}", log.Value);
+            //if (log.HasValue)
+            //    command.AppendFormat(" --log={0}", log.Value);
 
             command.Append(" ");
             command.Append(branch);

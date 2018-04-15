@@ -39,6 +39,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
     <OutputPath>..\..</OutputPath>
     <WarningsAsErrors />
+    <LangVersion>7</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Properties\AssemblyInfo.cs" />

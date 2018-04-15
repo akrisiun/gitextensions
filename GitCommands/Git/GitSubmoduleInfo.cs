@@ -42,6 +42,10 @@ namespace GitCommands
             }
         }
 
+        public bool IsInitialized => throw new NotImplementedException();
+
+        public bool IsUpToDate => throw new NotImplementedException();
+
         public static bool operator ==(GitSubmoduleInfo a, GitSubmoduleInfo b)
         {
             // If both are null, or both are same instance, return true.

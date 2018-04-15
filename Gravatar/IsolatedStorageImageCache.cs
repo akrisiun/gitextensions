@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Gravatar
 {
-    internal class IsolatedStorageImageCache : IImageCache
+    internal class IsolatedStorageImageCache // : IImageCache
     {
         public static IsolatedStorageFile GetIsolatedStorageFile()
         {

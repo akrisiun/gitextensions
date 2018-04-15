@@ -96,18 +96,18 @@ namespace GitCommands.Settings
             });
         }
 
+        public IList<IConfigSection> GetConfigSections()
+        {
+            return LockedAction(() =>
+            {
+                EnsureSettingsAreUpToDate();
+                return _configFile.Value.ConfigSections;
+            });
+        }
 
-        //public IList<ConfigSection> GetConfigSections()
-        //{
-        //    return LockedAction(() =>
-        //    {
-        //        EnsureSettingsAreUpToDate();
-        //        return _configFile.Value.ConfigSections;
-        //    });
-        //}
+        // public IList<IConfigSection> GetConfigSections()
 
         public void RemoveConfigSection(string configSectionName)
-        public IList<IConfigSection> GetConfigSections()
         {
             LockedAction(() =>
             {
@@ -118,7 +118,14 @@ namespace GitCommands.Settings
 
 
         public IEnumerable<ConfigSection> GetConfigSections(string configSectionName)
-
+        {
+            var list = GetConfigSections().GetEnumerator();
+            while (list.MoveNext())
+            {
+                if (list.Current is ConfigSection)
+                    yield return list.Current as ConfigSection;
+            }
+        }
         /// <summary>
         /// Removes the specific configuration section from the .git/config file.
         /// </summary>
@@ -126,7 +133,7 @@ namespace GitCommands.Settings
         /// <param name="performSave">If <see langword="true"/> the configuration changes will be saved immediately.</param>
         public void RemoveConfigSection(string configSectionName, bool performSave = false)
         {
-            return LockedAction < IEnumerable<ConfigSection>>(() =>
+            LockedAction<IEnumerable<ConfigSection>>(() =>
             {
                 EnsureSettingsAreUpToDate();
 

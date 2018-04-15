@@ -145,6 +145,16 @@ namespace GitCommands.Config
             return string.Equals(SectionName, other.SectionName, StringComparison.OrdinalIgnoreCase) &&
                 string.Equals(SubSection, other.SubSection, sc);
         }
+
+        IDictionary<string, IReadOnlyList<string>> IConfigSection.AsDictionary()
+        {
+            throw new NotImplementedException();
+        }
+
+        IReadOnlyList<string> IConfigSection.GetValues(string key)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public static class ConfigSectionExt

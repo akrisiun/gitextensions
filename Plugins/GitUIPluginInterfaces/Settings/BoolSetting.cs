@@ -57,12 +57,12 @@ namespace GitUIPluginInterfaces
                     ? Setting.ValueOrDefault(settings)
                     : Setting[settings];
 
-                control.SetNullableChecked(settingVal);
+                // control.SetNullableChecked(settingVal);
             }
 
             public override void SaveSetting(ISettingsSource settings, bool areSettingsEffective, CheckBox control)
             {
-                var controlValue = control.GetNullableChecked();
+                var controlValue = control.Checked; // .GetNullableChecked();
                 if (areSettingsEffective)
                 {
                     if (Setting.ValueOrDefault(settings) == controlValue)

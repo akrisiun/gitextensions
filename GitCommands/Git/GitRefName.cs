@@ -44,7 +44,9 @@ namespace GitCommands
         }
 
         [Pure, NotNull]
-        public static string GetRemoteName([NotNull] string refName, [NotNull, ItemNotNull] IEnumerable<string> remotes)
+        public static string GetRemoteName([NotNull] string refName,
+                [NotNull] // , ItemNotNull]
+                IEnumerable<string> remotes)
         {
             if (refName.StartsWith("refs/"))
             {

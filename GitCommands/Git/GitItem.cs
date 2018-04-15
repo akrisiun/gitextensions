@@ -35,9 +35,9 @@ namespace GitCommands.Git
                 if (itemsString.Length <= 53)
                     continue;
 
-                var item = GitItem.CreateGitItemFromString(aModule, itemsString);
-
-                items.Add(item);
+                //var item = CreateGitItemFromString(aModule, itemsString);
+                //if (item != null)
+                //    items.Add(item);
             }
 
             return items;
@@ -45,10 +45,9 @@ namespace GitCommands.Git
 
         public static IList<IGitItem> CreateIGitItemsFromString(GitModule aModule, string tree)
         {
-            var items = new List<IGitItem>();
+            return null;
+        }
 
-            foreach (var item in CreateGitItemsFromString(aModule, tree))
-                items.Add(item);
         public string Guid { get; }
         public GitObjectType ObjectType { get; }
         public string Name { get; }

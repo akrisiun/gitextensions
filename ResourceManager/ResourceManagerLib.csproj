@@ -1,41 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.1">
   <PropertyGroup>
+    <TargetFrameworks>net461</TargetFrameworks>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <!--<EnableDefaultEmbededResourceItems>false</EnableDefaultEmbededResourceItems>-->
+    
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D3440FD7-AFC5-4351-8741-6CDBF15CE944}</ProjectGuid>
     <OutputType>Library</OutputType>
+
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ResourceManager</RootNamespace>
     <AssemblyName>ResourceManagerLib</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -45,7 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet></CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -59,16 +43,11 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <LangVersion>7</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GitCommandsLib, Version=9.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\packages\GitCommandsLib.9.0.4-beta1\lib\net45\GitCommandsLib.dll</HintPath>
-    </Reference>
-    <Reference Include="GitExtUtils, Version=9.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\packages\GitExtUtils.9.0.4-beta1\lib\net45\GitExtUtils.dll</HintPath>
-    </Reference>
-    <Reference Include="GitUIPluginInterfacesLib, Version=9.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\packages\GitUIPluginInterfacesLib.9.0.4-beta1\lib\net45\GitUIPluginInterfacesLib.dll</HintPath>
-    </Reference>
     <Reference Include="SmartFormat">
       <HintPath>..\..\..\packages\SmartFormat.NET.1.6.1.0\lib\net40-Client\SmartFormat.dll</HintPath>
     </Reference>
@@ -91,6 +70,9 @@
     <Compile Include="GitExtensionsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <!--<EmbeddedResource Include="GitExtensionsUserControl.resx" />-->
+    <Compile Include="TranslationString.cs" />
+
     <Compile Include="GitPluginBase.cs" />
     <Compile Include="HotkeyCommand.cs" />
     <Compile Include="ITranslate.cs" />
@@ -113,12 +95,7 @@
     <Compile Include="Xliff\TranslationSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\GitCommands\GitCommandsLib.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="GitExtensionsUserControl.resx">
-      <DependentUpon>GitExtensionsUserControl.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!--<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />-->
 </Project>

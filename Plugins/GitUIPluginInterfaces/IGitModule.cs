@@ -34,7 +34,7 @@ namespace GitUIPluginInterfaces
         /// <summary>
         /// Run git command, console window is hidden, redirect output
         /// </summary>
-        Process RunGitCmdDetached(string arguments, Encoding encoding = null);
+        Process RunGitCmdDetached1(string arguments, Encoding encoding = null);
 
         /// <summary>
         /// Run git command, console window is hidden, wait for exit, redirect output

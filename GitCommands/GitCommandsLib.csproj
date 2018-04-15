@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-        <TargetFrameworks>net45</TargetFrameworks>
-        <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+        <TargetFrameworks>net461</TargetFrameworks>
+        <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
         <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
         <EnableDefaultEmbededResourceItems>false</EnableDefaultEmbededResourceItems>
       
@@ -10,7 +10,6 @@
         <RootNamespace>GitCommands</RootNamespace>
         <AssemblyName>GitCommandsLib</AssemblyName>
         <RuntimeIdentifiers>win7-x64;osx.10-11-x64;ubuntu.16.04-x64</RuntimeIdentifiers>
-
         <!--<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
         <Import Project="..\FxCop.targets" />-->
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -47,26 +46,42 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
     <WarningsAsErrors />
   </PropertyGroup>
-  <ItemGroup>
-    <None Remove="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <LangVersion>7</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="SmartFormat, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Bin\SmartFormat.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Abstractions, Version=2.0.0.144, Culture=neutral, processorArchitecture=MSIL">
+    <!--<Reference Include="System.IO.Abstractions, Version=2.0.0.144, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Abstractions.2.0.0.144\lib\net40\System.IO.Abstractions.dll</HintPath>
       <Private>True</Private>
-    </Reference>
+    </Reference>-->
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Git\DetachedHeadParser.cs" />
+    <Compile Include="Git\EnvironmentConfiguration.cs" />
+    <Compile Include="Git\FileDeleteException.cs" />
+    <Compile Include="Git\GitDeleteRemoteBranchCmd.cs" />
+    <Compile Include="Git\GitDeleteRemoteBranchesCmd.cs" />
+    <Compile Include="Git\GitDirectoryResolver.cs" />
+    <Compile Include="Git\GitGpgController.cs" />
+    <Compile Include="Git\GitRefName.cs" />
+    <Compile Include="Git\GitRemote.cs" />
+    <Compile Include="Git\GitRevisionTester.cs" />
+    <Compile Include="Git\GitTreeParser.cs" />
+    <Compile Include="Git\IGitItem.cs" />
+    <Compile Include="Git\IndexLockManager.cs" />
+    <Compile Include="Git\LongShaProvider.cs" />
+    <Compile Include="Git\RevisionDiffProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonAssemblyInfo.cs">
@@ -151,7 +166,6 @@
     <Compile Include="Git\GitStash.cs" />
     <Compile Include="Git\GitSubmoduleInfo.cs" />
     <Compile Include="Git\GitVersion.cs" />
-    <Compile Include="Git\IGitItem.cs" />
     <Compile Include="Patch\Patch.cs" />
     <Compile Include="Patch\PatchFile.cs" />
     <Compile Include="Patch\PatchManager.cs" />
@@ -183,7 +197,6 @@
   </ItemGroup>
    
   <ItemGroup>
-    <ProjectReference Include="..\GitExtUtils\GitExtUtilsLib.csproj" />
     <ProjectReference Include="..\Plugins\GitUIPluginInterfaces\GitUIPluginInterfacesLib.csproj" />
   </ItemGroup>
 </Project>

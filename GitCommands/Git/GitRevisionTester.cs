@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO.Abstractions;
+// using System.IO.Abstractions;
 using System.Linq;
 
 namespace GitCommands.Git
@@ -32,12 +32,12 @@ namespace GitCommands.Git
     public class GitRevisionTester : IGitRevisionTester
     {
         private readonly IFullPathResolver _fullPathResolver;
-        private readonly IFileSystem _fileSystem;
+        // private readonly IFileSystem _fileSystem;
 
-        public GitRevisionTester(IFullPathResolver fullPathResolver, IFileSystem fileSystem = null)
+        public GitRevisionTester(IFullPathResolver fullPathResolver, object fileSystem = null) // IFileSystem fileSystem = null)
         {
             _fullPathResolver = fullPathResolver;
-            _fileSystem = fileSystem ?? new FileSystem();
+            // _fileSystem = fileSystem ?? new FileSystem();
         }
 
         /// <inheritdoc />
@@ -92,10 +92,10 @@ namespace GitCommands.Git
             foreach (var item in items)
             {
                 string filePath = _fullPathResolver.Resolve(item.Name);
-                if (_fileSystem.File.Exists(filePath))
-                {
-                    return true;
-                }
+                //if (_fileSystem.File.Exists(filePath))
+                //{
+                //    return true;
+                //}
             }
 
             return false;

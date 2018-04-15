@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.IO.Abstractions;
+//using System.IO.Abstractions;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
@@ -34,7 +34,7 @@ namespace GitCommands
 
         public const string SettingsFileName = "GitExtensions.settings";
         // public static readonly string SettingsFileName = "GitExtensions.settings";
-        private static readonly ISshPathLocator SshPathLocatorInstance = new SshPathLocator();
+  //      private static readonly ISshPathLocator SshPathLocatorInstance = new SshPathLocator();
 
         public static Lazy<string> ApplicationDataPath;
         public static string SettingsFilePath { get { return Path.Combine(ApplicationDataPath.Value, SettingsFileName); } }
@@ -1153,7 +1153,7 @@ namespace GitCommands
             {
                 SettingsContainer.LockedAction(() =>
                 {
-                    SshPath = SshPathLocatorInstance.Find(GitBinDir);
+                    // SshPath = SshPathLocatorInstance.Find(GitBinDir);
                     Repositories.SaveSettings();
 
                     SettingsContainer.Save();
@@ -1331,11 +1331,11 @@ namespace GitCommands
             set { SetBool("UseConsoleEmulatorForCommands", value); }
         }
 
-        public static BranchOrdering BranchOrderingCriteria
-        {
-            get { return GetEnum("BranchOrderingCriteria", BranchOrdering.ByLastAccessDate); }
-            set { SetEnum("BranchOrderingCriteria", value); }
-        }
+        //public static BranchOrdering BranchOrderingCriteria
+        //{
+        //    get { return GetEnum("BranchOrderingCriteria", BranchOrdering.ByLastAccessDate); }
+        //    set { SetEnum("BranchOrderingCriteria", value); }
+        //}
 
         public static string GetGitExtensionsFullPath()
         {

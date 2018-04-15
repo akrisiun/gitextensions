@@ -135,7 +135,7 @@ namespace GitCommands.Statistics
 
         private void LoadModuleInfo(string command, IGitModule module, CancellationToken token)
         {
-            Process p = module.RunGitCmdDetached(command);
+            Process p = module.RunGitCmdDetached1(command);
 
             // Read line
             string line = p.StandardOutput.ReadLine();

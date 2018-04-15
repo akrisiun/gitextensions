@@ -110,18 +110,21 @@ namespace GitCommands
             return name;
         }
 
-                
-        public static bool TryFindFullPath(string fileName, out string fullPath)
+
+        public static bool TryFindFullPathInfo(string fileName, out string fullPath)
         {
+            FileInfo fi;
+            fullPath = null;
             try
             {
-                fi = new FileInfo(aPath);
+                fi = new FileInfo(fileName);
+                fullPath = fi.FullName;
             }
             catch (ArgumentException) { }
             catch (PathTooLongException) { }
             catch (NotSupportedException) { }
 
-            return fi != null && fi.Exists;
+            return fullPath != null && File.Exists(fullPath); // && fi.Exists;
         }
 
         public static bool DirectoryExists(string aPath)
@@ -137,31 +140,41 @@ namespace GitCommands
             }
         }
 
-        public static bool TryFindFullPath(string aFileName, out string fullPath)
+        public static bool PathExists(string fileName)
         {
-            if (PathUtil.PathExists(aFileName))
+            try
             {
-                fullPath = Path.GetFullPath(aFileName);
+                return fileName != null && File.Exists(Path.GetFullPath(fileName));
+            }
+            catch { }
+            return false;
+        }
 
-                if (File.Exists(fileName))
+        public static bool TryFindFullPath(string fileName, out string fullPath)
+        {
+            try
+            {
+                if (PathExists(fileName))
                 {
                     fullPath = Path.GetFullPath(fileName);
-                    return true;
-                }
 
-                foreach (var path in EnvironmentPathsProvider.GetEnvironmentValidPaths())
-                {
-                    fullPath = Path.Combine(path, fileName);
-                    if (File.Exists(fullPath))
+                    if (File.Exists(fileName))
                     {
+                        fullPath = Path.GetFullPath(fileName);
                         return true;
                     }
+
+                    foreach (var path in EnvironmentPathsProvider.GetEnvironmentValidPaths())
+                    {
+                        fullPath = Path.Combine(path, fileName);
+                        if (File.Exists(fullPath))
+                        {
+                            return true;
+                        }
+                    }
                 }
-            }
-            catch
-            {
-                // do nothing 
-            }
+            } catch { } // do nothing 
+
             fullPath = null;
             return false;
         }

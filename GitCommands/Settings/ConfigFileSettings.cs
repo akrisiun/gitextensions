@@ -6,7 +6,8 @@ using GitCommands.Config;
 
 namespace GitCommands.Settings
 {
-using System;
+    using GitUIPluginInterfaces;
+    using System;
 
     public class ConfigFileSettings : SettingsContainer<ConfigFileSettings, ConfigFileSettingsCache>, IConfigFileSettings
     {
@@ -15,6 +16,12 @@ using System;
         {
             core = new CorePath(this);
             mergetool = new MergeToolPath(this);
+        }
+
+        public IReadOnlyList<IConfigSection> GetConfigSections()
+        {
+            return new List<IConfigSection>().AsReadOnly();
+            // new ReadOnlyList<ICoonfigSection>();
         }
 
         public static ConfigFileSettings CreateEffective(GitModule aModule)
@@ -117,31 +124,24 @@ using System;
             return SettingsCache.GetConfigSections(configSectionName);
         }
 
-        public Encoding FilesEncoding
-        {
-            get
-            {
+        public Encoding FilesEncoding {
+            get {
                 return GetEncoding("i18n.filesEncoding");
             }
 
-            set
-            {
+            set {
                 SetEncoding("i18n.filesEncoding", value);
             }
         }
 
-        public Encoding CommitEncoding
-        {
-            get
-            {
+        public Encoding CommitEncoding {
+            get {
                 return GetEncoding("i18n.commitEncoding");
             }
         }
 
-        public Encoding LogOutputEncoding
-        {
-            get
-            {
+        public Encoding LogOutputEncoding {
+            get {
                 return GetEncoding("i18n.logoutputencoding");
             }
         }

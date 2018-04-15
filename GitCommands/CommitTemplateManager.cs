@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Abstractions;
+//using System.IO.Abstractions;
 using System.Linq;
 using GitUIPluginInterfaces;
 
@@ -45,20 +45,20 @@ namespace GitCommands
     public sealed class CommitTemplateManager : ICommitTemplateManager
     {
         private static readonly ConcurrentDictionary<string, Func<string>> RegisteredTemplatesDic = new ConcurrentDictionary<string, Func<string>>();
-        private readonly IFileSystem _fileSystem;
+        // private readonly IFileSystem _fileSystem;
         private readonly IGitModule _module;
         private readonly IFullPathResolver _fullPathResolver;
 
 
-        public CommitTemplateManager(IGitModule module, IFullPathResolver fullPathResolver, IFileSystem fileSystem)
+        public CommitTemplateManager(IGitModule module, IFullPathResolver fullPathResolver) // , IFileSystem fileSystem)
         {
             _module = module;
             _fullPathResolver = fullPathResolver;
-            _fileSystem = fileSystem;
+            // _fileSystem = fileSystem;
         }
 
         public CommitTemplateManager(IGitModule module)
-            : this(module, new FullPathResolver(() => module.WorkingDir), new FileSystem())
+            : this(module, new FullPathResolver(() => module.WorkingDir)) // , new FileSystem())
         {
         }
 
@@ -88,12 +88,12 @@ namespace GitCommands
             }
 
             fileName = _fullPathResolver.Resolve(fileName);
-            if (!_fileSystem.File.Exists(fileName))
-            {
-                throw new FileNotFoundException("File not found", fileName);
-            }
+            //if (!_fileSystem.File.Exists(fileName))
+            //{
+            //    throw new FileNotFoundException("File not found", fileName);
+            //}
 
-            string commitTemplate = _fileSystem.File.ReadAllText(fileName);
+            string commitTemplate = File.ReadAllText(fileName); //  _fileSystem.File.ReadAllText(fileName);
             return commitTemplate;
         }
 

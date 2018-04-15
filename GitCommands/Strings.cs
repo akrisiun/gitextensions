@@ -172,7 +172,8 @@ namespace ResourceManager
         }
     }
 
-    // internal 
+    // internal
+    [CLSCompliant(false)]
     public class TranslationString
     {
         public TranslationString(object str)
