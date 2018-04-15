@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,10 @@ using System.Windows.Forms;
 using GitCommands;
 using GitCommands.Config;
 using GitCommands.Repository;
+
+=======
+using GitCommands.Remote;
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 using GitUI.Script;
 using GitUI.UserControls;
 using ResourceManager;
@@ -25,7 +30,12 @@ namespace GitUI.CommandsDialogs
         private string _selectedBranchRemote;
         private string _selectedRemoteBranchName;
 
+
         private readonly AsyncLoader _remoteBranchesLoader = new AsyncLoader();
+=======
+        private IList<IGitRef> _gitRefs;
+        private readonly IGitRemoteManager _remoteManager;
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 
         public bool ErrorOccurred { get; private set; }
 
@@ -41,7 +51,8 @@ namespace GitUI.CommandsDialogs
         private readonly TranslationString _selectDestinationDirectory =
             new TranslationString("Please select a destination directory");
 
-        private readonly TranslationString _selectRemote = new TranslationString("Please select a remote repository");
+        private readonly TranslationString _errorPushToRemoteCaption = new TranslationString("Push to remote");
+        private readonly TranslationString _configureRemote = new TranslationString($"Please configure a remote repository first.{Environment.NewLine}Would you like to do it now?");
 
         private readonly TranslationString _selectTag =
             new TranslationString("You need to select a tag to push or select \"Push all tags\".");
@@ -67,6 +78,7 @@ namespace GitUI.CommandsDialogs
             new TranslationString("Force push may overwrite changes since your last fetch. Do you want to use the safer force with lease instead?");
         private readonly TranslationString _forceWithLeaseTooltips =
             new TranslationString("Force with lease is a safer way to force push. It ensures you only overwrite work that you have seen in your local repository");
+
         #endregion
 
         private FormPush()
@@ -96,11 +108,27 @@ namespace GitUI.CommandsDialogs
             //can't be set in OnLoad, because after PushAndShowDialogWhenFailed()
             //they are reset to false
             if (aCommands != null)
+
+=======
+            {
+                _remoteManager = new GitRemoteManager(Module);
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                 Init();
         }
 
+
+        /// <summary>
+        /// Gets the list of remotes configured in .git/config file.
+        /// </summary>
+        private List<GitRemote> UserGitRemotes { get; set; }
+
+
         private void Init()
         {
+
+=======
+            _gitRefs = Module.GetRefs();
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             if (GitCommandHelpers.VersionInUse.SupportPushWithRecursiveSubmodulesCheck)
             {
                 RecursiveSubmodules.Enabled = true;
@@ -116,7 +144,13 @@ namespace GitUI.CommandsDialogs
 
             _currentBranch = Module.GetSelectedBranch();
 
+
             _NO_TRANSLATE_Remotes.DataSource = Module.GetRemotes();
+=======
+            // refresh registered git remotes
+            UserGitRemotes = _remoteManager.LoadRemotes(false).ToList();
+            BindRemotesDropDown(null);
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 
             UpdateBranchDropDown();
             UpdateRemoteBranchDropDown();
@@ -150,19 +184,52 @@ namespace GitUI.CommandsDialogs
             return PushAndShowDialogWhenFailed(null);
         }
 
+
+        private bool CheckIfRemoteExist()
+        {
+            if (UserGitRemotes.Count < 1)
+            {
+                if (DialogResult.Yes == MessageBox.Show(this, _configureRemote.Text, _errorPushToRemoteCaption.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Error))
+                {
+                    OpenRemotesDialogAndRefreshList(null);
+                    return UserGitRemotes.Count > 0;
+                }
+                return false;
+            }
+            return true;
+        }
+
+        private void OpenRemotesDialogAndRefreshList(string selectedRemoteName)
+        {
+            if (!UICommands.StartRemotesDialog(this, selectedRemoteName))
+            {
+                return;
+            }
+            _remoteManager.LoadRemotes(false);
+            BindRemotesDropDown(selectedRemoteName);
+        }
+
         private void PushClick(object sender, EventArgs e)
         {
-            if (PushChanges(this))
-                Close();
+            DialogResult = PushChanges(this) ? DialogResult.OK : DialogResult.Abort;
         }
 
         private string GetDefaultPushRemote(String remote, String branch)
         {
+
             Func<string, string, bool> IsSettingForBranch = (aSetting, aBranch) =>
                 {
                     var head = new GitRef(Module, string.Empty, aSetting);
                     return head.IsHead && head.Name.Equals(aBranch);
                 };
+=======
+            _NO_TRANSLATE_Remotes.SelectedIndexChanged -= RemotesUpdated;
+            _NO_TRANSLATE_Remotes.TextUpdate -= RemotesUpdated;
+            _NO_TRANSLATE_Remotes.Sorted = false;
+            _NO_TRANSLATE_Remotes.DataSource = UserGitRemotes;
+            _NO_TRANSLATE_Remotes.DisplayMember = "Name";
+            _NO_TRANSLATE_Remotes.SelectedIndex = -1;
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 
             var pushSettings = Module.GetSettings(string.Format("remote.{0}.push", remote));
             var remoteHead = pushSettings.
@@ -173,7 +240,39 @@ namespace GitUI.CommandsDialogs
                 Where(h => h.IsHead).
                 FirstOrDefault();
 
+
             return remoteHead == null ? null : remoteHead.Name;
+=======
+            if (selectedRemoteName.IsNullOrEmpty())
+            {
+                selectedRemoteName = Module.GetSetting(string.Format(SettingKeyString.BranchRemote, _currentBranchName));
+            }
+
+            _currentBranchRemote = UserGitRemotes.FirstOrDefault(x => x.Name.Equals(selectedRemoteName, StringComparison.OrdinalIgnoreCase));
+            if (_currentBranchRemote != null)
+            {
+                _NO_TRANSLATE_Remotes.SelectedItem = _currentBranchRemote;
+            }
+            else if (UserGitRemotes.Any())
+            {
+                var defaultRemote = UserGitRemotes.FirstOrDefault(x => x.Name.Equals("origin", StringComparison.OrdinalIgnoreCase));
+                // we couldn't find the default assigned remote for the selected branch
+                // it is usually gets mapped via FormRemotes -> "default pull behavior" tab
+                // so pick the default user remote
+                if (defaultRemote == null)
+                {
+                    _NO_TRANSLATE_Remotes.SelectedIndex = 0;
+                }
+                else
+                {
+                    _NO_TRANSLATE_Remotes.SelectedItem = defaultRemote;
+                }
+            }
+            else
+            {
+                _NO_TRANSLATE_Remotes.SelectedIndex = -1;
+            }
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         }
 
         private bool IsBranchKnownToRemote(string remote, string branch)
@@ -196,11 +295,16 @@ namespace GitUI.CommandsDialogs
                 MessageBox.Show(owner, _selectDestinationDirectory.Text);
                 return false;
             }
+
             if (PushToRemote.Checked && string.IsNullOrEmpty(_NO_TRANSLATE_Remotes.Text))
+=======
+            if (/* PushToRemote.Checked */ !CheckIfRemoteExist())
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             {
-                MessageBox.Show(owner, _selectRemote.Text);
                 return false;
             }
+
+            var selectedRemoteName = _selectedRemote.Name;
             if (TabControlTagBranch.SelectedTab == TagTab && string.IsNullOrEmpty(TagComboBox.Text))
             {
                 MessageBox.Show(owner, _selectTag.Text);
@@ -216,8 +320,13 @@ namespace GitUI.CommandsDialogs
                 //If the current branch is not the default push, and not known by the remote
                 //(as far as we know since we are disconnected....)
                 if (_NO_TRANSLATE_Branch.Text != AllRefs &&
+
                     RemoteBranch.Text != GetDefaultPushRemote(_NO_TRANSLATE_Remotes.Text, _NO_TRANSLATE_Branch.Text) &&
                     !IsBranchKnownToRemote(_NO_TRANSLATE_Remotes.Text, RemoteBranch.Text))
+=======
+                    RemoteBranch.Text != _remoteManager.GetDefaultPushRemote(_selectedRemote, _NO_TRANSLATE_Branch.Text) &&
+                    !IsBranchKnownToRemote(selectedRemoteName, RemoteBranch.Text))
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                 {
                     //Ask if this is really what the user wants
                     if (!AppSettings.DontConfirmPushNewBranch &&
@@ -260,6 +369,7 @@ namespace GitUI.CommandsDialogs
                 if (!track && !string.IsNullOrWhiteSpace(RemoteBranch.Text))
                 {
                     GitRef selectedLocalBranch = _NO_TRANSLATE_Branch.SelectedItem as GitRef;
+
                     track = selectedLocalBranch != null && string.IsNullOrEmpty(selectedLocalBranch.TrackingRemote);
 
                     string[] remotes = _NO_TRANSLATE_Remotes.DataSource as string[];
@@ -267,6 +377,10 @@ namespace GitUI.CommandsDialogs
                         foreach (string remoteBranch in remotes)
                             if (!string.IsNullOrEmpty(remoteBranch) && _NO_TRANSLATE_Branch.Text.StartsWith(remoteBranch))
                                 track = false;
+=======
+                    track = selectedLocalBranch != null && string.IsNullOrEmpty(selectedLocalBranch.TrackingRemote) &&
+                            !UserGitRemotes.Any(x => _NO_TRANSLATE_Branch.Text.StartsWith(x.Name, StringComparison.OrdinalIgnoreCase));
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                     var autoSetupMerge = Module.EffectiveConfigFile.GetValue("branch.autoSetupMerge");
                     if (autoSetupMerge.IsNotNullOrWhitespace() && autoSetupMerge.ToLowerInvariant() == "false")
                     {
@@ -391,7 +505,14 @@ namespace GitUI.CommandsDialogs
 
         private bool IsRebasingMergeCommit()
         {
+
             if (AppSettings.FormPullAction == AppSettings.PullAction.Rebase && _candidateForRebasingMergeCommit)
+=======
+            if (AppSettings.FormPullAction == AppSettings.PullAction.Rebase &&
+                _candidateForRebasingMergeCommit &&
+                _selectedBranch == _currentBranchName &&
+                _selectedRemote == _currentBranchRemote)
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             {
                 if (_selectedBranch == _currentBranch && _selectedBranchRemote == _currentBranchRemote)
                 {
@@ -424,11 +545,11 @@ namespace GitUI.CommandsDialogs
             if (IsRejected.IsMatch(form.GetOutputString()) && !Module.IsBareRepository())
             {
                 bool forcePush = false;
-                IWin32Window owner = form;
+                IWin32Window owner = form.Owner;
                 if (AppSettings.AutoPullOnPushRejectedAction == null)
                 {
                     bool cancel = false;
-                    string destination = PushToRemote.Checked ? _NO_TRANSLATE_Remotes.Text : PushDestination.Text;
+                    string destination = _NO_TRANSLATE_Remotes.Text;
                     string buttons = _pullRepositoryButtons.Text;
                     switch (Module.LastPullAction)
                     {
@@ -550,8 +671,10 @@ namespace GitUI.CommandsDialogs
 
         private void FillPushDestinationDropDown()
         {
+            string prevUrl = PushDestination.Text;
             PushDestination.DataSource = Repositories.RemoteRepositoryHistory.Repositories;
             PushDestination.DisplayMember = "Path";
+            PushDestination.Text = prevUrl;
         }
 
         private void UpdateBranchDropDown()
@@ -575,7 +698,21 @@ namespace GitUI.CommandsDialogs
 
             _NO_TRANSLATE_Branch.Text = curBranch;
 
+
             ComboBoxHelper.ResizeComboBoxDropDownWidth (_NO_TRANSLATE_Branch, AppSettings.BranchDropDownMinWidth, AppSettings.BranchDropDownMaxWidth);
+=======
+            ComboBoxHelper.ResizeComboBoxDropDownWidth(_NO_TRANSLATE_Branch, AppSettings.BranchDropDownMinWidth, AppSettings.BranchDropDownMaxWidth);
+        }
+
+        private IEnumerable<IGitRef> GetLocalBranches()
+        {
+            return _gitRefs.Where(r => r.IsHead);
+        }
+
+        private IEnumerable<IGitRef> GetRemoteBranches(String remoteName)
+        {
+            return _gitRefs.Where(r => r.IsRemote && r.Remote == remoteName);
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         }
 
         private void PullClick(object sender, EventArgs e)
@@ -591,9 +728,26 @@ namespace GitUI.CommandsDialogs
             if (!string.IsNullOrEmpty(_NO_TRANSLATE_Branch.Text))
                 RemoteBranch.Items.Add(_NO_TRANSLATE_Branch.Text);
 
+
             foreach (var head in Module.GetRefs(false, true))
                 if (!RemoteBranch.Items.Contains(head))
                     RemoteBranch.Items.Add(head);
+=======
+            if (_selectedRemote != null)
+            {
+                foreach (var head in GetRemoteBranches(_selectedRemote.Name))
+                    if (_NO_TRANSLATE_Branch.Text != head.LocalName)
+                        RemoteBranch.Items.Add(head.LocalName);
+
+                var remoteBranchesSet = GetRemoteBranches(_selectedRemote.Name).ToHashSet(b => b.LocalName);
+                var onlyLocalBranches = GetLocalBranches().Where(b => !remoteBranchesSet.Contains(b.LocalName));
+
+
+                foreach (var head in onlyLocalBranches)
+                    if (_NO_TRANSLATE_Branch.Text != head.LocalName)
+                        RemoteBranch.Items.Add(head.LocalName);
+            }
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 
             ComboBoxHelper.ResizeComboBoxDropDownWidth (RemoteBranch, AppSettings.BranchDropDownMinWidth, AppSettings.BranchDropDownMaxWidth);
         }
@@ -619,9 +773,19 @@ namespace GitUI.CommandsDialogs
 
                         if (!defaultRemote.IsNullOrEmpty())
                         {
+
                             RemoteBranch.Text = defaultRemote;
                             return;
                         }
+=======
+                            string defaultRemote = _remoteManager.GetDefaultPushRemote(_selectedRemote,
+                                branch.Name);
+                            if (!defaultRemote.IsNullOrEmpty())
+                            {
+                                RemoteBranch.Text = defaultRemote;
+                                return;
+                            }
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 
                         if (branch.TrackingRemote != null && branch.TrackingRemote.Equals(_NO_TRANSLATE_Remotes.Text.Trim()))
                         {
@@ -648,6 +812,7 @@ namespace GitUI.CommandsDialogs
 
         private void AddRemoteClick(object sender, EventArgs e)
         {
+
             UICommands.StartRemotesDialog(this, _NO_TRANSLATE_Remotes.Text);
             string origText = _NO_TRANSLATE_Remotes.Text;
             _NO_TRANSLATE_Remotes.DataSource = Module.GetRemotes();
@@ -655,6 +820,9 @@ namespace GitUI.CommandsDialogs
             {
                 _NO_TRANSLATE_Remotes.Text = origText;
             }
+=======
+            OpenRemotesDialogAndRefreshList(_selectedRemote?.Name);
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         }
 
         private void PushToUrlCheckedChanged(object sender, EventArgs e)
@@ -705,7 +873,11 @@ namespace GitUI.CommandsDialogs
 
         private void EnableLoadSshButton()
         {
+
             LoadSSHKey.Visible = !string.IsNullOrEmpty(Module.GetPuttyKeyFileForRemote(_NO_TRANSLATE_Remotes.Text));
+=======
+            LoadSSHKey.Visible = _selectedRemote?.PuttySshKey.IsNotNullOrWhitespace() ?? false;
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         }
 
         private void LoadSshKeyClick(object sender, EventArgs e)

@@ -29,6 +29,7 @@ namespace GitUI.UserControls
         // master <- origin/master
         // pu <- origin/pu
 
+
         static readonly string remoteKey = Guid.NewGuid().ToString();
         static readonly string remotePushMirrorKey = Guid.NewGuid().ToString();
         static readonly string remotesKey = Guid.NewGuid().ToString();
@@ -126,6 +127,8 @@ namespace GitUI.UserControls
         }
         */
 
+=======
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         private class RemoteBranchTree : Tree
         {
             public RemoteBranchTree(TreeNode aTreeNode, IGitUICommandsSource uiCommands) : base(aTreeNode, uiCommands)
@@ -242,6 +245,7 @@ namespace GitUI.UserControls
         {
             public RemoteBranchNode(Tree aTree, string aFullPath) : base(aTree, aFullPath)
             {
+
                 IsDraggable = false;
             }
 
@@ -269,6 +273,8 @@ namespace GitUI.UserControls
                 //    });
 
                 //return new[] { dropLocalBranch, };
+=======
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             }
 
             internal override void OnSelected()
@@ -283,11 +289,19 @@ namespace GitUI.UserControls
                 var remoteBranchInfo = GetRemoteBranchInfo();
                 var cmd = Module.FetchCmd(remoteBranchInfo.Remote, remoteBranchInfo.BranchName,
                     null, null);
+
                 //var ret = FormRemoteProcess.ShowDialog(TreeViewNode.TreeView, Module, cmd);
                 //if (ret)
                 //{
                 //    UICommands.RepoChangedNotifier.Notify();
                 //}
+=======
+                var ret = FormRemoteProcess.ShowDialog(TreeViewNode.TreeView, Module, cmd);
+                if (ret)
+                {
+                    UICommands.RepoChangedNotifier.Notify();
+                }
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             }
 
             private struct RemoteBranchInfo
@@ -308,14 +322,21 @@ namespace GitUI.UserControls
             {
                 bool pullCompleted = false;
                 var remoteBranchInfo = GetRemoteBranchInfo();
+
                 //UICommands.StartPullDialog(this.TreeViewNode.TreeView, pullOnShow: false,
                 //    remoteBranch: remoteBranchInfo.BranchName, remote: remoteBranchInfo.Remote,
                 //    pullCompleted: out pullCompleted, fetchAll: false);
+=======
+                UICommands.StartPullDialog(this.TreeViewNode.TreeView, pullOnShow: false,
+                    remoteBranch: remoteBranchInfo.BranchName, remote: remoteBranchInfo.Remote,
+                    pullCompleted: out pullCompleted, fetchAll: false);
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             }
 
             /// <summary>Create a local branch from the remote branch.</summary>
             public void CreateBranch()
             {
+
                 //UICommands.StartCreateBranchDialog(this.TreeViewNode.TreeView, new GitRevision(Module, FullPath));
             }
 
@@ -332,17 +353,28 @@ namespace GitUI.UserControls
                 //    Value.Remote.UnTrack(Value);
                 //}
                 //throw new NotImplementedException("this one actually works, but need to change UI state and more testing");
+=======
+                UICommands.StartCreateBranchDialog(this.TreeViewNode.TreeView, new GitRevision(Module, FullPath));
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             }
 
             /// <summary>Delete the branch on the remote repository.</summary>
             public void Delete()
             {
                 var remoteBranchInfo = GetRemoteBranchInfo();
+
                 //var cmd = new GitDeleteRemoteBranchCmd(remoteBranchInfo.Remote, remoteBranchInfo.BranchName);
                 //if (MessageBoxes.ConfirmDeleteRemoteBranch(TreeViewNode.TreeView, remoteBranchInfo.BranchName, remoteBranchInfo.Remote))
                 //{
                 //    UICommands.StartCommandLineProcessDialog(cmd, null);
                 //}
+=======
+                var cmd = new GitDeleteRemoteBranchCmd(remoteBranchInfo.Remote, remoteBranchInfo.BranchName);
+                if (MessageBoxes.ConfirmDeleteRemoteBranch(TreeViewNode.TreeView, remoteBranchInfo.BranchName, remoteBranchInfo.Remote))
+                {
+                    UICommands.StartCommandLineProcessDialog(cmd, null);
+                }
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             }
 
             public void Checkout()
@@ -376,7 +408,11 @@ namespace GitUI.UserControls
 
             public void Reset()
             {
+
                 using (var form = new FormResetCurrentBranch(UICommands, new GitRevision(Module, FullPath), false))
+=======
+                using (var form = new FormResetCurrentBranch(UICommands, new GitRevision(Module, FullPath)))
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                 {
                     form.ShowDialog(TreeViewNode.TreeView);
                 }
@@ -385,7 +421,11 @@ namespace GitUI.UserControls
             protected override void ApplyStyle()
             {
                 base.ApplyStyle();
+
                 TreeViewNode.ImageKey = TreeViewNode.SelectedImageKey = "Branch.png";
+=======
+                TreeViewNode.ImageKey = TreeViewNode.SelectedImageKey = "RemoteBranch.png";
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             }
         }
 
@@ -398,17 +438,29 @@ namespace GitUI.UserControls
             public void Fetch()
             {
                 var cmd = Module.FetchCmd(FullPath, null, null, null);
+
                 //var ret = FormRemoteProcess.ShowDialog(TreeViewNode.TreeView, Module, cmd);
                 //if (ret)
                 //{
                 //    UICommands.RepoChangedNotifier.Notify();
                 //}
+=======
+                var ret = FormRemoteProcess.ShowDialog(TreeViewNode.TreeView, Module, cmd);
+                if (ret)
+                {
+                    UICommands.RepoChangedNotifier.Notify();
+                }
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             }
 
             protected override void ApplyStyle()
             {
                 base.ApplyStyle();
+
                 this.TreeViewNode.ImageKey = TreeViewNode.SelectedImageKey = "RemoteMirror.png";
+=======
+                this.TreeViewNode.ImageKey = TreeViewNode.SelectedImageKey = "RemoteRepo.png";
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             }
 
             public void ChangeName(string newName)

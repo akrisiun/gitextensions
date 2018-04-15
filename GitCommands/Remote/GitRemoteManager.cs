@@ -186,9 +186,7 @@ namespace GitCommands.Remote
             {
                 throw new ArgumentNullException(nameof(remote));
             }
-<<<<<<< HEAD:GitUI/Objects/GitRemoteController.cs
             return null; // _module.RemoveRemote(remote.Name);
-=======
 
             if (!remote.Disabled)
             {
@@ -198,7 +196,6 @@ namespace GitCommands.Remote
             var sectionName = $"{DisabledSectionPrefix}{SectionRemote}.{remote.Name}";
             _module.LocalConfigFile.RemoveConfigSection(sectionName, true);
             return string.Empty;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d:GitCommands/Remote/GitRemoteManager.cs
         }
 
         /// <summary>
@@ -261,15 +258,12 @@ namespace GitCommands.Remote
                 }
             }
 
-<<<<<<< HEAD:GitUI/Objects/GitRemoteController.cs
             UpdateSettings(string.Format(SettingKeyString.RemoteUrl, remoteName), remoteUrl);
             UpdateSettings(string.Format(SettingKeyString.RemotePushUrl, remoteName), remotePushUrl);
             //UpdateSettings(string.Format(SettingKeyString.RemotePuttySshKey, remoteName), remotePuttySshKey);
-=======
             UpdateSettings(remoteName, remoteDisabled, SettingKeyString.RemoteUrl, remoteUrl);
             UpdateSettings(remoteName, remoteDisabled, SettingKeyString.RemotePushUrl, remotePushUrl);
             UpdateSettings(remoteName, remoteDisabled, SettingKeyString.RemotePuttySshKey, remotePuttySshKey);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d:GitCommands/Remote/GitRemoteManager.cs
 
             return new GitRemoteSaveResult(output, updateRemoteRequired);
         }
@@ -372,7 +366,6 @@ namespace GitCommands.Remote
             {
                 _module.UnsetSetting(fullSettingName);
             }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d:GitCommands/Remote/GitRemoteManager.cs
         }
     }
 }

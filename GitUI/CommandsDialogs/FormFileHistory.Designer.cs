@@ -117,10 +117,14 @@ namespace GitUI.CommandsDialogs
             this.fullHistoryToolStripMenuItem,
             this.toolStripSeparator4});
             this.FileHistoryContextMenu.Name = "DiffContextMenu";
-            this.FileHistoryContextMenu.Size = new System.Drawing.Size(264, 184);
+
+            //this.FileHistoryContextMenu.Size = new System.Drawing.Size(264, 184);
+            this.FileHistoryContextMenu.Size = new System.Drawing.Size(340, 198);
+            this.FileHistoryContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.FileHistoryContextMenuOpening);
             // 
             // openWithDifftoolToolStripMenuItem
             // 
+            this.openWithDifftoolToolStripMenuItem.Image = global::GitUI.Properties.Resources.IconDiffTool;
             this.openWithDifftoolToolStripMenuItem.Name = "openWithDifftoolToolStripMenuItem";
             this.openWithDifftoolToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
             this.openWithDifftoolToolStripMenuItem.Size = new System.Drawing.Size(263, 24);
@@ -136,6 +140,7 @@ namespace GitUI.CommandsDialogs
             // 
             // saveAsToolStripMenuItem
             // 
+            this.saveAsToolStripMenuItem.Image = global::GitUI.Properties.Resources.IconSaveAs;
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(263, 24);
             this.saveAsToolStripMenuItem.Text = "Save as";
@@ -164,6 +169,7 @@ namespace GitUI.CommandsDialogs
             // 
             // revertCommitToolStripMenuItem
             // 
+            this.revertCommitToolStripMenuItem.Image = global::GitUI.Properties.Resources.IconRevertCommit;
             this.revertCommitToolStripMenuItem.Name = "revertCommitToolStripMenuItem";
             this.revertCommitToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
             this.revertCommitToolStripMenuItem.Text = "Revert commit";
@@ -171,6 +177,7 @@ namespace GitUI.CommandsDialogs
             // 
             // cherryPickThisCommitToolStripMenuItem
             // 
+            this.cherryPickThisCommitToolStripMenuItem.Image = global::GitUI.Properties.Resources.IconCherryPick;
             this.cherryPickThisCommitToolStripMenuItem.Name = "cherryPickThisCommitToolStripMenuItem";
             this.cherryPickThisCommitToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
             this.cherryPickThisCommitToolStripMenuItem.Text = "Cherry pick commit";
@@ -314,8 +321,12 @@ namespace GitUI.CommandsDialogs
             // 
             // toolStripBranches
             // 
+
             this.toolStripBranchFilterComboBox.Name = "toolStripBranches";
             this.toolStripBranchFilterComboBox.Size = new System.Drawing.Size(186, 28);
+            this.toolStripBranchFilterComboBox.Name = "toolStripBranchFilterComboBox";
+            this.toolStripBranchFilterComboBox.Size = new System.Drawing.Size(150, 25);
+            this.toolStripBranchFilterComboBox.Click += new System.EventHandler(this.toolStripBranchFilterComboBox_Click);
             // 
             // toolStripDropDownButton2
             // 

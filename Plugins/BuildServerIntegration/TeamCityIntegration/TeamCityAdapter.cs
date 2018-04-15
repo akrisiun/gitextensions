@@ -55,7 +55,7 @@ namespace TeamCityIntegration
 
         private string httpClientHostSuffix;
 
-<<<<<<< HEAD
+
         private List<Task<IEnumerable<string>>> getBuildTypesTask = new List<Task<IEnumerable<string>>>();
 =======
         private readonly List<Task<IEnumerable<string>>> getBuildTypesTask = new List<Task<IEnumerable<string>>>();
@@ -69,7 +69,7 @@ namespace TeamCityIntegration
 
         private Regex BuildIdFilter { get; set; }
 
-<<<<<<< HEAD
+
 =======
         private CookieContainer GetTeamCityNtlmAuthCookie (string serverUrl, IBuildServerCredentials buildServerCredentials)
         {
@@ -404,7 +404,7 @@ namespace TeamCityIntegration
 
                 if (buildServerCredentials != null)
                 {
-<<<<<<< HEAD
+
                     UpdateHttpClientOptions(buildServerCredentials);
 
                     return GetStreamAsync(restServicePath, cancellationToken);
@@ -423,7 +423,7 @@ namespace TeamCityIntegration
             return null;
         }
 
-<<<<<<< HEAD
+
         private void UpdateHttpClientOptions(IBuildServerCredentials buildServerCredentials)
 =======
         public void UpdateHttpClientOptionsNtlmAuth(IBuildServerCredentials buildServerCredentials)
@@ -431,7 +431,7 @@ namespace TeamCityIntegration
         {
             var useGuestAccess = buildServerCredentials == null || buildServerCredentials.UseGuestAccess;
 
-<<<<<<< HEAD
+
             if (useGuestAccess)
             {
                 httpClientHostSuffix = "guestAuth";

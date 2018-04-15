@@ -35,7 +35,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-<<<<<<< HEAD
+
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile>
@@ -99,7 +99,7 @@
     <Compile Include="IBrowseRepo.cs" />
     <Compile Include="IConfigFileSettings.cs" />
     <Compile Include="IConfigSection.cs" />
-<<<<<<< HEAD
+
 =======
     <Compile Include="IGitCommand.cs" />
 >>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
@@ -136,7 +136,7 @@
     <Compile Include="Settings\StringSetting.cs" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
+
 =======
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>

@@ -5476,7 +5476,10 @@ _ReSharper*/</source>
       <trans-unit id="lnkGitIgnorePatterns.Text">
         <source>More gitignore patterns</source>
         <target>更多.gitignore的範例patterns</target>
-        
+        <source>Generate a custom ignore file for git</source>
+      </trans-unit>
+      <trans-unit id="lnkGitIgnorePatterns.Text">
+        <source>Example ignore patterns</source>
       </trans-unit>
     </body>
   </file>
@@ -6193,7 +6196,7 @@ Do you want to continue?</source>
         
       </trans-unit>
       <trans-unit id="_pruneBranchesBranch.Text">
-        <source>Do you want deletes all stale remote-tracking branches?</source>
+        <source>Do you want to delete all stale remote-tracking branches?</source>
         <target>你想刪除所有陳年的遠端branches嗎?</target>
         
       </trans-unit>
@@ -8767,8 +8770,13 @@ global settings.
         
       </trans-unit>
       <trans-unit id="chkShowCurrentChangesInRevisionGraph.Text">
+
         <source>Show current working directory changes in revision graph (slow!)</source>
         <target>在版本圖上顯示當前工作目錄的變更(慢!)</target>
+=======
+        <source>Show current working directory changes in revision graph</source>
+        <target>在版本圖上顯示當前工作目錄的變更</target>
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         
       </trans-unit>
       <trans-unit id="chkShowGitCommandLine.Text">

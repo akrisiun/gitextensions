@@ -13,7 +13,7 @@ namespace TeamCityIntegration.Settings
     public partial class TeamCitySettingsUserControl : GitExtensionsControl, IBuildServerSettingsUserControl
     {
         private string _defaultProjectName;
-<<<<<<< HEAD
+
 =======
         private readonly TeamCityAdapter _teamCityAdapter = new TeamCityAdapter();
         private readonly TranslationString _failToLoadProjectMessage = new TranslationString("Failed to load the projects and build list." + Environment.NewLine + "Please verify the server url.");

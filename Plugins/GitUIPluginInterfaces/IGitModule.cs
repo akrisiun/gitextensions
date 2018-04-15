@@ -8,7 +8,7 @@ namespace GitUIPluginInterfaces
     /// <summary>Provides manipulation with git module.</summary>
     public interface IGitModule
     {
-<<<<<<< HEAD
+
 =======
         IConfigFileSettings LocalConfigFile { get; }
 
@@ -109,7 +109,7 @@ namespace GitUIPluginInterfaces
 
         IGitModule GetSubmodule(string submoduleName);
 
-<<<<<<< HEAD
+
 =======
         /// <summary>
         /// Retrieves registered remotes by running <c>git remote show</c> command.

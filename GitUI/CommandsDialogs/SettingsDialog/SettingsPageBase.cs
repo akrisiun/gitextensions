@@ -186,6 +186,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog
             : base(aSetting.FullPath, aSetting.DefaultValue.Value)
         {
             //CustomControl = aCheckBox;
+            CustomControl = aCheckBox;
         }
     }
 
@@ -195,6 +196,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog
             : base(aSetting.FullPath, aComboBox.Items.Cast<string>().ToList(), aSetting.DefaultValue)
         {
             //CustomControl = aComboBox;
+            CustomControl = aComboBox;
         }
     }
 
@@ -204,6 +206,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog
             : base(aSetting.FullPath, aSetting.DefaultValue.Value)
         {
             //CustomControl = aControl;
+            CustomControl = aControl;
         }
     }
 }

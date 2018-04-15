@@ -30,6 +30,7 @@ namespace GitUI.CommandsDialogs
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+
             this.gitHeadBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -41,6 +42,10 @@ namespace GitUI.CommandsDialogs
             this.New = new System.Windows.Forms.Button();
             this.Delete = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            this.flpnlRemoteManagement = new System.Windows.Forms.TableLayoutPanel();
+
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonClose = new System.Windows.Forms.Button();
             this.Save = new System.Windows.Forms.Button();
@@ -61,6 +66,22 @@ namespace GitUI.CommandsDialogs
             this.folderBrowserButtonPushUrl = new GitUI.UserControls.FolderBrowserButton();
             this.comboBoxPushUrl = new System.Windows.Forms.ComboBox();
             this.labelPushUrl = new System.Windows.Forms.Label();
+
+            this.folderBrowserButtonUrl = new GitUI.UserControls.FolderBrowserButton();
+            this.checkBoxSepPushUrl = new System.Windows.Forms.CheckBox();
+            this.RemoteName = new System.Windows.Forms.TextBox();
+            this.pnlManagementContainer = new System.Windows.Forms.Panel();
+            this.gbMgtPanel = new System.Windows.Forms.GroupBox();
+            this.panelButtons = new System.Windows.Forms.FlowLayoutPanel();
+            this.New = new System.Windows.Forms.Button();
+            this.Delete = new System.Windows.Forms.Button();
+            this.btnToggleState = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.Remotes = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
@@ -90,9 +111,22 @@ namespace GitUI.CommandsDialogs
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.gitHeadBindingSource)).BeginInit();
+
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.flpnlRemoteManagement.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
+            this.pnlMgtPuttySsh.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.flowLayoutPanel3.SuspendLayout();
+            this.pnlMgtDetails.SuspendLayout();
+            this.tblpnlMgtDetails.SuspendLayout();
+            this.pnlManagementContainer.SuspendLayout();
+            this.gbMgtPanel.SuspendLayout();
+            this.panelButtons.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -449,7 +483,102 @@ namespace GitUI.CommandsDialogs
             this.checkBoxSepPushUrl.UseVisualStyleBackColor = true;
             this.checkBoxSepPushUrl.CheckedChanged += new System.EventHandler(this.checkBoxSepPushUrl_CheckedChanged);
             // 
+
             // folderBrowserButtonPushUrl
+=======
+            // RemoteName
+            // 
+            this.RemoteName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RemoteName.Location = new System.Drawing.Point(109, 3);
+            this.RemoteName.Name = "RemoteName";
+            this.RemoteName.Size = new System.Drawing.Size(248, 21);
+            this.RemoteName.TabIndex = 1;
+            this.RemoteName.TextChanged += new System.EventHandler(this.RemoteName_TextChanged);
+            // 
+            // pnlManagementContainer
+            // 
+            this.pnlManagementContainer.Controls.Add(this.gbMgtPanel);
+            this.pnlManagementContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlManagementContainer.Location = new System.Drawing.Point(197, 3);
+            this.pnlManagementContainer.Name = "pnlManagementContainer";
+            this.pnlManagementContainer.Padding = new System.Windows.Forms.Padding(8, 4, 8, 8);
+            this.pnlManagementContainer.Size = new System.Drawing.Size(536, 293);
+            this.pnlManagementContainer.TabIndex = 0;
+            // 
+            // gbMgtPanel
+            // 
+            this.gbMgtPanel.AutoSize = true;
+            this.gbMgtPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gbMgtPanel.Controls.Add(this.flpnlRemoteManagement);
+            this.gbMgtPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbMgtPanel.Location = new System.Drawing.Point(8, 4);
+            this.gbMgtPanel.Name = "gbMgtPanel";
+            this.gbMgtPanel.Size = new System.Drawing.Size(520, 294);
+            this.gbMgtPanel.TabIndex = 0;
+            this.gbMgtPanel.TabStop = false;
+            this.gbMgtPanel.Text = "Create New Remote";
+            // 
+            // panelButtons
+            // 
+            this.panelButtons.AutoSize = true;
+            this.panelButtons.Controls.Add(this.New);
+            this.panelButtons.Controls.Add(this.Delete);
+            this.panelButtons.Controls.Add(this.btnToggleState);
+            this.panelButtons.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelButtons.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.panelButtons.Location = new System.Drawing.Point(150, 8);
+            this.panelButtons.Margin = new System.Windows.Forms.Padding(8);
+            this.panelButtons.Name = "panelButtons";
+            this.panelButtons.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.panelButtons.Size = new System.Drawing.Size(36, 277);
+            this.panelButtons.TabIndex = 1;
+            // 
+            // New
+            // 
+            this.New.Image = global::GitUI.Properties.Resources.IconMaintenance;
+            this.New.Location = new System.Drawing.Point(7, 3);
+            this.New.Name = "New";
+            this.New.Size = new System.Drawing.Size(26, 26);
+            this.New.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.New, "Add new remote");
+            this.New.UseVisualStyleBackColor = true;
+            this.New.Click += new System.EventHandler(this.NewClick);
+            // 
+            // Delete
+            // 
+            this.Delete.Image = global::GitUI.Properties.Resources.IconDeleteRemote;
+            this.Delete.Location = new System.Drawing.Point(7, 35);
+            this.Delete.Name = "Delete";
+            this.Delete.Size = new System.Drawing.Size(26, 26);
+            this.Delete.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.Delete, "Delete the selected remote");
+            this.Delete.UseVisualStyleBackColor = true;
+            this.Delete.Click += new System.EventHandler(this.DeleteClick);
+            // 
+            // btnToggleState
+            // 
+            this.btnToggleState.Image = global::GitUI.Properties.Resources.light_bulb_icon_off_16;
+            this.btnToggleState.Location = new System.Drawing.Point(7, 67);
+            this.btnToggleState.Name = "btnToggleState";
+            this.btnToggleState.Size = new System.Drawing.Size(26, 26);
+            this.btnToggleState.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.btnToggleState, "Enable or disable the selected remote");
+            this.btnToggleState.UseVisualStyleBackColor = true;
+            this.btnToggleState.Click += new System.EventHandler(this.btnToggleState_Click);
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.ItemSize = new System.Drawing.Size(117, 24);
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(744, 331);
+            this.tabControl1.TabIndex = 0;
+            // 
+            // tabPage1
             // 
             this.folderBrowserButtonPushUrl.Location = new System.Drawing.Point(409, 83);
             this.folderBrowserButtonPushUrl.Name = "folderBrowserButtonPushUrl";
@@ -473,6 +602,7 @@ namespace GitUI.CommandsDialogs
             // 
             // labelPushUrl
             // 
+
             this.labelPushUrl.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelPushUrl.AutoSize = true;
             this.labelPushUrl.Location = new System.Drawing.Point(3, 89);
@@ -481,6 +611,33 @@ namespace GitUI.CommandsDialogs
             this.labelPushUrl.TabIndex = 6;
             this.labelPushUrl.Text = "Push Url";
             this.labelPushUrl.Visible = false;
+=======
+            this.Remotes.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.Remotes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.Remotes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Remotes.FullRowSelect = true;
+            listViewGroup1.Header = "ListViewGroup";
+            listViewGroup1.Name = "listViewGroup1";
+            this.Remotes.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup1});
+            this.Remotes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.Remotes.HideSelection = false;
+            this.Remotes.LabelWrap = false;
+            this.Remotes.Location = new System.Drawing.Point(8, 8);
+            this.Remotes.MultiSelect = false;
+            this.Remotes.Name = "Remotes";
+            this.Remotes.Size = new System.Drawing.Size(142, 277);
+            this.Remotes.TabIndex = 1;
+            this.Remotes.TileSize = new System.Drawing.Size(136, 18);
+            this.Remotes.UseCompatibleStateImageBehavior = false;
+            this.Remotes.View = System.Windows.Forms.View.Details;
+            this.Remotes.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Remotes_MouseUp);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "";
+            this.columnHeader1.Width = 120;
             // 
             // tabPage2
             // 
@@ -867,8 +1024,11 @@ namespace GitUI.CommandsDialogs
 
         #endregion
 
+
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ListBox Remotes;
+        private System.Windows.Forms.ListView Remotes;
+
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
@@ -925,9 +1085,22 @@ namespace GitUI.CommandsDialogs
         private UserControls.FolderBrowserButton folderBrowserButtonPushUrl;
         private System.Windows.Forms.Panel panelButtons;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
+=======
+        private System.Windows.Forms.Label lblHeaderLine2;
+        private System.Windows.Forms.Panel pnlMgtDetails;
+        private System.Windows.Forms.TableLayoutPanel tblpnlMgtDetails;
+        private System.Windows.Forms.Panel pnlManagementContainer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BranchName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RemoteCombo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MergeWith;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnToggleState;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
     }
 }

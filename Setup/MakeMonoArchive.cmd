@@ -8,11 +8,8 @@ rem
 rem Update this version number with every release
 rem
 setlocal
-<<<<<<< HEAD
-set version=2.50.01
-=======
+
 set version=2.50.02
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 if not "%APPVEYOR_BUILD_VERSION%"=="" set version=%APPVEYOR_BUILD_VERSION%
 set normal=GitExtensions-%version%-Mono.zip
 set szip="..\packages\7-Zip.CommandLine.9.20.0\tools\7za"
@@ -243,11 +240,9 @@ xcopy /y ..\Plugins\Gource\bin\Release\Gource.pdb GitExtensions\Plugins\
 IF ERRORLEVEL 1 EXIT /B 1
 xcopy /y ..\Plugins\ProxySwitcher\bin\Release\ProxySwitcher.pdb GitExtensions\Plugins\
 IF ERRORLEVEL 1 EXIT /B 1
-<<<<<<< HEAD
+
 xcopy /y ..\Plugins\Stash\bin\Release\Stash.pdb GitExtensions\Plugins\
-=======
 xcopy /y ..\Plugins\Bitbucket\bin\Release\Bitbucket.pdb GitExtensions\Plugins\
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 IF ERRORLEVEL 1 EXIT /B 1
 xcopy /y ..\Plugins\ReleaseNotesGenerator\bin\Release\ReleaseNotesGenerator.pdb GitExtensions\Plugins\
 IF ERRORLEVEL 1 EXIT /B 1

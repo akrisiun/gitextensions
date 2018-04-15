@@ -82,6 +82,30 @@ namespace GitUI.Properties {
                 this["Dashboard_CommonSplitContainer_SplitterDistance"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("96")]
+        public int Dashboard_DeviceDpi {
+            get {
+                return ((int)(this["Dashboard_DeviceDpi"]));
+            }
+            set {
+                this["Dashboard_DeviceDpi"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("96")]
+        public int FormBrowse_DeviceDpi {
+            get {
+                return ((int)(this["FormBrowse_DeviceDpi"]));
+            }
+            set {
+                this["FormBrowse_DeviceDpi"] = value;
+            }
+        }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -104,6 +128,18 @@ namespace GitUI.Properties {
             }
             set {
                 this["FormBrowse_LeftPanel_Collapsed"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int FormBrowse_RevisionsSplitContainer_SplitterDistance {
+            get {
+                return ((int)(this["FormBrowse_RevisionsSplitContainer_SplitterDistance"]));
+            }
+            set {
+                this["FormBrowse_RevisionsSplitContainer_SplitterDistance"] = value;
             }
         }
     }

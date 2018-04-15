@@ -30,21 +30,26 @@ namespace GitUI.CommandsDialogs
         /// </summary>
         private void InitializeComponent()
         {
-            this.Branches = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.Ok = new System.Windows.Forms.Button();
-            this.horLine = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.Remotebranch = new System.Windows.Forms.RadioButton();
-            this.LocalBranch = new System.Windows.Forms.RadioButton();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.setBranchPanel = new System.Windows.Forms.TableLayoutPanel();
+
+=======
+            this.LocalBranch = new System.Windows.Forms.RadioButton();
+            this.Remotebranch = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Branches = new System.Windows.Forms.ComboBox();
+            this.lbChanges = new System.Windows.Forms.Label();
+            this.horLine = new System.Windows.Forms.Label();
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             this.localChangesPanel = new System.Windows.Forms.TableLayoutPanel();
             this.localChangesGB = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.rbReset = new System.Windows.Forms.RadioButton();
-            this.rbStash = new System.Windows.Forms.RadioButton();
-            this.rbMerge = new System.Windows.Forms.RadioButton();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.rbDontChange = new System.Windows.Forms.RadioButton();
+            this.rbMerge = new System.Windows.Forms.RadioButton();
+            this.rbStash = new System.Windows.Forms.RadioButton();
+            this.rbReset = new System.Windows.Forms.RadioButton();
             this.chkSetLocalChangesActionAsDefault = new System.Windows.Forms.CheckBox();
             this.remoteOptionsPanel = new System.Windows.Forms.TableLayoutPanel();
             this.rbDontCreate = new System.Windows.Forms.RadioButton();
@@ -52,15 +57,21 @@ namespace GitUI.CommandsDialogs
             this.rbResetBranch = new System.Windows.Forms.RadioButton();
             this.rbCreateBranchWithCustomName = new System.Windows.Forms.RadioButton();
             this.branchName = new System.Windows.Forms.Label();
+
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lbChanges = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
-            this.localChangesGB.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.remoteOptionsPanel.SuspendLayout();
+=======
             this.tableLayoutPanel1.SuspendLayout();
+            this.setBranchPanel.SuspendLayout();
+            this.localChangesPanel.SuspendLayout();
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+            this.localChangesGB.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
+            this.remoteOptionsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
+
             // Branches
             // 
             this.Branches.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -74,6 +85,8 @@ namespace GitUI.CommandsDialogs
             this.Branches.TabIndex = 1;
             this.Branches.SelectedIndexChanged += new System.EventHandler(this.Branches_SelectedIndexChanged);
             // 
+=======
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoSize = true;
@@ -88,19 +101,27 @@ namespace GitUI.CommandsDialogs
             // 
             // Ok
             // 
-            this.Ok.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Ok.AutoSize = true;
             this.Ok.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Ok.DialogResult = System.Windows.Forms.DialogResult.OK;
+
             this.Ok.Location = new System.Drawing.Point(0, 60);
             this.Ok.Margin = new System.Windows.Forms.Padding(0, 10, 6, 6);
             this.Ok.Name = "Ok";
             this.Ok.Size = new System.Drawing.Size(68, 25);
             this.Ok.TabIndex = 23;
+=======
+            this.Ok.Location = new System.Drawing.Point(480, 20);
+            this.Ok.Margin = new System.Windows.Forms.Padding(0, 20, 6, 6);
+            this.Ok.Name = "Ok";
+            this.Ok.Size = new System.Drawing.Size(62, 23);
+            this.Ok.TabIndex = 1;
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             this.Ok.Text = "Checkout";
             this.Ok.UseVisualStyleBackColor = true;
             this.Ok.Click += new System.EventHandler(this.OkClick);
             // 
+
             // horLine
             // 
             this.horLine.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -150,13 +171,38 @@ namespace GitUI.CommandsDialogs
             this.LocalBranch.Text = "Local branch";
             this.LocalBranch.UseVisualStyleBackColor = true;
             this.LocalBranch.CheckedChanged += new System.EventHandler(this.LocalBranchCheckedChanged);
+=======
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.setBranchPanel, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.horLine, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.localChangesPanel, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.remoteOptionsPanel, 0, 2);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(7);
+            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(565, 209);
+            this.tableLayoutPanel1.TabIndex = 0;
+            this.tableLayoutPanel1.TabStop = true;
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             // 
             // setBranchPanel
             // 
+            this.setBranchPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.setBranchPanel.AutoSize = true;
             this.setBranchPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.setBranchPanel.ColumnCount = 3;
-            this.tableLayoutPanel1.SetColumnSpan(this.setBranchPanel, 3);
             this.setBranchPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.setBranchPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.setBranchPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -165,12 +211,17 @@ namespace GitUI.CommandsDialogs
             this.setBranchPanel.Controls.Add(this.label1, 0, 1);
             this.setBranchPanel.Controls.Add(this.Branches, 1, 1);
             this.setBranchPanel.Controls.Add(this.lbChanges, 2, 1);
+
             this.setBranchPanel.Location = new System.Drawing.Point(7, 7);
             this.setBranchPanel.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+=======
+            this.setBranchPanel.Location = new System.Drawing.Point(10, 10);
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             this.setBranchPanel.Name = "setBranchPanel";
             this.setBranchPanel.RowCount = 2;
             this.setBranchPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.setBranchPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+
             this.setBranchPanel.Size = new System.Drawing.Size(428, 77);
             // 
             // localChangesGB
@@ -186,17 +237,104 @@ namespace GitUI.CommandsDialogs
             this.localChangesGB.TabIndex = 26;
             this.localChangesGB.TabStop = false;
             this.localChangesGB.Text = "Local changes";
+=======
+            this.setBranchPanel.Size = new System.Drawing.Size(545, 48);
+            this.setBranchPanel.TabIndex = 0;
+            // 
+            // LocalBranch
+            // 
+            this.LocalBranch.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.LocalBranch.AutoSize = true;
+            this.LocalBranch.Checked = true;
+            this.LocalBranch.Location = new System.Drawing.Point(2, 2);
+            this.LocalBranch.Margin = new System.Windows.Forms.Padding(2);
+            this.LocalBranch.Name = "LocalBranch";
+            this.LocalBranch.Size = new System.Drawing.Size(85, 17);
+            this.LocalBranch.TabIndex = 0;
+            this.LocalBranch.TabStop = true;
+            this.LocalBranch.Text = "Local branch";
+            this.LocalBranch.UseVisualStyleBackColor = true;
+            this.LocalBranch.CheckedChanged += new System.EventHandler(this.LocalBranchCheckedChanged);
+            // 
+            // Remotebranch
+            // 
+            this.Remotebranch.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.Remotebranch.AutoSize = true;
+            this.Remotebranch.Location = new System.Drawing.Point(91, 2);
+            this.Remotebranch.Margin = new System.Windows.Forms.Padding(2);
+            this.Remotebranch.Name = "Remotebranch";
+            this.Remotebranch.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.Remotebranch.Size = new System.Drawing.Size(104, 17);
+            this.Remotebranch.TabIndex = 1;
+            this.Remotebranch.Text = "Remote branch";
+            this.Remotebranch.UseVisualStyleBackColor = true;
+            this.Remotebranch.CheckedChanged += new System.EventHandler(this.RemoteBranchCheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(83, 27);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Select branch";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // Branches
+            // 
+            this.Branches.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Branches.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.Branches.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.Branches.FormattingEnabled = true;
+            this.Branches.Location = new System.Drawing.Point(92, 24);
+            this.Branches.Name = "Branches";
+            this.Branches.Size = new System.Drawing.Size(433, 21);
+            this.Branches.TabIndex = 3;
+            this.Branches.SelectedIndexChanged += new System.EventHandler(this.Branches_SelectedIndexChanged);
+            // 
+            // lbChanges
+            // 
+            this.lbChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbChanges.AutoSize = true;
+            this.lbChanges.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.lbChanges.Location = new System.Drawing.Point(531, 21);
+            this.lbChanges.Name = "lbChanges";
+            this.lbChanges.Size = new System.Drawing.Size(11, 27);
+            this.lbChanges.TabIndex = 4;
+            this.lbChanges.Text = "-";
+            this.lbChanges.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // horLine
+            // 
+            this.horLine.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.horLine.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.horLine.Location = new System.Drawing.Point(10, 64);
+            this.horLine.Margin = new System.Windows.Forms.Padding(3);
+            this.horLine.Name = "horLine";
+            this.horLine.Size = new System.Drawing.Size(545, 2);
+            this.horLine.TabIndex = 1;
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             // 
             // localChangesPanel
             // 
-            this.localChangesPanel.AutoSize = true;
-            this.localChangesPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.localChangesPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.localChangesPanel.ColumnCount = 2;
-            this.tableLayoutPanel1.SetColumnSpan(this.localChangesPanel, 3);
             this.localChangesPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.localChangesPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.localChangesPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 71F));
             this.localChangesPanel.Controls.Add(this.localChangesGB, 0, 0);
             this.localChangesPanel.Controls.Add(this.Ok, 1, 0);
+
             this.localChangesPanel.Location = new System.Drawing.Point(9, 161);
             this.localChangesPanel.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.localChangesPanel.Name = "localChangesPanel";
@@ -226,9 +364,42 @@ namespace GitUI.CommandsDialogs
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.Size = new System.Drawing.Size(379, 25);
             this.tableLayoutPanel2.TabIndex = 20;
+=======
+            this.localChangesPanel.Location = new System.Drawing.Point(7, 146);
+            this.localChangesPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.localChangesPanel.Name = "localChangesPanel";
+            this.localChangesPanel.RowCount = 1;
+            this.localChangesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.localChangesPanel.Size = new System.Drawing.Size(551, 58);
+            this.localChangesPanel.TabIndex = 3;
             // 
-            // rbReset
+            // localChangesGB
             // 
+            this.localChangesGB.Controls.Add(this.flowLayoutPanel2);
+            this.localChangesGB.Location = new System.Drawing.Point(0, 0);
+            this.localChangesGB.Margin = new System.Windows.Forms.Padding(0);
+            this.localChangesGB.Name = "localChangesGB";
+            this.localChangesGB.Size = new System.Drawing.Size(444, 54);
+            this.localChangesGB.TabIndex = 0;
+            this.localChangesGB.TabStop = false;
+            this.localChangesGB.Text = "Local changes";
+            // 
+            // flowLayoutPanel2
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+            // 
+            this.flowLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.flowLayoutPanel2.Controls.Add(this.rbDontChange);
+            this.flowLayoutPanel2.Controls.Add(this.rbMerge);
+            this.flowLayoutPanel2.Controls.Add(this.rbStash);
+            this.flowLayoutPanel2.Controls.Add(this.rbReset);
+            this.flowLayoutPanel2.Controls.Add(this.chkSetLocalChangesActionAsDefault);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(6, 20);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(424, 26);
+            this.flowLayoutPanel2.TabIndex = 1;
+            this.flowLayoutPanel2.WrapContents = false;
+            // 
+
             this.rbReset.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.rbReset.AutoSize = true;
             this.rbReset.Location = new System.Drawing.Point(222, 3);
@@ -251,21 +422,46 @@ namespace GitUI.CommandsDialogs
             this.rbStash.TabIndex = 3;
             this.rbStash.Text = "Stash";
             this.rbStash.UseVisualStyleBackColor = true;
+=======
+            // rbDontChange
+            // 
+            this.rbDontChange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rbDontChange.AutoSize = true;
+            this.rbDontChange.Location = new System.Drawing.Point(2, 2);
+            this.rbDontChange.Margin = new System.Windows.Forms.Padding(2);
+            this.rbDontChange.Name = "rbDontChange";
+            this.rbDontChange.Size = new System.Drawing.Size(88, 19);
+            this.rbDontChange.TabIndex = 0;
+            this.rbDontChange.Text = "Don\'t change";
+            this.rbDontChange.UseVisualStyleBackColor = false;
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             // 
             // rbMerge
             // 
-            this.rbMerge.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.rbMerge.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rbMerge.AutoSize = true;
+
             this.rbMerge.Location = new System.Drawing.Point(102, 3);
             this.rbMerge.Margin = new System.Windows.Forms.Padding(2);
             this.rbMerge.Name = "rbMerge";
             this.rbMerge.Size = new System.Drawing.Size(59, 19);
+=======
+            this.rbMerge.Location = new System.Drawing.Point(94, 2);
+            this.rbMerge.Margin = new System.Windows.Forms.Padding(2);
+            this.rbMerge.Name = "rbMerge";
+            this.rbMerge.Size = new System.Drawing.Size(55, 19);
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             this.rbMerge.TabIndex = 1;
             this.rbMerge.Text = "Merge";
-            this.rbMerge.UseVisualStyleBackColor = true;
+            this.rbMerge.UseVisualStyleBackColor = false;
             // 
-            // rbDontChange
+            // rbStash
             // 
+
             this.rbDontChange.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.rbDontChange.AutoSize = true;
             this.rbDontChange.Location = new System.Drawing.Point(2, 3);
@@ -275,23 +471,61 @@ namespace GitUI.CommandsDialogs
             this.rbDontChange.TabIndex = 2;
             this.rbDontChange.Text = "Don\'t change";
             this.rbDontChange.UseVisualStyleBackColor = true;
+=======
+            this.rbStash.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rbStash.AutoSize = true;
+            this.rbStash.Location = new System.Drawing.Point(153, 2);
+            this.rbStash.Margin = new System.Windows.Forms.Padding(2);
+            this.rbStash.Name = "rbStash";
+            this.rbStash.Size = new System.Drawing.Size(52, 19);
+            this.rbStash.TabIndex = 2;
+            this.rbStash.Text = "Stash";
+            this.rbStash.UseVisualStyleBackColor = false;
+            // 
+            // rbReset
+            // 
+            this.rbReset.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rbReset.AutoSize = true;
+            this.rbReset.Location = new System.Drawing.Point(209, 2);
+            this.rbReset.Margin = new System.Windows.Forms.Padding(2);
+            this.rbReset.Name = "rbReset";
+            this.rbReset.Size = new System.Drawing.Size(53, 19);
+            this.rbReset.TabIndex = 3;
+            this.rbReset.Text = "Reset";
+            this.rbReset.UseVisualStyleBackColor = false;
+            this.rbReset.CheckedChanged += new System.EventHandler(this.rbReset_CheckedChanged);
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             // 
             // chkSetLocalChangesActionAsDefault
             // 
+            this.chkSetLocalChangesActionAsDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.chkSetLocalChangesActionAsDefault.AutoSize = true;
             this.chkSetLocalChangesActionAsDefault.Location = new System.Drawing.Point(280, 3);
             this.chkSetLocalChangesActionAsDefault.Name = "chkSetLocalChangesActionAsDefault";
+
             this.chkSetLocalChangesActionAsDefault.Size = new System.Drawing.Size(96, 19);
             this.chkSetLocalChangesActionAsDefault.TabIndex = 34;
+=======
+            this.chkSetLocalChangesActionAsDefault.Size = new System.Drawing.Size(93, 17);
+            this.chkSetLocalChangesActionAsDefault.TabIndex = 4;
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             this.chkSetLocalChangesActionAsDefault.Text = "Set as default";
-            this.chkSetLocalChangesActionAsDefault.UseVisualStyleBackColor = true;
+            this.chkSetLocalChangesActionAsDefault.UseVisualStyleBackColor = false;
             // 
             // remoteOptionsPanel
             // 
+            this.remoteOptionsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.remoteOptionsPanel.AutoSize = true;
             this.remoteOptionsPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.remoteOptionsPanel.ColumnCount = 2;
-            this.tableLayoutPanel1.SetColumnSpan(this.remoteOptionsPanel, 3);
             this.remoteOptionsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.remoteOptionsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.remoteOptionsPanel.Controls.Add(this.rbDontCreate, 0, 4);
@@ -299,8 +533,12 @@ namespace GitUI.CommandsDialogs
             this.remoteOptionsPanel.Controls.Add(this.rbResetBranch, 0, 0);
             this.remoteOptionsPanel.Controls.Add(this.rbCreateBranchWithCustomName, 0, 2);
             this.remoteOptionsPanel.Controls.Add(this.branchName, 1, 0);
+
             this.remoteOptionsPanel.Location = new System.Drawing.Point(7, 74);
             this.remoteOptionsPanel.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+=======
+            this.remoteOptionsPanel.Location = new System.Drawing.Point(10, 72);
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             this.remoteOptionsPanel.Name = "remoteOptionsPanel";
             this.remoteOptionsPanel.RowCount = 5;
             this.remoteOptionsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -308,39 +546,63 @@ namespace GitUI.CommandsDialogs
             this.remoteOptionsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.remoteOptionsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.remoteOptionsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+
             this.remoteOptionsPanel.Size = new System.Drawing.Size(473, 77);
+=======
+            this.remoteOptionsPanel.Size = new System.Drawing.Size(545, 71);
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             this.remoteOptionsPanel.TabIndex = 2;
-            this.remoteOptionsPanel.Visible = false;
             // 
             // rbDontCreate
             // 
-            this.rbDontCreate.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.rbDontCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rbDontCreate.AutoSize = true;
             this.rbDontCreate.Location = new System.Drawing.Point(3, 55);
             this.rbDontCreate.Name = "rbDontCreate";
+
             this.rbDontCreate.Size = new System.Drawing.Size(157, 19);
             this.rbDontCreate.TabIndex = 3;
+=======
+            this.rbDontCreate.Size = new System.Drawing.Size(211, 17);
+            this.rbDontCreate.TabIndex = 4;
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             this.rbDontCreate.Text = "Checkout remote branch";
             this.rbDontCreate.UseVisualStyleBackColor = true;
             // 
             // txtCustomBranchName
             // 
-            this.txtCustomBranchName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCustomBranchName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtCustomBranchName.Enabled = false;
             this.txtCustomBranchName.Location = new System.Drawing.Point(240, 27);
             this.txtCustomBranchName.Margin = new System.Windows.Forms.Padding(2);
             this.txtCustomBranchName.Name = "txtCustomBranchName";
+
             this.txtCustomBranchName.Size = new System.Drawing.Size(231, 23);
             this.txtCustomBranchName.TabIndex = 23;
+=======
+            this.txtCustomBranchName.Size = new System.Drawing.Size(324, 21);
+            this.txtCustomBranchName.TabIndex = 3;
+            this.txtCustomBranchName.Leave += new System.EventHandler(this.txtCustomBranchName_Leave);
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             // 
             // rbResetBranch
             // 
-            this.rbResetBranch.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.rbResetBranch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rbResetBranch.AutoSize = true;
             this.rbResetBranch.Checked = true;
             this.rbResetBranch.Location = new System.Drawing.Point(3, 3);
             this.rbResetBranch.Name = "rbResetBranch";
+
             this.rbResetBranch.Size = new System.Drawing.Size(203, 19);
+=======
+            this.rbResetBranch.Size = new System.Drawing.Size(211, 17);
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             this.rbResetBranch.TabIndex = 0;
             this.rbResetBranch.TabStop = true;
             this.rbResetBranch.Text = "Reset local branch with the name:";
@@ -348,19 +610,27 @@ namespace GitUI.CommandsDialogs
             // 
             // rbCreateBranchWithCustomName
             // 
-            this.rbCreateBranchWithCustomName.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.rbCreateBranchWithCustomName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rbCreateBranchWithCustomName.AutoSize = true;
             this.rbCreateBranchWithCustomName.Location = new System.Drawing.Point(3, 28);
             this.rbCreateBranchWithCustomName.Margin = new System.Windows.Forms.Padding(3, 3, 3, 4);
             this.rbCreateBranchWithCustomName.Name = "rbCreateBranchWithCustomName";
+
             this.rbCreateBranchWithCustomName.Size = new System.Drawing.Size(232, 19);
             this.rbCreateBranchWithCustomName.TabIndex = 1;
+=======
+            this.rbCreateBranchWithCustomName.Size = new System.Drawing.Size(211, 18);
+            this.rbCreateBranchWithCustomName.TabIndex = 2;
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             this.rbCreateBranchWithCustomName.Text = "Create local branch with custom name:";
             this.rbCreateBranchWithCustomName.UseVisualStyleBackColor = true;
             this.rbCreateBranchWithCustomName.CheckedChanged += new System.EventHandler(this.rbCreateBranchWithCustomName_CheckedChanged);
             // 
             // branchName
             // 
+
             this.branchName.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.branchName.AutoSize = true;
             this.branchName.Location = new System.Drawing.Point(241, 5);
@@ -393,6 +663,17 @@ namespace GitUI.CommandsDialogs
             this.tableLayoutPanel1.Size = new System.Drawing.Size(487, 249);
             this.tableLayoutPanel1.TabIndex = 0;
             this.tableLayoutPanel1.TabStop = true;
+=======
+            this.branchName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.branchName.AutoEllipsis = true;
+            this.branchName.Location = new System.Drawing.Point(220, 0);
+            this.branchName.Name = "branchName";
+            this.branchName.Size = new System.Drawing.Size(322, 23);
+            this.branchName.TabIndex = 24;
+            this.branchName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             // 
             // lbChanges
             // 
@@ -410,17 +691,17 @@ namespace GitUI.CommandsDialogs
             // 
             this.AcceptButton = this.Ok;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.AutoSize = true;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(487, 249);
+            this.ClientSize = new System.Drawing.Size(573, 221);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
+            this.DoubleBuffered = true;
             this.MinimizeBox = false;
             this.Name = "FormCheckoutBranch";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Checkout branch";
             this.Activated += new System.EventHandler(this.FormCheckoutBranch_Activated);
+
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.localChangesGB.ResumeLayout(false);
@@ -435,8 +716,20 @@ namespace GitUI.CommandsDialogs
             this.setBranchPanel.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+=======
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.setBranchPanel.ResumeLayout(false);
+            this.setBranchPanel.PerformLayout();
+            this.localChangesPanel.ResumeLayout(false);
+            this.localChangesPanel.PerformLayout();
+            this.localChangesGB.ResumeLayout(false);
+            this.flowLayoutPanel2.ResumeLayout(false);
+            this.flowLayoutPanel2.PerformLayout();
+            this.remoteOptionsPanel.ResumeLayout(false);
+            this.remoteOptionsPanel.PerformLayout();
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -456,7 +749,6 @@ namespace GitUI.CommandsDialogs
         private System.Windows.Forms.RadioButton rbCreateBranchWithCustomName;
         private System.Windows.Forms.Label branchName;
         private System.Windows.Forms.GroupBox localChangesGB;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.RadioButton rbReset;
         private System.Windows.Forms.RadioButton rbStash;
         private System.Windows.Forms.RadioButton rbMerge;
@@ -466,5 +758,6 @@ namespace GitUI.CommandsDialogs
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lbChanges;
         private System.Windows.Forms.CheckBox chkSetLocalChangesActionAsDefault;
+        private FlowLayoutPanel flowLayoutPanel2;
     }
 }

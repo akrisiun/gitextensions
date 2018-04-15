@@ -12,11 +12,8 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
 {
     public sealed partial class FormCreateWorktree : GitModuleForm
     {
-        // these two are used to prepare for _selectedRevision
-        IGitRef _selectedBranch;
-
         private readonly AsyncLoader _branchesLoader;
-        private char[] invalidCharsInPath;
+        private readonly char[] _invalidCharsInPath;
         private string _initialDirectoryPath;
 
         public string WorktreeDirectory { get { return newWorktreeDirectory.Text; } }
@@ -27,7 +24,7 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
         {
             InitializeComponent();
             _branchesLoader = new AsyncLoader();
-            invalidCharsInPath = Path.GetInvalidFileNameChars();
+            _invalidCharsInPath = Path.GetInvalidFileNameChars();
             Translate();
         }
 
@@ -83,6 +80,7 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
                 return;
             }
 
+
             _selectedBranch = ((IList<IGitRef>)comboBoxBranches.DataSource).FirstOrDefault(
                 a => a.LocalName == comboBoxBranches.Text);
         }
@@ -93,8 +91,6 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
             {
                 return;
             }
-
-            _selectedBranch = (IGitRef)comboBoxBranches.SelectedValue;
         }
 
         private void comboBoxBranches_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -135,7 +131,7 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
         private void CreateWorktree()
         {
             //https://git-scm.com/docs/git-worktree
-            var arguments = "worktree add " + WorktreeDirectory;
+            var arguments = "worktree add \"" + WorktreeDirectory + "\"";
             if (radioButtonCreateNewBranch.Checked)
             {
                 arguments += " -b " + textBoxNewBranchName.Text;
@@ -143,9 +139,9 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
             else
             {
                 arguments += " " + ((GitRef)comboBoxBranches.SelectedItem).Name;
-
             }
-            UICommands.StartCommandLineProcessDialog("git", arguments);
+
+            UICommands.StartGitCommandProcessDialog(arguments);
             this.DialogResult = DialogResult.OK;
         }
 
@@ -198,7 +194,7 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
 
         private string NormalizeBranchName(string branchName)
         {
-            return string.Join("_", branchName.Split(invalidCharsInPath, StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.'); ;
+            return string.Join("_", branchName.Split(_invalidCharsInPath, StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
         }
 
         private void ValidateWorktreeOptions(object sender, EventArgs e)

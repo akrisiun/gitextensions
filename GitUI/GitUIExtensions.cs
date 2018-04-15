@@ -17,64 +17,22 @@ namespace GitUI
 
         public static SynchronizationContext UISynchronizationContext;
 
-        /// <summary>
-        /// One row selected:
-        /// B - Selected row
-        /// A - B's parent
-        ///
-        /// Two rows selected:
-        /// A - first selected row
-        /// B - second selected row
-        /// </summary>
-        public enum DiffWithRevisionKind
+
+        public static void OpenWithDifftool(this RevisionGrid grid, string fileName, string oldFileName, GitUI.RevisionDiffKind diffKind)
         {
-            DiffAB,
-            DiffALocal,
-            DiffBLocal,
-            DiffAParentLocal,
-            DiffBParentLocal
-        }
+            //Note: Order in revisions is that first clicked is last in array
+            string extraDiffArgs;
+            string firstRevision;
+            string secondRevision;
 
-        public static void OpenWithDifftool(this RevisionGrid grid, string fileName, string oldFileName, DiffWithRevisionKind diffKind, string parentGuid)
-        {
-            IList<GitRevision> revisions = grid.GetSelectedRevisions();
-
-            if (revisions.Count == 0 || revisions.Count > 2)
-                return;
-
-            string output;
-            if (diffKind == DiffWithRevisionKind.DiffAB)
+            string error = RevisionDiffInfoProvider.Get(grid.GetSelectedRevisions(), diffKind, out extraDiffArgs, out firstRevision, out secondRevision);
+            if (!string.IsNullOrEmpty(error))
             {
-                string firstRevision = revisions[0].Guid;
-                var secondRevision = revisions.Count == 2 ? revisions[1].Guid : null;
-
-                //to simplify if-ology
-                if (GitRevision.IsArtificial(secondRevision) && firstRevision != GitRevision.UnstagedGuid)
-                {
-                    firstRevision = secondRevision;
-                    secondRevision = revisions[0].Guid;
-                }
-
-                string extraDiffArgs = "-M -C";
-
-                if (GitRevision.IsArtificial(firstRevision))
-                {
-                    bool staged = firstRevision == GitRevision.IndexGuid;
-                    if (secondRevision == null || secondRevision == GitRevision.IndexGuid)
-                        firstRevision = string.Empty;
-                    else
-                        firstRevision = secondRevision;
-                    secondRevision = string.Empty;
-                    if (staged) //rev1 vs index
-                        extraDiffArgs = string.Join(" ", extraDiffArgs, "--cached");
-                }
-                else if (secondRevision == null)
-                    secondRevision = parentGuid ?? firstRevision + "^";
-
-                output = grid.Module.OpenWithDifftool(fileName, oldFileName, firstRevision, secondRevision, extraDiffArgs);
+                MessageBox.Show(grid, error);
             }
             else
             {
+
                 string revisionToCmp;
                 if (revisions.Count == 1)
                 {
@@ -112,16 +70,21 @@ namespace GitUI
                     return;
 
                 output = grid.Module.OpenWithDifftool(fileName, null, revisionToCmp);
+                string output = grid.Module.OpenWithDifftool(fileName, oldFileName, firstRevision, secondRevision, extraDiffArgs);
+                if (!string.IsNullOrEmpty(output))
+                    MessageBox.Show(grid, output);
             }
-
-            if (!string.IsNullOrEmpty(output))
-                MessageBox.Show(grid, output);
         }
 
         public static bool IsItemUntracked(GitItemStatus file,
             string firstRevision, string secondRevision)
         {
-            if (firstRevision == GitRevision.UnstagedGuid) //working directory changes
+            if (firstRevision == GitRevision.UnstagedGuid && file.IsDeleted ||
+                secondRevision == GitRevision.UnstagedGuid && file.IsNew)
+            {
+                return true;
+            }
+            else if (firstRevision == GitRevision.UnstagedGuid) //working directory changes
             {
                 if (secondRevision == null || secondRevision == GitRevision.IndexGuid)
                     return !file.IsTracked;
@@ -132,49 +95,14 @@ namespace GitUI
         private static PatchApply.Patch GetItemPatch(GitModule module, GitItemStatus file,
             string firstRevision, string secondRevision, string diffArgs, Encoding encoding)
         {
-            bool cacheResult = true;
-            if (GitRevision.IsArtificial(firstRevision))
-            {
-                bool staged = firstRevision == GitRevision.IndexGuid;
-                if (secondRevision == null || secondRevision == GitRevision.IndexGuid)
-                {
-                    return module.GetCurrentChanges(file.Name, file.OldName, staged,
-                            diffArgs, encoding);
-                }
-
-                cacheResult = false;
-                firstRevision = secondRevision;
-                secondRevision = string.Empty;
-                if (staged)
-                    diffArgs = string.Join(" ", diffArgs, "--cached");
-            }
-            else if (secondRevision == null)
-                secondRevision = firstRevision + "^";
-
             return module.GetSingleDiff(firstRevision, secondRevision, file.Name, file.OldName,
-                    diffArgs, encoding, cacheResult);
-        }
-
-        public static string GetSelectedPatch(this FileViewer diffViewer, RevisionGrid grid, GitItemStatus file)
-        {
-            IList<GitRevision> revisions = grid.GetSelectedRevisions();
-            string firstRevision = revisions.Count > 0 ? revisions[0].Guid : null;
-            string secondRevision = revisions.Count == 2 ? revisions[1].Guid : null;
-            return GetSelectedPatch(diffViewer, firstRevision, secondRevision, file);
+                    diffArgs, encoding, true);
         }
 
         public static string GetSelectedPatch(this FileViewer diffViewer, string firstRevision, string secondRevision, GitItemStatus file)
         {
             if (firstRevision == null)
                 return null;
-
-            //to simplify if-ology
-            if (GitRevision.IsArtificial(secondRevision) && firstRevision != GitRevision.UnstagedGuid)
-            {
-                string temp = firstRevision;
-                firstRevision = secondRevision;
-                secondRevision = temp;
-            }
 
             if (IsItemUntracked(file, firstRevision, secondRevision))
             {
@@ -203,8 +131,8 @@ namespace GitUI
             var firstRevision = revisions.Count > 0 ? revisions[0] : null;
             string firstRevisionGuid = firstRevision == null ? null : firstRevision.Guid;
             string parentRevisionGuid = revisions.Count == 2 ? revisions[1].Guid : null;
-            if (parentRevisionGuid == null && firstRevision != null && firstRevision.ParentGuids != null && firstRevision.ParentGuids.Length > 0)
-                parentRevisionGuid = firstRevision.ParentGuids[0];
+            if (parentRevisionGuid == null && firstRevision != null)
+                parentRevisionGuid = firstRevision.FirstParentGuid;
             ViewChanges(diffViewer, firstRevisionGuid, parentRevisionGuid, file, defaultText);
         }
 
@@ -224,7 +152,7 @@ namespace GitUI
             {
                 diffViewer.ViewPatch(() =>
                     {
-                        string selectedPatch = diffViewer.GetSelectedPatch(revision, parentRevision, file);
+                        string selectedPatch = diffViewer.GetSelectedPatch(parentRevision, revision, file);
                         return selectedPatch ?? defaultText;
                     });
             }

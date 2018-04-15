@@ -306,7 +306,9 @@
             this.revertSelectedLinesToolStripMenuItem.Name = "revertSelectedLinesToolStripMenuItem";
             this.revertSelectedLinesToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
             this.revertSelectedLinesToolStripMenuItem.Text = "Revert selected lines";
+
             //this.revertSelectedLinesToolStripMenuItem.Click += new System.EventHandler(this.revertSelectedLinesToolStripMenuItem_Click);
+            this.revertSelectedLinesToolStripMenuItem.Click += new System.EventHandler(this.revertSelectedLinesToolStripMenuItem_Click);
             // 
             // FileViewer
             // 

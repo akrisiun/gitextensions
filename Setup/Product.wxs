@@ -76,12 +76,9 @@
       <Component Id="Gravatar.dll" Guid="*">
         <File Source="..\Gravatar\bin\Release\Gravatar.dll" />
       </Component>
-<<<<<<< HEAD
-=======
       <Component Id="System.IO.Abstractions.dll" Guid="*">
         <File Source="..\Gravatar\bin\Release\System.IO.Abstractions.dll" />
       </Component>
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
       <Component Id="GitCommands.dll" Guid="*">
         <File Source="..\GitCommands\bin\Release\GitCommands.dll" />
       </Component>
@@ -239,7 +236,7 @@
       <Component Id="Newtonsoft.Json.dll" Guid="*">
         <File Source="..\packages\Newtonsoft.Json.10.0.3\lib\net40\Newtonsoft.Json.dll" />
       </Component>
-<<<<<<< HEAD
+
 =======
       <Component Id="JiraCommitHintPlugin.dll" Guid="*">
         <File Source="..\Plugins\JiraCommitHintPlugin\bin\Release\JiraCommitHintPlugin.dll" />
@@ -272,7 +269,7 @@
       <Component Id="ProxySwitcher.dll" Guid="*">
         <File Source="..\Plugins\ProxySwitcher\bin\Release\ProxySwitcher.dll" />
       </Component>
-<<<<<<< HEAD
+
       <Component Id="Stash.dll" Guid="*">
         <File Source="..\Plugins\Stash\bin\Release\Stash.dll" />
 =======
@@ -661,7 +658,7 @@
       <ComponentRef Id="PSTaskDialog.dll" />
       <ComponentRef Id="Microsoft.WindowsAPICodePack.dll" />
       <ComponentRef Id="Microsoft.WindowsAPICodePack.Shell.dll" />
-<<<<<<< HEAD
+
 =======
       <ComponentRef Id="System.IO.Abstractions.dll" />
 >>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
@@ -739,7 +736,7 @@
         <Feature Id="ReleaseNotesGenerator" Title="Release notes generator" Level="1">
           <ComponentRef Id="ReleaseNotesGenerator.dll" />
         </Feature>
-<<<<<<< HEAD
+
         <Feature Id="Stash" Title="Atlassian Stash integration" Level="1">
           <ComponentRef Id="Stash.dll" />
 =======
@@ -923,7 +920,7 @@
           <ComponentRef Id="VS$(var.VsVersion)_GitPlugin.resources.dll" />
         </Feature>
         <?endforeach ?>
-<<<<<<< HEAD
+
         <Feature Id="VS2015FeatureId" Title="Visual Studio 2015 integration" Level="1">
 =======
         <Feature Id="VS2015FeatureId" Title="Visual Studio 2015/2017 integration" Level="1">

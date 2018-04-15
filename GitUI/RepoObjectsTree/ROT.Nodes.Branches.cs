@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+
 //using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -8,12 +9,20 @@ using GitCommands;
 using GitCommands.Config;
 using GitUI.CommandsDialogs;
 using GitUIPluginInterfaces.Notifications;
+=======
+using System.Linq;
+using System.Windows.Forms;
+using GitCommands;
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 using ResourceManager;
 
 namespace GitUI.UserControls
 {
+
     using Linq = System.Linq;
 
+=======
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
     // "branches"
     public partial class RepoObjectsTree
     {
@@ -30,7 +39,12 @@ namespace GitUI.UserControls
             public string ParentPath { get; private set; }
 
             /// <summary>Full path of the branch. <example>"issues/issue1344"</example></summary>
+
             public string FullPath {
+=======
+            public string FullPath
+            {
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                 get { return ParentPath.Combine(PathSeparator, Name); }
             }
 
@@ -66,12 +80,16 @@ namespace GitUI.UserControls
                 string[] dirs = aFullPath.Split(PathSeparator);
                 Name = dirs[dirs.Length - 1];
 
+
                 var ParentPathTake =
                     Linq.Enumerable.Take(
                         dirs,
                         dirs.Length - 1);
 
                 ParentPath = String.Join(PathSeparator.ToString(), ParentPathTake); 
+=======
+                ParentPath = dirs.Take(dirs.Length - 1).Join(PathSeparator);
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             }
 
             internal BaseBranchNode CreateRootNode(IDictionary<string, BaseBranchNode> nodes,
@@ -124,8 +142,11 @@ namespace GitUI.UserControls
             public BranchNode(Tree aTree, string aFullPath)
                 : base(aTree, aFullPath.TrimStart(GitModule.ActiveBranchIndicator))
             {
+
                 IsDraggable = false;
                 AllowDrop = false;
+=======
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                 IsActive = aFullPath.StartsWith(GitModule.ActiveBranchIndicator.ToString());
             }
 
@@ -179,6 +200,7 @@ namespace GitUI.UserControls
                 SelectRevision();
             }
 
+
             protected override IEnumerable<DragDropAction> CreateDragDropActions()
             {
                 /*
@@ -224,6 +246,8 @@ namespace GitUI.UserControls
                 return new DragDropAction[] {/*stashDD,*/ branchDD };
             }
 
+=======
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             public void Checkout()
             {
                 UICommands.StartCheckoutBranch(FullPath, false);
@@ -231,13 +255,21 @@ namespace GitUI.UserControls
 
             public void Delete()
             {
+
                 UICommands.StartDeleteBranchDialog(ParentWindow(), new string[] { FullPath });
+=======
+                UICommands.StartDeleteBranchDialog(ParentWindow(), new string[] {FullPath});
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             }
 
             public void DeleteForce()
             {
                 var branchHead = GitRef.CreateBranchRef(UICommands.Module, null, FullPath);
+
                 var cmd = new GitDeleteBranchCmd(new GitRef[] { branchHead }, true);
+=======
+                var cmd = new GitDeleteBranchCmd(new GitRef[] {branchHead}, true);
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                 UICommands.StartCommandLineProcessDialog(cmd, null);
             }
         }
@@ -271,10 +303,14 @@ namespace GitUI.UserControls
 
             public void DeleteAll()
             {
+
                 var branches =
                     Linq.Enumerable.Select(
                     Nodes.DepthEnumerator<BranchNode>()
                     , branch => branch.FullPath);
+=======
+                var branches = Nodes.DepthEnumerator<BranchNode>().Select(branch => branch.FullPath);
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                 UICommands.StartDeleteBranchDialog(ParentWindow(), branches);
             }
 
@@ -282,14 +318,19 @@ namespace GitUI.UserControls
             {
                 var branches = Nodes.DepthEnumerator<BranchNode>();
                 var branchHeads =
+
                     Linq.Enumerable.Select(
                         branches,
                         branch => GitRef.CreateBranchRef(UICommands.Module, null, branch.FullPath)
                         );
+=======
+                    branches.Select(branch => GitRef.CreateBranchRef(UICommands.Module, null, branch.FullPath));
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                 var cmd = new GitDeleteBranchCmd(branchHeads, true);
                 UICommands.StartCommandLineProcessDialog(cmd, null);
             }
         }
+
 
         //    /// <summary>Name of the remote for this remote branch. <example>"origin"</example></summary>
         //    public string Remote { get; private set; }
@@ -315,6 +356,8 @@ namespace GitUI.UserControls
         //}
 
 
+=======
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         private class BranchTree : Tree
         {
             public const char PathSeparator = '/';
@@ -398,6 +441,7 @@ namespace GitUI.UserControls
 
                 TreeViewNode.Text = string.Format("{0} ({1})", Strings.branches, Nodes.Count);
 
+
                 if (SelectedBranch != null)
                 {
                     var selectedNodeWhere =
@@ -420,18 +464,28 @@ namespace GitUI.UserControls
                         Nodes.DepthEnumerator<BranchNode>(),
                         b => b.IsActive));
 
+=======
+                var activeBranch = Nodes.DepthEnumerator<BranchNode>().Where(b => b.IsActive).FirstOrDefault();
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                 if (activeBranch == null)
                 {
                     TreeViewNode.TreeView.SelectedNode = null;
                 }
                 else
                 {
+
                     activeBranch.Select();
+=======
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                     SelectedBranch = activeBranch.FullPath;
                 }
             }
         }
+
         #endregion private classes
+=======
+    #endregion private classes
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 
     }
 }

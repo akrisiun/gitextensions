@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Drawing;
-<<<<<<< HEAD
+
 using GitUIPluginInterfaces.Notifications;
 =======
 using System.Windows.Forms;
@@ -148,7 +148,7 @@ namespace GitUIPluginInterfaces
         event GitUIEventHandler PreVerifyDatabase;
         event GitUIEventHandler PreViewPatch;
 
-<<<<<<< HEAD
+
 =======
         bool StartCommandLineProcessDialog(object ownerForm, string command, string arguments);
         bool StartCommandLineProcessDialog(IGitCommand cmd, IWin32Window parentForm);
@@ -173,7 +173,7 @@ namespace GitUIPluginInterfaces
         bool StartDeleteBranchDialog(string branch);
         bool StartDeleteTagDialog();
         bool StartEditGitIgnoreDialog(bool localExcludes);
-<<<<<<< HEAD
+
 
 
 =======

@@ -85,19 +85,18 @@ namespace ResourceManager
 
             string authorEmail = GetEmail(commitData.Author);
             header.AppendLine(
-<<<<<<< HEAD
+
                 FillToLength(WebUtility.HtmlEncode(Strings.GetAuthorText()) + ":", COMMITHEADER_STRING_LENGTH) +
-=======
                 (WebUtility.HtmlEncode(Strings.GetAuthorText()) + ":").PadRight(GetHeaderPadding()) +
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                 linkFactory.CreateLink(commitData.Author, "mailto:" + authorEmail));
+
             header.AppendLine(
                 (WebUtility.HtmlEncode(datesEqual ? Strings.GetDateText() :
                                        Strings.GetAuthorDateText()) + ":").PadRight(GetHeaderPadding()) +
                 WebUtility.HtmlEncode(
                     LocalizationHelpers.GetRelativeDateString(DateTime.UtcNow, commitData.AuthorDate.UtcDateTime) + " (" +
                     LocalizationHelpers.GetFullDateString(commitData.AuthorDate) + ")"));
-<<<<<<< HEAD
+
             string committerEmail = GetEmail(commitData.Committer);
             header.AppendLine(
                 FillToLength(WebUtility.HtmlEncode(Strings.GetCommitterText()) + ":",

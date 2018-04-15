@@ -205,7 +205,7 @@ namespace AppVeyorIntegration
                                 string commitSha1 = null;
                                 var pullRequestId = b["pullRequestId"];
                                 if (isGitHubRepository && pullRequestId != null)
-<<<<<<< HEAD
+
                                 {
                                     if (!_shouldDisplayGitHubPullRequestBuilds)
                                         return null;
@@ -269,7 +269,7 @@ namespace AppVeyorIntegration
 
                                 var version = b["version"].ToObject<string>();
                                 var status = ParseBuildStatus(b["status"].ToObject<string>());
-<<<<<<< HEAD
+
                                 string duration = string.Empty;
 =======
                                 long? duration = null;

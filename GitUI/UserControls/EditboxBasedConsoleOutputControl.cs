@@ -88,7 +88,8 @@ namespace GitUI.UserControls
         }
 
         // override
-        public void StartProcess(string command, string arguments, string workdir, Dictionary<string, string> envVariables)
+//        public void StartProcess(string command, string arguments, string workdir, Dictionary<string, string> envVariables)
+        public override void StartProcess(string command, string arguments, string workdir, Dictionary<string, string> envVariables)
         {
             try
             {
@@ -109,12 +110,18 @@ namespace GitUI.UserControls
                 ProcessStartInfo startInfo = GitCommandHelpers.CreateProcessStartInfo(command, arguments, workdir, GitModule.SystemEncoding);
                 startInfo.CreateNoWindow = (!ssh && !AppSettings.ShowGitCommandLine);
 
+
                 if (envVariables != null)
                 {
                     foreach (var envVariable in envVariables)
                     {
                         startInfo.EnvironmentVariables.Add(envVariable.Key, envVariable.Value);
                     }
+=======
+                foreach (var envVariable in envVariables)
+                {
+                    startInfo.EnvironmentVariables.Add(envVariable.Key, envVariable.Value);
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                 }
                 process.StartInfo = startInfo;
 

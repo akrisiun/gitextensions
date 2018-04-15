@@ -21,7 +21,7 @@ for /f "usebackq tokens=1* delims=: " %%i in (`%vswhere% -latest -requires Micro
 set project=..\GitExtensions.VS2015.sln
 set projectShellEx=..\GitExtensionsShellEx\GitExtensionsShellEx.vcxproj
 set projectSshAskPass=..\GitExtSshAskPass\SshAskPass.vcxproj
-<<<<<<< HEAD
+
 set nuget=..\.nuget\nuget.exe
 set SkipShellExtRegistration=1
 set EnableNuGetPackageRestore=true
@@ -60,7 +60,7 @@ call MakeMonoArchive.cmd
 IF ERRORLEVEL 1 EXIT /B 1
 
 echo.
-<<<<<<< HEAD
+
 pause
 =======
 IF "%SKIP_PAUSE%"=="" pause

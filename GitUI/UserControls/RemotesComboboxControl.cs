@@ -1,4 +1,5 @@
 ﻿using System;
+using GitCommands.Remote;
 
 namespace GitUI.UserControls
 {
@@ -36,6 +37,8 @@ namespace GitUI.UserControls
             }
 
             comboBoxRemotes.DataSource = Module.GetRemotes();
+            var remoteManager = new GitRemoteManager(Module);
+            comboBoxRemotes.DataSource = remoteManager.LoadRemotes(false);
         }
     }
 }

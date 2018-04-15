@@ -116,6 +116,7 @@ namespace GitUI
             this.cherryPickCommitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.archiveRevisionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manipulateCommitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rewordCommitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fixupCommitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.squashCommitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -140,6 +141,7 @@ namespace GitUI
             this.quickSearchTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.getHelpOnHowToUseTheseFeaturesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editCommitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.Revisions)).BeginInit();
             this.mainContextMenu.SuspendLayout();
             this.NoCommits.SuspendLayout();
@@ -571,13 +573,15 @@ namespace GitUI
             // manipulateCommitToolStripMenuItem
             // 
             this.manipulateCommitToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editCommitToolStripMenuItem,
+            this.rewordCommitToolStripMenuItem,
             this.fixupCommitToolStripMenuItem,
             this.squashCommitToolStripMenuItem,
             this.getHelpOnHowToUseTheseFeaturesToolStripMenuItem});
             this.manipulateCommitToolStripMenuItem.Name = "manipulateCommitToolStripMenuItem";
             this.manipulateCommitToolStripMenuItem.Size = new System.Drawing.Size(264, 24);
             this.manipulateCommitToolStripMenuItem.Text = "Advanced";
-            // 
+            //
             // fixupCommitToolStripMenuItem
             // 
             this.fixupCommitToolStripMenuItem.Name = "fixupCommitToolStripMenuItem";
@@ -772,6 +776,20 @@ namespace GitUI
             this.getHelpOnHowToUseTheseFeaturesToolStripMenuItem.Text = "Get help on how to use these features";
             this.getHelpOnHowToUseTheseFeaturesToolStripMenuItem.Click += new System.EventHandler(this.getHelpOnHowToUseTheseFeaturesToolStripMenuItem_Click);
             // 
+            // editCommitToolStripMenuItem
+            // 
+            this.editCommitToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editCommitToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
+            this.editCommitToolStripMenuItem.Text = "Edit commit";
+            this.editCommitToolStripMenuItem.Click += new System.EventHandler(this.editCommitToolStripMenuItem_Click);
+            // 
+            // rewordCommitToolStripMenuItem
+            //
+            this.rewordCommitToolStripMenuItem.Name = "rewordCommitToolStripMenuItem";
+            this.rewordCommitToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
+            this.rewordCommitToolStripMenuItem.Text = "Reword commit";
+            this.rewordCommitToolStripMenuItem.Click += new System.EventHandler(this.rewordCommitToolStripMenuItem_Click);
+            // 
             // RevisionGrid
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -842,6 +860,7 @@ namespace GitUI
         private System.Windows.Forms.Button CloneRepository;
         private System.Windows.Forms.ToolStripMenuItem showMergeCommitsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manipulateCommitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rewordCommitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fixupCommitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem squashCommitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem renameBranchToolStripMenuItem;
@@ -864,5 +883,10 @@ namespace GitUI
         private System.Windows.Forms.ToolStripMenuItem compareToBaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectAsBaseToolStripMenuItem;
         private ToolStripMenuItem getHelpOnHowToUseTheseFeaturesToolStripMenuItem;
+
+=======
+        private ToolStripMenuItem openBuildReportToolStripMenuItem;
+        private ToolStripMenuItem editCommitToolStripMenuItem;
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
     }
 }

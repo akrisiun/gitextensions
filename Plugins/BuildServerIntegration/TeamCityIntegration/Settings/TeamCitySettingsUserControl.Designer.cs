@@ -39,7 +39,7 @@ namespace TeamCityIntegration.Settings
             this.labelRegexError = new System.Windows.Forms.Label();
             this.CheckBoxLogAsGuest = new System.Windows.Forms.CheckBox();
             this.buttonProjectChooser = new System.Windows.Forms.Button();
-<<<<<<< HEAD
+
 =======
             this.lnkExtractDataFromBuildUrlCopiedInTheClipboard = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -60,7 +60,7 @@ namespace TeamCityIntegration.Settings
             // 
             label13.Anchor = System.Windows.Forms.AnchorStyles.Left;
             label13.AutoSize = true;
-<<<<<<< HEAD
+
             label13.Location = new System.Drawing.Point(3, 12);
 =======
             label13.Location = new System.Drawing.Point(3, 25);
@@ -74,7 +74,7 @@ namespace TeamCityIntegration.Settings
             // 
             label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             label1.AutoSize = true;
-<<<<<<< HEAD
+
             label1.Location = new System.Drawing.Point(3, 43);
 =======
             label1.Location = new System.Drawing.Point(3, 50);
@@ -88,7 +88,7 @@ namespace TeamCityIntegration.Settings
             // 
             labelBuildFilter.Anchor = System.Windows.Forms.AnchorStyles.Left;
             labelBuildFilter.AutoSize = true;
-<<<<<<< HEAD
+
             labelBuildFilter.Location = new System.Drawing.Point(3, 96);
 =======
             labelBuildFilter.Location = new System.Drawing.Point(3, 93);
@@ -103,7 +103,7 @@ namespace TeamCityIntegration.Settings
             labelProjectNameComment.Anchor = System.Windows.Forms.AnchorStyles.Left;
             labelProjectNameComment.AutoSize = true;
             labelProjectNameComment.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
-<<<<<<< HEAD
+
             labelProjectNameComment.Location = new System.Drawing.Point(133, 67);
 =======
             labelProjectNameComment.Location = new System.Drawing.Point(117, 72);
@@ -118,7 +118,7 @@ namespace TeamCityIntegration.Settings
             // 
             labelBuildIdFilter.AutoSize = true;
             labelBuildIdFilter.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
-<<<<<<< HEAD
+
             labelBuildIdFilter.Location = new System.Drawing.Point(133, 121);
 =======
             labelBuildIdFilter.Location = new System.Drawing.Point(3, 0);
@@ -132,7 +132,7 @@ namespace TeamCityIntegration.Settings
             // 
             this.TeamCityServerUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-<<<<<<< HEAD
+
             this.TeamCityServerUrl.Location = new System.Drawing.Point(136, 9);
 =======
             this.TeamCityServerUrl.Location = new System.Drawing.Point(117, 21);
@@ -147,7 +147,7 @@ namespace TeamCityIntegration.Settings
             // 
             this.TeamCityProjectName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-<<<<<<< HEAD
+
             this.TeamCityProjectName.Location = new System.Drawing.Point(136, 39);
 =======
             this.TeamCityProjectName.Location = new System.Drawing.Point(3, 2);
@@ -161,7 +161,7 @@ namespace TeamCityIntegration.Settings
             // 
             this.TeamCityBuildIdFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-<<<<<<< HEAD
+
             this.TeamCityBuildIdFilter.Location = new System.Drawing.Point(136, 93);
 =======
             this.TeamCityBuildIdFilter.Location = new System.Drawing.Point(117, 89);
@@ -177,7 +177,7 @@ namespace TeamCityIntegration.Settings
             this.labelRegexError.AutoSize = true;
             this.labelRegexError.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
             this.labelRegexError.ForeColor = System.Drawing.Color.Red;
-<<<<<<< HEAD
+
             this.labelRegexError.Location = new System.Drawing.Point(188, 121);
 =======
             this.labelRegexError.Location = new System.Drawing.Point(54, 0);
@@ -191,7 +191,7 @@ namespace TeamCityIntegration.Settings
             // CheckBoxLogAsGuest
             // 
             this.CheckBoxLogAsGuest.AutoSize = true;
-<<<<<<< HEAD
+
             this.CheckBoxLogAsGuest.Location = new System.Drawing.Point(137, 148);
 =======
             this.CheckBoxLogAsGuest.Location = new System.Drawing.Point(117, 133);
@@ -206,7 +206,7 @@ namespace TeamCityIntegration.Settings
             // buttonProjectChooser
             // 
             this.buttonProjectChooser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-<<<<<<< HEAD
+
             this.buttonProjectChooser.Location = new System.Drawing.Point(617, 38);
 =======
             this.buttonProjectChooser.Location = new System.Drawing.Point(416, 2);
@@ -219,7 +219,7 @@ namespace TeamCityIntegration.Settings
             this.buttonProjectChooser.UseVisualStyleBackColor = true;
             this.buttonProjectChooser.Click += new System.EventHandler(this.buttonProjectChooser_Click);
             // 
-<<<<<<< HEAD
+
             // TeamCitySettingsUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -341,7 +341,7 @@ namespace TeamCityIntegration.Settings
         private System.Windows.Forms.Label labelRegexError;
         private System.Windows.Forms.CheckBox CheckBoxLogAsGuest;
         private System.Windows.Forms.Button buttonProjectChooser;
-<<<<<<< HEAD
+
 =======
         private System.Windows.Forms.LinkLabel lnkExtractDataFromBuildUrlCopiedInTheClipboard;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
