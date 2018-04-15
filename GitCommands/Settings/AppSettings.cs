@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.IO.Abstractions;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
@@ -10,6 +12,8 @@ using GitCommands.Logging;
 using GitCommands.Repository;
 using GitCommands.Settings;
 using Microsoft.Win32;
+using System.Linq;
+using GitCommands.Utils;
 
 namespace GitCommands
 {
@@ -27,13 +31,17 @@ namespace GitCommands
         public static readonly char PosixPathSeparator = '/';
         public static Version AppVersion { get { return Assembly.GetCallingAssembly().GetName().Version; } }
         public static string ProductVersion { get { return Application.ProductVersion; } }
+
         public const string SettingsFileName = "GitExtensions.settings";
+        // public static readonly string SettingsFileName = "GitExtensions.settings";
+        private static readonly ISshPathLocator SshPathLocatorInstance = new SshPathLocator();
 
         public static Lazy<string> ApplicationDataPath;
         public static string SettingsFilePath { get { return Path.Combine(ApplicationDataPath.Value, SettingsFileName); } }
 
         private static RepoDistSettings _SettingsContainer;
         public static RepoDistSettings SettingsContainer { get { return _SettingsContainer; } }
+        private static readonly SettingsPath DetailedSettingsPath = new AppSettingsPath("Detailed");
 
         public static int BranchDropDownMinWidth = 300;
         public static int BranchDropDownMaxWidth = 600;
@@ -93,6 +101,12 @@ namespace GitCommands
             }
         }
 
+        public static bool RememberAmendCommitState
+        {
+            get { return GetBool("RememberAmendCommitState", true); }
+            set { SetBool("RememberAmendCommitState", value); }
+        }
+
         public static void UsingContainer(RepoDistSettings aSettingsContainer, Action action)
         {
             SettingsContainer.LockedAction(() =>
@@ -130,11 +144,14 @@ namespace GitCommands
             string gitExtDir = GetGitExtensionsDirectory().TrimEnd('\\').TrimEnd('/');
             string debugPath = @"GitExtensions\bin\Debug";
             int len = debugPath.Length;
-            var path = gitExtDir.Substring(gitExtDir.Length - len);
-            if (debugPath.ToPosixPath().Equals(path.ToPosixPath()))
+            if (gitExtDir.Length > len)
             {
-                string projectPath = gitExtDir.Substring(0, gitExtDir.Length - len);
-                return Path.Combine(projectPath, "Bin");
+                var path = gitExtDir.Substring(gitExtDir.Length - len);
+                if (debugPath.ToPosixPath().Equals(path.ToPosixPath()))
+                {
+                    string projectPath = gitExtDir.Substring(0, gitExtDir.Length - len);
+                    return Path.Combine(projectPath, "Bin");
+                }
             }
 #endif
             return GetInstallDir();
@@ -308,6 +325,18 @@ namespace GitCommands
             get { return GetBool("showresetallchanges", true); }
             set { SetBool("showresetallchanges", value); }
         }
+        
+        public static readonly BoolNullableSetting ShowConEmuTab = new BoolNullableSetting("ShowConEmuTab", DetailedSettingsPath, true);
+        public static readonly StringSetting ConEmuStyle = new StringSetting("ConEmuStyle", DetailedSettingsPath, "<Solarized Light>");
+        public static readonly StringSetting ConEmuTerminal = new StringSetting("ConEmuTerminal", DetailedSettingsPath, "bash");
+        public static readonly StringSetting ConEmuFontSize = new StringSetting("ConEmuFontSize", DetailedSettingsPath, "12");
+        public static readonly BoolNullableSetting ShowGpgInformation = new BoolNullableSetting("ShowGpgInformation", DetailedSettingsPath, false);
+
+        public static bool ShowRevisionInfoNextToRevisionGrid
+        {
+            get { return !EnvUtils.IsMonoRuntime() && DetailedSettingsPath.GetBool("ShowRevisionInfoNextToRevisionGrid", false); }
+            set { DetailedSettingsPath.SetBool("ShowRevisionInfoNextToRevisionGrid", !EnvUtils.IsMonoRuntime() && value); }
+        }
 
         public static bool ProvideAutocompletion
         {
@@ -459,11 +488,11 @@ namespace GitCommands
             set { SetString("iconstyle", value); }
         }
 
-        public static int AuthorImageSize
-        {
-            get { return GetInt("authorimagesize", 80); }
-            set { SetInt("authorimagesize", value); }
-        }
+        /// <summary>
+        /// Gets the size of the commit author avatar. Set to 80px.
+        /// </summary>
+        /// <remarks>The value should be scaled with DPI.</remarks>
+        public static int AuthorImageSize => 80;
 
         public static int AuthorImageCacheDays
         {
@@ -537,10 +566,22 @@ namespace GitCommands
             set { SetBool("LoadBlameOnShow", value); }
         }
 
+        public static bool OpenSubmoduleDiffInSeparateWindow
+        {
+            get { return GetBool("opensubmodulediffinseparatewindow", false); }
+            set { SetBool("opensubmodulediffinseparatewindow", value); }
+        }
+
         public static bool RevisionGraphShowWorkingDirChanges
         {
             get { return GetBool("revisiongraphshowworkingdirchanges", false); }
             set { SetBool("revisiongraphshowworkingdirchanges", value); }
+        }
+
+        public static bool RevisionGraphDrawAlternateBackColor
+        {
+            get { return GetBool("RevisionGraphDrawAlternateBackColor", true); }
+            set { SetBool("RevisionGraphDrawAlternateBackColor", value); }
         }
 
         public static bool RevisionGraphDrawNonRelativesGray
@@ -633,6 +674,12 @@ namespace GitCommands
             set { SetBool("DontConfirmAmend", value); }
         }
 
+        public static bool DontConfirmCommitIfNoBranch
+        {
+            get { return GetBool("DontConfirmCommitIfNoBranch", false); }
+            set { SetBool("DontConfirmCommitIfNoBranch", value); }
+        }
+
         public static bool? AutoPopStashAfterPull
         {
             get { return GetBool("AutoPopStashAfterPull"); }
@@ -661,6 +708,24 @@ namespace GitCommands
         {
             get { return GetBool("DontConfirmAddTrackingRef", false); }
             set { SetBool("DontConfirmAddTrackingRef", value); }
+        }
+
+        public static bool DontConfirmCommitAfterConflictsResolved
+        {
+            get { return GetBool("DontConfirmCommitAfterConflictsResolved", false); }
+            set { SetBool("DontConfirmCommitAfterConflictsResolved", value); }
+        }
+
+        public static bool DontConfirmSecondAbortConfirmation
+        {
+            get { return GetBool("DontConfirmSecondAbortConfirmation", false); }
+            set { SetBool("DontConfirmSecondAbortConfirmation", value); }
+        }
+
+        public static bool DontConfirmResolveConflicts
+        {
+            get { return GetBool("DontConfirmResolveConflicts", false); }
+            set { SetBool("DontConfirmResolveConflicts", value); }
         }
 
         public static bool IncludeUntrackedFilesInAutoStash
@@ -819,6 +884,7 @@ namespace GitCommands
             set { SetBool("showfirstparent", value); }
         }
 
+
         public static int CommitDialogSplitter
         {
             get { return GetInt("commitdialogsplitter", -1); }
@@ -829,6 +895,12 @@ namespace GitCommands
         {
             get { return GetInt("commitdialogrightsplitter", -1); }
             set { SetInt("commitdialogrightsplitter", value); }
+=======
+        public static bool CommitDialogSelectionFilter
+        {
+            get { return GetBool("commitdialogselectionfilter", false); }
+            set { SetBool("commitdialogselectionfilter", value); }
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         }
 
         public static string DefaultCloneDestinationPath
@@ -843,7 +915,7 @@ namespace GitCommands
             set { SetInt("revisiongridquicksearchtimeout", value); }
         }
 
-        public static string GravatarFallbackService
+        public static string GravatarDefaultImageType
         {
             get { return GetString("gravatarfallbackservice", "Identicon"); }
             set { SetString("gravatarfallbackservice", value); }
@@ -878,6 +950,12 @@ namespace GitCommands
         {
             get { return GetBool("showdiffforallparents", true); }
             set { SetBool("showdiffforallparents", value); }
+        }
+
+        public static int DiffVerticalRulerPosition
+        {
+            get { return GetInt( "diffverticalrulerposition", 80 ); }
+            set { SetInt( "diffverticalrulerposition", value ); }
         }
 
         public static string RecentWorkingDir
@@ -1070,11 +1148,12 @@ namespace GitCommands
 
         public static void SaveSettings()
         {
+            SaveEncodings();
             try
             {
                 SettingsContainer.LockedAction(() =>
                 {
-                    SshPath = GitCommandHelpers.GetSsh();
+                    SshPath = SshPathLocatorInstance.Find(GitBinDir);
                     Repositories.SaveSettings();
 
                     SettingsContainer.Save();
@@ -1086,13 +1165,7 @@ namespace GitCommands
 
         public static void LoadSettings()
         {
-            Action<Encoding> addEncoding = delegate(Encoding e) { AvailableEncodings[e.HeaderName] = e; };
-            addEncoding(Encoding.Default);
-            addEncoding(new ASCIIEncoding());
-            addEncoding(new UnicodeEncoding());
-            addEncoding(new UTF7Encoding());
-            addEncoding(new UTF8Encoding(false));
-            addEncoding(System.Text.Encoding.GetEncoding("CP852"));
+            LoadEncodings();
 
             try
             {
@@ -1132,10 +1205,22 @@ namespace GitCommands
             set { SetInt("MaxMostRecentRepositories", value); }
         }
 
+        public static int RecentRepositoriesHistorySize
+        {
+            get { return GetInt("history size", 30); }
+            set { SetInt("history size", value); }
+        }
+
         public static int RecentReposComboMinWidth
         {
             get { return GetInt("RecentReposComboMinWidth", 0); }
             set { SetInt("RecentReposComboMinWidth", value); }
+        }
+
+        public static string SerializedHotkeys
+        {
+            get { return GetString("SerializedHotkeys", null); }
+            set { SetString("SerializedHotkeys", value); }
         }
 
         public static bool SortMostRecentRepos
@@ -1244,6 +1329,12 @@ namespace GitCommands
         {
             get { return GetBool("UseConsoleEmulatorForCommands", true); }
             set { SetBool("UseConsoleEmulatorForCommands", value); }
+        }
+
+        public static BranchOrdering BranchOrderingCriteria
+        {
+            get { return GetEnum("BranchOrderingCriteria", BranchOrdering.ByLastAccessDate); }
+            set { SetEnum("BranchOrderingCriteria", value); }
         }
 
         public static string GetGitExtensionsFullPath()
@@ -1398,47 +1489,72 @@ namespace GitCommands
             return SettingsContainer.GetString(name, defaultValue);
         }
 
+        private static void LoadEncodings()
+        {
+            Action<Encoding> addEncoding = delegate (Encoding e) { AvailableEncodings[e.HeaderName] = e; };
+            Action<string> addEncodingByName = delegate (string s) { try { addEncoding(Encoding.GetEncoding(s)); } catch { } };
+
+            string availableEncodings = GetString("AvailableEncodings", "");
+            if (string.IsNullOrWhiteSpace(availableEncodings))
+            {
+                // Default encoding set
+                addEncoding(Encoding.Default);
+                addEncoding(new ASCIIEncoding());
+                addEncoding(new UnicodeEncoding());
+                addEncoding(new UTF7Encoding());
+                addEncoding(new UTF8Encoding(false));
+                try
+                {
+                    addEncoding(Encoding.GetEncoding(CultureInfo.CurrentCulture.TextInfo.OEMCodePage));
+                }
+                catch
+                {
+                    //there are CultureInfos without a code page
+                }
+            }
+            else
+            {
+                var utf8 = new UTF8Encoding(false);
+                foreach(var encodingName in availableEncodings.Split(';'))
+                {
+                    // create utf-8 without BOM
+                    if (encodingName == utf8.HeaderName)
+                        addEncoding(utf8);
+                    // default encoding
+                    else if (encodingName == "Default")
+                        addEncoding(Encoding.Default);
+                    // add encoding by name
+                    else
+                        addEncodingByName(encodingName);
+                }
+            }
+        }
+
+        private static void SaveEncodings()
+        {
+            string availableEncodings = AvailableEncodings.Values.Select(e => e.HeaderName).Join(";");
+            availableEncodings = availableEncodings.Replace(Encoding.Default.HeaderName, "Default");
+            SetString("AvailableEncodings", availableEncodings);
+        }
+
     }
 
-    /*
-    public abstract class Setting<T> : IXmlSerializable
+    public class AppSettingsPath : SettingsPath
     {
-        public SettingsContainer SettingsSource { get; private set; }
-        private T _Value;
-        public bool HasValue { get; private set; }
-        public string Name { get; private set; }
-        public T DefaultValue { get; private set; }
-
-        public Setting(SettingsContainer aSettingsSource, string aName, T aDefaultValue)
+        public AppSettingsPath(string aPathName) : base(null, aPathName)
         {
-            SettingsSource = aSettingsSource;
-            Name = aName;
-            DefaultValue = aDefaultValue;
-            HasValue = false;
         }
 
-        public T Value
+        public override T GetValue<T>(string name, T defaultValue, Func<string, T> decode)
         {
-            get
-            {
-                return SettingsSource.GetValue(Name, DefaultValue, (s) => DefaultValue);
-            }
-
-            set
-            {
-                //SettingsSource.SetValue(this, value);
-            }
+            return AppSettings.SettingsContainer.GetValue(PathFor(name), defaultValue, decode);
         }
 
-        public virtual System.Xml.Schema.XmlSchema GetSchema()
+        public override void SetValue<T>(string name, T value, Func<T, string> encode)
         {
-            return null;
+            AppSettings.SettingsContainer.SetValue(PathFor(name), value, encode);
         }
 
-        public abstract void ReadXml(XmlReader reader);
-        public abstract void WriteXml(XmlWriter writer);
     }
-
-    */
 
 }

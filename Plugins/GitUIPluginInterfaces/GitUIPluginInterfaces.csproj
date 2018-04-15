@@ -10,7 +10,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GitUIPluginInterfaces</RootNamespace>
     <AssemblyName>GitUIPluginInterfaces</AssemblyName>
+< HEAD
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+=======
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -31,11 +35,16 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+<<<<<<< HEAD
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <ReleaseVersion>2.48</ReleaseVersion>
+=======
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -65,8 +74,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Reactive.Interfaces, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Rx-Interfaces.2.2.5\lib\net40\System.Reactive.Interfaces.dll</HintPath>
+    <Reference Include="System.Reactive.Interfaces, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Reactive.Interfaces.3.1.1\lib\net45\System.Reactive.Interfaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -74,6 +83,7 @@
     <Compile Include="..\..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BuildServerIntegration\BuildDurationFormatter.cs" />
     <Compile Include="BuildServerIntegration\BuildInfo.cs" />
     <Compile Include="BuildServerIntegration\BuildServerAdapterMetadataAttribute.cs" />
     <Compile Include="BuildServerIntegration\BuildServerCredentials.cs" />
@@ -89,6 +99,10 @@
     <Compile Include="IBrowseRepo.cs" />
     <Compile Include="IConfigFileSettings.cs" />
     <Compile Include="IConfigSection.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="IGitCommand.cs" />
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
     <Compile Include="IGitItem.cs" />
     <Compile Include="IGitPluginForRepository.cs" />
     <Compile Include="IGitModule.cs" />
@@ -99,6 +113,7 @@
     <Compile Include="Notifications\INotifications.cs" />
     <Compile Include="Notifications\Notification.cs" />
     <Compile Include="ILockableNotifier.cs" />
+    <Compile Include="ISettingsValueGetter.cs" />
     <Compile Include="Settings\BoolSetting.cs" />
     <Compile Include="ISetting.cs" />
     <Compile Include="ISettingsSource.cs" />
@@ -121,6 +136,32 @@
     <Compile Include="Settings\StringSetting.cs" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
+=======
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\GitExtUtils\GitExtUtils.csproj">
+      <Project>{0f1f1168-a4b2-4fa2-b17b-735140d17f39}</Project>
+      <Name>GitExtUtils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\..\FxCop.targets" />

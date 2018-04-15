@@ -18,9 +18,12 @@ namespace GitCommands
         public const string IndexGuid = "1111111111111111111111111111111111111111";
         /// <summary>40 characters of a-f or any digit.</summary>
         public const string Sha1HashPattern = @"[a-f\d]{40}";
+        public const string Sha1HashShortPattern = @"[a-f\d]{7,40}";
         public static readonly Regex Sha1HashRegex = new Regex("^" + Sha1HashPattern + "$", RegexOptions.Compiled);
+        public static readonly Regex Sha1HashShortRegex = new Regex(string.Format(@"\b{0}\b", Sha1HashShortPattern), RegexOptions.Compiled);
 
         public string[] ParentGuids;
+
         private IList<IGitItem> _subItems;
         private readonly List<GitRef> _refs = new List<GitRef>();
         private readonly GitModule _module;
@@ -32,7 +35,10 @@ namespace GitCommands
         {
             Guid = guid;
             Subject = "";
+
             _module = aModule as GitModule;
+            SubjectCount = "";
+            Module = aModule;
         }
 
         #pragma warning disable 3014 // CS3014 off
@@ -61,6 +67,8 @@ namespace GitCommands
         }
 
         public string Subject { get; set; }
+        //Count for artificial commits (could be changed to object lists)
+        public string SubjectCount { get; set; }
         public string Body { get; set; }
         //UTF-8 when is null or empty
         public string MessageEncoding { get; set; }
@@ -69,11 +77,6 @@ namespace GitCommands
 
         public string Guid { get; set; }
         public string Name { get; set; }
-
-        public IEnumerable<IGitItem> SubItems
-        {
-            get { return _subItems ?? (_subItems = _module.GetTree(TreeGuid, false)); }
-        }
 
         #endregion
 
@@ -84,7 +87,7 @@ namespace GitCommands
             {
                 sha = sha.Substring(0, 4) + ".." + sha.Substring(sha.Length - 4, 4);
             }
-            return String.Format("{0}:{1}", sha, Subject);
+            return String.Format("{0}:{1}{2}", sha, SubjectCount, Subject);
         }
 
         public bool MatchesSearchString(string searchString)
@@ -110,9 +113,20 @@ namespace GitCommands
                     guid == IndexGuid;
         }
 
-        public bool HasParent()
+        public bool HasParent
         {
-            return ParentGuids != null && ParentGuids.Length > 0;
+            get
+            {
+                return ParentGuids != null && ParentGuids.Length > 0;
+            }
+        }
+
+        public string FirstParentGuid
+        {
+            get
+            {
+                return HasParent ? ParentGuids[0] : null;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -122,6 +136,25 @@ namespace GitCommands
         {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public static GitRevision CreateForShortSha1(GitModule aModule, string sha1)
+        {
+            if (!sha1.IsNullOrWhiteSpace() && sha1.Length < 40)
+            {
+                string fullSha1;
+                if (aModule.IsExistingCommitHash(sha1, out fullSha1))
+                {
+                    sha1 = fullSha1;
+                }
+            }
+
+            return new GitRevision(aModule, sha1);
+        }
+
+        public static bool IsFullSha1Hash(string id)
+        {
+            return Regex.IsMatch(id, GitRevision.Sha1HashPattern);
         }
     }
 }

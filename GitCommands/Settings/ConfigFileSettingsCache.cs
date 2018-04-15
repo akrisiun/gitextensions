@@ -1,6 +1,7 @@
 ﻿using GitCommands.Config;
 using System;
 using System.Collections.Generic;
+using GitUIPluginInterfaces;
 
 namespace GitCommands.Settings
 {
@@ -42,7 +43,6 @@ namespace GitCommands.Settings
 
         protected override void ClearImpl()
         {
-            base.ClearImpl();
             ReadSettings(SettingsFilePath);
         }
 
@@ -71,6 +71,22 @@ namespace GitCommands.Settings
             return _configFile.Value.GetValue(key, null);
         }
 
+        /// <summary>
+        /// Adds the specific configuration section to the .git/config file.
+        /// </summary>
+        /// <param name="configSection">The configuration section.</param>
+        public void AddConfigSection(IConfigSection configSection)
+        {
+            LockedAction(() =>
+            {
+                EnsureSettingsAreUpToDate();
+                _configFile.Value.AddConfigSection(configSection);
+
+                // mark as dirty so the updated configuartion is persisted
+                SettingsChanged();
+            });
+        }
+
         public IList<string> GetValues(string key)
         {
             return LockedAction(() =>
@@ -80,6 +96,7 @@ namespace GitCommands.Settings
             });
         }
 
+<<<<<<< HEAD
         //public IList<ConfigSection> GetConfigSections()
         //{
         //    return LockedAction(() =>
@@ -90,6 +107,9 @@ namespace GitCommands.Settings
         //}
 
         public void RemoveConfigSection(string configSectionName)
+=======
+        public IList<IConfigSection> GetConfigSections()
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         {
             LockedAction(() =>
             {
@@ -98,12 +118,29 @@ namespace GitCommands.Settings
             });
         }
 
+<<<<<<< HEAD
         public IEnumerable<ConfigSection> GetConfigSections(string configSectionName)
+=======
+        /// <summary>
+        /// Removes the specific configuration section from the .git/config file.
+        /// </summary>
+        /// <param name="configSectionName">The name of the configuration section.</param>
+        /// <param name="performSave">If <see langword="true"/> the configuration changes will be saved immediately.</param>
+        public void RemoveConfigSection(string configSectionName, bool performSave = false)
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         {
             return LockedAction < IEnumerable<ConfigSection>>(() =>
             {
                 EnsureSettingsAreUpToDate();
+<<<<<<< HEAD
                 return null; // _configFile.Value.GetConfigSections(configSectionName);
+=======
+                _configFile.Value.RemoveConfigSection(configSectionName);
+                if (performSave)
+                {
+                    _configFile.Value.Save();
+                }
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             });
         }
     }

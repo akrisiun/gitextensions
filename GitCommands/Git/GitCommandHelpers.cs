@@ -48,6 +48,8 @@ namespace GitCommands
 
     public static class GitCommandHelpers
     {
+        private static readonly ISshPathLocator SshPathLocatorInstance = new SshPathLocator();
+
         public static void SetEnvironmentVariable(bool reload = false)
         {
             string path = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Process);
@@ -122,7 +124,7 @@ namespace GitCommands
             }
         }
 
-	    public static ProcessStartInfo CreateProcessStartInfo(string fileName, string arguments, string workingDirectory, Encoding outputEncoding)
+        public static ProcessStartInfo CreateProcessStartInfo(string fileName, string arguments, string workingDirectory, Encoding outputEncoding)
         {
             return new ProcessStartInfo
             {
@@ -144,25 +146,29 @@ namespace GitCommands
         {
             SetEnvironmentVariable();
 
-            string quotedCmd = fileName;
-            if (quotedCmd.IndexOf(' ') != -1)
-                quotedCmd = quotedCmd.Quote();
-
             var executionStartTimestamp = DateTime.Now;
 
             var startInfo = CreateProcessStartInfo(fileName, arguments, workingDirectory, outputEncoding);
             var startProcess = Process.Start(startInfo);
+            startProcess.EnableRaisingEvents = true;
 
-            startProcess.Exited += (sender, args) =>
+            EventHandler processExited = null;
+            processExited = (sender, args) =>
             {
+                startProcess.Exited -= processExited;
+
+                string quotedCmd = fileName;
+                if (quotedCmd.IndexOf(' ') != -1)
+                    quotedCmd = quotedCmd.Quote();
                 var executionEndTimestamp = DateTime.Now;
                 AppSettings.GitLog.Log(quotedCmd + " " + arguments, executionStartTimestamp, executionEndTimestamp);
             };
+            startProcess.Exited += processExited;
 
             return startProcess;
         }
 
-	    public static bool UseSsh(string arguments)
+        public static bool UseSsh(string arguments)
         {
             var x = !Plink() && GetArgumentsRequiresSsh(arguments);
             return x || arguments.Contains("plink");
@@ -476,7 +482,7 @@ namespace GitCommands
 
         public static string CloneCmd(string fromPath, string toPath)
         {
-            return CloneCmd(fromPath, toPath, false, false, string.Empty, null);
+            return CloneCmd(fromPath, toPath, false, false, string.Empty, null, null, false);
         }
 
         /// <summary>
@@ -497,8 +503,9 @@ namespace GitCommands
         /// <para><c>False</c>: --no-single-branch.</para>
         /// <para><c>NULL</c>: don't pass any such param to git.</para>
         /// </param>
+        /// <param name="lfs">True to use the <c>git lfs clone</c> command instead of <c>git clone</c>.</param>
         /// <returns></returns>
-        public static string CloneCmd(string fromPath, string toPath, bool central, bool initSubmodules, [CanBeNull] string branch, int? depth, [Optional] bool? isSingleBranch)
+        public static string CloneCmd(string fromPath, string toPath, bool central, bool initSubmodules, [CanBeNull] string branch, int? depth, bool? isSingleBranch, bool lfs)
         {
             var from = PathUtil.IsLocalFile(fromPath) ? fromPath.ToPosixPath() : fromPath;
             var to = toPath.ToPosixPath();
@@ -519,7 +526,9 @@ namespace GitCommands
             options.Add(string.Format("\"{0}\"", from.Trim()));
             options.Add(string.Format("\"{0}\"", to.Trim()));
 
-            return "clone " + string.Join(" ", options.ToArray());
+            var command = lfs ? "lfs clone " : "clone ";
+
+            return command + string.Join(" ", options.ToArray());
         }
 
         public static string CheckoutCmd(string branchOrRevisionName, LocalChangesAction changesAction)
@@ -581,9 +590,16 @@ namespace GitCommands
             }
         }
 
-        public static string MergedBranches()
+        public static string MergedBranches(bool includeRemote = false)
         {
-            return "branch --merged";
+            if (includeRemote)
+            {
+                return "branch -a --merged";
+            }
+            else
+            {
+                return "branch --merged";
+            }
         }
 
         /// <summary>Un-sets the git SSH command path.</summary>
@@ -602,17 +618,9 @@ namespace GitCommands
         /// <summary>Indicates whether the git SSH command uses Plink.</summary>
         public static bool Plink()
         {
-            var sshString = GetSsh();
+            var sshString = SshPathLocatorInstance.Find(AppSettings.GitBinDir);
 
             return sshString.EndsWith("plink.exe", StringComparison.CurrentCultureIgnoreCase);
-        }
-
-        /// <summary>Gets the git SSH command; or "" if the environment variable is NOT set.</summary>
-        public static string GetSsh()
-        {
-            var ssh = Environment.GetEnvironmentVariable("GIT_SSH", EnvironmentVariableTarget.Process);
-
-            return ssh ?? "";
         }
 
         /// <summary>Pushes multiple sets of local branches to remote branches.</summary>
@@ -914,7 +922,7 @@ namespace GitCommands
 
                 if (line != null)
                 {
-                    var match = Regex.Match(line, @"diff --git a/(\S+) b/(\S+)");
+                    var match = Regex.Match(line, @"diff --git [abic]/(.+)\s[abwi]/(.+)");
                     if (match.Groups.Count > 1)
                     {
                         status.Name = match.Groups[1].Value;
@@ -1067,7 +1075,7 @@ namespace GitCommands
             return diffFiles;
         }
 
-        public static List<GitItemStatus> GetAssumeUnchangedFilesFromString(GitModule module, string lsString)
+        public static List<GitItemStatus> GetAssumeUnchangedFilesFromString(string lsString)
         {
             List<GitItemStatus> result = new List<GitItemStatus>();
             string[] lines = lsString.SplitLines();
@@ -1082,6 +1090,26 @@ namespace GitCommands
                 gitItemStatus.IsStaged = false;
                 gitItemStatus.IsAssumeUnchanged = true;
                 result.Add(gitItemStatus);
+            }
+
+            return result;
+        }
+
+        public static List<GitItemStatus> GetSkipWorktreeFilesFromString(string lsString)
+        {
+            List<GitItemStatus> result = new List<GitItemStatus>();
+            string[] lines = lsString.SplitLines();
+            foreach (string line in lines)
+            {
+                char statusCharacter = line[0];
+
+                string fileName = line.Substring(line.IndexOf(' ') + 1);
+                GitItemStatus gitItemStatus = GitItemStatusFromStatusCharacter(fileName, statusCharacter);
+                if (gitItemStatus.IsSkipWorktree)
+                {
+                    gitItemStatus.IsStaged = false;
+                    result.Add(gitItemStatus);
+                }
             }
 
             return result;
@@ -1121,6 +1149,7 @@ namespace GitCommands
             gitItemStatus.IsNew = x == 'A' || x == '?' || x == '!';
             gitItemStatus.IsChanged = x == 'M';
             gitItemStatus.IsDeleted = x == 'D';
+            gitItemStatus.IsSkipWorktree = x == 'S';
             gitItemStatus.IsRenamed = false;
             gitItemStatus.IsTracked = x != '?' && x != '!' && x != ' ' || !gitItemStatus.IsNew;
             gitItemStatus.IsConflict = x == 'U';
@@ -1140,7 +1169,9 @@ namespace GitCommands
             return string.Empty;
         }
 
+
         public static string MergeBranchCmd(string branch, bool allowFastForward, bool squash, bool noCommit, string strategy)
+        // public static string MergeBranchCmd(string branch, bool allowFastForward, bool squash, bool noCommit, string strategy, bool allowUnrelatedHistories, string message, int? log)
         {
             StringBuilder command = new StringBuilder("merge");
 
@@ -1155,6 +1186,12 @@ namespace GitCommands
                 command.Append(" --squash");
             if (noCommit)
                 command.Append(" --no-commit");
+
+            if (!string.IsNullOrEmpty(message))
+                command.AppendFormat(" -m {0}", message.Quote());
+
+            if (log.HasValue)
+                command.AppendFormat(" --log={0}", log.Value);
 
             command.Append(" ");
             command.Append(branch);

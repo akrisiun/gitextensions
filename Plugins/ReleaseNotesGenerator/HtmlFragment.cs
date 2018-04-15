@@ -196,13 +196,13 @@ namespace ReleaseNotesGenerator
             // http://msdn.microsoft.com/library/default.asp?url=/workshop/networking/clipboard/htmlclipboard.asp
 
             // The string contains index references to other spots in the string, so we need placeholders so we can compute the offsets. 
-            // The <<<<<<<_ strings are just placeholders. We'll backpatch them actual values afterwards.
+            // The <_ strings are just placeholders. We'll backpatch them actual values afterwards.
             // The string layout (<<<) also ensures that it can't appear in the body of the html because the <
             // character must be escaped.
             string header =
     @"Version:0.9
-StartHTML:<<<<<<<1
-EndHTML:<<<<<<<2
+StartHTML:<1
+EndHTML:<2
 StartFragment:<<<<<<<3
 EndFragment:<<<<<<<4
 ";

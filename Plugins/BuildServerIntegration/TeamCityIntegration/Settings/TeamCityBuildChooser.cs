@@ -53,9 +53,16 @@ namespace TeamCityIntegration.Settings
             var node = (Node)treeNode.Tag;
             if (node.IsProject && !node.Loaded)
             {
+< HEAD
                 treeNode.Nodes.Clear();
                 var project = _teamCityAdapter.GetProjectChildren(node.Name);
                 treeNode.Nodes.AddRange(project.Projects.Select(p => new TreeNode(p)
+=======
+                project.Builds = _teamCityAdapter.GetProjectBuilds(project.Id);
+
+                //Remove "Loading..." node
+                if (treeNode.Nodes.Count == 1 && treeNode.Nodes[0].Tag == null)
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                 {
                     Tag = new Node { IsProject = true, Loaded = false, Name = p, ParentProject = node.Name }
                 }).ToArray());

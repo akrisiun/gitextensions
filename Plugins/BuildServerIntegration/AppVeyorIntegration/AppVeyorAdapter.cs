@@ -205,6 +205,7 @@ namespace AppVeyorIntegration
                                 string commitSha1 = null;
                                 var pullRequestId = b["pullRequestId"];
                                 if (isGitHubRepository && pullRequestId != null)
+<<<<<<< HEAD
                                 {
                                     if (!_shouldDisplayGitHubPullRequestBuilds)
                                         return null;
@@ -233,12 +234,46 @@ namespace AppVeyorIntegration
                                 }
                                 if (commitSha1 == null || !IsCommitInRevisionGrid(commitSha1))
                                 {
+=======
+                                {
+                                    if (!_shouldDisplayGitHubPullRequestBuilds)
+                                        return null;
+                                    try
+                                    {
+                                        var githubCommitUrl = string.Format(GitHubUrl, repoName, b["commitId"]);
+                                        var gitHubTask = GetResponseAsync(_httpClientGitHub, githubCommitUrl, CancellationToken.None).ContinueWith(
+                                            task2 =>
+                                            {
+                                                var content = task2.Result;
+                                                if (string.IsNullOrWhiteSpace(content))
+                                                    return;
+                                                var commitResult = JObject.Parse(content);
+                                                commitSha1 = commitResult["parents"][1]["sha"].ToObject<string>();
+                                            });
+                                        gitHubTask.Wait();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.WriteLine(ex.Message);
+                                    }
+                                }
+                                else
+                                {
+                                    commitSha1 = b["commitId"].ToObject<string>();
+                                }
+                                if (commitSha1 == null || !IsCommitInRevisionGrid(commitSha1))
+                                {
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                                     return null;
                                 }
 
                                 var version = b["version"].ToObject<string>();
                                 var status = ParseBuildStatus(b["status"].ToObject<string>());
+<<<<<<< HEAD
                                 string duration = string.Empty;
+=======
+                                long? duration = null;
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                                 if (status == BuildInfo.BuildStatus.Success || status == BuildInfo.BuildStatus.Failure)
                                     duration = GetBuildDuration(b);
 
@@ -399,11 +434,11 @@ namespace AppVeyorIntegration
             }
         }
 
-        private static string GetBuildDuration(JToken buildData)
+        private static long GetBuildDuration(JToken buildData)
         {
             var startTime = buildData["started"].ToObject<DateTime>();
             var updateTime = buildData["updated"].ToObject<DateTime>();
-            return " (" + (updateTime - startTime).ToString(@"mm\:ss") + ")";
+            return (long)(updateTime - startTime).TotalMilliseconds;
         }
 
         private JObject FetchBuildDetailsManagingVersionUpdate(BuildDetails buildDetails, CancellationToken cancellationToken)
@@ -511,6 +546,7 @@ namespace AppVeyorIntegration
 
     internal class BuildDetails : BuildInfo
     {
+        private static readonly IBuildDurationFormatter _buildDurationFormatter = new BuildDurationFormatter();
         private int _buildProgressCount;
         //From build build list
         public string BuildId { get; set; }
@@ -530,7 +566,7 @@ namespace AppVeyorIntegration
 
         public void UpdateDescription()
         {
-            Description = Id + PullRequestText + " " + DisplayStatus + " " + Duration + TestsResultText;
+            Description = Id + PullRequestText + " " + DisplayStatus + " " + _buildDurationFormatter.Format(Duration) + TestsResultText;
         }
 
         private string DisplayStatus
@@ -545,7 +581,5 @@ namespace AppVeyorIntegration
                 return Status.ToString("G") + new string('.', _buildProgressCount) + new string(' ', 3 - _buildProgressCount);
             }
         }
-
-        public string Duration { get; set; }
     }
 }

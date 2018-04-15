@@ -21,6 +21,7 @@ for /f "usebackq tokens=1* delims=: " %%i in (`%vswhere% -latest -requires Micro
 set project=..\GitExtensions.VS2015.sln
 set projectShellEx=..\GitExtensionsShellEx\GitExtensionsShellEx.vcxproj
 set projectSshAskPass=..\GitExtSshAskPass\SshAskPass.vcxproj
+<<<<<<< HEAD
 set nuget=..\.nuget\nuget.exe
 set SkipShellExtRegistration=1
 set EnableNuGetPackageRestore=true
@@ -33,6 +34,12 @@ set msbuildparams=/p:Configuration=Release /t:Rebuild /nologo /v:m
 %nuget% install ..\Plugins\BuildServerIntegration\TeamCityIntegration\packages.config -OutputDirectory ..\packages -Source https://nuget.org/api/v2/
 %nuget% install packages.config -OutputDirectory ..\packages -Source https://nuget.org/api/v2/
 %nuget% install ..\Externals\conemu-inside\ConEmuWinForms\packages.config -OutputDirectory ..\packages -Source https://nuget.org/api/v2/
+=======
+set SkipShellExtRegistration=1
+set EnableNuGetPackageRestore=true
+..\.nuget\nuget.exe restore %project%
+set msbuildparams=/p:Configuration=Release /t:restore /t:Rebuild /nologo /v:m
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 
 %msbuild% %project% /p:Platform="Any CPU" %msbuildparams%
 IF ERRORLEVEL 1 EXIT /B 1
@@ -53,4 +60,8 @@ call MakeMonoArchive.cmd
 IF ERRORLEVEL 1 EXIT /B 1
 
 echo.
+<<<<<<< HEAD
 pause
+=======
+IF "%SKIP_PAUSE%"=="" pause
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d

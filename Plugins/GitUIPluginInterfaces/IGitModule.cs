@@ -8,6 +8,31 @@ namespace GitUIPluginInterfaces
     /// <summary>Provides manipulation with git module.</summary>
     public interface IGitModule
     {
+<<<<<<< HEAD
+=======
+        IConfigFileSettings LocalConfigFile { get; }
+
+        string AddRemote(string remoteName, string path);
+        IList<IGitRef> GetRefs(bool tags = true, bool branches = true);
+        IEnumerable<string> GetSettings(string setting);
+        IEnumerable<IGitItem> GetTree(string id, bool full);
+
+        /// <summary>
+        /// Removes the registered remote by running <c>git remote rm</c> command.
+        /// </summary>
+        /// <param name="remoteName">The remote name.</param>
+        string RemoveRemote(string remoteName);
+
+        /// <summary>
+        /// Renames the registered remote by running <c>git remote rename</c> command.
+        /// </summary>
+        /// <param name="remoteName">The current remote name.</param>
+        /// <param name="newName">The new remote name.</param>
+        string RenameRemote(string remoteName, string newName);
+        void SetSetting(string setting, string value);
+        void UnsetSetting(string setting);
+
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         /// <summary>
         /// Run git command, console window is hidden, redirect output
         /// </summary>
@@ -35,11 +60,36 @@ namespace GitUIPluginInterfaces
 
         string RunBatchFile(string batchFile);
 
+        /// <summary>
+        /// Determines whether the given repository has index.lock file.
+        /// </summary>
+        /// <returns><see langword="true"/> is index is locked; otherwise <see langword="false"/>.</returns>
+        bool IsIndexLocked();
+
+        /// <summary>
+        /// Delete index.lock in the current working folder.
+        /// </summary>
+        /// <param name="includeSubmodules">
+        ///     If <see langword="true"/> all submodules will be scanned for index.lock files and have them delete, if found.
+        /// </param>
+        void UnlockIndex(bool includeSubmodules);
+
         /// <summary>Gets the directory which contains the git repository.</summary>
         string WorkingDir { get; }
 
-        /// <summary>Gets the ".git" directory path.</summary>
-        string GetGitDirectory();
+        /// <summary>
+        /// Gets the location of .git directory for the current working folder.
+        /// </summary>
+        string WorkingDirGitDir { get; }
+
+        /// <summary>
+        /// Asks git to resolve the given relativePath
+        /// git special folders are located in different directories depending on the kind of repo: submodule, worktree, main
+        /// See https://git-scm.com/docs/git-rev-parse#git-rev-parse---git-pathltpathgt
+        /// </summary>
+        /// <param name="relativePath">A path relative to the .git directory</param>
+        /// <returns></returns>
+        string ResolveGitInternalPath(string relativePath);
 
         /// <summary>Indicates whether the specified directory contains a git repository.</summary>
         bool IsValidGitWorkingDir();
@@ -51,15 +101,32 @@ namespace GitUIPluginInterfaces
 
         string GravatarCacheDir { get; }
 
+        string GetSubmoduleFullPath(string localPath);
+
         IEnumerable<IGitSubmoduleInfo> GetSubmodulesInfo();
 
         IList<string> GetSubmodulesLocalPaths(bool recursive = true);
 
         IGitModule GetSubmodule(string submoduleName);
 
+<<<<<<< HEAD
+=======
+        /// <summary>
+        /// Retrieves registered remotes by running <c>git remote show</c> command.
+        /// </summary>
+        /// <returns>Registered remotes.</returns>
+        string[] GetRemotes();
+
+        /// <summary>
+        /// Retrieves registered remotes by running <c>git remote show</c> command.
+        /// </summary>
+        /// <param name="allowEmpty"></param>
+        /// <returns>Registered remotes.</returns>
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         string[] GetRemotes(bool allowEmpty);
 
         string GetSetting(string setting);
+        string GetEffectiveSetting(string setting);
 
         bool StartPageantForRemote(string remote);
 

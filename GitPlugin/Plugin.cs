@@ -12,7 +12,6 @@ namespace GitPlugin.Commands
     // Interfaces with visual studio and handles the dispatch.
     public class Plugin
     {
-        private const string GitCommandBarName = "GitExtensions";
         private const string OldGitMainMenuName = "&Git";
         private const string OldGitExtMainMenuName = "&GitExt";
         private const string GitMainMenuName = "G&itExt";
@@ -24,10 +23,6 @@ namespace GitPlugin.Commands
         private readonly string _connectPath;
         private readonly OutputWindowPane _outputPane;
         private readonly Dictionary<string, Command> _visualStudioCommands = new Dictionary<string, Command>();
-
-        // specify if captions of commands can be updated
-        // On VS2013 (at least) update captions of command on hidden toolbar lead to create doubles of all commands on toolbar 2 commits, 4, 8, 16 ...
-        public static bool AllowCaptionUpdate;
 
         public Plugin(DTE2 application, AddIn addIn, string panelName, string connectPath)
         {
@@ -183,7 +178,7 @@ namespace GitPlugin.Commands
         {
             CommandBar cb =
                 CommandBars.Cast<CommandBar>()
-                    .FirstOrDefault(c => c.Name == GitCommandBarName);
+                    .FirstOrDefault(c => c.Name == PluginHelpers.GitCommandBarName);
             if (cb != null)
             {
                 cb.Delete();
@@ -194,10 +189,10 @@ namespace GitPlugin.Commands
         {
             CommandBar bar =
                 CommandBars.Cast<CommandBar>()
-                    .FirstOrDefault(c => c.Name == GitCommandBarName);
+                    .FirstOrDefault(c => c.Name == PluginHelpers.GitCommandBarName);
             if (bar == null)
             {
-                bar = (CommandBar)_application.Commands.AddCommandBar(GitCommandBarName, vsCommandBarType.vsCommandBarTypeToolbar);
+                bar = (CommandBar)_application.Commands.AddCommandBar(PluginHelpers.GitCommandBarName, vsCommandBarType.vsCommandBarTypeToolbar);
                 bar.Position = position;
                 bar.RowIndex = -1;
             }
@@ -304,7 +299,7 @@ namespace GitPlugin.Commands
             {
                 CommandBar cb =
                     CommandBars.Cast<CommandBar>()
-                        .FirstOrDefault(c => c.Name == GitCommandBarName);
+                        .FirstOrDefault(c => c.Name == PluginHelpers.GitCommandBarName);
                 if (cb == null)
                 {
                     return true;
@@ -418,7 +413,7 @@ namespace GitPlugin.Commands
         {
             CommandBar cb =
                 CommandBars.Cast<CommandBar>()
-                    .FirstOrDefault(c => c.Name == GitCommandBarName);
+                    .FirstOrDefault(c => c.Name == PluginHelpers.GitCommandBarName);
             if (cb != null)
             {
                 foreach (CommandBarButton control in cb.Controls)

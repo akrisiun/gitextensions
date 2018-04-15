@@ -76,6 +76,12 @@
       <Component Id="Gravatar.dll" Guid="*">
         <File Source="..\Gravatar\bin\Release\Gravatar.dll" />
       </Component>
+<<<<<<< HEAD
+=======
+      <Component Id="System.IO.Abstractions.dll" Guid="*">
+        <File Source="..\Gravatar\bin\Release\System.IO.Abstractions.dll" />
+      </Component>
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
       <Component Id="GitCommands.dll" Guid="*">
         <File Source="..\GitCommands\bin\Release\GitCommands.dll" />
       </Component>
@@ -233,6 +239,21 @@
       <Component Id="Newtonsoft.Json.dll" Guid="*">
         <File Source="..\packages\Newtonsoft.Json.10.0.3\lib\net40\Newtonsoft.Json.dll" />
       </Component>
+<<<<<<< HEAD
+=======
+      <Component Id="JiraCommitHintPlugin.dll" Guid="*">
+        <File Source="..\Plugins\JiraCommitHintPlugin\bin\Release\JiraCommitHintPlugin.dll" />
+      </Component>
+      <Component Id="Atlassian.Jira.dll" Guid="*">
+        <File Source="..\Plugins\JiraCommitHintPlugin\bin\Release\Atlassian.Jira.dll" />
+      </Component>
+      <Component Id="NString.dll" Guid="*">
+        <File Source="..\Plugins\JiraCommitHintPlugin\bin\Release\NString.dll" />
+      </Component>
+      <Component Id="System.Collections.Immutable.dll" Guid="*">
+        <File Source="..\Plugins\JiraCommitHintPlugin\bin\Release\System.Collections.Immutable.dll" />
+      </Component>
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
       <!--Remove unused dll, installed in versions <= 2.31-->
       <Component Id="Github.dll" Guid="0DA13691-140A-4490-8B4C-8AF537DAEB67">
         <RemoveFile Name="Github.dll" Id="Github.dll" On="both" />
@@ -251,8 +272,15 @@
       <Component Id="ProxySwitcher.dll" Guid="*">
         <File Source="..\Plugins\ProxySwitcher\bin\Release\ProxySwitcher.dll" />
       </Component>
+<<<<<<< HEAD
       <Component Id="Stash.dll" Guid="*">
         <File Source="..\Plugins\Stash\bin\Release\Stash.dll" />
+=======
+      <Component Id="Bitbucket.dll" Guid="*">
+        <File Source="..\Plugins\Bitbucket\bin\Release\Bitbucket.dll" />
+        <!--Renamed dll, installed in versions <= 2.50.02-->
+        <RemoveFile Name="Stash.dll" Id="Stash.dll" On="both" />
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
       </Component>
       <Component Id="TeamCityIntegration.dll" Guid="*">
         <File Source="..\Plugins\BuildServerIntegration\TeamCityIntegration\bin\Release\TeamCityIntegration.dll" />
@@ -633,6 +661,10 @@
       <ComponentRef Id="PSTaskDialog.dll" />
       <ComponentRef Id="Microsoft.WindowsAPICodePack.dll" />
       <ComponentRef Id="Microsoft.WindowsAPICodePack.Shell.dll" />
+<<<<<<< HEAD
+=======
+      <ComponentRef Id="System.IO.Abstractions.dll" />
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
       <ComponentRef Id="System.Reactive.Core.dll" />
       <ComponentRef Id="System.Reactive.Interfaces.dll" />
       <ComponentRef Id="System.Reactive.Linq.dll" />
@@ -707,8 +739,14 @@
         <Feature Id="ReleaseNotesGenerator" Title="Release notes generator" Level="1">
           <ComponentRef Id="ReleaseNotesGenerator.dll" />
         </Feature>
+<<<<<<< HEAD
         <Feature Id="Stash" Title="Atlassian Stash integration" Level="1">
           <ComponentRef Id="Stash.dll" />
+=======
+        <Feature Id="Bitbucket" Title="Atlassian Bitbucket Server integration" Level="1">
+          <ComponentRef Id="Bitbucket.dll" />
+          <ComponentRef Id="Newtonsoft.Json.dll" />
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         </Feature>
         <Feature Id="AppVeyorIntegration" Title="AppVeyor integration" Level="1">
           <ComponentRef Id="AppVeyorIntegration.dll" />
@@ -719,6 +757,10 @@
         </Feature>
         <Feature Id="JenkinsIntegration" Title="Jenkins integration" Level="1">
           <ComponentRef Id="JenkinsIntegration.dll" />
+< HEAD
+=======
+          <ComponentRef Id="Newtonsoft.Json.dll" />
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         </Feature>
         <Feature Id="TfsIntegration" Title="Tfs integration" Level="1">
           <ComponentRef Id="TfsIntegration.dll" />
@@ -732,6 +774,18 @@
           <ComponentRef Id="Microsoft.VisualStudio.Services.Common.dll" />
           <ComponentRef Id="Microsoft.VisualStudio.Services.WebApi.dll" />
           <ComponentRef Id="System.Net.Http.Formatting.dll" />
+< HEAD
+=======
+          <ComponentRef Id="Newtonsoft.Json.dll" />
+        </Feature>
+        <Feature Id="JiraCommitHintPlugin" Title="Jira Commit Hint Plugin" Level="1">
+          <ComponentRef Id="JiraCommitHintPlugin.dll" />
+          <ComponentRef Id="Atlassian.Jira.dll" />
+          <ComponentRef Id="RestSharp.dll" />
+          <ComponentRef Id="Newtonsoft.Json.dll" />
+          <ComponentRef Id="NString.dll" />
+          <ComponentRef Id="System.Collections.Immutable.dll" />
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         </Feature>
       </Feature>
       <Feature Id="GitExtensions.desktop" Title="Desktop shortcut" Level="1">
@@ -869,7 +923,11 @@
           <ComponentRef Id="VS$(var.VsVersion)_GitPlugin.resources.dll" />
         </Feature>
         <?endforeach ?>
+<<<<<<< HEAD
         <Feature Id="VS2015FeatureId" Title="Visual Studio 2015 integration" Level="1">
+=======
+        <Feature Id="VS2015FeatureId" Title="Visual Studio 2015/2017 integration" Level="1">
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
           <Condition Level="2">NOT VS2015DEVENV</Condition>
           <ComponentRef Id="VS2015_VSIX" />
         </Feature>

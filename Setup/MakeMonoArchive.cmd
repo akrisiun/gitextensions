@@ -8,7 +8,11 @@ rem
 rem Update this version number with every release
 rem
 setlocal
+<<<<<<< HEAD
 set version=2.50.01
+=======
+set version=2.50.02
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 if not "%APPVEYOR_BUILD_VERSION%"=="" set version=%APPVEYOR_BUILD_VERSION%
 set normal=GitExtensions-%version%-Mono.zip
 set szip="..\packages\7-Zip.CommandLine.9.20.0\tools\7za"
@@ -30,6 +34,8 @@ IF ERRORLEVEL 1 EXIT /B 1
 xcopy /y ..\GitExtensions\bin\Release\GitExtensions.exe.config GitExtensions\
 IF ERRORLEVEL 1 EXIT /B 1
 xcopy /y ..\GitExtensions\bin\Release\GitUI.dll GitExtensions\
+IF ERRORLEVEL 1 EXIT /B 1
+xcopy /y ..\GitExtensions\bin\Release\System.IO.Abstractions.dll GitExtensions\
 IF ERRORLEVEL 1 EXIT /B 1
 xcopy /y ..\GitExtensions\bin\Release\GitUIPluginInterfaces.dll GitExtensions\
 IF ERRORLEVEL 1 EXIT /B 1
@@ -79,6 +85,8 @@ xcopy /y ..\Plugins\Gerrit\bin\Release\Gerrit.dll GitExtensions\Plugins\
 IF ERRORLEVEL 1 EXIT /B 1
 xcopy /y ..\Plugins\Gerrit\bin\Release\Newtonsoft.Json.dll GitExtensions\Plugins\
 IF ERRORLEVEL 1 EXIT /B 1
+xcopy /y ..\Plugins\GitFlow\bin\Release\GitFlow.dll GitExtensions\Plugins\
+IF ERRORLEVEL 1 EXIT /B 1
 xcopy /y ..\Plugins\Github3\bin\Release\Github3.dll GitExtensions\Plugins\
 IF ERRORLEVEL 1 EXIT /B 1
 xcopy /y ..\Plugins\Statistics\GitImpact\bin\Release\GitImpact.dll GitExtensions\Plugins\
@@ -89,7 +97,7 @@ xcopy /y ..\Plugins\Gource\bin\Release\Gource.dll GitExtensions\Plugins\
 IF ERRORLEVEL 1 EXIT /B 1
 xcopy /y ..\Plugins\ProxySwitcher\bin\Release\ProxySwitcher.dll GitExtensions\Plugins\
 IF ERRORLEVEL 1 EXIT /B 1
-xcopy /y ..\Plugins\Stash\bin\Release\Stash.dll GitExtensions\Plugins\
+xcopy /y ..\Plugins\Bitbucket\bin\Release\Bitbucket.dll GitExtensions\Plugins\
 IF ERRORLEVEL 1 EXIT /B 1
 xcopy /y ..\Plugins\ReleaseNotesGenerator\bin\Release\ReleaseNotesGenerator.dll GitExtensions\Plugins\
 IF ERRORLEVEL 1 EXIT /B 1
@@ -235,7 +243,11 @@ xcopy /y ..\Plugins\Gource\bin\Release\Gource.pdb GitExtensions\Plugins\
 IF ERRORLEVEL 1 EXIT /B 1
 xcopy /y ..\Plugins\ProxySwitcher\bin\Release\ProxySwitcher.pdb GitExtensions\Plugins\
 IF ERRORLEVEL 1 EXIT /B 1
+<<<<<<< HEAD
 xcopy /y ..\Plugins\Stash\bin\Release\Stash.pdb GitExtensions\Plugins\
+=======
+xcopy /y ..\Plugins\Bitbucket\bin\Release\Bitbucket.pdb GitExtensions\Plugins\
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 IF ERRORLEVEL 1 EXIT /B 1
 xcopy /y ..\Plugins\ReleaseNotesGenerator\bin\Release\ReleaseNotesGenerator.pdb GitExtensions\Plugins\
 IF ERRORLEVEL 1 EXIT /B 1

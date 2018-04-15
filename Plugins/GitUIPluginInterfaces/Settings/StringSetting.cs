@@ -33,6 +33,7 @@ namespace GitUIPluginInterfaces
         public string Name { get; private set; }
         public string Caption { get; private set; }
         public string DefaultValue { get; set; }
+        public TextBox CustomControl { get; set; }
 
         public TextBox CustomControl { get; set; }
 

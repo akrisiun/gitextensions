@@ -182,6 +182,7 @@ namespace GitCommands.GitExtLinks
         {
         }
 
+
         //public IEnumerable<GitExtLink> Parse(GitRevision revision)
         //{
         //    GitRemoteController remoteController = new GitRemoteController(revision.Module);
@@ -195,25 +196,54 @@ namespace GitCommands.GitExtLinks
         //    return remoteMatches.Select(remoteMatch => ParseRevision(remoteMatch, revision)).Unwrap();
         //}
 
+        public IEnumerable<GitExtLink> Parse(GitRevision revision)
+        {
+            GitRemoteManager remoteManager = new GitRemoteManager(revision.Module);
+            return Parse(revision, remoteManager);
+        }
+
+        internal IEnumerable<GitExtLink> Parse(GitRevision revision, IGitRemoteManager remoteManager)
+        {
+            IEnumerable<Match> remoteMatches = ParseRemotes(remoteManager);
+
+            return remoteMatches.SelectMany(remoteMatch => ParseRevision(remoteMatch, revision));
+        }
+
         public IEnumerable<GitExtLink> ParseRevision(Match remoteMatch, GitRevision revision)
         {
             List<IEnumerable<GitExtLink>> links = new List<IEnumerable<GitExtLink>>();
 
             if (SearchInParts.Contains(RevisionPart.LocalBranches))
+            {
                 foreach (var head in revision.Refs.Where(b => !b.IsRemote))
-                    links.Add(ParseRevisionPart(remoteMatch, head.LocalName, revision));
+                {   links.Add(ParseRevisionPart(remoteMatch, head.LocalName, revision));
+                }
+            }
 
             if (SearchInParts.Contains(RevisionPart.RemoteBranches))
+            {
                 foreach (var head in revision.Refs.Where(b => b.IsRemote))
+
                     links.Add(ParseRevisionPart(remoteMatch, head.LocalName, revision));
 
             if (SearchInParts.Contains(RevisionPart.Message))
                 links.Add(ParseRevisionPart(remoteMatch, revision.Body, revision));
+                {
+                    links.Add(ParseRevisionPart(remoteMatch, head.LocalName, revision));
+                }
+            }
 
-            return links.Unwrap();
+            if (SearchInParts.Contains(RevisionPart.Message))
+            {
+                links.Add(ParseRevisionPart(remoteMatch, revision.Body, revision));
+            }
+
+            return links.SelectMany(list => list);
         }
 
-        public IEnumerable<Match> ParseRemotes(object remote)
+
+        // public IEnumerable<Match> ParseRemotes(object remote)
+        private IEnumerable<Match> ParseRemotes(IGitRemoteManager remoteManager)
         {
             IList<Match> allMatches = new List<Match>();
 
@@ -224,6 +254,7 @@ namespace GitCommands.GitExtLinks
             else
             {
                 IList<string> remoteUrls = new List<string>();
+
 
                 // TODO
                 //var remoteController = remote as IGitRemoteController;
@@ -249,6 +280,28 @@ namespace GitCommands.GitExtLinks
                 //        }
                 //    }
                 //}
+=======
+                var remotes = remoteManager.LoadRemotes(false);
+                IEnumerable<GitRemote> matchingRemotes = GetMatchingRemotes(remotes);
+
+                foreach (GitRemote remote in matchingRemotes)
+                {
+                    if (RemoteSearchInParts.Contains(RemotePart.URL))
+                    {
+                        if (remote.Url.IsNotNullOrWhitespace())
+                        {
+                            remoteUrls.Add(remote.Url.ToLower());
+                        }
+                    }
+                    if (RemoteSearchInParts.Contains(RemotePart.PushURL))
+                    {
+                        if (remote.PushUrl.IsNotNullOrWhitespace())
+                        {
+                            remoteUrls.Add(remote.PushUrl.ToLower());
+                        }
+                    }
+                }
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 
                 foreach (string url in remoteUrls.Distinct())
                 {
@@ -274,6 +327,7 @@ namespace GitCommands.GitExtLinks
                 return remotes;
             }
 
+
             IEnumerable<GitRemote> matchingRemotes = remotes; // .Where(r => UseRemotesRegex.Value.IsMatch(r.Name));
             //matchingRemotes = OrderByPositionInUseRemotePattern(matchingRemotes);
             //if (UseOnlyFirstRemote)
@@ -289,6 +343,22 @@ namespace GitCommands.GitExtLinks
         //{
         //    return remotes.OrderBy(r => UseRemotesPattern.IndexOf(r.Name, StringComparison.OrdinalIgnoreCase));
         //}
+=======
+            IEnumerable<GitRemote> matchingRemotes = remotes.Where(r => UseRemotesRegex.Value.IsMatch(r.Name));
+            matchingRemotes = OrderByPositionInUseRemotePattern(matchingRemotes);
+            if (UseOnlyFirstRemote)
+            {
+                matchingRemotes = matchingRemotes.Take(1);
+            }
+
+            return matchingRemotes;
+        }
+
+        private IEnumerable<GitRemote> OrderByPositionInUseRemotePattern(IEnumerable<GitRemote> remotes)
+        {
+            return remotes.OrderBy(r => UseRemotesPattern.IndexOf(r.Name, StringComparison.OrdinalIgnoreCase));
+        }
+>>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 
         public IEnumerable<GitExtLink> ParseRevisionPart(Match remoteMatch, string part, GitRevision revision)
         {
