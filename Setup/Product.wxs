@@ -250,7 +250,7 @@
       <Component Id="System.Collections.Immutable.dll" Guid="*">
         <File Source="..\Plugins\JiraCommitHintPlugin\bin\Release\System.Collections.Immutable.dll" />
       </Component>
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
       <!--Remove unused dll, installed in versions <= 2.31-->
       <Component Id="Github.dll" Guid="0DA13691-140A-4490-8B4C-8AF537DAEB67">
         <RemoveFile Name="Github.dll" Id="Github.dll" On="both" />
@@ -277,7 +277,7 @@
         <File Source="..\Plugins\Bitbucket\bin\Release\Bitbucket.dll" />
         <!--Renamed dll, installed in versions <= 2.50.02-->
         <RemoveFile Name="Stash.dll" Id="Stash.dll" On="both" />
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
       </Component>
       <Component Id="TeamCityIntegration.dll" Guid="*">
         <File Source="..\Plugins\BuildServerIntegration\TeamCityIntegration\bin\Release\TeamCityIntegration.dll" />
@@ -661,7 +661,7 @@
 
 =======
       <ComponentRef Id="System.IO.Abstractions.dll" />
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
       <ComponentRef Id="System.Reactive.Core.dll" />
       <ComponentRef Id="System.Reactive.Interfaces.dll" />
       <ComponentRef Id="System.Reactive.Linq.dll" />
@@ -743,7 +743,7 @@
         <Feature Id="Bitbucket" Title="Atlassian Bitbucket Server integration" Level="1">
           <ComponentRef Id="Bitbucket.dll" />
           <ComponentRef Id="Newtonsoft.Json.dll" />
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         </Feature>
         <Feature Id="AppVeyorIntegration" Title="AppVeyor integration" Level="1">
           <ComponentRef Id="AppVeyorIntegration.dll" />
@@ -757,7 +757,7 @@
 < HEAD
 =======
           <ComponentRef Id="Newtonsoft.Json.dll" />
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         </Feature>
         <Feature Id="TfsIntegration" Title="Tfs integration" Level="1">
           <ComponentRef Id="TfsIntegration.dll" />
@@ -782,7 +782,7 @@
           <ComponentRef Id="Newtonsoft.Json.dll" />
           <ComponentRef Id="NString.dll" />
           <ComponentRef Id="System.Collections.Immutable.dll" />
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         </Feature>
       </Feature>
       <Feature Id="GitExtensions.desktop" Title="Desktop shortcut" Level="1">
@@ -921,10 +921,7 @@
         </Feature>
         <?endforeach ?>
 
-        <Feature Id="VS2015FeatureId" Title="Visual Studio 2015 integration" Level="1">
-=======
         <Feature Id="VS2015FeatureId" Title="Visual Studio 2015/2017 integration" Level="1">
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
           <Condition Level="2">NOT VS2015DEVENV</Condition>
           <ComponentRef Id="VS2015_VSIX" />
         </Feature>

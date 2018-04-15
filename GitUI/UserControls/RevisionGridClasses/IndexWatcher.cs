@@ -89,11 +89,9 @@ namespace GitUI.UserControls.RevisionGridClasses
                 if (!enabled)
                     return true;
 
-
-                if (_gitDirPath != Module.GetGitDirectory())
-=======
+                // if (_gitDirPath != Module.GetGitDirectory())
                 if (_gitDirPath != Module.WorkingDirGitDir)
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                     return true;
 
                 return indexChanged;
@@ -135,9 +133,8 @@ namespace GitUI.UserControls.RevisionGridClasses
 
             if (_gitDirPath != Module.GetGitDirectory() ||
                 enabled != AppSettings.UseFastChecks)
-=======
             if (_gitDirPath != Module.WorkingDirGitDir || enabled != AppSettings.UseFastChecks)
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 SetFileSystemWatcher();
         }
 

@@ -53,15 +53,12 @@ namespace GitUI.UserControls.RevisionGridClasses
         {
             get { return _tags; }
         }
-=======
 
         public IEnumerable<IGitRef> AllBranches => _allBranches.AsEnumerable();
 
         public IEnumerable<IGitRef> AllTags => _tags.AsEnumerable();
 
         public IEnumerable<IGitRef> BranchesWithNoIdenticalRemotes => _branchesWithNoIdenticalRemotes.AsEnumerable();
-
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 
         public string[] GetAllBranchNames()
         {

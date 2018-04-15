@@ -884,9 +884,7 @@ namespace GitUI
         private System.Windows.Forms.ToolStripMenuItem selectAsBaseToolStripMenuItem;
         private ToolStripMenuItem getHelpOnHowToUseTheseFeaturesToolStripMenuItem;
 
-=======
         private ToolStripMenuItem openBuildReportToolStripMenuItem;
         private ToolStripMenuItem editCommitToolStripMenuItem;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
     }
 }

@@ -10,11 +10,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GitUIPluginInterfaces</RootNamespace>
     <AssemblyName>GitUIPluginInterfaces</AssemblyName>
-< HEAD
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-=======
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -41,10 +38,9 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <ReleaseVersion>2.48</ReleaseVersion>
-=======
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -99,10 +95,8 @@
     <Compile Include="IBrowseRepo.cs" />
     <Compile Include="IConfigFileSettings.cs" />
     <Compile Include="IConfigSection.cs" />
-
-=======
     <Compile Include="IGitCommand.cs" />
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     <Compile Include="IGitItem.cs" />
     <Compile Include="IGitPluginForRepository.cs" />
     <Compile Include="IGitModule.cs" />
@@ -136,32 +130,13 @@
     <Compile Include="Settings\StringSetting.cs" />
   </ItemGroup>
   <ItemGroup>
-
-=======
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\GitExtUtils\GitExtUtils.csproj">
       <Project>{0f1f1168-a4b2-4fa2-b17b-735140d17f39}</Project>
       <Name>GitExtUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\..\FxCop.targets" />

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Drawing;
-
 using GitUIPluginInterfaces.Notifications;
-=======
 using System.Windows.Forms;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 
 namespace GitUIPluginInterfaces
 {
@@ -148,14 +145,12 @@ namespace GitUIPluginInterfaces
         event GitUIEventHandler PreVerifyDatabase;
         event GitUIEventHandler PreViewPatch;
 
-
-=======
         bool StartCommandLineProcessDialog(object ownerForm, string command, string arguments);
         bool StartCommandLineProcessDialog(IGitCommand cmd, IWin32Window parentForm);
         bool StartCommandLineProcessDialog(string command, string arguments);
         bool StartBatchFileProcessDialog(object ownerForm, string batchFile);
         bool StartBatchFileProcessDialog(string batchFile);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
         bool StartAddFilesDialog();
         bool StartApplyPatchDialog();
@@ -174,11 +169,8 @@ namespace GitUIPluginInterfaces
         bool StartDeleteTagDialog();
         bool StartEditGitIgnoreDialog(bool localExcludes);
 
-
-
-=======
         void StartFileHistoryDialog(string fileName);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         bool StartFormatPatchDialog();
         bool StartGitCommandProcessDialog(string arguments);
         bool StartInitializeDialog();

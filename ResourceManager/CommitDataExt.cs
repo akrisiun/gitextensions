@@ -108,7 +108,6 @@ namespace ResourceManager
                 WebUtility.HtmlEncode(
                     LocalizationHelpers.GetRelativeDateString(DateTime.UtcNow, commitData.CommitDate.UtcDateTime) + " (" +
                     LocalizationHelpers.GetFullDateString(commitData.CommitDate) + ")"));
-=======
 
             if (!authorIsCommiter)
             {
@@ -128,7 +127,6 @@ namespace ResourceManager
                         LocalizationHelpers.GetFullDateString(commitData.CommitDate) + ")"));
             }
 
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             header.Append(
                 (WebUtility.HtmlEncode(Strings.GetCommitHashText()) + ":").PadRight(GetHeaderPadding()) +
                 WebUtility.HtmlEncode(commitData.Guid));

@@ -311,7 +311,6 @@ namespace GitCommands.Remote
         // pass the list in to minimise allocations
         private void PopulateRemotes(List<GitRemote> allRemotes, bool enabled)
         {
-<<<<<<< HEAD:GitUI/Objects/GitRemoteController.cs
             //if (!string.IsNullOrWhiteSpace(value))
             //{
             //    _module.SetSetting(settingName, value);
@@ -320,7 +319,7 @@ namespace GitCommands.Remote
             //{
             //    _module.UnsetSetting(settingName);
             //}
-=======
+
             Func<string[]> func;
             if (enabled)
             {

@@ -68,7 +68,6 @@ namespace GitUI.CommandsDialogs
             }
             textBox1.SelectionStart = selectionStart;
             textBox1.SelectionLength = selectionLength;
-=======
             var selectionStart = txtSearchBox.SelectionStart;
             var selectionLength = txtSearchBox.SelectionLength;
             listBoxSearchResult.BeginUpdate();
@@ -86,7 +85,7 @@ namespace GitUI.CommandsDialogs
             }
             txtSearchBox.SelectionStart = selectionStart;
             txtSearchBox.SelectionLength = selectionLength;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             AutoFit();
         }
 
@@ -108,7 +107,7 @@ namespace GitUI.CommandsDialogs
                 for (int i1 = 0; i1 < listBox1.Items.Count; i1++)
                 {
                     int itemWidth = Convert.ToInt32(g.MeasureString(Convert.ToString(listBox1.Items[i1]), listBox1.Font).Width);
-=======
+
             if (listBoxSearchResult.Items.Count == 0)
             {
                 listBoxSearchResult.Visible = false;
@@ -124,7 +123,7 @@ namespace GitUI.CommandsDialogs
                 for (int i1 = 0; i1 < listBoxSearchResult.Items.Count; i1++)
                 {
                     int itemWidth = Convert.ToInt32(g.MeasureString(Convert.ToString(listBoxSearchResult.Items[i1]), listBoxSearchResult.Font).Width);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                     width = Math.Max(width, itemWidth);
                 }
             }
@@ -145,7 +144,7 @@ namespace GitUI.CommandsDialogs
                 listBox1.Location = ParentForm.PointToClient(listBoxLocationOnScreen);
             }
             listBox1.BringToFront();
-=======
+
             listBoxSearchResult.Width = width;
             listBoxSearchResult.Height = Math.Min(800, listBoxSearchResult.Font.Height * (listBoxSearchResult.Items.Count + 1));
 
@@ -161,16 +160,16 @@ namespace GitUI.CommandsDialogs
                 listBoxSearchResult.Location = ParentForm.PointToClient(listBoxLocationOnScreen);
             }
             listBoxSearchResult.BringToFront();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
 
         public T SelectedItem
         {
 
             get { return (T)listBox1.SelectedItem; }
-=======
+
             get { return (T)listBoxSearchResult.SelectedItem; }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
 
         void IDisposable.Dispose()
@@ -184,9 +183,9 @@ namespace GitUI.CommandsDialogs
 
 
         private void textBox1_TextChanged(object sender, EventArgs e)
-=======
+        {}
+
         private void txtSearchBox_TextChange(object sender, EventArgs e)
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         {
             OnTextChanged(e);
             if (_isUpdatingTextFromCode)
@@ -196,18 +195,13 @@ namespace GitUI.CommandsDialogs
             }
 
             string  _selectedText = textBox1.Text;
-=======
-            string  _selectedText = txtSearchBox.Text;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
-
+            // string  _selectedText = txtSearchBox.Text;
             backgroundLoader.Load(() => getCandidates(_selectedText), SearchForCandidates);
         }
 
 
         private void textBox1_KeyUp(object sender, KeyEventArgs e)
-=======
-        private void txtSearchBox_KeyUp(object sender, KeyEventArgs e)
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+        // private void txtSearchBox_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -220,10 +214,9 @@ namespace GitUI.CommandsDialogs
 
                 listBox1.SelectedItem = null;
                 listBox1.Visible = false;
-=======
                 listBoxSearchResult.SelectedItem = null;
                 listBoxSearchResult.Visible = false;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 e.SuppressKeyPress = true;
                 if (OnCancelled != null)
                 {
@@ -241,13 +234,12 @@ namespace GitUI.CommandsDialogs
                 textBox1.Text = listBox1.SelectedItem.ToString();
             }
             listBox1.Visible = false;
-=======
             if (listBoxSearchResult.SelectedItem != null)
             {
                 txtSearchBox.Text = listBoxSearchResult.SelectedItem.ToString();
             }
             listBoxSearchResult.Visible = false;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             if (OnTextEntered != null)
             {
                 OnTextEntered();
@@ -262,15 +254,8 @@ namespace GitUI.CommandsDialogs
                 if (listBox1.Items.Count > 1)
                 {
                     listBox1.SelectedIndex = (listBox1.SelectedIndex + 1) % listBox1.Items.Count;
-=======
-        private void txtSearchBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Down)
-            {
-                if (listBoxSearchResult.Items.Count > 1)
-                {
-                    listBoxSearchResult.SelectedIndex = (listBoxSearchResult.SelectedIndex + 1) % listBoxSearchResult.Items.Count;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+                    // listBoxSearchResult.SelectedIndex = (listBoxSearchResult.SelectedIndex + 1) % listBoxSearchResult.Items.Count;
+
                     e.SuppressKeyPress = true;
                 }
             }
@@ -285,15 +270,8 @@ namespace GitUI.CommandsDialogs
                         newSelectedIndex = listBox1.Items.Count - 1;
 
                     listBox1.SelectedIndex = newSelectedIndex;
-=======
-                if (listBoxSearchResult.Items.Count > 1)
-                {
-                    var newSelectedIndex = listBoxSearchResult.SelectedIndex - 1;
-                    if (newSelectedIndex < 0)
-                        newSelectedIndex = listBoxSearchResult.Items.Count - 1;
+                    // listBoxSearchResult.SelectedIndex = newSelectedIndex;
 
-                    listBoxSearchResult.SelectedIndex = newSelectedIndex;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                     e.SuppressKeyPress = true;
                 }
             }
@@ -304,9 +282,7 @@ namespace GitUI.CommandsDialogs
 
 
         private void listBox1_DoubleClick(object sender, EventArgs e)
-=======
-        private void listBoxSearchResult_DoubleClick(object sender, EventArgs e)
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+        // private void listBoxSearchResult_DoubleClick(object sender, EventArgs e)
         {
             ItemSelectedFromList();
         }

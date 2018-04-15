@@ -22,8 +22,6 @@ using JetBrains.Annotations;
 using Settings = GitCommands.AppSettings;
 using GitUI.UserControls;
 using IWin32Window = GitUI.IWin32Window;
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 
 namespace GitUI
 {
@@ -43,10 +41,8 @@ namespace GitUI
 
 
             // Notifications = NotificationManager.Get(this);
-=======
             IImageCache avatarCache = new DirectoryImageCache(AppSettings.GravatarCachePath, AppSettings.AuthorImageCacheDays);
             _gravatarService = new GravatarService(avatarCache);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         }
 
         public GitUICommands(string workingDir)
@@ -345,7 +341,6 @@ namespace GitUI
             );
         }
 
-=======
         public bool StartDeleteRemoteBranchDialog(IWin32Window owner, string remoteBranch)
         {
             return DoActionOnRepo(owner, true, false, PreDeleteRemoteBranch, PostDeleteRemoteBranch, () =>
@@ -358,8 +353,6 @@ namespace GitUI
                 }
             );
         }
-
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 
         public bool StartCheckoutRevisionDialog(IWin32Window owner, string revision = null)
         {
@@ -1314,10 +1307,8 @@ namespace GitUI
             Func<bool> action = () =>
             {
 
-                using (var form = new FormGitIgnore(this, true))
-=======
+//                using (var form = new FormGitIgnore(this, true))
                 using (var form = new FormGitIgnore(this, localExcludes))
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                     form.ShowDialog(owner);
 
                 return true;
@@ -1335,11 +1326,8 @@ namespace GitUI
         {
             Func<bool> action = () =>
             {
-
-                using (var frm = new FormAddToGitIgnore(this, localExclude: false, filePatterns: filePattern))
-=======
+//                using (var frm = new FormAddToGitIgnore(this, localExclude: false, filePatterns: filePattern))
                 using (var frm = new FormAddToGitIgnore(this, localExclude, filePattern))
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                     frm.ShowDialog(owner);
 
                 return true;
@@ -1597,10 +1585,8 @@ namespace GitUI
             FormBrowse.LazyTree = new Lazy<UserControls.IRepoObjectsTree>(
                 () => new RepoObjectsTree());
 
-            var form = new FormBrowse(this, filter);
-=======
+            // var form = new FormBrowse(this, filter);
             var form = new FormBrowse(this, filter, selectedCommit);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 
             if (Application.MessageLoop)
             {

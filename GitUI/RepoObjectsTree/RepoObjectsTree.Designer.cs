@@ -595,7 +595,7 @@ namespace GitUI.UserControls
 			this.mnubtnRebase.Text = "&Rebase";
 			this.mnubtnRebase.ToolTipText = "Rebase current branch to this branch";
 			// 
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // mnubtnMergeBranch
             // 
             this.mnubtnMergeBranch.Image = global::GitUI.Properties.Resources.IconMerge;
@@ -997,7 +997,6 @@ namespace GitUI.UserControls
             this.branchFilterPanel.PerformLayout();
             this.menuSettings.ResumeLayout(false);
             this.ResumeLayout(false);
-=======
             this.mnubtnMergeBranch.Size = new System.Drawing.Size(203, 22);
             this.mnubtnMergeBranch.Text = "&Merge";
             this.mnubtnMergeBranch.ToolTipText = "Merge remote branch into current branch";
@@ -1211,7 +1210,7 @@ namespace GitUI.UserControls
 			this.branchSearchPanel.PerformLayout();
 			this.menuSettings.ResumeLayout(false);
 			this.ResumeLayout(false);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
         }
 
@@ -1240,7 +1239,6 @@ namespace GitUI.UserControls
         private ToolStripMenuItem mnubtnStashApply;
         private ToolStripMenuItem mnubtnStashDrop;
         private ContextMenuStrip menuSubmodule;
-=======
         private ToolStripMenuItem mnubtnFilterLocalBranchInRevisionGrid;
         private ToolStripMenuItem mnubtnFilterRemoteBranchInRevisionGrid;
         private ContextMenuStrip menuTags;
@@ -1249,7 +1247,7 @@ namespace GitUI.UserControls
         private ToolStripMenuItem mnubtnDeleteRemoteBranch;
         private ToolStripMenuItem mnubtnFetchAllBranchesFromARemote;
         private ToolStripMenuItem mnubtnPullFromRemoteBranch;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         private ContextMenuStrip menuTag;
         private ImageList imgList;
         private ContextMenuStrip menuBranchPath;
@@ -1275,20 +1273,18 @@ namespace GitUI.UserControls
         private ContextMenuStrip menuRemoteRepoNode;
         private ToolStripMenuItem mnubtnNewCreateBranch;
         private ToolStripMenuItem mnubtnNewFetch;
-=======
         private ContextMenuStrip menuRemoteRepoNode;
         private ToolStripMenuItem mnubtnCreateBranchBasedOnRemoteBranch;
         private ToolStripMenuItem mnubtnFetchOneBranch;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         private ToolStripMenuItem mnuBtnCheckoutLocal;
         private ToolStripMenuItem mnubtnCreateBranchForTag;
         private ToolStripMenuItem mnubtnDeleteTag;
         private TableLayoutPanel repoTreePanel;
 
         private TableLayoutPanel branchFilterPanel;
-=======
         private TableLayoutPanel branchSearchPanel;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         private Label lblSearchBranch;
         private Button btnSearch;
         private Button btnSettings;
@@ -1304,10 +1300,9 @@ namespace GitUI.UserControls
         private ToolStripMenuItem mnubtnRemoteBranchFetchAndCheckout;
 
         private ToolStripMenuItem mnuBtnCheckTag;
-=======
         private ToolStripMenuItem mnuBtnCheckoutTag;
         private ToolStripMenuItem mnubtnFetchRebase;
         private ToolStripMenuItem mnubtnFetchCreateBranch;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     }
 }

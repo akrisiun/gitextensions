@@ -72,9 +72,8 @@ namespace GitUI
         public Action OnToggleLeftPanelRequested;
 
         // public event EventHandler<EventArgs> ShowFirstParentsToggled;
-=======
         public event EventHandler<EventArgs> ShowFirstParentsToggled;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
         private readonly RevisionGridMenuCommands _revisionGridMenuCommands;
 
@@ -89,7 +88,6 @@ namespace GitUI
         #endregion
 
         private GitRevision _baseCommitToCompare = null;
-=======
         private readonly AuthorEmailBasedRevisionHighlighting _revisionHighlighting;
 
         private GitRevision _baseCommitToCompare = null;
@@ -107,7 +105,7 @@ namespace GitUI
                 AmbiguousRefs = null;
             }
         }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
         public RevisionGrid()
         {
@@ -832,7 +830,6 @@ namespace GitUI
             if (Revisions.SelectedRows.Count > 0)
 
                 LastRowIndex = Revisions.SelectedRows[0].Index;
-=======
             {
                 LatestSelectedRowIndex = Revisions.SelectedRows[0].Index;
                 //if there was selected a new revision while data is being loaded
@@ -843,7 +840,7 @@ namespace GitUI
                 }
 
             }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
             SelectionTimer.Enabled = false;
             SelectionTimer.Stop();
@@ -1226,10 +1223,9 @@ namespace GitUI
         }
 
 
-        private SuperProjectInfo GetSuperprojectCheckout(Func<GitRef, bool> showRemoteRef)
-=======
+        // private SuperProjectInfo GetSuperprojectCheckout(Func<GitRef, bool> showRemoteRef)
         private SuperProjectInfo GetSuperprojectCheckout(Func<IGitRef, bool> showRemoteRef, GitModule gitModule)
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         {
             if (gitModule.SuperprojectModule == null)
                 return null;
@@ -1565,7 +1561,6 @@ namespace GitUI
             {
 
                 e.Graphics.FillRectangle(Brushes.White, e.CellBounds);
-=======
                 cellBackgroundBrush = new SolidBrush(e.CellStyle.BackColor);
             }
             // Draw cell background
@@ -1579,7 +1574,7 @@ namespace GitUI
             {
                 Revisions.dataGrid_CellPainting(sender, e);
                 return;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             }
 
             // Determine cell foreground (text) colour for other columns
@@ -2203,9 +2198,8 @@ namespace GitUI
 
 
             var frm = new FormResetCurrentBranch(UICommands, GetRevision(LastRowIndex), false);
-=======
-            var frm = new FormResetCurrentBranch(UICommands, LatestSelectedRevision);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+            // var frm = new FormResetCurrentBranch(UICommands, LatestSelectedRevision);
+
             frm.ShowDialog(this);
         }
 
@@ -2370,9 +2364,6 @@ namespace GitUI
             var revision = LatestSelectedRevision;
             var gitRefListsForRevision = new GitRefListsForRevision(revision);
 
-
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             foreach (var head in gitRefListsForRevision.AllTags)
             {
                 ToolStripItem toolStripItem = new ToolStripMenuItem(head.Name);
@@ -2383,9 +2374,8 @@ namespace GitUI
                 toolStripItem = new ToolStripMenuItem(head.Name);
 
                 toolStripItem.Tag = head.CompleteName;
-=======
                 toolStripItem.Tag = GetRefUnambiguousName(head);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 toolStripItem.Click += ToolStripItemClickMergeBranch;
                 mergeBranchDropDown.Items.Add(toolStripItem);
             }
@@ -2404,18 +2394,16 @@ namespace GitUI
                     ToolStripItem toolStripItem = new ToolStripMenuItem(head.Name);
 
                     toolStripItem.Tag = head.CompleteName;
-=======
                     toolStripItem.Tag = GetRefUnambiguousName(head);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                     toolStripItem.Click += ToolStripItemClickMergeBranch;
                     mergeBranchDropDown.Items.Add(toolStripItem);
 
                     toolStripItem = new ToolStripMenuItem(head.Name);
 
                     toolStripItem.Tag = head.CompleteName;
-=======
                     toolStripItem.Tag = GetRefUnambiguousName(head);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                     toolStripItem.Click += ToolStripItemClickRebaseBranch;
                     rebaseDropDown.Items.Add(toolStripItem);
                 }
@@ -3281,9 +3269,7 @@ namespace GitUI
             SelectAsBaseToCompare,
             CompareToBase,
 
-=======
             CreateFixupCommit,
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             ToggleLeftPanel,
         }
 
@@ -3319,9 +3305,7 @@ namespace GitUI
                 case Commands.SelectAsBaseToCompare: selectAsBaseToolStripMenuItem_Click(null, null); break;
                 case Commands.CompareToBase: compareToBaseToolStripMenuItem_Click(null, null); break;
 
-=======
                 case Commands.CreateFixupCommit: FixupCommitToolStripMenuItemClick(null, null); break;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                 case Commands.ToggleLeftPanel: ToggleLeftPanel(); break;
                 default:
                     {
@@ -3519,15 +3503,13 @@ namespace GitUI
 
         private void compareToBaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-=======
             if (_baseCommitToCompare == null)
             {
                 MessageBox.Show(this, _baseForCompareNotSelectedError.Text, _strError.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             var headCommit = GetSelectedRevisions().First();
             using (var diffForm = new FormDiff(UICommands, this,
                 _baseCommitToCompare.Guid, headCommit.Guid,
@@ -3572,9 +3554,7 @@ namespace GitUI
 
         IList<GitRevision> IRevisionGrid.GetSelectedRevisions()
         {
-
-            throw new NotImplementedException();
-=======
+            // throw new NotImplementedException();
             var revision = this.GetSelectedRevisions().First();
             if (revision.BuildStatus != null && !string.IsNullOrWhiteSpace(revision.BuildStatus.Url))
                 Process.Start(revision.BuildStatus.Url);
@@ -3603,7 +3583,7 @@ namespace GitUI
                 formProcess.ProcessEnvVariables.Add("GIT_SEQUENCE_EDITOR", String.Format("sed -i -re '0,/pick/s//{0}/'", command));
                 formProcess.ShowDialog(this);
             }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
     }
 }

@@ -56,21 +56,18 @@ namespace TeamCityIntegration
         private string httpClientHostSuffix;
 
 
-        private List<Task<IEnumerable<string>>> getBuildTypesTask = new List<Task<IEnumerable<string>>>();
-=======
+        // private List<Task<IEnumerable<string>>> getBuildTypesTask = new List<Task<IEnumerable<string>>>();
         private readonly List<Task<IEnumerable<string>>> getBuildTypesTask = new List<Task<IEnumerable<string>>>();
 
         private CookieContainer _teamCityNtlmAuthCookie;
 
         private string HostName { get; set; }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
         private string[] ProjectNames { get; set; }
 
         private Regex BuildIdFilter { get; set; }
 
-
-=======
         private CookieContainer GetTeamCityNtlmAuthCookie (string serverUrl, IBuildServerCredentials buildServerCredentials)
         {
             if (_teamCityNtlmAuthCookie != null)
@@ -100,7 +97,7 @@ namespace TeamCityIntegration
             return _teamCityNtlmAuthCookie;
         }
 
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         public string LogAsGuestUrlParameter { get; set; }
 
         public void Initialize(IBuildServerWatcher buildServerWatcher, ISettingsSource config)
@@ -408,26 +405,23 @@ namespace TeamCityIntegration
                     UpdateHttpClientOptions(buildServerCredentials);
 
                     return GetStreamAsync(restServicePath, cancellationToken);
-=======
                     UpdateHttpClientOptionsNtlmAuth(buildServerCredentials);
                     return GetStreamAsync (restServicePath, cancellationToken);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 }
 
                 throw new OperationCanceledException(task.Result.ReasonPhrase);
             }
 
             // throw new HttpRequestException(task.Result.ReasonPhrase);
-// #else
 #endif
             return null;
         }
 
 
-        private void UpdateHttpClientOptions(IBuildServerCredentials buildServerCredentials)
-=======
+        // private void UpdateHttpClientOptions(IBuildServerCredentials buildServerCredentials)
         public void UpdateHttpClientOptionsNtlmAuth(IBuildServerCredentials buildServerCredentials)
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         {
             var useGuestAccess = buildServerCredentials == null || buildServerCredentials.UseGuestAccess;
 
@@ -436,11 +430,10 @@ namespace TeamCityIntegration
             {
                 httpClientHostSuffix = "guestAuth";
                 httpClient.DefaultRequestHeaders.Authorization = null;
-=======
                 httpClientHostSuffix = "httpAuth";
                 CreateNewHttpClient (HostName);
                 httpClientHandler.CookieContainer = GetTeamCityNtlmAuthCookie(httpClient.BaseAddress.AbsoluteUri, buildServerCredentials);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             }
             else
             {

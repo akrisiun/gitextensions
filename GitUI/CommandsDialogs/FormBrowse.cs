@@ -116,12 +116,11 @@ namespace GitUI.CommandsDialogs
             new TranslationString("Are you sure you want to reset this file or directory?");
         private readonly TranslationString _resetFileError =
             new TranslationString("Exactly one revision must be selected. Abort.");
-=======
         private readonly TranslationString _buildReportTabCaption =
             new TranslationString("Build Report");
         private readonly TranslationString _consoleTabCaption =
             new TranslationString("Console");
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         #endregion
 
         #region Private 
@@ -177,12 +176,11 @@ namespace GitUI.CommandsDialogs
             InitializeComponent();
             Tree = repoObjectsTree;
 
-=======
             //Save value for commit info panel, may be changed
             _showRevisionInfoNextToRevisionGrid = AppSettings.ShowRevisionInfoNextToRevisionGrid;
             InitializeComponent();
 
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // set tab page images
             {
                 var imageList = new ImageList();
@@ -216,8 +214,6 @@ namespace GitUI.CommandsDialogs
                 repoObjectsTree.UICommandsSource = this;
             }
 
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             Repositories.LoadRepositoryHistoryAsync();
             Task.Factory.StartNew(PluginLoader.Load)
                 .ContinueWith((task) => RegisterPlugins(), TaskScheduler.FromCurrentSynchronizationContext());
@@ -229,12 +225,9 @@ namespace GitUI.CommandsDialogs
             toolStripBranchFilterComboBox.DropDown += toolStripBranches_DropDown_ResizeDropDownWidth;
             revisionDiff.Bind(RevisionGrid, fileTree);
 
-
-            Translate ();
-=======
             Translate();
             LayoutRevisionInfo();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
             if (AppSettings.ShowGitStatusInBrowseToolbar && !Module.IsBareRepository())
             {
@@ -243,13 +236,12 @@ namespace GitUI.CommandsDialogs
                                  {
                                      ImageTransparentColor = Color.Magenta
                                  };
-=======
                 {
                     ImageTransparentColor = Color.Magenta,
                     ImageScaling = ToolStripItemImageScaling.SizeToFit,
                     Margin = new Padding(0, 1, 0, 2)
                 };
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 if (aCommands != null)
                     _toolStripGitStatus.UICommandsSource = this;
                 _toolStripGitStatus.Click += StatusClick;
@@ -277,8 +269,6 @@ namespace GitUI.CommandsDialogs
             this.toolPanel.SplitterDistance = this.ToolStrip.Height;
             this._dontUpdateOnIndexChange = false;
 
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             GitUICommandsChanged += (a, e) =>
             {
                 var oldcommands = e.OldCommands;
@@ -307,7 +297,6 @@ namespace GitUI.CommandsDialogs
             FillTerminalTab();
 
             RecoverSplitterContainerLayout();
-=======
             ManageWorktreeSupport();
             RecoverSplitterContainerLayout();
         }
@@ -336,7 +325,7 @@ namespace GitUI.CommandsDialogs
                 RevisionInfo.Parent = CommitInfoTabControl.Controls[0];
                 RevisionsSplitContainer.Panel2Collapsed = true;
             }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
 
         public GitUI.RevisionGrid RevisionsGrid {  get { return this.RevisionGrid; } }
@@ -1183,9 +1172,9 @@ namespace GitUI.CommandsDialogs
         }
 
         public void FindFileOnClick(object sender, EventArgs e)
-=======
+        {}
+
         private async void FillGpgInfo()
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         {
             var revisions = RevisionGrid.GetSelectedRevisions();
             var revision = revisions.FirstOrDefault();
@@ -1228,9 +1217,8 @@ namespace GitUI.CommandsDialogs
                         }
                 }
             }
-=======
             _buildReportTabPageExtension.FillBuildReport(revision);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
 
         [Flags]
@@ -1318,11 +1306,10 @@ namespace GitUI.CommandsDialogs
             //GitModule module = FormOpenDirectory.OpenModule(this);
             //if (module != null)
             //    SetGitModule(this, new GitModuleEventArgs(module));
-=======
             GitModule module = FormOpenDirectory.OpenModule(this, Module);
             if (module != null)
                 SetGitModule(this, new GitModuleEventArgs(module));
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
 
         private void CheckoutToolStripMenuItemClick(object sender, EventArgs e)
@@ -1537,9 +1524,8 @@ namespace GitUI.CommandsDialogs
         {
 
             Properties.Settings.Default.Save();
-=======
             AppSettings.SaveSettings();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
 
         private void EditGitignoreToolStripMenuItem1Click(object sender, EventArgs e)
@@ -1551,9 +1537,8 @@ namespace GitUI.CommandsDialogs
         {
 
             UICommands.StartEditGitIgnoreDialog(); // (this);
-=======
             UICommands.StartEditGitIgnoreDialog(this, true);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
 
         private void ArchiveToolStripMenuItemClick(object sender, EventArgs e)
@@ -1820,11 +1805,7 @@ namespace GitUI.CommandsDialogs
         {
             try
             {
-
-                Process.Start("http://git-extensions-documentation.readthedocs.org/en/release-2.48/");
-=======
                 Process.Start("http://git-extensions-documentation.readthedocs.org/en/release-2.50/");
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             }
             catch (System.ComponentModel.Win32Exception)
             {
@@ -1864,8 +1845,6 @@ namespace GitUI.CommandsDialogs
             RevisionGrid.OpenWithDifftool(selectedItem.Name, selectedItem.OldName, diffKind, parentGuid);
         }
 
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         private void AddWorkingdirDropDownItem(Repository repo, string caption)
         {
             ToolStripMenuItem toolStripItem = new ToolStripMenuItem(caption);
@@ -1941,11 +1920,10 @@ namespace GitUI.CommandsDialogs
                 Repositories.AddMostRecentRepository(Module.WorkingDir);
 
                 Settings.RecentWorkingDir = module.WorkingDir;
-=======
                 AppSettings.RecentWorkingDir = module.WorkingDir;
                 ChangeTerminalActiveFolder(Module.WorkingDir);
 
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 #if DEBUG
                 //Current encodings
                 Debug.WriteLine("Encodings for " + module.WorkingDir);
@@ -2316,8 +2294,6 @@ namespace GitUI.CommandsDialogs
                     curIdx--;
                 }
             }
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             else
                 RightSplitContainer.SplitterDistance = RightSplitContainer.Height;
         }
@@ -2409,9 +2385,8 @@ namespace GitUI.CommandsDialogs
                     }
                 }
             }
-=======
             base.OnClosed(e);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
 
         private void CommandsToolStripMenuItem_DropDownOpening(object sender, System.EventArgs e)
@@ -2434,11 +2409,10 @@ namespace GitUI.CommandsDialogs
                 //TODO: howto restore a corrupted config? Properties.Settings.Default.Reset() doesn't work.
             }
         }
-=======
             //Most options do not make sense for artificial commits or no revision selected at all
             var selectedRevisions = RevisionGrid.GetSelectedRevisions();
             bool enabled = selectedRevisions.Count == 1 && !selectedRevisions[0].IsArtificial();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
             this.branchToolStripMenuItem.Enabled =
             this.deleteBranchToolStripMenuItem.Enabled =
@@ -2980,9 +2954,6 @@ namespace GitUI.CommandsDialogs
             catch (Exception) { }
 
             Process.Start(@"https://github.com/gitextensions/gitextensions/issues/new?body=" + WebUtility.HtmlEncode(issueData));
-=======
-            Process.Start(@"https://github.com/gitextensions/gitextensions/issues/new");
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         }
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -3073,7 +3044,7 @@ namespace GitUI.CommandsDialogs
 			    terminal.Start(startinfo);
 		    };
 	    }
-=======
+
         /// <summary>
         /// Adds a tab with console interface to Git over the current working copy. Recreates the terminal on tab activation if user exits the shell.
         /// </summary>
@@ -3204,7 +3175,7 @@ namespace GitUI.CommandsDialogs
                 _terminal.Start(startinfo);
             };
         }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
         public void ChangeTerminalActiveFolder(string path)
         {
@@ -3301,8 +3272,7 @@ namespace GitUI.CommandsDialogs
 
         public bool StartBrowseDialog(string args)
         {
-            throw new NotImplementedException();
-=======
+            // throw new NotImplementedException();
             var formReflog = new FormReflog(UICommands);
             formReflog.ShowDialog();
             if (formReflog.ShouldRefresh)
@@ -3327,7 +3297,7 @@ namespace GitUI.CommandsDialogs
         {
             var formManageWorktree = new FormManageWorktree(UICommands);
             formManageWorktree.ShowDialog(this);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
 
         public void FormCommit_Shown(IFormCommit form)
@@ -3341,7 +3311,6 @@ namespace GitUI.CommandsDialogs
             throw new NotImplementedException();
         }
 
-=======
         private void toolStripSplitStash_DropDownOpened(object sender, EventArgs e)
         {
             PreventToolStripSplitButtonClosing(sender as ToolStripSplitButton);
@@ -3351,6 +3320,6 @@ namespace GitUI.CommandsDialogs
         {
             toolStripBranchFilterComboBox.DroppedDown = true;
         }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     }
 }

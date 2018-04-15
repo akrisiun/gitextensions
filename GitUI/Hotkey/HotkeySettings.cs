@@ -57,7 +57,6 @@ namespace GitUI.Hotkey
 
             return Commands.SequenceEqual(other.Commands);
         }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 
         public override int GetHashCode()
         {

@@ -102,8 +102,9 @@ namespace GitUI.UserControls
 				_nLastExitCode = args.ExitCode;
 				FireProcessExited();
 			};
-			startinfo.ConsoleEmulatorClosedEventSink = (s, e) =>
-=======
+			// startinfo.ConsoleEmulatorClosedEventSink = (s, e) =>
+        }
+        
         public override void StartProcess(string command, string arguments, string workdir, Dictionary<string, string> envVariables)
         {
             var cmdl = new StringBuilder();
@@ -137,7 +138,7 @@ namespace GitUI.UserControls
             };
 
             startinfo.ConsoleEmulatorClosedEventSink = (s, e) =>
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 {
                     if (s == _terminal.RunningSession)
                     {
@@ -150,10 +151,6 @@ namespace GitUI.UserControls
 			_terminal.Start(startinfo);
 		}
 	}
-=======
-            _terminal.Start(startinfo);
-        }
-    }
 
     [CLSCompliant(false)]
     public class ConsoleCommandLineOutputProcessor
@@ -237,5 +234,4 @@ namespace GitUI.UserControls
             }
         }
     }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 }

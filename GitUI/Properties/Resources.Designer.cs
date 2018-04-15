@@ -165,9 +165,6 @@ namespace GitUI.Properties {
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap Branch {
-=======
-        internal static System.Drawing.Bitmap Branch {
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             get {
                 object obj = ResourceManager.GetObject("Branch", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -179,9 +176,6 @@ namespace GitUI.Properties {
         /// </summary>
 
         public static System.Drawing.Bitmap BranchFrom {
-=======
-        internal static System.Drawing.Bitmap BranchFrom {
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             get {
                 object obj = ResourceManager.GetObject("BranchFrom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -222,8 +216,6 @@ namespace GitUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         internal static System.Drawing.Bitmap bug {
             get {
                 object obj = ResourceManager.GetObject("bug", resourceCulture);
@@ -263,8 +255,6 @@ namespace GitUI.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to Changelog
-        ///=========
-        ///
         ///### [Version 2.50.02] (06 September 2017)
         ///
         ///#### Features: 
@@ -521,9 +511,6 @@ namespace GitUI.Properties {
         /// </summary>
 
         public static System.Drawing.Bitmap DeleteRed {
-=======
-        internal static System.Drawing.Bitmap DeleteRed {
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             get {
                 object obj = ResourceManager.GetObject("DeleteRed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -542,8 +529,6 @@ namespace GitUI.Properties {
         }
 		
 		/// <summary>
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         ///   Looks up a localized string similar to Andréj Telle, Oliver Friedrich.
         /// </summary>
         internal static string Designers {
@@ -637,9 +622,6 @@ namespace GitUI.Properties {
         /// </summary>
 
         public static System.Drawing.Bitmap ExpandAll {
-=======
-        internal static System.Drawing.Bitmap ExpandAll {
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             get {
                 object obj = ResourceManager.GetObject("ExpandAll", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -813,11 +795,13 @@ namespace GitUI.Properties {
         public static System.Drawing.Bitmap HeadBranch {
             get {
                 object obj = ResourceManager.GetObject("HeadBranch", resourceCulture);
-=======
+            }
+        }
+
         internal static System.Drawing.Bitmap gitex {
             get {
                 object obj = ResourceManager.GetObject("gitex", resourceCulture);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -976,8 +960,6 @@ namespace GitUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         internal static System.Drawing.Bitmap IconAddToGitIgnore {
             get {
                 object obj = ResourceManager.GetObject("IconAddToGitIgnore", resourceCulture);
@@ -2051,11 +2033,13 @@ namespace GitUI.Properties {
         public static System.Drawing.Bitmap RemoteMirror {
             get {
                 object obj = ResourceManager.GetObject("RemoteMirror", resourceCulture);
-=======
+            }
+        }
+        
         internal static System.Drawing.Bitmap RemoteBranch {
             get {
                 object obj = ResourceManager.GetObject("RemoteBranch", resourceCulture);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2065,9 +2049,6 @@ namespace GitUI.Properties {
         /// </summary>
 
         public static System.Drawing.Bitmap RemoteRepo {
-=======
-        internal static System.Drawing.Bitmap RemoteRepo {
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             get {
                 object obj = ResourceManager.GetObject("RemoteRepo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));

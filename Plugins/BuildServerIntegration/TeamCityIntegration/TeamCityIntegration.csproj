@@ -19,10 +19,9 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ReleaseVersion>2.48</ReleaseVersion>
-=======
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

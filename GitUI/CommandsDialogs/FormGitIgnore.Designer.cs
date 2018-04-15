@@ -65,13 +65,13 @@
             panel1.Name = "panel1";
             panel1.Padding = new System.Windows.Forms.Padding(0, 0, 8, 4);
             panel1.Size = new System.Drawing.Size(250, 38);
-=======
+
             panel1.Location = new System.Drawing.Point(0, 479);
             panel1.Margin = new System.Windows.Forms.Padding(4);
             panel1.Name = "panel1";
             panel1.Padding = new System.Windows.Forms.Padding(0, 0, 10, 5);
             panel1.Size = new System.Drawing.Size(269, 47);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             panel1.TabIndex = 5;
             // 
             // lnkGitIgnoreGenerate
@@ -88,7 +88,7 @@
             this.lnkGitIgnoreGenerate.TabIndex = 7;
             this.lnkGitIgnoreGenerate.TabStop = true;
             this.lnkGitIgnoreGenerate.Text = "Generate a custom gitignore";
-=======
+
             this.lnkGitIgnoreGenerate.Location = new System.Drawing.Point(30, 2);
             this.lnkGitIgnoreGenerate.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.lnkGitIgnoreGenerate.Name = "lnkGitIgnoreGenerate";
@@ -97,7 +97,7 @@
             this.lnkGitIgnoreGenerate.TabIndex = 7;
             this.lnkGitIgnoreGenerate.TabStop = true;
             this.lnkGitIgnoreGenerate.Text = "Generate a custom ignore file for git";
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.lnkGitIgnoreGenerate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGitIgnoreGenerate_LinkClicked);
             // 
             // lnkGitIgnorePatterns
@@ -114,7 +114,7 @@
             this.lnkGitIgnorePatterns.TabIndex = 6;
             this.lnkGitIgnorePatterns.TabStop = true;
             this.lnkGitIgnorePatterns.Text = "More gitignore patterns";
-=======
+
             this.lnkGitIgnorePatterns.Location = new System.Drawing.Point(98, 23);
             this.lnkGitIgnorePatterns.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.lnkGitIgnorePatterns.Name = "lnkGitIgnorePatterns";
@@ -123,7 +123,7 @@
             this.lnkGitIgnorePatterns.TabIndex = 6;
             this.lnkGitIgnorePatterns.TabStop = true;
             this.lnkGitIgnorePatterns.Text = "Example ignore patterns";
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.lnkGitIgnorePatterns.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGitIgnorePatterns_LinkClicked);
             // 
             // flowLayoutPanel2
@@ -136,12 +136,12 @@
             flowLayoutPanel2.Location = new System.Drawing.Point(0, 391);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
             flowLayoutPanel2.Size = new System.Drawing.Size(372, 32);
-=======
+
             flowLayoutPanel2.Location = new System.Drawing.Point(0, 484);
             flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
             flowLayoutPanel2.Size = new System.Drawing.Size(508, 42);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             flowLayoutPanel2.TabIndex = 6;
             flowLayoutPanel2.WrapContents = false;
             // 
@@ -153,12 +153,12 @@
             this.AddDefault.Location = new System.Drawing.Point(3, 3);
             this.AddDefault.Name = "AddDefault";
             this.AddDefault.Size = new System.Drawing.Size(160, 25);
-=======
+
             this.AddDefault.Location = new System.Drawing.Point(4, 4);
             this.AddDefault.Margin = new System.Windows.Forms.Padding(4);
             this.AddDefault.Name = "AddDefault";
             this.AddDefault.Size = new System.Drawing.Size(200, 34);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.AddDefault.TabIndex = 2;
             this.AddDefault.Text = "Add default ignores";
             this.AddDefault.UseVisualStyleBackColor = true;
@@ -172,12 +172,12 @@
             this.AddPattern.Location = new System.Drawing.Point(169, 3);
             this.AddPattern.Name = "AddPattern";
             this.AddPattern.Size = new System.Drawing.Size(160, 25);
-=======
+
             this.AddPattern.Location = new System.Drawing.Point(212, 4);
             this.AddPattern.Margin = new System.Windows.Forms.Padding(4);
             this.AddPattern.Name = "AddPattern";
             this.AddPattern.Size = new System.Drawing.Size(200, 34);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.AddPattern.TabIndex = 3;
             this.AddPattern.Text = "Add pattern";
             this.AddPattern.UseVisualStyleBackColor = true;
@@ -193,12 +193,12 @@
             this.Save.Location = new System.Drawing.Point(463, 3);
             this.Save.Name = "Save";
             this.Save.Size = new System.Drawing.Size(160, 25);
-=======
+
             this.Save.Location = new System.Drawing.Point(578, 4);
             this.Save.Margin = new System.Windows.Forms.Padding(4);
             this.Save.Name = "Save";
             this.Save.Size = new System.Drawing.Size(200, 34);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.Save.TabIndex = 1;
             this.Save.Text = "Save";
             this.Save.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -211,10 +211,10 @@
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
 
             this.splitContainer1.Location = new System.Drawing.Point(4, 4);
-=======
+
             this.splitContainer1.Location = new System.Drawing.Point(5, 5);
             this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -231,11 +231,11 @@
 
             this.splitContainer1.Size = new System.Drawing.Size(626, 423);
             this.splitContainer1.SplitterDistance = 372;
-=======
+
             this.splitContainer1.Size = new System.Drawing.Size(782, 526);
             this.splitContainer1.SplitterDistance = 508;
             this.splitContainer1.SplitterWidth = 5;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.splitContainer1.TabIndex = 0;
             // 
             // _NO_TRANSLATE_GitIgnoreEdit
@@ -248,10 +248,8 @@
             this._NO_TRANSLATE_GitIgnoreEdit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this._NO_TRANSLATE_GitIgnoreEdit.Name = "_NO_TRANSLATE_GitIgnoreEdit";
 
-            this._NO_TRANSLATE_GitIgnoreEdit.Size = new System.Drawing.Size(372, 391);
-=======
             this._NO_TRANSLATE_GitIgnoreEdit.Size = new System.Drawing.Size(508, 484);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this._NO_TRANSLATE_GitIgnoreEdit.TabIndex = 0;
             // 
             // label1
@@ -263,10 +261,8 @@
             this.label1.Name = "label1";
             this.label1.ReadOnly = true;
 
-            this.label1.Size = new System.Drawing.Size(250, 385);
-=======
             this.label1.Size = new System.Drawing.Size(269, 479);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.label1.TabIndex = 4;
             this.label1.Text = resources.GetString("label1.Text");
             this.label1.WordWrap = false;
@@ -282,12 +278,11 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 427);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(626, 31);
-=======
             this.flowLayoutPanel1.Location = new System.Drawing.Point(5, 531);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(782, 42);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // btnCancel
@@ -298,12 +293,11 @@
             this.btnCancel.Location = new System.Drawing.Point(382, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 25);
-=======
             this.btnCancel.Location = new System.Drawing.Point(476, 4);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(94, 34);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -321,7 +315,7 @@
             this.MinimumSize = new System.Drawing.Size(650, 500);
             this.Name = "FormGitIgnore";
             this.Padding = new System.Windows.Forms.Padding(4);
-=======
+
             this.ClientSize = new System.Drawing.Size(792, 578);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.flowLayoutPanel1);
@@ -329,7 +323,7 @@
             this.MinimumSize = new System.Drawing.Size(808, 613);
             this.Name = "FormGitIgnore";
             this.Padding = new System.Windows.Forms.Padding(5);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit .gitignore";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormGitIgnoreFormClosing);

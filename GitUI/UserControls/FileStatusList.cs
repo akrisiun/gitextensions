@@ -47,10 +47,8 @@ namespace GitUI
         public FileStatusList()
         {
             InitializeComponent();
-
-=======
             CreateOpenSubmoduleMenuItem();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             Translate();
             FilterVisible = false;
 
@@ -110,9 +108,7 @@ namespace GitUI
 
         protected override void DisposeCustomResources()
         {
-
             selectedIndexChangeSubscription.Dispose();
-=======
             if (selectedIndexChangeSubscription != null)
             {
                 selectedIndexChangeSubscription.Dispose();
@@ -140,7 +136,7 @@ namespace GitUI
                     .ObserveOn(SynchronizationContext.Current)
                     .Subscribe(_ => FileStatusListView_SelectedIndexChanged());
             }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
 
         private static ImageList _images;
@@ -496,8 +492,6 @@ namespace GitUI
             }
         }
 
-
-=======
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public IEnumerable<string> SelectedItemParents
@@ -521,7 +515,7 @@ namespace GitUI
             }
         }
 
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         public void ClearSelected()
         {
             foreach (ListViewItem item in FileStatusListView.SelectedItems)

@@ -40,13 +40,11 @@ namespace GitUIPluginInterfaces
         public ISettingControlBinding CreateControlBinding()
         {
             return new ComboBoxBinding(this, CustomControl);
-< HEAD
         }
 
         public static Func<ComboBox> CreateComboBox { get; set; }
-=======
     }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
         private class ComboBoxBinding : SettingControlBinding<ChoiceSetting, ComboBox>
         {

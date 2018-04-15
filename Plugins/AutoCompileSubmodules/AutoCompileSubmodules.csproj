@@ -32,12 +32,10 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
 
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <ReleaseVersion>2.48</ReleaseVersion>
-=======
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

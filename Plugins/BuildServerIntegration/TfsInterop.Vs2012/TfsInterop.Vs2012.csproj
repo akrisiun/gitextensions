@@ -15,8 +15,6 @@
 
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
   </PropertyGroup>

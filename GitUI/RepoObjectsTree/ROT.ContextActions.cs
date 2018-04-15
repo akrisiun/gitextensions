@@ -90,7 +90,6 @@ RegisterClick<StashNode>(mnubtnStashDrop, stash => stash.Delete());
             RegisterClick<RemoteBranchNode>(mnubtnMergeBranch, remoteBranch => remoteBranch.Merge());
             RegisterClick<RemoteBranchNode>(mnubtnRebase, remoteBranch => remoteBranch.Rebase());
             RegisterClick<RemoteBranchNode>(mnubtnReset, remoteBranch => remoteBranch.Reset());
-=======
             RegisterClick<RemoteBranchNode>(mnubtnDeleteRemoteBranch, remoteBranch => remoteBranch.Delete());
             RegisterClick<RemoteBranchNode>(mnubtnBranchCheckout, branch => branch.Checkout());
             RegisterClick<RemoteBranchNode>(mnubtnFetchOneBranch, remoteBranch => remoteBranch.Fetch());
@@ -104,7 +103,7 @@ RegisterClick<StashNode>(mnubtnStashDrop, stash => stash.Delete());
             RegisterClick<RemoteBranchNode>(mnubtnRebase, remoteBranch => remoteBranch.Rebase());
             RegisterClick<RemoteBranchNode>(mnubtnReset, remoteBranch => remoteBranch.Reset());
             RegisterClick<RemoteBranchNode>(mnubtnFilterRemoteBranchInRevisionGrid, remoteBranch => FilterInRevisionGrid(remoteBranch));
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             RegisterClick<RemoteBranchNode>(mnubtnRemoteBranchFetchAndCheckout, b =>
             {
                 b.Fetch();
@@ -114,7 +113,6 @@ RegisterClick<StashNode>(mnubtnStashDrop, stash => stash.Delete());
             Node.RegisterContextMenu(typeof(RemoteBranchNode), menuRemote);
 
             RegisterClick<RemoteRepoNode>(mnubtnRemoteFetch, remoteBranch => remoteBranch.Fetch());
-=======
             RegisterClick<RemoteBranchNode>(mnubtnFetchCreateBranch, b =>
             {
                 b.Fetch();
@@ -128,30 +126,28 @@ RegisterClick<StashNode>(mnubtnStashDrop, stash => stash.Delete());
             Node.RegisterContextMenu(typeof(RemoteBranchNode), menuRemote);
 
             RegisterClick<RemoteRepoNode>(mnubtnFetchAllBranchesFromARemote, remote => remote.Fetch());
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             RegisterClick<RemoteRepoNode>(mnubtnManageRemotes, remoteBranch => PopupManageRemotesForm());
             Node.RegisterContextMenu(typeof(RemoteRepoNode), menuRemoteRepoNode);
 
             RegisterClick<TagNode>(mnubtnCreateBranchForTag, tag => tag.CreateBranch());
             RegisterClick<TagNode>(mnubtnDeleteTag, tag => tag.Delete());
 
-            RegisterClick<TagNode>(mnuBtnCheckTag, tag => tag.Checkout());
-=======
+            //RegisterClick<TagNode>(mnuBtnCheckTag, tag => tag.Checkout());
             RegisterClick<TagNode>(mnuBtnCheckoutTag, tag => tag.Checkout());
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             Node.RegisterContextMenu(typeof(TagNode), menuTag);
 
             RegisterClick(mnuBtnManageRemotesFromRootNode, PopupManageRemotesForm);
         }
 
 
-=======
         private void FilterInRevisionGrid(BaseBranchNode branch)
         {
             FilterBranchHelper.SetBranchFilter(branch.FullPath, refresh: true);
         }
 
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         private void PopupManageRemotesForm()
         {
             using (var form = new FormRemotes(UICommands))

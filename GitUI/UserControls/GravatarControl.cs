@@ -52,9 +52,8 @@ namespace GitUI
             catch (Exception)
             {  // avatar excepion is not reason to stop at all!
             }
-=======
             UpdateGravatar();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
 
 

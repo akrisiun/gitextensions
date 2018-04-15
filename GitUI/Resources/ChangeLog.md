@@ -25,7 +25,7 @@ Changelog
 * Exception "Illegal characters in path" when invoking "browse" via command line parameter - Issue [3489]
 * Blows up when I click on Help in Branch dialog - Issue [3011]
 
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 ### [Version 2.50.01] (07 July 2017)
 
 #### Fixes: 
@@ -53,7 +53,7 @@ Changelog
 * Warn the user if reseting a local branch is non fast forward. - Issue [3438]
 =======
 * Warn the user if resetting a local branch is non fast forward. - Issue [3438]
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 * AppVeyor CI plugin - PR [3426]
 * 2.49 RC2: Branch name not showing in VS 2015  - Issue [3393]
 * ConEmu settings - Issue [3392]
@@ -122,7 +122,7 @@ Changelog
 * Revisiongrid doesnt keep the selection - Issue [2956]
 =======
 * Revisiongrid doesn't keep the selection - Issue [2956]
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 * Cannot paste into commit window - Issue [2926]
 * On Diff/File List pane got exception ArgumentOutOfRangeException InvalidArgument Value of -1 is not valid for index - Issue [2759]
 * Strip any ANSI escape codes from git command output - PR [2689]
@@ -151,7 +151,7 @@ Changelog
 * Warn the user if reseting a local branch is non fast forward. - Issue [3438]
 =======
 * Warn the user if resetting a local branch is non fast forward. - Issue [3438]
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 * AppVeyor CI plugin - PR [3426]
 * 2.49 RC2: Branch name not showing in VS 2015  - Issue [3393]
 * ConEmu settings - Issue [3392]
@@ -214,7 +214,7 @@ Changelog
 * Revisiongrid doesnt keep the selection - Issue [2956]
 =======
 * Revisiongrid doesn't keep the selection - Issue [2956]
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 * Cannot paste into commit window - Issue [2926]
 * On Diff/File List pane got exception ArgumentOutOfRangeException InvalidArgument Value of -1 is not valid for index - Issue [2759]
 * Strip any ANSI escape codes from git command output - PR [2689]
@@ -1956,4 +1956,4 @@ Changelog
 [3794]:https://github.com/gitextensions/gitextensions/issues/3794
 [3489]:https://github.com/gitextensions/gitextensions/issues/3489
 [3011]:https://github.com/gitextensions/gitextensions/issues/3011
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+

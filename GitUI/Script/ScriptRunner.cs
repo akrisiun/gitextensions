@@ -332,8 +332,6 @@ namespace GitUI.Script
                 FormProcess.ShowDialog(owner as Form, command, argument, aModule.WorkingDir, null, true);
             else
             {
-
-=======
                 PowerShellHelper.RunPowerShell(command, argument, aModule.WorkingDir, scriptInfo.RunInBackground);
                 return false;
             }
@@ -354,16 +352,13 @@ namespace GitUI.Script
                 FormProcess.ShowStandardProcessDialog(owner, command, argument, aModule.WorkingDir, null, true);
             else
             {
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 if (originalCommand.Equals("{openurl}", StringComparison.CurrentCultureIgnoreCase))
                     Process.Start(argument);
                 else
                     aModule.RunExternalCmdDetached(command, argument);
             }
 
-=======
-
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             return !scriptInfo.RunInBackground;
         }
 
@@ -380,10 +375,9 @@ namespace GitUI.Script
 
             var revisionGrid = revisionGridI as RevisionGrid;
 
-            GitRevision selectedRevision = revisionGrid.GetRevision(revisionGrid.LastRowIndex);
-=======
+            //  GitRevision selectedRevision = revisionGrid.GetRevision(revisionGrid.LastRowIndex);
             GitRevision selectedRevision = revisionGrid.LatestSelectedRevision;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             foreach (GitRef head in selectedRevision.Refs)
             {
                 if (head.IsTag)

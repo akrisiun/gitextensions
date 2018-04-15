@@ -137,7 +137,6 @@
             // _NO_TRANSLATE_maxRecentRepositories
             // 
             this._NO_TRANSLATE_maxRecentRepositories.Location = new System.Drawing.Point(250, 11);
-=======
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.AutoSize = true;
@@ -195,7 +194,7 @@
             // _NO_TRANSLATE_maxRecentRepositories
             // 
             this._NO_TRANSLATE_maxRecentRepositories.Location = new System.Drawing.Point(250, 38);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this._NO_TRANSLATE_maxRecentRepositories.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -205,9 +204,8 @@
             this._NO_TRANSLATE_maxRecentRepositories.Size = new System.Drawing.Size(61, 21);
 
             this._NO_TRANSLATE_maxRecentRepositories.TabIndex = 1;
-=======
-            this._NO_TRANSLATE_maxRecentRepositories.TabIndex = 3;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+//            this._NO_TRANSLATE_maxRecentRepositories.TabIndex = 3;
+
             this._NO_TRANSLATE_maxRecentRepositories.ValueChanged += new System.EventHandler(this.sortMostRecentRepos_CheckedChanged);
             // 
             // comboMinWidthEdit
@@ -220,7 +218,7 @@
             this.maxRecentRepositories.Size = new System.Drawing.Size(222, 13);
             this.maxRecentRepositories.TabIndex = 0;
             this.maxRecentRepositories.Text = "Maximum number of most recent repositories";
-=======
+
             this.comboMinWidthEdit.Location = new System.Drawing.Point(250, 222);
             this.comboMinWidthEdit.Maximum = new decimal(new int[] {
             800,
@@ -254,7 +252,7 @@
             this.comboMinWidthLabel.Size = new System.Drawing.Size(202, 13);
             this.comboMinWidthLabel.TabIndex = 7;
             this.comboMinWidthLabel.Text = "Combobox minimum width (0 = Autosize)";
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // 
             // sortLessRecentRepos
             // 
@@ -266,13 +264,13 @@
             this.sortLessRecentRepos.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.sortLessRecentRepos.Size = new System.Drawing.Size(228, 17);
             this.sortLessRecentRepos.TabIndex = 3;
-=======
+
             this.sortLessRecentRepos.Location = new System.Drawing.Point(11, 88);
             this.sortLessRecentRepos.Name = "sortLessRecentRepos";
             this.sortLessRecentRepos.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.sortLessRecentRepos.Size = new System.Drawing.Size(228, 17);
             this.sortLessRecentRepos.TabIndex = 5;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.sortLessRecentRepos.Text = "Sort less recent repositories alphabetically";
             this.sortLessRecentRepos.UseVisualStyleBackColor = true;
             this.sortLessRecentRepos.CheckedChanged += new System.EventHandler(this.sortMostRecentRepos_CheckedChanged);
@@ -290,7 +288,7 @@
             this.sortMostRecentRepos.Text = "Sort most recent repositories alphabetically";
             this.sortMostRecentRepos.UseVisualStyleBackColor = true;
             this.sortMostRecentRepos.CheckedChanged += new System.EventHandler(this.sortMostRecentRepos_CheckedChanged);
-=======
+
             this.shorteningGB.AutoSize = true;
             this.shorteningGB.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.shorteningGB.Controls.Add(this.dontShortenRB);
@@ -339,7 +337,7 @@
             this.mostSigDirRB.Text = "The most significant directory ";
             this.mostSigDirRB.UseVisualStyleBackColor = true;
             this.mostSigDirRB.CheckedChanged += new System.EventHandler(this.sortMostRecentRepos_CheckedChanged);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // 
             // comboPanel
             // 
@@ -506,7 +504,7 @@
             this.dontShortenRB.Text = "Do not shorten  ";
             this.dontShortenRB.UseVisualStyleBackColor = true;
             this.dontShortenRB.CheckedChanged += new System.EventHandler(this.sortMostRecentRepos_CheckedChanged);
-=======
+
             // lblRecentRepositoriesHistorySize
             // 
             this.lblRecentRepositoriesHistorySize.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -516,7 +514,7 @@
             this.lblRecentRepositoriesHistorySize.Size = new System.Drawing.Size(157, 13);
             this.lblRecentRepositoriesHistorySize.TabIndex = 0;
             this.lblRecentRepositoriesHistorySize.Text = "Recent repositories history size";
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // 
             // _NO_TRANSLATE_RecentRepositoriesHistorySize
             // 
@@ -605,7 +603,7 @@
             this.comboMinWidthNote.Size = new System.Drawing.Size(300, 100);
             this.comboMinWidthNote.TabIndex = 7;
             this.comboMinWidthNote.Text = "NB: The width of the columns helps to visualise how the repository name will be shown in the combobox.";
-=======
+
             this._NO_TRANSLATE_RecentRepositoriesHistorySize.Location = new System.Drawing.Point(250, 11);
             this._NO_TRANSLATE_RecentRepositoriesHistorySize.Maximum = new decimal(new int[] {
             999,
@@ -625,7 +623,7 @@
             0,
             0,
             0});
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // 
             // FormRecentReposSettings
             // 
@@ -647,10 +645,10 @@
             flpnlControls.ResumeLayout(false);
             flpnlControls.PerformLayout();
 
-=======
+
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             ((System.ComponentModel.ISupportInitialize)(this._NO_TRANSLATE_maxRecentRepositories)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.comboMinWidthEdit)).EndInit();
             this.shorteningGB.ResumeLayout(false);
@@ -668,9 +666,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.comboMinWidthEdit)).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
-=======
+
             ((System.ComponentModel.ISupportInitialize)(this._NO_TRANSLATE_RecentRepositoriesHistorySize)).EndInit();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -706,9 +704,8 @@
         private System.Windows.Forms.ColumnHeader chdrRepository1;
         private System.Windows.Forms.Label comboMinWidthNote;
 
-=======
         private System.Windows.Forms.NumericUpDown _NO_TRANSLATE_RecentRepositoriesHistorySize;
         private System.Windows.Forms.Label lblRecentRepositoriesHistorySize;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     }
 }

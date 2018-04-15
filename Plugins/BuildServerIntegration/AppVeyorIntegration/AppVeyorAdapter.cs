@@ -234,8 +234,6 @@ namespace AppVeyorIntegration
                                 }
                                 if (commitSha1 == null || !IsCommitInRevisionGrid(commitSha1))
                                 {
-=======
-                                {
                                     if (!_shouldDisplayGitHubPullRequestBuilds)
                                         return null;
                                     try
@@ -263,17 +261,16 @@ namespace AppVeyorIntegration
                                 }
                                 if (commitSha1 == null || !IsCommitInRevisionGrid(commitSha1))
                                 {
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                                     return null;
                                 }
 
                                 var version = b["version"].ToObject<string>();
                                 var status = ParseBuildStatus(b["status"].ToObject<string>());
 
-                                string duration = string.Empty;
-=======
+                                // string duration = string.Empty;
                                 long? duration = null;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                                 if (status == BuildInfo.BuildStatus.Success || status == BuildInfo.BuildStatus.Failure)
                                     duration = GetBuildDuration(b);
 

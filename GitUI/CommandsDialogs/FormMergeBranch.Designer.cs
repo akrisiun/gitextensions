@@ -46,7 +46,7 @@
             this.fastForward = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.Currentbranch = new System.Windows.Forms.Label();
-=======
+
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.advancedPanel = new System.Windows.Forms.TableLayoutPanel();
             this.mergeMessage = new System.Windows.Forms.TextBox();
@@ -66,27 +66,27 @@
             this.currentBranchLabel = new System.Windows.Forms.Label();
             this.Currentbranch = new System.Windows.Forms.Label();
             this.Branches = new GitUI.BranchComboBox();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.label2 = new System.Windows.Forms.Label();
             this.helpImageDisplayUserControl1 = new GitUI.Help.HelpImageDisplayUserControl();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
 
-=======
+
             this.tableLayoutPanel2.SuspendLayout();
             this.advancedPanel.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nbMessages)).BeginInit();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.SuspendLayout();
             // 
             // strategyToolTip
             // 
 
             this.strategyToolTip.AutomaticDelay = 1;
-=======
+
             this.strategyToolTip.AutomaticDelay = 100;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.strategyToolTip.AutoPopDelay = 0;
             this.strategyToolTip.InitialDelay = 1;
             this.strategyToolTip.ReshowDelay = 1;
@@ -102,13 +102,13 @@
             this.Ok.Name = "Ok";
             this.Ok.Size = new System.Drawing.Size(108, 25);
             this.Ok.TabIndex = 9;
-=======
+
             this.Ok.Location = new System.Drawing.Point(657, 425);
             this.Ok.Margin = new System.Windows.Forms.Padding(3, 3, 10, 10);
             this.Ok.Name = "Ok";
             this.Ok.Size = new System.Drawing.Size(108, 25);
             this.Ok.TabIndex = 2;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.Ok.Text = "&Merge";
             this.Ok.UseVisualStyleBackColor = true;
             this.Ok.Click += new System.EventHandler(this.OkClick);
@@ -127,7 +127,7 @@
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(704, 357);
-=======
+
             this.tableLayoutPanel1.AutoSize = true;
             this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel1.ColumnCount = 2;
@@ -143,7 +143,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(772, 460);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // groupBox1
@@ -237,7 +237,7 @@
             this.strategyHelp.Text = "Help";
             this.strategyHelp.Visible = false;
             this.strategyHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.strategyHelp_LinkClicked);
-=======
+
             this.groupBox1.AutoSize = true;
             this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.groupBox1.Controls.Add(this.tableLayoutPanel2);
@@ -366,7 +366,7 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(192, 21);
             this.flowLayoutPanel1.TabIndex = 1;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // 
             // _NO_TRANSLATE_mergeStrategy
             // 
@@ -394,7 +394,7 @@
             this.currentBranchLabel.Size = new System.Drawing.Size(15, 19);
             this.currentBranchLabel.TabIndex = 0;
             this.currentBranchLabel.Text = "?";
-=======
+
             this._NO_TRANSLATE_mergeStrategy.Location = new System.Drawing.Point(0, 0);
             this._NO_TRANSLATE_mergeStrategy.Margin = new System.Windows.Forms.Padding(0);
             this._NO_TRANSLATE_mergeStrategy.Name = "_NO_TRANSLATE_mergeStrategy";
@@ -476,7 +476,7 @@
             this.noCommit.TabIndex = 6;
             this.noCommit.Text = "Do not commit";
             this.noCommit.UseVisualStyleBackColor = true;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // 
             // noFastForward
             // 
@@ -486,13 +486,13 @@
             this.noFastForward.Name = "noFastForward";
             this.noFastForward.Size = new System.Drawing.Size(243, 23);
             this.noFastForward.TabIndex = 0;
-=======
+
             this.tableLayoutPanel2.SetColumnSpan(this.noFastForward, 2);
             this.noFastForward.Location = new System.Drawing.Point(3, 96);
             this.noFastForward.Name = "noFastForward";
             this.noFastForward.Size = new System.Drawing.Size(194, 17);
             this.noFastForward.TabIndex = 5;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.noFastForward.Text = "Always create a new merge commit";
             this.noFastForward.UseVisualStyleBackColor = true;
             this.noFastForward.CheckedChanged += new System.EventHandler(this.noFastForward_CheckedChanged);
@@ -506,13 +506,13 @@
             this.fastForward.Name = "fastForward";
             this.fastForward.Size = new System.Drawing.Size(327, 23);
             this.fastForward.TabIndex = 1;
-=======
+
             this.tableLayoutPanel2.SetColumnSpan(this.fastForward, 2);
             this.fastForward.Location = new System.Drawing.Point(3, 73);
             this.fastForward.Name = "fastForward";
             this.fastForward.Size = new System.Drawing.Size(264, 17);
             this.fastForward.TabIndex = 4;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.fastForward.TabStop = true;
             this.fastForward.Text = "Keep a single branch line if possible (fast forward)";
             this.fastForward.UseVisualStyleBackColor = true;
@@ -551,7 +551,7 @@
             this.helpImageDisplayUserControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-=======
+
             // currentBranchLabel
             // 
             this.currentBranchLabel.AutoSize = true;
@@ -604,7 +604,7 @@
             this.helpImageDisplayUserControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.helpImageDisplayUserControl1.AutoSize = true;
             this.helpImageDisplayUserControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.helpImageDisplayUserControl1.Image1 = global::GitUI.Properties.Resources.HelpCommandMerge;
@@ -618,13 +618,13 @@
             this.helpImageDisplayUserControl1.Name = "helpImageDisplayUserControl1";
             this.helpImageDisplayUserControl1.Size = new System.Drawing.Size(231, 351);
             this.helpImageDisplayUserControl1.TabIndex = 18;
-=======
+
             this.helpImageDisplayUserControl1.MinimumSize = new System.Drawing.Size(289, 416);
             this.helpImageDisplayUserControl1.Name = "helpImageDisplayUserControl1";
             this.tableLayoutPanel1.SetRowSpan(this.helpImageDisplayUserControl1, 2);
             this.helpImageDisplayUserControl1.Size = new System.Drawing.Size(289, 454);
             this.helpImageDisplayUserControl1.TabIndex = 0;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.helpImageDisplayUserControl1.UniqueIsExpandedSettingsId = "MergeBranches";
             // 
             // FormMergeBranch
@@ -638,7 +638,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(483, 396);
-=======
+
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(772, 460);
@@ -646,7 +646,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(478, 380);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.Name = "FormMergeBranch";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Merge branches";
@@ -657,7 +657,7 @@
             this.groupBox1.PerformLayout();
 
             this.ResumeLayout(false);
-=======
+
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.advancedPanel.ResumeLayout(false);
@@ -667,7 +667,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nbMessages)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
         }
 
@@ -675,14 +675,13 @@
 
 
         private System.Windows.Forms.Label label1;
-=======
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ToolTip strategyToolTip;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private Help.HelpImageDisplayUserControl helpImageDisplayUserControl1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label currentBranchLabel;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         private System.Windows.Forms.Label Currentbranch;
         private BranchComboBox Branches;
         private System.Windows.Forms.Label label2;
@@ -703,13 +702,12 @@
         private BranchComboBox Branches;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private Help.HelpImageDisplayUserControl helpImageDisplayUserControl1;
-=======
         private System.Windows.Forms.CheckBox allowUnrelatedHistories;
         private System.Windows.Forms.CheckBox addLogMessages;
         private System.Windows.Forms.NumericUpDown nbMessages;
         private System.Windows.Forms.TextBox mergeMessage;
         private System.Windows.Forms.CheckBox addMergeMessage;
         private System.Windows.Forms.Button Ok;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     }
 }

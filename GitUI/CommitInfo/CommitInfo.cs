@@ -52,10 +52,9 @@ namespace GitUI.CommitInfo
 
             //string link = _linkFactory.ParseLink(e.LinkText);
             //HandleLink(link, sender);
-=======
             string link = _linkFactory.ParseLink(e.LinkText);
             HandleLink(link, sender);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
 
         private void HandleLink(string link, object sender)
@@ -136,9 +135,8 @@ namespace GitUI.CommitInfo
         {
 
             _RevisionHeader.BackColor = ColorHelper.MakeColorDarker(this.BackColor);
-=======
             _RevisionHeader.BackColor = ColorHelper.MakeColorDarker(BackColor);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
             showContainedInBranchesToolStripMenuItem.Checked = AppSettings.CommitInfoShowContainedInBranchesLocal;
             showContainedInBranchesRemoteToolStripMenuItem.Checked = AppSettings.CommitInfoShowContainedInBranchesRemote;
@@ -169,20 +167,18 @@ namespace GitUI.CommitInfo
             data.ChildrenGuids = _children;
 
             // CommitInformation commitInformation = CommitInformation.GetCommitInfo(data, _linkFactory, CommandClick != null, Module);
-=======
             CommitInformation commitInformation = CommitInformation.GetCommitInfo(data, _linkFactory, CommandClick != null, Module);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
             //_RevisionHeader.SetXHTMLText(commitInformation.Header);
             _RevisionHeader.Height = GetRevisionHeaderHeight();
 
             //_revisionInfo = commitInformation.Body;
             updateText();
-=======
             _revisionInfo = commitInformation.Body;
 
             UpdateRevisionInfo();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             LoadAuthorImage(data.Author ?? data.Committer);
 
             if (AppSettings.CommitInfoShowContainedInBranches)
@@ -333,7 +329,6 @@ namespace GitUI.CommitInfo
         }
 
         private void updateText()
-=======
         private void DisplayAvatarSetup(bool right)
         {
             tableLayout.SuspendLayout();
@@ -375,7 +370,7 @@ namespace GitUI.CommitInfo
         }
 
         private void UpdateRevisionInfo()
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         {
             if (_sortedRefs != null)
             {
@@ -463,14 +458,13 @@ namespace GitUI.CommitInfo
             if (AppSettings.ShowAuthorGravatar)
             {
                 gravatar1.LoadImageForEmail("");
-=======
             _linkFactory.Clear();
             UpdateRevisionInfo();
             gravatar1.Visible = AppSettings.ShowAuthorGravatar;
             if (AppSettings.ShowAuthorGravatar)
             {
                 gravatar1.LoadImage("");
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             }
         }
 
@@ -485,9 +479,8 @@ namespace GitUI.CommitInfo
             {
 
                 gravatar1.LoadImageForEmail(matches[0].Groups[1].Value);
-=======
                 gravatar1.LoadImage(matches[0].Groups[1].Value);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             }
         }
 
@@ -530,11 +523,10 @@ namespace GitUI.CommitInfo
                     //if (showBranchesAsLinks)
                     //    branchText = _linkFactory.CreateBranchLink(noPrefixBranch);
                     //else
-=======
                     if (showBranchesAsLinks)
                         branchText = _linkFactory.CreateBranchLink(noPrefixBranch);
                     else
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                         branchText = WebUtility.HtmlEncode(noPrefixBranch);
                     links.Add(branchText);
                 }
@@ -555,9 +547,8 @@ namespace GitUI.CommitInfo
                     // showBranchesAsLinks ? _linkFactory.CreateTagLink(s) :
                     WebUtility.HtmlEncode(s)
                 ).Join(", ");
-=======
                 .Select(s => showBranchesAsLinks ? _linkFactory.CreateTagLink(s) : WebUtility.HtmlEncode(s)).Join(", ");
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
             if (!String.IsNullOrEmpty(tagString))
                 return Environment.NewLine + WebUtility.HtmlEncode(containedInTags.Text) + " " + tagString;
@@ -569,18 +560,16 @@ namespace GitUI.CommitInfo
             var linksString = string.Empty;
             //var parser = new GitExtLinksParser(Module.EffectiveSettings);
             //var links = parser.Parse(revision).Distinct();
-
-
             //foreach (var link in links)
             //{
             //    linksString = linksString.Combine(", ", _linkFactory.CreateLink(link.Caption, link.URI));
             //}
-=======
+
             foreach (var link in links)
             {
                 linksString = linksString.Combine(", ", _linkFactory.CreateLink(link.Caption, link.URI));
             }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
             if (linksString.IsNullOrEmpty())
                 return string.Empty;
@@ -663,9 +652,5 @@ namespace GitUI.CommitInfo
             // Cache desired size for commit header
             _headerResize = e.NewRectangle;
         }
-
-
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
     }
 }

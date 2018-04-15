@@ -83,7 +83,7 @@
             this.groupBox13.TabIndex = 60;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Language";
-=======
+
             this.gbLanguages.Controls.Add(this.label49);
             this.gbLanguages.Controls.Add(this.label22);
             this.gbLanguages.Controls.Add(this.Dictionary);
@@ -96,7 +96,7 @@
             this.gbLanguages.TabIndex = 3;
             this.gbLanguages.TabStop = false;
             this.gbLanguages.Text = "Language";
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // 
             // label49
             // 
@@ -106,9 +106,9 @@
             this.label49.Size = new System.Drawing.Size(141, 13);
 
             this.label49.TabIndex = 30;
-=======
+
             this.label49.TabIndex = 0;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.label49.Text = "Language (restart required)";
             // 
             // label22
@@ -119,9 +119,9 @@
             this.label22.Size = new System.Drawing.Size(150, 13);
 
             this.label22.TabIndex = 33;
-=======
+
             this.label22.TabIndex = 3;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.label22.Text = "Dictionary for spelling checker";
             // 
             // Dictionary
@@ -133,9 +133,9 @@
             this.Dictionary.Size = new System.Drawing.Size(169, 21);
 
             this.Dictionary.TabIndex = 34;
-=======
+
             this.Dictionary.TabIndex = 4;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.Dictionary.DropDown += new System.EventHandler(this.Dictionary_DropDown);
             // 
             // downloadDictionary
@@ -147,9 +147,9 @@
             this.downloadDictionary.Size = new System.Drawing.Size(104, 13);
 
             this.downloadDictionary.TabIndex = 35;
-=======
+
             this.downloadDictionary.TabIndex = 5;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.downloadDictionary.TabStop = true;
             this.downloadDictionary.Text = "Download dictionary";
             this.downloadDictionary.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.downloadDictionary_LinkClicked);
@@ -163,9 +163,9 @@
             this.Language.Size = new System.Drawing.Size(169, 21);
 
             this.Language.TabIndex = 31;
-=======
+
             this.Language.TabIndex = 1;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // 
             // helpTranslate
             // 
@@ -176,9 +176,9 @@
             this.helpTranslate.Size = new System.Drawing.Size(74, 13);
 
             this.helpTranslate.TabIndex = 32;
-=======
+
             this.helpTranslate.TabIndex = 2;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.helpTranslate.TabStop = true;
             this.helpTranslate.Text = "Help translate";
             this.helpTranslate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.helpTranslate_LinkClicked);
@@ -200,7 +200,7 @@
             this.groupBox15.TabIndex = 59;
             this.groupBox15.TabStop = false;
             this.groupBox15.Text = "Fonts";
-=======
+
             this.gbFonts.Controls.Add(this.commitFontChangeButton);
             this.gbFonts.Controls.Add(this.label34);
             this.gbFonts.Controls.Add(this.diffFontChangeButton);
@@ -213,7 +213,7 @@
             this.gbFonts.TabIndex = 2;
             this.gbFonts.TabStop = false;
             this.gbFonts.Text = "Fonts";
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // 
             // commitFontChangeButton
             // 
@@ -224,9 +224,9 @@
             this.commitFontChangeButton.Size = new System.Drawing.Size(66, 23);
 
             this.commitFontChangeButton.TabIndex = 25;
-=======
+
             this.commitFontChangeButton.TabIndex = 5;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.commitFontChangeButton.Text = "font name";
             this.commitFontChangeButton.UseVisualStyleBackColor = true;
             this.commitFontChangeButton.Click += new System.EventHandler(this.commitFontChangeButton_Click);
@@ -239,9 +239,9 @@
             this.label34.Size = new System.Drawing.Size(65, 13);
 
             this.label34.TabIndex = 24;
-=======
+
             this.label34.TabIndex = 4;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.label34.Text = "Commit font";
             // 
             // diffFontChangeButton
@@ -253,9 +253,9 @@
             this.diffFontChangeButton.Size = new System.Drawing.Size(66, 23);
 
             this.diffFontChangeButton.TabIndex = 21;
-=======
+
             this.diffFontChangeButton.TabIndex = 1;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.diffFontChangeButton.Text = "font name";
             this.diffFontChangeButton.UseVisualStyleBackColor = true;
             this.diffFontChangeButton.Click += new System.EventHandler(this.diffFontChangeButton_Click);
@@ -269,9 +269,9 @@
             this.applicationFontChangeButton.Size = new System.Drawing.Size(66, 23);
 
             this.applicationFontChangeButton.TabIndex = 23;
-=======
+
             this.applicationFontChangeButton.TabIndex = 3;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.applicationFontChangeButton.Text = "font name";
             this.applicationFontChangeButton.UseVisualStyleBackColor = true;
             this.applicationFontChangeButton.Click += new System.EventHandler(this.applicationFontChangeButton_Click);
@@ -284,9 +284,7 @@
             this.label26.Size = new System.Drawing.Size(82, 13);
 
             this.label26.TabIndex = 22;
-=======
-            this.label26.TabIndex = 2;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.label26.Text = "Application font";
             // 
             // label56
@@ -297,9 +295,7 @@
             this.label56.Size = new System.Drawing.Size(55, 13);
 
             this.label56.TabIndex = 20;
-=======
-            this.label56.TabIndex = 0;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.label56.Text = "Code font";
             // 
             // gbGeneral
@@ -318,7 +314,7 @@
             this.groupBox14.TabIndex = 57;
             this.groupBox14.TabStop = false;
             this.groupBox14.Text = "General";
-=======
+
             this.gbGeneral.Controls.Add(this.chkShowRelativeDate);
             this.gbGeneral.Controls.Add(this.chkShowCurrentBranchInVisualStudio);
             this.gbGeneral.Controls.Add(this.chkEnableAutoScale);
@@ -330,7 +326,7 @@
             this.gbGeneral.TabIndex = 0;
             this.gbGeneral.TabStop = false;
             this.gbGeneral.Text = "General";
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // 
             // chkShowRelativeDate
             // 
@@ -340,9 +336,7 @@
             this.chkShowRelativeDate.Size = new System.Drawing.Size(209, 17);
 
             this.chkShowRelativeDate.TabIndex = 1;
-=======
-            this.chkShowRelativeDate.TabIndex = 0;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.chkShowRelativeDate.Text = "Show relative date instead of full date";
             this.chkShowRelativeDate.UseVisualStyleBackColor = true;
             // 
@@ -354,9 +348,7 @@
             this.chkShowCurrentBranchInVisualStudio.Size = new System.Drawing.Size(200, 17);
 
             this.chkShowCurrentBranchInVisualStudio.TabIndex = 2;
-=======
-            this.chkShowCurrentBranchInVisualStudio.TabIndex = 1;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.chkShowCurrentBranchInVisualStudio.Text = "Show current branch in Visual Studio";
             this.chkShowCurrentBranchInVisualStudio.UseVisualStyleBackColor = true;
             // 
@@ -369,9 +361,7 @@
             this.chkEnableAutoScale.Size = new System.Drawing.Size(254, 17);
 
             this.chkEnableAutoScale.TabIndex = 3;
-=======
-            this.chkEnableAutoScale.TabIndex = 2;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.chkEnableAutoScale.Text = "Auto scale user interface when high DPI is used";
             this.chkEnableAutoScale.UseVisualStyleBackColor = true;
             // 
@@ -383,9 +373,7 @@
             this.truncateLongFilenames.Size = new System.Drawing.Size(121, 13);
 
             this.truncateLongFilenames.TabIndex = 5;
-=======
-            this.truncateLongFilenames.TabIndex = 3;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.truncateLongFilenames.Text = "Truncate long filenames";
             // 
             // truncatePathMethod
@@ -401,9 +389,7 @@
             this.truncatePathMethod.Size = new System.Drawing.Size(242, 21);
 
             this.truncatePathMethod.TabIndex = 6;
-=======
-            this.truncatePathMethod.TabIndex = 4;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // 
             // gbAuthorImages
             // 
@@ -440,7 +426,6 @@
             this.AuthorImageSize.Name = "AuthorImageSize";
             this.AuthorImageSize.Size = new System.Drawing.Size(142, 21);
             this.AuthorImageSize.TabIndex = 12;
-=======
             this.gbAuthorImages.Controls.Add(this.NoImageService);
             this.gbAuthorImages.Controls.Add(this.label53);
             this.gbAuthorImages.Controls.Add(this.label47);
@@ -454,7 +439,7 @@
             this.gbAuthorImages.TabIndex = 1;
             this.gbAuthorImages.TabStop = false;
             this.gbAuthorImages.Text = "Author images";
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // 
             // NoImageService
             // 
@@ -465,9 +450,7 @@
             this.NoImageService.Size = new System.Drawing.Size(142, 21);
 
             this.NoImageService.TabIndex = 17;
-=======
-            this.NoImageService.TabIndex = 5;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // 
             // label53
             // 
@@ -477,9 +460,7 @@
             this.label53.Size = new System.Drawing.Size(88, 13);
 
             this.label53.TabIndex = 16;
-=======
-            this.label53.TabIndex = 4;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.label53.Text = "No image service";
             // 
             // label47
@@ -490,9 +471,7 @@
             this.label47.Size = new System.Drawing.Size(30, 13);
 
             this.label47.TabIndex = 15;
-=======
-            this.label47.TabIndex = 3;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             this.label47.Text = "days";
             // 
             // _NO_TRANSLATE_DaysToCacheImages
@@ -507,9 +486,7 @@
             this._NO_TRANSLATE_DaysToCacheImages.Size = new System.Drawing.Size(77, 21);
 
             this._NO_TRANSLATE_DaysToCacheImages.TabIndex = 14;
-=======
-            this._NO_TRANSLATE_DaysToCacheImages.TabIndex = 2;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // 
             // label46
             // 
@@ -530,11 +507,10 @@
             this.label44.TabIndex = 11;
             this.label44.Text = "Image size";
             // 
-=======
             this.label46.TabIndex = 1;
             this.label46.Text = "Cache images";
             // 
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             // ClearImageCache
             // 
             this.ClearImageCache.Location = new System.Drawing.Point(11, 96);
@@ -553,9 +529,6 @@
             this.ShowAuthorGravatar.Size = new System.Drawing.Size(202, 17);
 
             this.ShowAuthorGravatar.TabIndex = 10;
-=======
-            this.ShowAuthorGravatar.TabIndex = 0;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             this.ShowAuthorGravatar.Text = "Get author image from gravatar.com";
             this.ShowAuthorGravatar.UseVisualStyleBackColor = true;
             // 
@@ -594,7 +567,6 @@
             this.groupBox14.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-=======
             this.Padding = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.Size = new System.Drawing.Size(1360, 773);
             this.gbLanguages.ResumeLayout(false);
@@ -605,7 +577,7 @@
             this.gbGeneral.PerformLayout();
             this.gbAuthorImages.ResumeLayout(false);
             this.gbAuthorImages.PerformLayout();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             ((System.ComponentModel.ISupportInitialize)(this._NO_TRANSLATE_DaysToCacheImages)).EndInit();
             this.ResumeLayout(false);
 

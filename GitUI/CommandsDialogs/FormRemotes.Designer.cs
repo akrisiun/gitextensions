@@ -485,7 +485,6 @@ namespace GitUI.CommandsDialogs
             // 
 
             // folderBrowserButtonPushUrl
-=======
             // RemoteName
             // 
             this.RemoteName.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -611,7 +610,6 @@ namespace GitUI.CommandsDialogs
             this.labelPushUrl.TabIndex = 6;
             this.labelPushUrl.Text = "Push Url";
             this.labelPushUrl.Visible = false;
-=======
             this.Remotes.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.Remotes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
@@ -1090,7 +1088,7 @@ namespace GitUI.CommandsDialogs
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
-=======
+
         private System.Windows.Forms.Label lblHeaderLine2;
         private System.Windows.Forms.Panel pnlMgtDetails;
         private System.Windows.Forms.TableLayoutPanel tblpnlMgtDetails;
@@ -1101,6 +1099,6 @@ namespace GitUI.CommandsDialogs
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnToggleState;
         private System.Windows.Forms.ColumnHeader columnHeader1;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     }
 }

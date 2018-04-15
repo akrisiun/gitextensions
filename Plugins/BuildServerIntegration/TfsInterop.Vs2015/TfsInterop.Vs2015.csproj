@@ -15,8 +15,6 @@
 
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -139,10 +137,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-
-=======
     <Reference Include="System.ComponentModel.Composition" />
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     <Reference Include="System.Core" />
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.1.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.IdentityModel.Tokens.Jwt.5.1.4\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
@@ -150,8 +146,6 @@
     </Reference>
 
     <Reference Include="System.Net.Http" />
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
@@ -167,10 +161,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
-
-=======
     <Reference Include="System.Xml.Linq" />
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\TfsInterop.Common\Properties\AssemblyInfo.cs" />
@@ -201,6 +193,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 </Project>

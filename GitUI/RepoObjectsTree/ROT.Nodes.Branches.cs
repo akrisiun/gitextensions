@@ -9,20 +9,16 @@ using GitCommands;
 using GitCommands.Config;
 using GitUI.CommandsDialogs;
 using GitUIPluginInterfaces.Notifications;
-=======
 using System.Linq;
 using System.Windows.Forms;
 using GitCommands;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 using ResourceManager;
 
 namespace GitUI.UserControls
 {
-
     using Linq = System.Linq;
 
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
     // "branches"
     public partial class RepoObjectsTree
     {
@@ -40,11 +36,9 @@ namespace GitUI.UserControls
 
             /// <summary>Full path of the branch. <example>"issues/issue1344"</example></summary>
 
-            public string FullPath {
-=======
             public string FullPath
             {
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 get { return ParentPath.Combine(PathSeparator, Name); }
             }
 
@@ -86,10 +80,9 @@ namespace GitUI.UserControls
                         dirs,
                         dirs.Length - 1);
 
-                ParentPath = String.Join(PathSeparator.ToString(), ParentPathTake); 
-=======
+                //  ParentPath = String.Join(PathSeparator.ToString(), ParentPathTake); 
                 ParentPath = dirs.Take(dirs.Length - 1).Join(PathSeparator);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             }
 
             internal BaseBranchNode CreateRootNode(IDictionary<string, BaseBranchNode> nodes,
@@ -145,8 +138,7 @@ namespace GitUI.UserControls
 
                 IsDraggable = false;
                 AllowDrop = false;
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 IsActive = aFullPath.StartsWith(GitModule.ActiveBranchIndicator.ToString());
             }
 
@@ -246,8 +238,6 @@ namespace GitUI.UserControls
                 return new DragDropAction[] {/*stashDD,*/ branchDD };
             }
 
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
             public void Checkout()
             {
                 UICommands.StartCheckoutBranch(FullPath, false);
@@ -256,20 +246,18 @@ namespace GitUI.UserControls
             public void Delete()
             {
 
-                UICommands.StartDeleteBranchDialog(ParentWindow(), new string[] { FullPath });
-=======
+                // UICommands.StartDeleteBranchDialog(ParentWindow(), new string[] { FullPath });
                 UICommands.StartDeleteBranchDialog(ParentWindow(), new string[] {FullPath});
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             }
 
             public void DeleteForce()
             {
                 var branchHead = GitRef.CreateBranchRef(UICommands.Module, null, FullPath);
 
-                var cmd = new GitDeleteBranchCmd(new GitRef[] { branchHead }, true);
-=======
+                //  var cmd = new GitDeleteBranchCmd(new GitRef[] { branchHead }, true);
                 var cmd = new GitDeleteBranchCmd(new GitRef[] {branchHead}, true);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 UICommands.StartCommandLineProcessDialog(cmd, null);
             }
         }
@@ -308,9 +296,9 @@ namespace GitUI.UserControls
                     Linq.Enumerable.Select(
                     Nodes.DepthEnumerator<BranchNode>()
                     , branch => branch.FullPath);
-=======
+
                 var branches = Nodes.DepthEnumerator<BranchNode>().Select(branch => branch.FullPath);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 UICommands.StartDeleteBranchDialog(ParentWindow(), branches);
             }
 
@@ -323,9 +311,9 @@ namespace GitUI.UserControls
                         branches,
                         branch => GitRef.CreateBranchRef(UICommands.Module, null, branch.FullPath)
                         );
-=======
-                    branches.Select(branch => GitRef.CreateBranchRef(UICommands.Module, null, branch.FullPath));
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
+                branches.Select(branch => GitRef.CreateBranchRef(UICommands.Module, null, branch.FullPath));
+
                 var cmd = new GitDeleteBranchCmd(branchHeads, true);
                 UICommands.StartCommandLineProcessDialog(cmd, null);
             }
@@ -355,9 +343,6 @@ namespace GitUI.UserControls
         //}
         //}
 
-
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         private class BranchTree : Tree
         {
             public const char PathSeparator = '/';
@@ -464,9 +449,8 @@ namespace GitUI.UserControls
                         Nodes.DepthEnumerator<BranchNode>(),
                         b => b.IsActive));
 
-=======
                 var activeBranch = Nodes.DepthEnumerator<BranchNode>().Where(b => b.IsActive).FirstOrDefault();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 if (activeBranch == null)
                 {
                     TreeViewNode.TreeView.SelectedNode = null;
@@ -475,17 +459,11 @@ namespace GitUI.UserControls
                 {
 
                     activeBranch.Select();
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
                     SelectedBranch = activeBranch.FullPath;
                 }
             }
         }
 
         #endregion private classes
-=======
-    #endregion private classes
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
-
     }
 }

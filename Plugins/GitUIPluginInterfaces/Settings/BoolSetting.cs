@@ -56,14 +56,12 @@ namespace GitUIPluginInterfaces
 
         private class CheckBoxBinding : SettingControlBinding<BoolSetting, CheckBox>
         {
-< HEAD
             public CheckBoxBinding(BoolSetting aSetting)
                  : base(aSetting, BoolSetting.CreateCheckBox()) { }
-=======
             public CheckBoxBinding(BoolSetting aSetting, CheckBox aCustomControl)
                 : base(aSetting, aCustomControl)
             { }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
             public override CheckBox CreateControl()
             {
@@ -91,11 +89,9 @@ namespace GitUIPluginInterfaces
 
             public override void SaveSetting(ISettingsSource settings, bool areSettingsEffective, CheckBox control)
             {
-< HEAD
                 bool? isChecked = // control.IsChecked; //
                         (control.CheckState == CheckState.Indeterminate) ? (bool?)null : (control.CheckState == CheckState.Checked);
                 //Setting[settings] = UIExtensions.GetNullableChecked(control, isChecked);
-=======
                 var controlValue = control.GetNullableChecked();
                 if (areSettingsEffective)
                 {
@@ -106,7 +102,7 @@ namespace GitUIPluginInterfaces
                 }
 
                 Setting[settings] = controlValue;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             }
         }
     }

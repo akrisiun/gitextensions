@@ -19,9 +19,7 @@ namespace GitUI.UserControls
         static readonly string headBranchKey = Guid.NewGuid().ToString();
         private SearchControl<string> txtBranchFilter;
         private readonly HashSet<string> _branchFilterAutoCompletionSrc = new HashSet<string>();
-=======
-    public partial class RepoObjectsTree : GitModuleControl
-    {
+
         private readonly TranslationString showBranchOnly =
             new TranslationString("Filter the revision grid to show this branch only\nTo show all branches, right click the revision grid, select 'view' and then the 'show all branches'");
 
@@ -31,7 +29,7 @@ namespace GitUI.UserControls
         /// <summary>Image key for a head branch.</summary>
         private SearchControl<string> txtBranchCriterion;
         private readonly HashSet<string> _branchCriterionAutoCompletionSrc = new HashSet<string>();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
         public RepoObjectsTree()
         {
@@ -50,10 +48,9 @@ namespace GitUI.UserControls
             treeMain.NodeMouseClick += OnNodeClick;
             treeMain.NodeMouseDoubleClick += OnNodeDoubleClick;
 
-=======
             mnubtnFilterRemoteBranchInRevisionGrid.ToolTipText = showBranchOnly.Text;
             mnubtnFilterLocalBranchInRevisionGrid.ToolTipText = showBranchOnly.Text;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
 
         private void InitiliazeSearchBox()
@@ -81,7 +78,6 @@ namespace GitUI.UserControls
         private IList<string> FilterBranch(string arg)
         {
             return _branchFilterAutoCompletionSrc
-=======
             txtBranchCriterion = new SearchControl<string>(SearchForBranch, i => { });
             txtBranchCriterion.OnTextEntered += () =>
             {
@@ -104,7 +100,7 @@ namespace GitUI.UserControls
         private IList<string> SearchForBranch(string arg)
         {
             return _branchCriterionAutoCompletionSrc
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 .Where(r => r.IndexOf(arg, StringComparison.OrdinalIgnoreCase) != -1)
                 .ToList();
         }
@@ -129,11 +125,11 @@ namespace GitUI.UserControls
             var localBranchesRootNode = new TreeNode(Strings.branches.Text)
             {
                 ImageKey = "RemoteRepo.png",
-=======
+
             var localBranchesRootNode = new TreeNode(Strings.branches.Text)
             {
                 ImageKey = "LocalRepo.png",
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             };
             localBranchesRootNode.SelectedImageKey = localBranchesRootNode.ImageKey;
             AddTree(new BranchTree(localBranchesRootNode, newSource));
@@ -141,10 +137,8 @@ namespace GitUI.UserControls
             var remoteBranchesRootNode = new TreeNode(Strings.remotes.Text)
             {
 
-                ImageKey = "RemoteMirror.png",
-=======
-                ImageKey = "RemoteRepo.png",
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+                ImageKey = "RemoteMirror.png"
+                // ImageKey = "RemoteRepo.png",
             };
             remoteBranchesRootNode.SelectedImageKey = remoteBranchesRootNode.ImageKey;
             _remoteTree = new RemoteBranchTree(remoteBranchesRootNode, newSource)
@@ -180,7 +174,7 @@ namespace GitUI.UserControls
                 if (!_branchFilterAutoCompletionSrc.Contains(lastPart))
                 {
                     _branchFilterAutoCompletionSrc.Add(lastPart);
-=======
+
             _branchCriterionAutoCompletionSrc.Add(branchFullPath);
 
             if(lastPart != null && lastPart != branchFullPath)
@@ -188,7 +182,7 @@ namespace GitUI.UserControls
                 if (!_branchCriterionAutoCompletionSrc.Contains(lastPart))
                 {
                     _branchCriterionAutoCompletionSrc.Add(lastPart);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 }
             }
         }
@@ -229,8 +223,6 @@ namespace GitUI.UserControls
 
         ContextMenuStrip IRepoObjectsTree.menuSettings => throw new NotImplementedException();
 
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
         private void CancelBackgroundTasks()
         {
             if (_cancelledTokenSource != null)
@@ -244,9 +236,8 @@ namespace GitUI.UserControls
                 }
 
                 _branchFilterAutoCompletionSrc.Clear();
-=======
                 _branchCriterionAutoCompletionSrc.Clear();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             }
             _cancelledTokenSource = new CancellationTokenSource();
         }
@@ -275,9 +266,8 @@ namespace GitUI.UserControls
                         autoCompletionSrc.AddRange(
 
                             _branchFilterAutoCompletionSrc.ToArray());
-=======
                             _branchCriterionAutoCompletionSrc.ToArray());
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                     }));
                 }, _cancelledTokenSource.Token);
             _tasks.ToList().ForEach(t => t.Start());
@@ -317,9 +307,8 @@ namespace GitUI.UserControls
         {
 
             txtBranchFilter.CloseDropdown();
-=======
             txtBranchCriterion.CloseDropdown();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             if (_searchCriteriaChanged && _searchResult != null && _searchResult.Any())
             {
                 _searchCriteriaChanged = false;
@@ -332,11 +321,10 @@ namespace GitUI.UserControls
                 if (txtBranchFilter.Text.IsNullOrWhiteSpace())
                 {
                     txtBranchFilter.Focus();
-=======
                 if (txtBranchCriterion.Text.IsNullOrWhiteSpace())
                 {
                     txtBranchCriterion.Focus();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                     return;
                 }
             }
@@ -346,11 +334,11 @@ namespace GitUI.UserControls
                 if (txtBranchFilter.Text.IsNotNullOrWhitespace())
                 {
                     _searchResult = SearchTree(txtBranchFilter.Text, treeMain.Nodes);
-=======
+
                 if (txtBranchCriterion.Text.IsNotNullOrWhitespace())
                 {
                     _searchResult = SearchTree(txtBranchCriterion.Text, treeMain.Nodes);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 }
             }
             var node = GetNextSearchResult();
@@ -407,18 +395,17 @@ namespace GitUI.UserControls
 
 
         private void OnBranchFilterChanged(object sender, EventArgs e)
-=======
+
         private void OnBranchCriterionChanged(object sender, EventArgs e)
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         {
             _searchCriteriaChanged = true;
         }
 
 
         private void txtBranchFilter_KeyDown(object sender, KeyEventArgs e)
-=======
         private void txtBranchCriterion_KeyDown(object sender, KeyEventArgs e)
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -435,8 +422,8 @@ namespace GitUI.UserControls
 
         public void UpdateRevision(GitModuleRevisionEventArgs e)
         {
-            throw new NotImplementedException();
-=======
+        }
+
         /// <summary>Occurs when a <see cref="TreeNode"/> is selected.</summary>
         void OnNodeSelected(object sender, TreeViewEventArgs e)
         {
@@ -456,7 +443,7 @@ namespace GitUI.UserControls
         {
             // When folding/unfolding a node, e.Node won't be the one you double clicked, but a child node instead
             Node.OnNode<Node>(treeMain.SelectedNode, node => node.OnDoubleClick());
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
     }
 }

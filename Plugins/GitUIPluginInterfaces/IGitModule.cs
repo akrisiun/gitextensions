@@ -8,8 +8,6 @@ namespace GitUIPluginInterfaces
     /// <summary>Provides manipulation with git module.</summary>
     public interface IGitModule
     {
-
-=======
         IConfigFileSettings LocalConfigFile { get; }
 
         string AddRemote(string remoteName, string path);
@@ -32,7 +30,7 @@ namespace GitUIPluginInterfaces
         void SetSetting(string setting, string value);
         void UnsetSetting(string setting);
 
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         /// <summary>
         /// Run git command, console window is hidden, redirect output
         /// </summary>
@@ -109,8 +107,6 @@ namespace GitUIPluginInterfaces
 
         IGitModule GetSubmodule(string submoduleName);
 
-
-=======
         /// <summary>
         /// Retrieves registered remotes by running <c>git remote show</c> command.
         /// </summary>
@@ -122,7 +118,7 @@ namespace GitUIPluginInterfaces
         /// </summary>
         /// <param name="allowEmpty"></param>
         /// <returns>Registered remotes.</returns>
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         string[] GetRemotes(bool allowEmpty);
 
         string GetSetting(string setting);

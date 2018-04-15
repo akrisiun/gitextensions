@@ -60,11 +60,10 @@
     <NoWarn>1573,3003</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-=======
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NoWarn>1573</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -84,12 +83,11 @@
       <HintPath>..\packages\ConEmu.Control.WinForms.1.0.20160313.1\lib\net40\ConEmu.WinForms.dll</HintPath>
       <Private>True</Private>
     </Reference>
-=======
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     <Reference Include="PSTaskDialog">
       <HintPath>..\Bin\PSTaskDialog.dll</HintPath>
     </Reference>
@@ -227,7 +225,6 @@
     </Compile>
 
     <Compile Include="CommandsDialogs\SearchControl.cs">
-=======
     <Compile Include="CommandsDialogs\SearchWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -249,7 +246,7 @@
       <DependentUpon>FormAvailableEncodings.cs</DependentUpon>
     </Compile>
     <Compile Include="CommandsDialogs\SettingsDialog\Pages\DiffViewerSettingsPage.cs">
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CommandsDialogs\SearchControl.Designer.cs">
@@ -268,8 +265,6 @@
       <DependentUpon>CommitDialogSettingsPage.cs</DependentUpon>
     </Compile>
     <Compile Include="CommandsDialogs\SettingsDialog\EditorHelper.cs" />
-
-=======
     <Compile Include="CommandsDialogs\SettingsDialog\AutoLayoutSettingsPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -297,7 +292,7 @@
     <Compile Include="RevisionDiffInfoProvider.cs" />
     <Compile Include="RevisionDiffKind.cs" />
     <Compile Include="FormStatusOutputLog.cs" />
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     <Compile Include="CommandsDialogs\WorktreeDialog\FormCreateWorktree.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -380,14 +375,13 @@
       <DependentUpon>NotificationsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Notifications\NotifierHelpers.cs" />
-=======
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Script\PowerShellHelper.cs" />
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     <Compile Include="RepoHosts.cs" />
     <Compile Include="Script\ScriptRunner.cs" />
     <Compile Include="AutoCompletion\AutoCompleteWord.cs" />
@@ -437,11 +431,10 @@
     <Compile Include="RepoObjectsTree\ROT.Nodes.Submodules.cs" />
     <Compile Include="RepoObjectsTree\ROT.Nodes.Tags.cs" />
 	-->
-=======
     <Compile Include="SplitterManager.cs" />
     <Compile Include="SpellChecker\SpellCheckerHelper.cs" />
     <Compile Include="SpellChecker\WordAtCursorExtractor.cs" />
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     <Compile Include="UserControls\BranchComboBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -488,9 +481,8 @@
     </Compile>
 
     <Compile Include="UserControls\IRevisionGrid.cs" />
-=======
     <Compile Include="UserControls\PathFormatter.cs" />
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     <Compile Include="UserControls\RevisionGridClasses\CopyToClipboardMenuHelper.cs" />
     <Compile Include="UserControls\RevisionGridClasses\CaptionCustomMenuRenderer.cs" />
     <Compile Include="UserControls\RevisionGridClasses\FollowParentRewriter.cs" />
@@ -1296,7 +1288,7 @@
 
     <EmbeddedResource Include="CommandsDialogs\SearchControl.resx">
       <DependentUpon>SearchControl.cs</DependentUpon>
-=======
+    </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\SearchWindow.resx">
       <DependentUpon>SearchWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -1308,7 +1300,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\DiffViewerSettingsPage.resx">
       <DependentUpon>DiffViewerSettingsPage.cs</DependentUpon>
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\BuildServerIntegrationSettingsPage.resx">
       <DependentUpon>BuildServerIntegrationSettingsPage.cs</DependentUpon>
@@ -1317,7 +1309,6 @@
       <DependentUpon>CommitDialogSettingsPage.cs</DependentUpon>
     </EmbeddedResource>
 
-=======
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\AutoLayoutSettingsPage.resx">
       <DependentUpon>AutoLayoutSettingsPage.cs</DependentUpon>
     </EmbeddedResource>
@@ -1333,7 +1324,7 @@
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\RepoDistSettingsPage.resx">
       <DependentUpon>RepoDistSettingsPage.cs</DependentUpon>
     </EmbeddedResource>
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     <EmbeddedResource Include="CommandsDialogs\WorktreeDialog\FormCreateWorktree.resx">
       <DependentUpon>FormCreateWorktree.cs</DependentUpon>
     </EmbeddedResource>
@@ -1756,11 +1747,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <CustomToolNamespace>GitUI.Properties</CustomToolNamespace>
-
-=======
       <LogicalName>GitUI.Properties.Resources.resources</LogicalName>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\RevisionGrid.resx">
       <DependentUpon>RevisionGrid.cs</DependentUpon>
@@ -2058,7 +2046,6 @@
 	<Content Include="RepoObjectsTree\BlankIcon.png" />
 	-->
     <Content Include="RepoObjectsTree\BlankIcon.png" />
-=======
     <Content Include="Resources\Icons\commit_error.png" />
     <Content Include="Resources\Icons\commit_ok.png" />
     <Content Include="Resources\Icons\commit_warning.png" />
@@ -2121,7 +2108,7 @@
     <Content Include="Resources\Icons\RemoteBranch.png" />
     <Content Include="Resources\Icons\RemoteRepo.png" />
     <Content Include="Resources\Icons\LocalRepo.png" />
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
     <Content Include="Translation\Czech.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2353,8 +2340,6 @@
     <None Include="Resources\Icons\IconSubmoduleRevisionSemiDownDirty.png" />
     <None Include="Resources\Icons\IconSubmoduleRevisionSemiUp.png" />
     <None Include="Resources\Icons\IconSubmoduleRevisionSemiUpDirty.png" />
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
     <Content Include="Resources\Sounds\cow-moo.wav" />
     <None Include="Properties\DataSources\GitUI.Script.ScriptInfo.datasource" />
     <None Include="Properties\DataSources\GitCommands.Repository.datasource" />
@@ -2382,7 +2367,6 @@
     <Error Condition="!Exists('..\packages\ConEmu.Core.16.3.10.0\build\ConEmu.Core.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ConEmu.Core.16.3.10.0\build\ConEmu.Core.Targets'))" />
     -->
   </Target>
-=======
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
@@ -2399,5 +2383,4 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 </Project>

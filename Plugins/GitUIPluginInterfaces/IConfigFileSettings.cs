@@ -1,7 +1,4 @@
-< HEAD
 //using GitCommands.Config;
-=======
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
 using System.Collections.Generic;
 
 namespace GitUIPluginInterfaces

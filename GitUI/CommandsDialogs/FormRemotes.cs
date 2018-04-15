@@ -1,20 +1,17 @@
 ﻿using System;
-
-=======
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 using System.Windows.Forms;
 using GitCommands;
 using GitCommands.Config;
 using GitCommands.Repository;
 
-=======
 using GitCommands.Remote;
 using GitUIPluginInterfaces;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 using ResourceManager;
 
 namespace GitUI.CommandsDialogs
@@ -23,11 +20,10 @@ namespace GitUI.CommandsDialogs
     {
 
         private string _remote = "";
-=======
         private IGitRemoteManager _remoteManager;
         private GitRemote _selectedRemote;
         private readonly ListViewGroup _lvgEnabled, _lvgDisabled;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
         private readonly TranslationString _remoteBranchDataError =
             new TranslationString("Invalid ´{1}´ found for branch ´{0}´." + Environment.NewLine +
@@ -72,8 +68,6 @@ namespace GitUI.CommandsDialogs
 
         public delegate void EventRemoteChange(string remoteName);
         public delegate void EventRemoteRenamed(string orgName, string newName);
-
-=======
         private readonly TranslationString _gbMgtPanelHeaderNew =
             new TranslationString("Create New Remote");
 
@@ -103,7 +97,7 @@ Inactive remote is completely invisible to git.");
         public delegate void EventRemoteChange(string remoteName);
         public delegate void EventRemoteRenamed(string orgName, string newName);
 
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         public EventRemoteChange OnRemoteDeleted;
         public EventRemoteRenamed OnRemoteRenamedOrAdded;
 
@@ -116,8 +110,7 @@ Inactive remote is completely invisible to git.");
         }
 
         private void FormRemotesLoad(object sender, EventArgs e)
-=======
-
+        {
             // remove text from 'new' and 'delete' buttons because now they are represented by icons
             New.Text = string.Empty;
             Delete.Text = string.Empty;
@@ -197,7 +190,7 @@ Inactive remote is completely invisible to git.");
         }
 
         private IGitRef GetHeadForSelectedRemoteBranch()
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         {
             Initialize();
 
@@ -215,10 +208,9 @@ Inactive remote is completely invisible to git.");
             MessageBox.Show(this,
                 string.Format(_remoteBranchDataError.Text, RemoteBranches.Rows[e.RowIndex].Cells[0].Value,
                     RemoteBranches.Columns[e.ColumnIndex].HeaderText));
-=======
             // refresh registered git remotes
             UserGitRemotes = _remoteManager.LoadRemotes(true).ToList();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
             RemoteBranches.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "";
         }
@@ -229,7 +221,6 @@ Inactive remote is completely invisible to git.");
         /// remote name will be preselected in the listbox
         /// </summary>
         public string PreselectRemoteOnLoad { get; set; }
-=======
         private void InitialiseTabRemotes(string preselectRemote = null)
         {
             // because the binding the same BindingList to multiple controls,
@@ -262,7 +253,7 @@ Inactive remote is completely invisible to git.");
                 comboBoxPushUrl.EndUpdate();
             }
         }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
         private void Initialize()
         {
@@ -271,11 +262,10 @@ Inactive remote is completely invisible to git.");
 
 
             Remotes.DataSource = Module.GetRemotes(false);
-=======
             RemoteRepositoryCombo.Sorted = false;
             RemoteRepositoryCombo.DataSource = new[] { new GitRemote() }.Union(UserGitRemotes).ToList();
             RemoteRepositoryCombo.DisplayMember = "Name";
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
 
             var heads = Module.GetRefs(false, true);
             RemoteBranches.DataSource = heads;
@@ -296,7 +286,6 @@ Inactive remote is completely invisible to git.");
 
             comboBoxPushUrl.DataSource = Repositories.RemoteRepositoryHistory.Repositories;
             comboBoxPushUrl.DisplayMember = "Path";
-=======
             // we need this event only once, so unwire
             Application.Idle -= application_Idle;
 
@@ -319,7 +308,7 @@ Inactive remote is completely invisible to git.");
             _remoteManager = new GitRemoteManager(Module);
             // load the data for the very first time
             Initialize(PreselectRemoteOnLoad);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
 
         private void btnToggleState_Click(object sender, EventArgs e)
@@ -362,7 +351,6 @@ Inactive remote is completely invisible to git.");
                 if (checkBoxSepPushUrl.Checked)
                 {
                     Module.SetPathSetting(string.Format(SettingKeyString.RemotePushUrl, RemoteName.Text), comboBoxPushUrl.Text);
-=======
                 // update all other remote properties
                 var result = _remoteManager.SaveRemote(_selectedRemote,
                                                              RemoteName.Text,
@@ -373,7 +361,7 @@ Inactive remote is completely invisible to git.");
                 {
                     OnRemoteRenamedOrAdded(
                         _selectedRemote != null? _selectedRemote.Name : RemoteName.Text, RemoteName.Text);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 }
 
                 if (MessageBox.Show(this, _questionAutoPullBehaviour.Text, _questionAutoPullBehaviourCaption.Text,
@@ -416,7 +404,7 @@ Inactive remote is completely invisible to git.");
                 else
                 {
                     Module.UnsetSetting(string.Format(SettingKeyString.RemotePushUrl, RemoteName.Text));
-=======
+
                 // if the user has just created a fresh new remote
                 // there may be a need to configure it
                 if (result.ShouldUpdateRemote && !string.IsNullOrEmpty(Url.Text) &&
@@ -428,7 +416,7 @@ Inactive remote is completely invisible to git.");
                     FormRemoteProcess.ShowDialog(this, "remote update");
                     _remoteManager.ConfigureRemotes(RemoteName.Text);
                     UICommands.RepoChangedNotifier.Notify();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 }
             }
 
@@ -472,10 +460,9 @@ Inactive remote is completely invisible to git.");
                 MessageBox.Show(this, output, _hintDelete.Text);
             }
             Initialize();
-=======
             Remotes.SelectedIndices.Clear();
             RemoteName.Focus();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
 
         private void DeleteClick(object sender, EventArgs e)
@@ -490,9 +477,8 @@ Inactive remote is completely invisible to git.");
             {
 
                 var output = Module.RemoveRemote(_remote);
-=======
                 var output = _remoteManager.RemoveRemote(_selectedRemote);
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 if (!string.IsNullOrEmpty(output))
                 {
                     MessageBox.Show(this, output, _hintDelete.Text);
@@ -504,8 +490,6 @@ Inactive remote is completely invisible to git.");
                         OnRemoteDeleted(_remote);
                     }
                 }
-
-=======
                 else
                 {
                     if (OnRemoteDeleted != null)
@@ -515,7 +499,7 @@ Inactive remote is completely invisible to git.");
                 }
 
                 Initialize();
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             }
 
             Initialize();
@@ -531,14 +515,14 @@ Inactive remote is completely invisible to git.");
                         InitialDirectory = ".",
                         Title = _sshKeyOpenCaption.Text
                     })
-=======
+
             using (var dialog = new OpenFileDialog
             {
                 Filter = _sshKeyOpenFilter.Text + @"|*.ppk",
                 InitialDirectory = ".",
                 Title = _sshKeyOpenCaption.Text
             })
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             {
                 if (dialog.ShowDialog(this) == DialogResult.OK)
                     PuttySshKey.Text = dialog.FileName;
@@ -586,14 +570,12 @@ Inactive remote is completely invisible to git.");
                 RemoteRepositoryCombo.Items.Add(remote);
 
             RemoteRepositoryCombo.Text = head.TrackingRemote;
-
-=======
             RemoteRepositoryCombo.SelectedItem = UserGitRemotes.FirstOrDefault(x => x.Name.Equals(head.TrackingRemote, StringComparison.OrdinalIgnoreCase));
             if (RemoteRepositoryCombo.SelectedItem == null)
             {
                 RemoteRepositoryCombo.SelectedIndex = 0;
             }
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             DefaultMergeWithCombo.Text = head.MergeWith;
         }
 
@@ -616,11 +598,9 @@ Inactive remote is completely invisible to git.");
                 return;
 
 
-            var remoteUrl = Module.GetPathSetting(string.Format(SettingKeyString.RemoteUrl, currentSelectedRemote));
-
-=======
+            // var remoteUrl = Module.GetPathSetting(string.Format(SettingKeyString.RemoteUrl, currentSelectedRemote));
             var remoteUrl = Module.GetSetting(string.Format(SettingKeyString.RemoteUrl, currentSelectedRemote));
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
             if (string.IsNullOrEmpty(remoteUrl))
                 return;
 
@@ -666,15 +646,14 @@ Inactive remote is completely invisible to git.");
         {
 
             if (!(Remotes.SelectedItem is string))
-=======
-            Save.Enabled = RemoteName.Text.Trim().Length > 0;
+                Save.Enabled = RemoteName.Text.Trim().Length > 0;
         }
 
         private void Remotes_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Remotes.SelectedIndices.Count > 0 && _selectedRemote == Remotes.SelectedItems[0].Tag)
             {
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
                 return;
 
 
@@ -691,7 +670,7 @@ Inactive remote is completely invisible to git.");
 
             PuttySshKey.Text =
                 Module.GetPathSetting(string.Format("remote.{0}.puttykeyfile", RemoteName.Text));
-=======
+
             New.Enabled = Delete.Enabled = btnToggleState.Enabled = false;
             RemoteName.Text = string.Empty;
             Url.Text = string.Empty;
@@ -723,7 +702,7 @@ Inactive remote is completely invisible to git.");
             BindBtnToggleState(_selectedRemote.Disabled);
             btnToggleState.Visible = true;
             flpnlRemoteManagement.Enabled = !_selectedRemote.Disabled;
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         }
 
         private void UpdateBranchClick(object sender, EventArgs e)
@@ -736,16 +715,16 @@ Inactive remote is completely invisible to git.");
             ShowSeperatePushUrl(checkBoxSepPushUrl.Checked);
         }
 
-
         private void ShowSeperatePushUrl(bool visible)
-=======
+        {}
+
         private void Remotes_MouseUp(object sender, MouseEventArgs e)
         {
             flpnlRemoteManagement.Enabled = !_selectedRemote?.Disabled ?? true;
         }
 
         private void ShowSeparatePushUrl(bool visible)
->>>>>>> 1991c921c26de6ed3baf154db596cac92821677d
+
         {
             labelPushUrl.Visible = visible;
             comboBoxPushUrl.Visible = visible;
