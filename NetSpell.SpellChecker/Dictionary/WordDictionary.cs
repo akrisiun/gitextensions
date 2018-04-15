@@ -20,24 +20,11 @@ namespace NetSpell.SpellChecker.Dictionary
     /// <summary>
     /// The WordDictionary class contains all the logic for managing the word list.
     /// </summary>
-    [ToolboxBitmap(typeof(NetSpell.SpellChecker.Dictionary.WordDictionary), "Dictionary.bmp")]
-    public class WordDictionary : System.ComponentModel.Component
+    [ToolboxBitmap(typeof(WordDictionary), "Dictionary.bmp")]
+    public class WordDictionary : Component
     {
-        private Dictionary<string, Word> _baseWords = new Dictionary<string, Word>();
-        private string _copyright = "";
         private string _dictionaryFile = Thread.CurrentThread.CurrentCulture.Name + ".dic";
-        private string _dictionaryFolder = "";
-        private bool _enableUserFile = true;
-        private bool _initialized;
-        private PhoneticRuleCollection _phoneticRules = new PhoneticRuleCollection();
-        private List<string> _possibleBaseWords = new List<string>();
-        private AffixRuleCollection _prefixRules = new AffixRuleCollection();
-        private List<string> _replaceCharacters = new List<string>();
-        private AffixRuleCollection _suffixRules = new AffixRuleCollection();
-        private string _tryCharacters = "";
-        private string _userFile = "user.dic";
-        private Dictionary<string, string> _userWords = new Dictionary<string, string>();
-        private System.ComponentModel.Container components;
+        private Container _components;
 
         /// <summary>
         ///     Initializes a new instance of the class
@@ -50,7 +37,7 @@ namespace NetSpell.SpellChecker.Dictionary
         /// <summary>
         ///     Initializes a new instance of the class
         /// </summary>
-        public WordDictionary(System.ComponentModel.IContainer container)
+        public WordDictionary(IContainer container)
         {
             container.Add(this);
             InitializeComponent();
@@ -62,13 +49,16 @@ namespace NetSpell.SpellChecker.Dictionary
         private void LoadUserFile()
         {
             // load user words
-            _userWords.Clear();
+            UserWords.Clear();
 
             // quit if user file is disabled
-            if (!EnableUserFile) return;
+            if (!EnableUserFile)
+            {
+                return;
+            }
 
             string userPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "NetSpell");
-            string filePath = Path.Combine(userPath, _userFile);
+            string filePath = Path.Combine(userPath, UserFile);
 
             if (File.Exists(filePath))
             {
@@ -81,24 +71,24 @@ namespace NetSpell.SpellChecker.Dictionary
                     using (var sr = new StreamReader(fs, Encoding.UTF8))
                     {
                         fs = null;
+
                         // read line by line
                         while (sr.Peek() >= 0)
                         {
                             string tempLine = sr.ReadLine().Trim();
                             if (tempLine.Length > 0)
                             {
-                                _userWords.Add(tempLine, tempLine);
+                                UserWords.Add(tempLine, tempLine);
                             }
                         }
                     }
                 }
                 finally
                 {
-                    if (fs != null)
-                        fs.Dispose();
+                    fs?.Dispose();
                 }
 
-                TraceWriter.TraceInfo("Loaded User Dictionary; Words:{0}", _userWords.Count);
+                TraceWriter.TraceInfo("Loaded User Dictionary; Words:{0}", UserWords.Count);
             }
         }
 
@@ -106,18 +96,23 @@ namespace NetSpell.SpellChecker.Dictionary
         ///     Saves the user dictionary file
         /// </summary>
         /// <remarks>
-        ///		If the file does not exist, it will be created
+        ///     If the file does not exist, it will be created
         /// </remarks>
         private void SaveUserFile()
         {
-
             // quit if user file is disabled
-            if (!EnableUserFile) return;
+            if (!EnableUserFile)
+            {
+                return;
+            }
 
             string userPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "NetSpell");
-            if (!Directory.Exists(userPath)) Directory.CreateDirectory(userPath);
+            if (!Directory.Exists(userPath))
+            {
+                Directory.CreateDirectory(userPath);
+            }
 
-            string filePath = Path.Combine(userPath, _userFile);
+            string filePath = Path.Combine(userPath, UserFile);
 
             TraceWriter.TraceInfo("Saving User Dictionary:{0}", filePath);
 
@@ -130,7 +125,7 @@ namespace NetSpell.SpellChecker.Dictionary
                     fs = null;
                     sw.NewLine = "\n";
 
-                    foreach (string tempWord in _userWords.Keys)
+                    foreach (string tempWord in UserWords.Keys)
                     {
                         sw.WriteLine(tempWord);
                     }
@@ -138,11 +133,10 @@ namespace NetSpell.SpellChecker.Dictionary
             }
             finally
             {
-                if (fs != null)
-                    fs.Dispose();
+                fs?.Dispose();
             }
 
-            TraceWriter.TraceInfo("Saved User Dictionary; Words:{0}", _userWords.Count);
+            TraceWriter.TraceInfo("Saved User Dictionary; Words:{0}", UserWords.Count);
         }
 
         /// <summary>
@@ -177,11 +171,11 @@ namespace NetSpell.SpellChecker.Dictionary
         ///     </para>
         /// </param>
         /// <remarks>
-        ///		This method is only affects the user word list
+        ///     This method is only affects the user word list
         /// </remarks>
         public void Add(string word)
         {
-            _userWords.Add(word, word);
+            UserWords.Add(word, word);
             SaveUserFile();
         }
 
@@ -189,11 +183,11 @@ namespace NetSpell.SpellChecker.Dictionary
         ///     Clears the user list of words
         /// </summary>
         /// <remarks>
-        ///		This method is only affects the user word list
+        ///     This method is only affects the user word list
         /// </remarks>
         public void Clear()
         {
-            _userWords.Clear();
+            UserWords.Clear();
             SaveUserFile();
         }
 
@@ -211,17 +205,17 @@ namespace NetSpell.SpellChecker.Dictionary
         public bool Contains(string word)
         {
             // clean up possible base word list
-            _possibleBaseWords.Clear();
+            PossibleBaseWords.Clear();
 
             // Step 1 Search UserWords
-            if (_userWords.ContainsKey(word))
+            if (UserWords.ContainsKey(word))
             {
                 TraceWriter.TraceVerbose("Word Found in User Dictionary: {0}", word);
                 return true;  // word found
             }
 
             // Step 2 Search BaseWords
-            if (_baseWords.ContainsKey(word))
+            if (BaseWords.ContainsKey(word))
             {
                 TraceWriter.TraceVerbose("Word Found in Base Words: {0}", word);
                 return true; // word found
@@ -231,6 +225,7 @@ namespace NetSpell.SpellChecker.Dictionary
 
             // save suffixed words for use when removing prefix
             List<string> suffixWords = new List<string>();
+
             // Add word to suffix word list
             suffixWords.Add(word);
 
@@ -241,7 +236,7 @@ namespace NetSpell.SpellChecker.Dictionary
                     string tempWord = AffixUtility.RemoveSuffix(word, entry);
                     if (tempWord != word)
                     {
-                        if (_baseWords.ContainsKey(tempWord))
+                        if (BaseWords.ContainsKey(tempWord))
                         {
                             if (VerifyAffixKey(tempWord, rule.Name[0]))
                             {
@@ -258,13 +253,14 @@ namespace NetSpell.SpellChecker.Dictionary
                         else
                         {
                             // saving possible base words for use in generating suggestions
-                            _possibleBaseWords.Add(tempWord);
+                            PossibleBaseWords.Add(tempWord);
                         }
                     }
                 }
             }
+
             // saving possible base words for use in generating suggestions
-            _possibleBaseWords.AddRange(suffixWords);
+            PossibleBaseWords.AddRange(suffixWords);
 
             // Step 4 Remove Prefix, Search BaseWords
             foreach (AffixRule rule in PrefixRules.Values)
@@ -276,7 +272,7 @@ namespace NetSpell.SpellChecker.Dictionary
                         string tempWord = AffixUtility.RemovePrefix(suffixWord, entry);
                         if (tempWord != suffixWord)
                         {
-                            if (_baseWords.ContainsKey(tempWord))
+                            if (BaseWords.ContainsKey(tempWord))
                             {
                                 if (VerifyAffixKey(tempWord, rule.Name[0]))
                                 {
@@ -286,13 +282,14 @@ namespace NetSpell.SpellChecker.Dictionary
                             }
 
                             // saving possible base words for use in generating suggestions
-                            _possibleBaseWords.Add(tempWord);
+                            PossibleBaseWords.Add(tempWord);
                         }
                     } // suffix word
                 } // prefix rule entry
             } // prefix rule
+
             // word not found
-            TraceWriter.TraceVerbose("Possible Base Words: {0}", _possibleBaseWords.Count);
+            TraceWriter.TraceVerbose("Possible Base Words: {0}", PossibleBaseWords.Count);
             return false;
         }
 
@@ -315,13 +312,12 @@ namespace NetSpell.SpellChecker.Dictionary
             suffixWords.Add(word.Text);
             string prefixKeys = "";
 
-
             // check suffix keys first
             foreach (char key in word.AffixKeys)
             {
-                if (_suffixRules.ContainsKey(key.ToString(CultureInfo.CurrentUICulture)))
+                if (SuffixRules.ContainsKey(key.ToString(CultureInfo.CurrentUICulture)))
                 {
-                    AffixRule rule = _suffixRules[key.ToString(CultureInfo.CurrentUICulture)];
+                    AffixRule rule = SuffixRules[key.ToString(CultureInfo.CurrentUICulture)];
                     string tempWord = AffixUtility.AddSuffix(word.Text, rule);
                     if (tempWord != word.Text)
                     {
@@ -335,7 +331,7 @@ namespace NetSpell.SpellChecker.Dictionary
                         }
                     }
                 }
-                else if (_prefixRules.ContainsKey(key.ToString(CultureInfo.CurrentUICulture)))
+                else if (PrefixRules.ContainsKey(key.ToString(CultureInfo.CurrentUICulture)))
                 {
                     prefixKeys += key.ToString(CultureInfo.CurrentUICulture);
                 }
@@ -344,7 +340,8 @@ namespace NetSpell.SpellChecker.Dictionary
             // apply prefixes
             foreach (char key in prefixKeys)
             {
-                AffixRule rule = _prefixRules[key.ToString(CultureInfo.CurrentUICulture)];
+                AffixRule rule = PrefixRules[key.ToString(CultureInfo.CurrentUICulture)];
+
                 // apply prefix to all suffix words
                 foreach (string suffixWord in suffixWords)
                 {
@@ -369,21 +366,20 @@ namespace NetSpell.SpellChecker.Dictionary
         public void Initialize()
         {
             // clean up data first
-            _baseWords.Clear();
-            _replaceCharacters.Clear();
-            _prefixRules.Clear();
-            _suffixRules.Clear();
-            _phoneticRules.Clear();
-            _tryCharacters = "";
-
+            BaseWords.Clear();
+            ReplaceCharacters.Clear();
+            PrefixRules.Clear();
+            SuffixRules.Clear();
+            PhoneticRules.Clear();
+            TryCharacters = "";
 
             // the following is used to split a line by white space
-            Regex _spaceRegx = new Regex(@"[^\s]+", RegexOptions.Compiled);
+            Regex spaceRegx = new Regex(@"[^\s]+", RegexOptions.Compiled);
             MatchCollection partMatches;
 
             string currentSection = "";
             AffixRule currentRule = null;
-            string dictionaryPath = Path.Combine(_dictionaryFolder, _dictionaryFile);
+            string dictionaryPath = Path.Combine(DictionaryFolder, _dictionaryFile);
 
             TraceWriter.TraceInfo("Loading Dictionary:{0}", dictionaryPath);
 
@@ -401,7 +397,10 @@ namespace NetSpell.SpellChecker.Dictionary
                     {
                         string tempLine = sr.ReadLine().Trim();
                         if (tempLine.Length <= 0)
+                        {
                             continue;
+                        }
+
                         // check for section flag
                         if (tempLine.StartsWith("[") && tempLine.EndsWith("]"))
                         {
@@ -426,7 +425,7 @@ namespace NetSpell.SpellChecker.Dictionary
                             case "[Suffix]": // MySpell suffix rules
 
                                 // split line by white space
-                                partMatches = _spaceRegx.Matches(tempLine);
+                                partMatches = spaceRegx.Matches(tempLine);
 
                                 // if 3 parts, then new rule
                                 if (partMatches.Count == 3)
@@ -435,10 +434,14 @@ namespace NetSpell.SpellChecker.Dictionary
 
                                     // part 1 = affix key
                                     currentRule.Name = partMatches[0].Value;
-                                    // part 2 = combine flag
-                                    if (partMatches[1].Value == "Y") currentRule.AllowCombine = true;
-                                    // part 3 = entry count, not used
 
+                                    // part 2 = combine flag
+                                    if (partMatches[1].Value == "Y")
+                                    {
+                                        currentRule.AllowCombine = true;
+                                    }
+
+                                    // part 3 = entry count, not used
                                     if (currentSection == "[Prefix]")
                                     {
                                         // add to prefix collection
@@ -450,7 +453,8 @@ namespace NetSpell.SpellChecker.Dictionary
                                         SuffixRules.Add(currentRule.Name, currentRule);
                                     }
                                 }
-                                    //if 4 parts, then entry for current rule
+
+                                // if 4 parts, then entry for current rule
                                 else if (partMatches.Count == 4)
                                 {
                                     // part 1 = affix key
@@ -460,49 +464,64 @@ namespace NetSpell.SpellChecker.Dictionary
 
                                         // part 2 = strip char
                                         if (partMatches[1].Value != "0")
+                                        {
                                             entry.StripCharacters = partMatches[1].Value;
+                                        }
+
                                         // part 3 = add chars
                                         entry.AddCharacters = partMatches[2].Value;
+
                                         // part 4 = conditions
                                         AffixUtility.EncodeConditions(partMatches[3].Value, entry);
 
                                         currentRule.AffixEntries.Add(entry);
                                     }
                                 }
+
                                 break;
                             case "[Phonetic]": // ASpell phonetic rules
                                 // split line by white space
-                                partMatches = _spaceRegx.Matches(tempLine);
+                                partMatches = spaceRegx.Matches(tempLine);
                                 if (partMatches.Count >= 2)
                                 {
                                     PhoneticRule rule = new PhoneticRule();
                                     PhoneticUtility.EncodeRule(partMatches[0].Value, ref rule);
                                     rule.ReplaceString = partMatches[1].Value;
-                                    _phoneticRules.Add(rule);
+                                    PhoneticRules.Add(rule);
                                 }
+
                                 break;
                             case "[Words]": // dictionary word list
                                 // splits word into its parts
                                 string[] parts = tempLine.Split('/');
                                 Word tempWord = new Word();
+
                                 // part 1 = base word
                                 tempWord.Text = parts[0];
+
                                 // part 2 = affix keys
-                                if (parts.Length >= 2) tempWord.AffixKeys = parts[1];
+                                if (parts.Length >= 2)
+                                {
+                                    tempWord.AffixKeys = parts[1];
+                                }
+
                                 // part 3 = phonetic code
-                                if (parts.Length >= 3) tempWord.PhoneticCode = parts[2];
+                                if (parts.Length >= 3)
+                                {
+                                    tempWord.PhoneticCode = parts[2];
+                                }
 
                                 BaseWords.Add(tempWord.Text, tempWord);
                                 break;
                         } // currentSection switch
                     } // read line
+
                     // close files
                 }
             }
             finally
             {
-                if (fs != null)
-                    fs.Dispose();
+                fs?.Dispose();
             }
 
             TraceWriter.TraceInfo("Dictionary Loaded BaseWords:{0}; PrefixRules:{1}; SuffixRules:{2}; PhoneticRules:{3}",
@@ -510,9 +529,8 @@ namespace NetSpell.SpellChecker.Dictionary
 
             LoadUserFile();
 
-            _initialized = true;
+            Initialized = true;
         }
-
 
         /// <summary>
         ///     Generates a phonetic code of how the word sounds
@@ -528,23 +546,23 @@ namespace NetSpell.SpellChecker.Dictionary
         public string PhoneticCode(string word)
         {
             string tempWord = word.ToUpper();
-            string prevWord = "";
             StringBuilder code = new StringBuilder();
 
             while (tempWord.Length > 0)
             {
                 // save previous word
-                prevWord = tempWord;
-                foreach (PhoneticRule rule in _phoneticRules)
+                var prevWord = tempWord;
+                foreach (PhoneticRule rule in PhoneticRules)
                 {
-                    bool begining = tempWord.Length == word.Length ? true : false;
-                    bool ending = rule.ConditionCount == tempWord.Length ? true : false;
+                    bool begining = tempWord.Length == word.Length;
+                    bool ending = rule.ConditionCount == tempWord.Length;
 
                     if ((rule.BeginningOnly == begining || !rule.BeginningOnly)
                         && (rule.EndOnly == ending || !rule.EndOnly)
                         && rule.ConditionCount <= tempWord.Length)
                     {
                         int passCount = 0;
+
                         // loop through conditions
                         for (int i = 0; i < rule.ConditionCount; i++)
                         {
@@ -558,6 +576,7 @@ namespace NetSpell.SpellChecker.Dictionary
                                 break; // rule fails if one condition fails
                             }
                         }
+
                         // if all conditions passed
                         if (passCount == rule.ConditionCount)
                         {
@@ -571,8 +590,10 @@ namespace NetSpell.SpellChecker.Dictionary
                                 {
                                     code.Append(rule.ReplaceString);
                                 }
+
                                 tempWord = tempWord.Substring(rule.ConditionCount - rule.ConsumeCount);
                             }
+
                             break;
                         }
                     }
@@ -581,7 +602,6 @@ namespace NetSpell.SpellChecker.Dictionary
                 // if no match consume one char
                 if (prevWord.Length == tempWord.Length)
                 {
-
                     tempWord = tempWord.Substring(1);
                 }
             }// while
@@ -598,11 +618,11 @@ namespace NetSpell.SpellChecker.Dictionary
         ///     </para>
         /// </param>
         /// <remarks>
-        ///		This method is only affects the user word list
+        ///     This method is only affects the user word list
         /// </remarks>
         public void Remove(string word)
         {
-            _userWords.Remove(word);
+            UserWords.Remove(word);
             SaveUserFile();
         }
 
@@ -613,11 +633,9 @@ namespace NetSpell.SpellChecker.Dictionary
         {
             if (disposing)
             {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
+                _components?.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -626,21 +644,14 @@ namespace NetSpell.SpellChecker.Dictionary
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Dictionary<string, Word> BaseWords
-        {
-            get { return _baseWords; }
-        }
+        public Dictionary<string, Word> BaseWords { get; } = new Dictionary<string, Word>();
 
         /// <summary>
         ///     Copyright text for the dictionary
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string Copyright
-        {
-            get { return _copyright; }
-            set { _copyright = value; }
-        }
+        public string Copyright { get; set; } = "";
 
         /// <summary>
         ///     The file name for the main dictionary
@@ -651,7 +662,7 @@ namespace NetSpell.SpellChecker.Dictionary
         [NotifyParentProperty(true)]
         public string DictionaryFile
         {
-            get { return _dictionaryFile; }
+            get => _dictionaryFile;
             set
             {
                 _dictionaryFile = value;
@@ -661,7 +672,6 @@ namespace NetSpell.SpellChecker.Dictionary
                 }
             }
         }
-
 
         /// <summary>
         ///     Folder containing the dictionaries
@@ -673,93 +683,62 @@ namespace NetSpell.SpellChecker.Dictionary
         [Editor(typeof(FolderNameEditor), typeof(UITypeEditor))]
 #endif
         [NotifyParentProperty(true)]
-        public string DictionaryFolder
-        {
-            get { return _dictionaryFolder; }
-            set { _dictionaryFolder = value; }
-        }
+        public string DictionaryFolder { get; set; } = "";
 
         /// <summary>
         ///     Set this to true to automatically create a user dictionary when
         ///     a word is added.
         /// </summary>
         /// <remarks>
-        ///		This should be set to false in a web environment
+        ///     This should be set to false in a web environment
         /// </remarks>
         [DefaultValue(true)]
         [Category("Options")]
         [Description("Set this to true to automatically create a user dictionary")]
         [NotifyParentProperty(true)]
-        public bool EnableUserFile
-        {
-            get { return _enableUserFile; }
-            set { _enableUserFile = value; }
-        }
-
+        public bool EnableUserFile { get; set; } = true;
 
         /// <summary>
         ///     True if the dictionary has been initialized
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public bool Initialized
-        {
-            get { return _initialized; }
-        }
-
+        public bool Initialized { get; private set; }
 
         /// <summary>
         ///     Collection of phonetic rules for this dictionary
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public PhoneticRuleCollection PhoneticRules
-        {
-            get { return _phoneticRules; }
-        }
-
+        public PhoneticRuleCollection PhoneticRules { get; } = new PhoneticRuleCollection();
 
         /// <summary>
         ///     Collection of affix prefixes for the base words in this dictionary
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public AffixRuleCollection PrefixRules
-        {
-            get { return _prefixRules; }
-        }
+        public AffixRuleCollection PrefixRules { get; } = new AffixRuleCollection();
 
         /// <summary>
         ///     List of characters to use when generating suggestions using the near miss strategy
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public List<string> ReplaceCharacters
-        {
-            get { return _replaceCharacters; }
-        }
-
+        public List<string> ReplaceCharacters { get; } = new List<string>();
 
         /// <summary>
         ///     Collection of affix suffixes for the base words in this dictionary
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public AffixRuleCollection SuffixRules
-        {
-            get { return _suffixRules; }
-        }
+        public AffixRuleCollection SuffixRules { get; } = new AffixRuleCollection();
 
         /// <summary>
         ///     List of characters to try when generating suggestions using the near miss stratigy
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string TryCharacters
-        {
-            get { return _tryCharacters; }
-            set { _tryCharacters = value; }
-        }
+        public string TryCharacters { get; set; } = "";
 
         /// <summary>
         ///     The file name for the user word list for this dictionary
@@ -768,21 +747,14 @@ namespace NetSpell.SpellChecker.Dictionary
         [Category("Dictionary")]
         [Description("The file name for the user word list for this dictionary")]
         [NotifyParentProperty(true)]
-        public string UserFile
-        {
-            get { return _userFile; }
-            set { _userFile = value; }
-        }
+        public string UserFile { get; set; } = "user.dic";
 
         /// <summary>
         ///     List of user entered words in this dictionary
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Dictionary<string, string> UserWords
-        {
-            get { return _userWords; }
-        }
+        public Dictionary<string, string> UserWords { get; } = new Dictionary<string, string>();
 
         /// <summary>
         ///     List of text saved from when 'Contains' is called.
@@ -790,25 +762,21 @@ namespace NetSpell.SpellChecker.Dictionary
         ///     doesn't find a word.
         /// </summary>
         /// <remarks>
-        ///		These are not actual words.
+        ///     These are not actual words.
         /// </remarks>
-        internal List<string> PossibleBaseWords
-        {
-            get { return _possibleBaseWords; }
-        }
-
+        internal List<string> PossibleBaseWords { get; } = new List<string>();
 
         #region Component Designer generated code
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            _components = new System.ComponentModel.Container();
         }
         #endregion
 
     }
-
 }

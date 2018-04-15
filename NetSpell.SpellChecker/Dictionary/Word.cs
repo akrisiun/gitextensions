@@ -5,15 +5,8 @@ namespace NetSpell.SpellChecker.Dictionary
     /// <summary>
     /// The Word class represents a base word in the dictionary
     /// </summary>
-    public sealed class Word  : IComparable<Word>
+    public sealed class Word : IComparable<Word>
     {
-        private string _AffixKeys = "";
-        private int _editDistance;
-        private int _height;
-        private int _index;
-        private string _PhoneticCode = "";
-        private string _text = "";
-
         /// <summary>
         ///     Initializes a new instance of the class
         /// </summary>
@@ -41,9 +34,9 @@ namespace NetSpell.SpellChecker.Dictionary
         /// </param>
         public Word(string text, string affixKeys, string phoneticCode)
         {
-            _text = text;
-            _AffixKeys = affixKeys;
-            _PhoneticCode = phoneticCode;
+            Text = text;
+            AffixKeys = affixKeys;
+            PhoneticCode = phoneticCode;
         }
 
         /// <summary>
@@ -61,8 +54,8 @@ namespace NetSpell.SpellChecker.Dictionary
         /// </param>
         public Word(string text, string affixKeys)
         {
-            _text = text;
-            _AffixKeys = affixKeys;
+            Text = text;
+            AffixKeys = affixKeys;
         }
 
         /// <summary>
@@ -75,7 +68,7 @@ namespace NetSpell.SpellChecker.Dictionary
         /// </param>
         public Word(string text)
         {
-            _text = text;
+            Text = text;
         }
 
         /// <summary>
@@ -101,9 +94,9 @@ namespace NetSpell.SpellChecker.Dictionary
         /// </returns>
         internal Word(string text, int index, int height)
         {
-            _text = text;
-            _index = index;
-            _height = height;
+            Text = text;
+            Index = index;
+            Height = height;
         }
 
         /// <summary>
@@ -121,89 +114,62 @@ namespace NetSpell.SpellChecker.Dictionary
         /// </param>
         internal Word(string text, int editDistance)
         {
-            _text = text;
-            _editDistance = editDistance;
+            Text = text;
+            EditDistance = editDistance;
         }
 
         /// <summary>
         ///     Sorts a collection of words by EditDistance
         /// </summary>
         /// <remarks>
-        ///		The compare sorts in desc order, largest EditDistance first
+        ///     The compare sorts in desc order, largest EditDistance first
         /// </remarks>
         public int CompareTo(Word word)
         {
-            int result = _editDistance.CompareTo(word._editDistance);
+            int result = EditDistance.CompareTo(word.EditDistance);
             return result; // * -1; // sorts desc order
         }
-
 
         /// <summary>
         ///     The affix keys that can be applied to this base word
         /// </summary>
-        public string AffixKeys
-        {
-            get {return _AffixKeys;}
-            set {_AffixKeys = value;}
-        }
+        public string AffixKeys { get; set; } = "";
 
-        
         /// <summary>
         ///     The index position of where this word appears
         /// </summary>
-        public int Index
-        {
-            get { return _index; }
-            set { _index = value; }
-        }
+        public int Index { get; set; }
 
         /// <summary>
         ///     The phonetic code for this word
         /// </summary>
-        public string PhoneticCode
-        {
-            get {return _PhoneticCode;}
-            set {_PhoneticCode = value;}
-        }
+        public string PhoneticCode { get; set; } = "";
 
         /// <summary>
         ///     The string for the base word
         /// </summary>
-        public string Text
-        {
-            get { return _text; }
-            set { _text = value; }
-        }	
-
+        public string Text { get; set; } = "";
 
         /// <summary>
-        ///     Used for sorting suggestions by its edit distance for 
+        ///     Used for sorting suggestions by its edit distance for
         ///     the misspelled word
         /// </summary>
-        internal int EditDistance
-        {
-            get {return _editDistance;}
-            set {_editDistance = value;}
-        }
+        internal int EditDistance { get; set; }
 
         /// <summary>
         ///     The line height of this word
         /// </summary>
-        internal int Height
-        {
-            get { return _height; }
-            set { _height = value; }
-        }
+        internal int Height { get; set; }
 
         /// <summary>
         ///     Converts the word object to a string
         /// </summary>
         /// <returns>
-        ///		Returns the Text Property contents
+        ///     Returns the Text Property contents
         /// </returns>
         public override string ToString()
         {
-            return _text;
+            return Text;
         }
     }
 }

@@ -11,19 +11,15 @@ namespace GitUIPluginInterfaces.BuildServerIntegration
             : base(typeof(IBuildServerTypeMetadata))
         {
             if (string.IsNullOrEmpty(buildServerType))
+            {
                 throw new ArgumentException();
+            }
 
             BuildServerType = buildServerType;
         }
 
-        public string BuildServerType { get; private set; }
+        public string BuildServerType { get; }
 
-        public virtual string CanBeLoaded
-        {
-            get
-            {
-                return null;
-            }
-        }
+        public virtual string CanBeLoaded => null;
     }
 }

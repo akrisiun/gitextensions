@@ -1,15 +1,8 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
-
 
 namespace GitUIPluginInterfaces
 {
-    public interface IWin32Window1
-    {
-        IntPtr Handle { get; }
-    }
-
     public abstract class GitUIBaseEventArgs : CancelEventArgs
     {
         protected GitUIBaseEventArgs(IGitUICommands gitUICommands, string arguments = null)
@@ -20,26 +13,17 @@ namespace GitUIPluginInterfaces
         protected GitUIBaseEventArgs(IWin32Window ownerForm, IGitUICommands gitUICommands, string arguments = null)
             : base(false)
         {
-            this.OwnerForm = ownerForm;
-            this.GitUICommands = gitUICommands;
-            this.Arguments = arguments;
+            OwnerForm = ownerForm;
+            GitUICommands = gitUICommands;
+            Arguments = arguments;
         }
 
-        public IGitUICommands GitUICommands { get; private set; }
+        public IGitUICommands GitUICommands { get; }
 
-        public IWin32Window OwnerForm { get; private set; }
+        public IWin32Window OwnerForm { get; }
 
-        public IGitModule GitModule
-        {
-            get
-            {
-                return GitUICommands.GitModule;
-            }
-            
-        }
+        public IGitModule GitModule => GitUICommands.GitModule;
 
-        public string Arguments { get; private set; }
-
+        public string Arguments { get; }
     }
-
 }

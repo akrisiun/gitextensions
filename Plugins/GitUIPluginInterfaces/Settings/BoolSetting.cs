@@ -1,32 +1,24 @@
-﻿using System;
-using System.Windows.Forms;
-// using System.Windows.Forms;
-// using GitUI;
+﻿using System.Windows.Forms;
+using GitUI;
 
 namespace GitUIPluginInterfaces
 {
-    public interface ICheckBox : IControl
+    public class BoolSetting : ISetting
     {
-        bool  ThreeState { get; set; }
-        bool? IsChecked { get; set; }
-    }
-
-    public class BoolSetting: ISetting
-    {
-        public BoolSetting(string aName, bool aDefaultValue)
-            : this(aName, aName, aDefaultValue) { }
-
-        public static Func<CheckBox> CreateCheckBox { get; set; }
-
-        public BoolSetting(string aName, string aCaption, bool aDefaultValue)
+        public BoolSetting(string name, bool defaultValue)
+            : this(name, name, defaultValue)
         {
-            Name = aName;
-            Caption = aCaption;
-            DefaultValue = aDefaultValue;
         }
 
-        public string Name { get; private set; }
-        public string Caption { get; private set; }
+        public BoolSetting(string name, string caption, bool defaultValue)
+        {
+            Name = name;
+            Caption = caption;
+            DefaultValue = defaultValue;
+        }
+
+        public string Name { get; }
+        public string Caption { get; }
         public bool DefaultValue { get; set; }
         public CheckBox CustomControl { get; set; }
 
@@ -37,15 +29,9 @@ namespace GitUIPluginInterfaces
 
         public bool? this[ISettingsSource settings]
         {
-            get
-            {
-                return settings.GetBool(Name);
-            }
+            get => settings.GetBool(Name);
 
-            set
-            {
-                settings.SetBool(Name, value);
-            }
+            set => settings.SetBool(Name, value);
         }
 
         public bool ValueOrDefault(ISettingsSource settings)
@@ -53,45 +39,29 @@ namespace GitUIPluginInterfaces
             return this[settings] ?? DefaultValue;
         }
 
-
         private class CheckBoxBinding : SettingControlBinding<BoolSetting, CheckBox>
         {
-            public CheckBoxBinding(BoolSetting aSetting)
-                 : base(aSetting, BoolSetting.CreateCheckBox()) { }
-            public CheckBoxBinding(BoolSetting aSetting, CheckBox aCustomControl)
-                : base(aSetting, aCustomControl)
-            { }
-
+            public CheckBoxBinding(BoolSetting setting, CheckBox customControl)
+                : base(setting, customControl)
+            {
+            }
 
             public override CheckBox CreateControl()
             {
-                CheckBox result = BoolSetting.CreateCheckBox(); // =  new CheckBox();
-                result.ThreeState = true;
-                return result;
+                return new CheckBox { ThreeState = true };
             }
 
             public override void LoadSetting(ISettingsSource settings, bool areSettingsEffective, CheckBox control)
             {
-                bool? settingVal;
-                if (areSettingsEffective)
-                {
-                    settingVal = Setting.ValueOrDefault(settings);
-                }
-                else
-                {
-                    settingVal = Setting[settings];
-                }
+                bool? settingVal = areSettingsEffective
+                    ? Setting.ValueOrDefault(settings)
+                    : Setting[settings];
 
-                //control.SetNullableChecked(settingVal, (c, val) => 
-                //    control.CheckState  = val == null ? CheckState.Indeterminate : 
-                //        val ?? true ? CheckState.Checked : CheckState.Unchecked);
+                control.SetNullableChecked(settingVal);
             }
 
             public override void SaveSetting(ISettingsSource settings, bool areSettingsEffective, CheckBox control)
             {
-                bool? isChecked = // control.IsChecked; //
-                        (control.CheckState == CheckState.Indeterminate) ? (bool?)null : (control.CheckState == CheckState.Checked);
-                //Setting[settings] = UIExtensions.GetNullableChecked(control, isChecked);
                 var controlValue = control.GetNullableChecked();
                 if (areSettingsEffective)
                 {
@@ -102,7 +72,6 @@ namespace GitUIPluginInterfaces
                 }
 
                 Setting[settings] = controlValue;
-
             }
         }
     }

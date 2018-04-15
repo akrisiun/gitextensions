@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -11,36 +11,9 @@
     <RootNamespace>GitUIPluginInterfaces</RootNamespace>
     <AssemblyName>GitUIPluginInterfaces</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-
     <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
-    <ReleaseVersion>2.48</ReleaseVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,8 +23,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>..\..\GitExtensions.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Debug\GitUIPluginInterfaces.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -60,12 +34,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>..\..\GitExtensions.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Release\GitUIPluginInterfaces.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GitCommands">
-      <HintPath>..\..\GitCommands\bin\Debug\GitCommands.dll</HintPath>
+    <Reference Include="Microsoft.VisualStudio.Threading, Version=15.6.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.VisualStudio.Threading.15.6.46\lib\net46\Microsoft.VisualStudio.Threading.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Validation, Version=15.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.VisualStudio.Validation.15.3.15\lib\net45\Microsoft.VisualStudio.Validation.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -74,6 +54,8 @@
       <HintPath>..\..\packages\System.Reactive.Interfaces.3.1.1\lib\net45\System.Reactive.Interfaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\CommonAssemblyInfo.cs">
@@ -96,23 +78,17 @@
     <Compile Include="IConfigFileSettings.cs" />
     <Compile Include="IConfigSection.cs" />
     <Compile Include="IGitCommand.cs" />
-
     <Compile Include="IGitItem.cs" />
     <Compile Include="IGitPluginForRepository.cs" />
     <Compile Include="IGitModule.cs" />
     <Compile Include="IGitRef.cs" />
     <Compile Include="IGitRemoteCommand.cs" />
-    <Compile Include="ISettingsValueGetter.cs" />
-    <Compile Include="Notifications\ContextAction.cs" />
-    <Compile Include="Notifications\INotifications.cs" />
-    <Compile Include="Notifications\Notification.cs" />
     <Compile Include="ILockableNotifier.cs" />
     <Compile Include="ISettingsValueGetter.cs" />
     <Compile Include="Settings\BoolSetting.cs" />
     <Compile Include="ISetting.cs" />
     <Compile Include="ISettingsSource.cs" />
     <Compile Include="ManagedExtensibility.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryHosts\IRepositoryHostPlugin.cs" />
     <Compile Include="IGitPlugin.cs" />
     <Compile Include="IGitPluginSettingsContainer.cs" />
@@ -123,7 +99,6 @@
     <Compile Include="RepositoryHosts\IPasswordHelper.cs" />
     <Compile Include="RepositoryHosts\IHostedRemote.cs" />
     <Compile Include="RepositoryHosts\IPullRequestInformation.cs" />
-    <Compile Include="Notifications\StatusSeverity.cs" />
     <Compile Include="Settings\NumberSetting.cs" />
     <Compile Include="Settings\ChoiceSetting.cs" />
     <Compile Include="Settings\PasswordSetting.cs" />
@@ -136,9 +111,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="..\..\FxCop.targets" />
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.15.6.46\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.0-beta006\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.0-beta006\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.15.6.46\build\Microsoft.VisualStudio.Threading.Analyzers.targets" Condition="Exists('..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.15.6.46\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.15.6.46\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.15.6.46\build\Microsoft.VisualStudio.Threading.Analyzers.targets'))" />
+  </Target>
 </Project>

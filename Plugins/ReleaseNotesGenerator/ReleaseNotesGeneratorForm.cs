@@ -16,11 +16,11 @@ namespace ReleaseNotesGenerator
     public partial class ReleaseNotesGeneratorForm : GitExtensionsFormBase
     {
         private readonly TranslationString _commitLogFrom = new TranslationString("Commit log from '{0}' to '{1}' ({2}):");
-        private readonly TranslationString _fromCommitNotSpecified = new TranslationString("'From' must be commit specified");
-        private readonly TranslationString _toCommitNotSpecified = new TranslationString("'To' must be commit specified");
+        private readonly TranslationString _fromCommitNotSpecified = new TranslationString("'From' commit must be specified");
+        private readonly TranslationString _toCommitNotSpecified = new TranslationString("'To' commit must be specified");
         private readonly TranslationString _caption = new TranslationString("Invalid input");
 
-        const string MostRecentHint = "most recent changes are listed on top";
+        private const string MostRecentHint = "most recent changes are listed on top";
         private readonly GitUIBaseEventArgs _gitUiCommands;
         private IEnumerable<LogLine> _lastGeneratedLogLines;
         private readonly IGitLogLineParser _gitLogLineParser;
@@ -51,6 +51,7 @@ namespace ReleaseNotesGenerator
                 textBoxRevFrom.Focus();
                 return;
             }
+
             if (string.IsNullOrWhiteSpace(textBoxRevTo.Text))
             {
                 MessageBox.Show(this, _toCommitNotSpecified.Text, _caption.Text);
@@ -76,6 +77,7 @@ namespace ReleaseNotesGenerator
             {
                 labelRevCount.Text = "n/a";
             }
+
             textBoxResult_TextChanged(null, null);
         }
 
@@ -100,7 +102,6 @@ namespace ReleaseNotesGenerator
             string result = CreateTextTable(_lastGeneratedLogLines, true, false);
             Clipboard.SetText(result);
         }
-
 
         private void buttonCopyAsHtml_Click(object sender, EventArgs e)
         {
@@ -127,11 +128,11 @@ namespace ReleaseNotesGenerator
                 stringBuilder.AppendFormat("{0}{1}{2}{3}", logLine.Commit, colSeparatorFirstLine, message, Environment.NewLine);
             }
 
-            string result = headerText + Environment.NewLine + stringBuilder.ToString();
+            string result = headerText + Environment.NewLine + stringBuilder;
             return result;
         }
 
-        private string CreateHtmlTable(IEnumerable<LogLine> logLines)
+        private static string CreateHtmlTable(IEnumerable<LogLine> logLines)
         {
             var stringBuilder = new StringBuilder();
             stringBuilder.Append("<table>\r\n");
@@ -140,6 +141,7 @@ namespace ReleaseNotesGenerator
                 string message = string.Join("<br/>", logLine.MessageLines.Select(a => WebUtility.HtmlEncode(a)));
                 stringBuilder.AppendFormat("<tr>\r\n  <td>{0}</td>\r\n  <td>{1}</td>\r\n</tr>\r\n", logLine.Commit, message);
             }
+
             stringBuilder.Append("</table>");
             return stringBuilder.ToString();
         }

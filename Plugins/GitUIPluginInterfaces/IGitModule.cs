@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GitUIPluginInterfaces
 {
@@ -11,7 +12,7 @@ namespace GitUIPluginInterfaces
         IConfigFileSettings LocalConfigFile { get; }
 
         string AddRemote(string remoteName, string path);
-        IList<IGitRef> GetRefs(bool tags = true, bool branches = true);
+        IReadOnlyList<IGitRef> GetRefs(bool tags = true, bool branches = true);
         IEnumerable<string> GetSettings(string setting);
         IEnumerable<IGitItem> GetTree(string id, bool full);
 
@@ -29,7 +30,6 @@ namespace GitUIPluginInterfaces
         string RenameRemote(string remoteName, string newName);
         void SetSetting(string setting, string value);
         void UnsetSetting(string setting);
-
 
         /// <summary>
         /// Run git command, console window is hidden, redirect output
@@ -49,14 +49,14 @@ namespace GitUIPluginInterfaces
         /// <summary>
         /// Run command, console window is hidden, wait for exit, redirect output
         /// </summary>
-        string RunCmd(string cmd, string arguments, Encoding encoding = null, byte[] stdIn = null);
+        Task<string> RunCmdAsync(string cmd, string arguments, Encoding encoding = null, byte[] stdIn = null);
 
         /// <summary>
         /// Run command, console window is hidden, wait for exit, redirect output
         /// </summary>
         CmdResult RunCmdResult(string cmd, string arguments, Encoding encoding = null, byte[] stdInput = null);
 
-        string RunBatchFile(string batchFile);
+        Task<string> RunBatchFileAsync(string batchFile);
 
         /// <summary>
         /// Determines whether the given repository has index.lock file.
@@ -86,11 +86,15 @@ namespace GitUIPluginInterfaces
         /// See https://git-scm.com/docs/git-rev-parse#git-rev-parse---git-pathltpathgt
         /// </summary>
         /// <param name="relativePath">A path relative to the .git directory</param>
-        /// <returns></returns>
         string ResolveGitInternalPath(string relativePath);
 
         /// <summary>Indicates whether the specified directory contains a git repository.</summary>
         bool IsValidGitWorkingDir();
+
+        /// <summary>Indicates whether the repository is in a 'detached HEAD' state.</summary>
+        bool IsDetachedHead();
+
+        bool IsExistingCommitHash(string sha1Fragment, out string fullSha1);
 
         /// <summary>Gets the path to the git application executable.</summary>
         string GitCommand { get; }
@@ -103,7 +107,7 @@ namespace GitUIPluginInterfaces
 
         IEnumerable<IGitSubmoduleInfo> GetSubmodulesInfo();
 
-        IList<string> GetSubmodulesLocalPaths(bool recursive = true);
+        IReadOnlyList<string> GetSubmodulesLocalPaths(bool recursive = true);
 
         IGitModule GetSubmodule(string submoduleName);
 
@@ -111,15 +115,10 @@ namespace GitUIPluginInterfaces
         /// Retrieves registered remotes by running <c>git remote show</c> command.
         /// </summary>
         /// <returns>Registered remotes.</returns>
-        string[] GetRemotes();
+        string[] GetRemotes(bool allowEmpty = true);
 
-        /// <summary>
-        /// Retrieves registered remotes by running <c>git remote show</c> command.
-        /// </summary>
-        /// <param name="allowEmpty"></param>
-        /// <returns>Registered remotes.</returns>
-
-        string[] GetRemotes(bool allowEmpty);
+        /// <summary>Gets the remote of the current branch; or "" if no remote is configured.</summary>
+        string GetCurrentRemote();
 
         string GetSetting(string setting);
         string GetEffectiveSetting(string setting);
@@ -135,5 +134,9 @@ namespace GitUIPluginInterfaces
         bool IsRunningGitProcess();
 
         ISettingsSource GetEffectiveSettings();
+
+        string ReEncodeStringFromLossless(string s);
+
+        string ReEncodeCommitMessage(string s, string toEncodingName);
     }
 }

@@ -1,9 +1,9 @@
-﻿using GitUIPluginInterfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using GitUIPluginInterfaces;
 
 namespace Gource
 {
@@ -15,8 +15,8 @@ namespace Gource
             Translate();
             PathToGource = pathToGource;
             GitUIArgs = gitUIArgs;
-            GitWorkingDir = gitUIArgs != null ? gitUIArgs.GitModule.WorkingDir : null;
-            AvatarsDir = gitUIArgs != null ? gitUIArgs.GitModule.GravatarCacheDir : null;
+            GitWorkingDir = gitUIArgs?.GitModule.WorkingDir;
+            AvatarsDir = gitUIArgs?.GitModule.GravatarCacheDir;
             GourceArguments = gourceArguments;
 
             WorkingDir.Text = GitWorkingDir;
@@ -24,7 +24,7 @@ namespace Gource
             Arguments.Text = GourceArguments;
         }
 
-        private GitUIBaseEventArgs GitUIArgs { get; set; }
+        private GitUIBaseEventArgs GitUIArgs { get; }
 
         public string PathToGource { get; set; }
 
@@ -34,7 +34,7 @@ namespace Gource
 
         public string GourceArguments { get; set; }
 
-        private void RunRealCmdDetatched(string cmd, string arguments)
+        private void RunRealCmdDetached(string cmd, string arguments)
         {
             try
             {
@@ -62,12 +62,15 @@ namespace Gource
             GourceArguments = Arguments.Text;
             string gourceAvatarsDir = "";
             if (GourceArguments.Contains("$(AVATARS)"))
+            {
                 gourceAvatarsDir = LoadAvatars();
+            }
+
             string arguments = GourceArguments.Replace("$(AVATARS)", gourceAvatarsDir);
             PathToGource = GourcePath.Text;
             GitWorkingDir = WorkingDir.Text;
 
-            RunRealCmdDetatched(GourcePath.Text, arguments);
+            RunRealCmdDetached(GourcePath.Text, arguments);
             Close();
         }
 
@@ -76,7 +79,10 @@ namespace Gource
             var gourceAvatarsDir = Path.Combine(Path.GetTempPath(), "GitAvatars");
             Directory.CreateDirectory(gourceAvatarsDir);
             foreach (var file in Directory.GetFiles(gourceAvatarsDir))
+            {
                 File.Delete(file);
+            }
+
             var lines = GitUIArgs.GitModule.RunGitCmd("log --pretty=format:\"%aE|%aN\"").Split('\n');
             HashSet<string> authors = new HashSet<string>();
             foreach (var line in lines)
@@ -101,6 +107,7 @@ namespace Gource
                     }
                 }
             }
+
             return gourceAvatarsDir;
         }
 
@@ -108,10 +115,10 @@ namespace Gource
         {
             using (var fileDialog =
                 new OpenFileDialog
-                    {
-                        Filter = "Gource (gource.exe)|gource.exe",
-                        FileName = GourcePath.Text
-                    })
+                {
+                    Filter = "Gource (gource.exe)|gource.exe",
+                    FileName = GourcePath.Text
+                })
             {
                 fileDialog.ShowDialog(this);
 

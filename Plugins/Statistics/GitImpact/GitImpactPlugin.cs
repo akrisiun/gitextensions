@@ -1,9 +1,10 @@
-﻿using System.Windows.Forms;
+﻿using System.ComponentModel.Composition;
 using GitUIPluginInterfaces;
 using ResourceManager;
 
 namespace GitImpact
 {
+    [Export(typeof(IGitPlugin))]
     public class GitImpactPlugin : GitPluginBase, IGitPluginForRepository
     {
         public GitImpactPlugin()
@@ -17,10 +18,15 @@ namespace GitImpact
         public override bool Execute(GitUIBaseEventArgs gitUIEventArgs)
         {
             if (string.IsNullOrEmpty(gitUIEventArgs.GitModule.WorkingDir))
+            {
                 return false;
+            }
 
             using (var form = new FormImpact(gitUIEventArgs.GitModule))
+            {
                 form.ShowDialog(gitUIEventArgs.OwnerForm);
+            }
+
             return false;
         }
 

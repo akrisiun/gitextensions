@@ -1,43 +1,26 @@
-﻿//using System.Windows.Forms;
-
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace GitUIPluginInterfaces
 {
-    public interface IControl
+    public class StringSetting : ISetting
     {
-        IntPtr Handle { get; }
-    }
-
-    public interface ITextBox: IControl
-    {
-        string Text { get; set; }
-        char PasswordChar { get; set; }
-}
-
-    public class StringSetting: ISetting
-    {
-        public StringSetting(string aName, string aDefaultValue)
-            : this(aName, aName, aDefaultValue)
+        public StringSetting(string name, string defaultValue)
+            : this(name, name, defaultValue)
         {
         }
 
-        public StringSetting(string aName, string aCaption, string aDefaultValue)
+        public StringSetting(string name, string caption, string defaultValue)
         {
-            Name = aName;
-            Caption = aCaption;
-            DefaultValue = aDefaultValue;
+            Name = name;
+            Caption = caption;
+            DefaultValue = defaultValue;
         }
 
-        public string Name { get; private set; }
-        public string Caption { get; private set; }
+        public string Name { get; }
+        public string Caption { get; }
         public string DefaultValue { get; set; }
         public TextBox CustomControl { get; set; }
-
-        public TextBox CustomControl { get; set; }
-
-        public static Func<TextBox> CreateTextBox { get; set; }
 
         public ISettingControlBinding CreateControlBinding()
         {
@@ -46,28 +29,25 @@ namespace GitUIPluginInterfaces
 
         private class TextBoxBinding : SettingControlBinding<StringSetting, TextBox>
         {
-            public TextBoxBinding(StringSetting aSetting, TextBox aCustomControl)
-                : base(aSetting, aCustomControl)
-            { }
+            public TextBoxBinding(StringSetting setting, TextBox customControl)
+                : base(setting, customControl)
+            {
+            }
 
             public override TextBox CreateControl()
             {
-                return StringSetting.CreateTextBox();
+                return new TextBox();
             }
 
             public override void LoadSetting(ISettingsSource settings, bool areSettingsEffective, TextBox control)
             {
-                string settingVal;
-                if (areSettingsEffective)
-                {
-                    settingVal = Setting.ValueOrDefault(settings);
-                }
-                else
-                {
-                    settingVal = Setting[settings];
-                }
+                string settingVal = areSettingsEffective
+                    ? Setting.ValueOrDefault(settings)
+                    : Setting[settings];
 
-                control.Text = settingVal;
+                control.Text = control.Multiline
+                    ? settingVal.Replace("\n", Environment.NewLine)
+                    : settingVal;
             }
 
             public override void SaveSetting(ISettingsSource settings, bool areSettingsEffective, TextBox control)
@@ -87,21 +67,14 @@ namespace GitUIPluginInterfaces
 
         public string this[ISettingsSource settings]
         {
-            get 
-            {
-                return settings.GetString(Name, null);
-            }
+            get => settings.GetString(Name, null);
 
-            set 
-            {
-                settings.SetString(Name, value);
-            }
+            set => settings.SetString(Name, value);
         }
 
         public string ValueOrDefault(ISettingsSource settings)
         {
             return this[settings] ?? DefaultValue;
         }
-
     }
 }

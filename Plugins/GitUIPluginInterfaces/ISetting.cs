@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-//using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace GitUIPluginInterfaces
 {
@@ -28,19 +23,16 @@ namespace GitUIPluginInterfaces
         /// Creates a control to be placed on FormSettings to edit this setting value
         /// Control should take care of scalability and resizability of its subcontrols
         /// </summary>
-        /// <returns></returns>
         Control GetControl();
 
         /// <summary>
         /// Loads setting value from settings to Control
         /// </summary>
-        /// <param name="settings"></param>
         void LoadSetting(ISettingsSource settings, bool areSettingsEffective);
 
         /// <summary>
         /// Saves value from Control to settings
         /// </summary>
-        /// <param name="settings"></param>
         void SaveSetting(ISettingsSource settings, bool areSettingsEffective);
 
         /// <summary>
@@ -49,26 +41,28 @@ namespace GitUIPluginInterfaces
         /// </summary>
         string Caption();
 
-        ISetting GetSetting();        
+        ISetting GetSetting();
     }
 
-    public abstract class SettingControlBinding<S, T> : ISettingControlBinding where T : Control where S : ISetting
+    public abstract class SettingControlBinding<TSetting, TControl> : ISettingControlBinding where TControl : Control where TSetting : ISetting
     {
-        private T _control;
-        protected readonly S Setting;
+        private TControl _control;
+        protected readonly TSetting Setting;
 
-        protected SettingControlBinding(S aSetting, T aCustomControl)
+        protected SettingControlBinding(TSetting setting, TControl customControl)
         {
-            Setting = aSetting;
-            _control = aCustomControl;
+            Setting = setting;
+            _control = customControl;
         }
 
-        private T Control
+        private TControl Control
         {
             get
             {
                 if (_control == null)
+                {
                     _control = CreateControl();
+                }
 
                 return _control;
             }
@@ -87,7 +81,6 @@ namespace GitUIPluginInterfaces
         /// <summary>
         /// Saves value from Control to settings
         /// </summary>
-        /// <param name="settings"></param>
         public void SaveSetting(ISettingsSource settings, bool areSettingsEffective)
         {
             SaveSetting(settings, areSettingsEffective, Control);
@@ -102,22 +95,21 @@ namespace GitUIPluginInterfaces
         {
             return Setting;
         }
+
         /// <summary>
         /// Creates a control to be placed on FormSettings to edit this setting value
         /// Control should take care of scalability and resizability of its subcontrols
         /// </summary>
-        /// <returns></returns>
-        public abstract T CreateControl();
+        public abstract TControl CreateControl();
 
         /// <summary>
         /// Loads setting value from settings to Control
         /// </summary>
-        public abstract void LoadSetting(ISettingsSource settings, bool areSettingsEffective, T control);
+        public abstract void LoadSetting(ISettingsSource settings, bool areSettingsEffective, TControl control);
 
         /// <summary>
         /// Saves value from Control to settings
         /// </summary>
-        public abstract void SaveSetting(ISettingsSource settings, bool areSettingsEffective, T control);
+        public abstract void SaveSetting(ISettingsSource settings, bool areSettingsEffective, TControl control);
     }
-
 }

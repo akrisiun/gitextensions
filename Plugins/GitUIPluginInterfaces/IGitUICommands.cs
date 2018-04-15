@@ -1,156 +1,109 @@
 ﻿using System;
 using System.Drawing;
-using GitUIPluginInterfaces.Notifications;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GitUIPluginInterfaces
 {
-    [Serializable]
-    public delegate void GitUIEventHandler(object sender, GitUIBaseEventArgs e);
-    [Serializable]
-    public delegate void GitUIPostActionEventHandler(object sender, GitUIPostActionEventArgs e);
-
-    public interface IGitUICommandsBase
+    public interface IGitUICommands
     {
-        event GitUIEventHandler PostBrowse;
-
-        event GitUIPostActionEventHandler PostCheckoutBranch;
-        event GitUIPostActionEventHandler PostCheckoutRevision;
-        event GitUIPostActionEventHandler PostCherryPick;
-        event GitUIPostActionEventHandler PostClone;
-        event GitUIPostActionEventHandler PostCommit;
-
-
-        event GitUIPostActionEventHandler PostAddFiles;
-        event GitUIPostActionEventHandler PostEditGitIgnore;
-        event GitUIPostActionEventHandler PostFileHistory;
-        event GitUIPostActionEventHandler PostFormatPatch;
-        event GitUIPostActionEventHandler PostInitialize;
-        event GitUIPostActionEventHandler PostPull;
-        event GitUIPostActionEventHandler PostPush;
-
-        event GitUIPostActionEventHandler PostResolveConflicts;
-        event GitUIPostActionEventHandler PostSettings;
-        event GitUIPostActionEventHandler PostRevertCommit;
-        event GitUIPostActionEventHandler PostStash;
-        event GitUIEventHandler PostRepositoryChanged;
-
-        event GitUIEventHandler PreSubmodulesEdit;
-        event GitUIEventHandler PreSyncSubmodules;
-        event GitUIEventHandler PreUpdateSubmodules;
-        event GitUIEventHandler PreBrowseInitialize;
-        event GitUIEventHandler PreSparseWorkingCopy;
-
-        bool StartCommandLineProcessDialog(object ownerForm, string command, string arguments);
-        bool StartCommandLineProcessDialog(string command, string arguments);
-        bool StartBatchFileProcessDialog(object ownerForm, string batchFile);
-        bool StartBatchFileProcessDialog(string batchFile);
-
-        void StartFileHistoryDialog(string fileName);
-        bool StartPullDialog();
-        bool StartPushDialog();
-        bool StartRebaseDialog(string branch);
-        bool StartRemotesDialog();
-        bool StartResolveConflictsDialog();
-        bool StartSettingsDialog();
-        bool StartSettingsDialog(IGitPlugin gitPlugin);
-        bool StartStashDialog();
+        event EventHandler<GitUIPostActionEventArgs> PostAddFiles;
+        event EventHandler<GitUIPostActionEventArgs> PostApplyPatch;
+        event EventHandler<GitUIPostActionEventArgs> PostArchive;
+        event EventHandler<GitUIPostActionEventArgs> PostBlame;
+        event EventHandler<GitUIBaseEventArgs> PostBrowse;
+        event EventHandler<GitUIPostActionEventArgs> PostCheckoutBranch;
+        event EventHandler<GitUIPostActionEventArgs> PostCheckoutRevision;
+        event EventHandler<GitUIPostActionEventArgs> PostCherryPick;
+        event EventHandler<GitUIPostActionEventArgs> PostClone;
+        event EventHandler<GitUIPostActionEventArgs> PostCommit;
+        event EventHandler<GitUIPostActionEventArgs> PostCompareRevisions;
+        event EventHandler<GitUIPostActionEventArgs> PostCreateBranch;
+        event EventHandler<GitUIPostActionEventArgs> PostCreateTag;
+        event EventHandler<GitUIPostActionEventArgs> PostDeleteBranch;
+        event EventHandler<GitUIPostActionEventArgs> PostDeleteTag;
+        event EventHandler<GitUIPostActionEventArgs> PostEditGitAttributes;
+        event EventHandler<GitUIPostActionEventArgs> PostEditGitIgnore;
+        event EventHandler<GitUIPostActionEventArgs> PostFileHistory;
+        event EventHandler<GitUIPostActionEventArgs> PostFormatPatch;
+        event EventHandler<GitUIPostActionEventArgs> PostInitialize;
+        event EventHandler<GitUIPostActionEventArgs> PostMailMap;
+        event EventHandler<GitUIPostActionEventArgs> PostMergeBranch;
+        event EventHandler<GitUIPostActionEventArgs> PostPull;
+        event EventHandler<GitUIPostActionEventArgs> PostPush;
+        event EventHandler<GitUIPostActionEventArgs> PostRebase;
+        event EventHandler<GitUIPostActionEventArgs> PostRename;
+        event EventHandler<GitUIPostActionEventArgs> PostRemotes;
+        event EventHandler<GitUIBaseEventArgs> PostRepositoryChanged;
+        event EventHandler<GitUIPostActionEventArgs> PostResolveConflicts;
+        event EventHandler<GitUIPostActionEventArgs> PostRevertCommit;
+        event EventHandler<GitUIPostActionEventArgs> PostSettings;
+        event EventHandler<GitUIPostActionEventArgs> PostStash;
+        event EventHandler<GitUIPostActionEventArgs> PostSubmodulesEdit;
+        event EventHandler<GitUIPostActionEventArgs> PostSyncSubmodules;
+        event EventHandler<GitUIPostActionEventArgs> PostUpdateSubmodules;
+        event EventHandler<GitUIPostActionEventArgs> PostVerifyDatabase;
+        event EventHandler<GitUIPostActionEventArgs> PostViewPatch;
+        event EventHandler<GitUIPostActionEventArgs> PostSparseWorkingCopy;
+        event EventHandler<GitUIBaseEventArgs> PostBrowseInitialize;
+        event EventHandler<GitUIBaseEventArgs> PostRegisterPlugin;
+        event EventHandler<GitUIBaseEventArgs> PreAddFiles;
+        event EventHandler<GitUIBaseEventArgs> PreApplyPatch;
+        event EventHandler<GitUIBaseEventArgs> PreArchive;
+        event EventHandler<GitUIBaseEventArgs> PreBlame;
+        event EventHandler<GitUIBaseEventArgs> PreBrowse;
+        event EventHandler<GitUIBaseEventArgs> PreCheckoutBranch;
+        event EventHandler<GitUIBaseEventArgs> PreCheckoutRevision;
+        event EventHandler<GitUIBaseEventArgs> PreCherryPick;
+        event EventHandler<GitUIBaseEventArgs> PreClone;
+        event EventHandler<GitUIBaseEventArgs> PreCommit;
+        event EventHandler<GitUIBaseEventArgs> PreCompareRevisions;
+        event EventHandler<GitUIBaseEventArgs> PreCreateBranch;
+        event EventHandler<GitUIBaseEventArgs> PreCreateTag;
+        event EventHandler<GitUIBaseEventArgs> PreDeleteBranch;
+        event EventHandler<GitUIBaseEventArgs> PreDeleteTag;
+        event EventHandler<GitUIBaseEventArgs> PreEditGitAttributes;
+        event EventHandler<GitUIBaseEventArgs> PreEditGitIgnore;
+        event EventHandler<GitUIBaseEventArgs> PreFileHistory;
+        event EventHandler<GitUIBaseEventArgs> PreFormatPatch;
+        event EventHandler<GitUIBaseEventArgs> PreInitialize;
+        event EventHandler<GitUIBaseEventArgs> PreMailMap;
+        event EventHandler<GitUIBaseEventArgs> PreMergeBranch;
+        event EventHandler<GitUIBaseEventArgs> PrePull;
+        event EventHandler<GitUIBaseEventArgs> PrePush;
+        event EventHandler<GitUIBaseEventArgs> PreRebase;
+        event EventHandler<GitUIBaseEventArgs> PreRename;
+        event EventHandler<GitUIBaseEventArgs> PreRemotes;
+        event EventHandler<GitUIBaseEventArgs> PreResolveConflicts;
+        event EventHandler<GitUIBaseEventArgs> PreRevertCommit;
+        event EventHandler<GitUIBaseEventArgs> PreSettings;
+        event EventHandler<GitUIBaseEventArgs> PreStash;
+        event EventHandler<GitUIBaseEventArgs> PreSubmodulesEdit;
+        event EventHandler<GitUIBaseEventArgs> PreSyncSubmodules;
+        event EventHandler<GitUIBaseEventArgs> PreUpdateSubmodules;
+        event EventHandler<GitUIBaseEventArgs> PreVerifyDatabase;
+        event EventHandler<GitUIBaseEventArgs> PreViewPatch;
+        event EventHandler<GitUIBaseEventArgs> PreBrowseInitialize;
+        event EventHandler<GitUIBaseEventArgs> PreSparseWorkingCopy;
 
         IGitModule GitModule { get; }
         string GitCommand(string arguments);
-        string CommandLineCommand(string cmd, string arguments);
+        Task<string> CommandLineCommandAsync(string cmd, string arguments);
         IGitRemoteCommand CreateRemoteCommand();
         void CacheAvatar(string email);
         Icon FormIcon { get; }
-        
-        /// <summary>Gets notifications implementation.</summary>
-        INotifications Notifications { get; }
-        IBrowseRepo BrowseRepo { get; set;  }
+        IBrowseRepo BrowseRepo { get; }
 
         /// <summary>
         /// RepoChangedNotifier.Notify() should be called after each action that changess repo state
         /// </summary>
         ILockableNotifier RepoChangedNotifier { get; }
-    }
-
-    public interface IGitUICommands : IGitUICommandsBase
-    {
-        event GitUIPostActionEventHandler PostApplyPatch;
-        event GitUIPostActionEventHandler PostArchive;
-        event GitUIPostActionEventHandler PostBlame;
-
-        event GitUIPostActionEventHandler PostCompareRevisions;
-        event GitUIPostActionEventHandler PostCreateBranch;
-        event GitUIPostActionEventHandler PostCreateTag;
-        event GitUIPostActionEventHandler PostDeleteBranch;
-        event GitUIPostActionEventHandler PostDeleteTag;
-        event GitUIPostActionEventHandler PostEditGitAttributes;
-
-        event GitUIPostActionEventHandler PostMailMap;
-        event GitUIPostActionEventHandler PostMergeBranch;
-        event GitUIPostActionEventHandler PostRebase;
-        event GitUIPostActionEventHandler PostRename;
-        event GitUIPostActionEventHandler PostRemotes;
-
-        event GitUIPostActionEventHandler PostSvnClone;
-        event GitUIPostActionEventHandler PostSvnDcommit;
-        event GitUIPostActionEventHandler PostSvnFetch;
-        event GitUIPostActionEventHandler PostSvnRebase;
-        event GitUIPostActionEventHandler PostSubmodulesEdit;
-        event GitUIPostActionEventHandler PostSyncSubmodules;
-        event GitUIPostActionEventHandler PostUpdateSubmodules;
-        event GitUIPostActionEventHandler PostVerifyDatabase;
-        event GitUIPostActionEventHandler PostViewPatch;
-        event GitUIPostActionEventHandler PostSparseWorkingCopy;
-
-        event GitUIEventHandler PostBrowseInitialize;
-        event GitUIEventHandler PostRegisterPlugin;
-        event GitUIEventHandler PreAddFiles;
-        event GitUIEventHandler PreApplyPatch;
-        event GitUIEventHandler PreArchive;
-        event GitUIEventHandler PreBlame;
-        event GitUIEventHandler PreCheckoutBranch;
-        event GitUIEventHandler PreCheckoutRevision;
-        event GitUIEventHandler PreCherryPick;
-        event GitUIEventHandler PreClone;
-
-        event GitUIEventHandler PreBrowse;
-        event GitUIEventHandler PreCommit;
-        event GitUIEventHandler PreCompareRevisions;
-        event GitUIEventHandler PreCreateBranch;
-        event GitUIEventHandler PreCreateTag;
-        event GitUIEventHandler PreDeleteBranch;
-        event GitUIEventHandler PreDeleteTag;
-        event GitUIEventHandler PreFileHistory;
-        event GitUIEventHandler PreInitialize;
-        event GitUIEventHandler PreMergeBranch;
-        event GitUIEventHandler PrePull;
-        event GitUIEventHandler PrePush;
-
-        event GitUIEventHandler PreEditGitAttributes;
-        event GitUIEventHandler PreEditGitIgnore;
-        event GitUIEventHandler PreFormatPatch;
-        event GitUIEventHandler PreMailMap;
-        event GitUIEventHandler PreRebase;
-        event GitUIEventHandler PreRename;
-        event GitUIEventHandler PreRemotes;
-        event GitUIEventHandler PreResolveConflicts;
-        event GitUIEventHandler PreRevertCommit;
-        event GitUIEventHandler PreSettings;
-        event GitUIEventHandler PreStash;
-        event GitUIEventHandler PreSvnClone;
-        event GitUIEventHandler PreSvnDcommit;
-        event GitUIEventHandler PreSvnFetch;
-        event GitUIEventHandler PreSvnRebase;
-        event GitUIEventHandler PreVerifyDatabase;
-        event GitUIEventHandler PreViewPatch;
 
         bool StartCommandLineProcessDialog(object ownerForm, string command, string arguments);
         bool StartCommandLineProcessDialog(IGitCommand cmd, IWin32Window parentForm);
         bool StartCommandLineProcessDialog(string command, string arguments);
         bool StartBatchFileProcessDialog(object ownerForm, string batchFile);
         bool StartBatchFileProcessDialog(string batchFile);
-
 
         bool StartAddFilesDialog();
         bool StartApplyPatchDialog();
@@ -165,12 +118,9 @@ namespace GitUIPluginInterfaces
         bool StartCompareRevisionsDialog();
         bool StartCreateBranchDialog();
         bool StartCreateTagDialog();
-        bool StartDeleteBranchDialog(string branch);
         bool StartDeleteTagDialog();
         bool StartEditGitIgnoreDialog(bool localExcludes);
-
         void StartFileHistoryDialog(string fileName);
-
         bool StartFormatPatchDialog();
         bool StartGitCommandProcessDialog(string arguments);
         bool StartInitializeDialog();
@@ -178,11 +128,14 @@ namespace GitUIPluginInterfaces
         bool StartMailMapDialog();
         bool StartMergeBranchDialog(string branch);
         bool StartPluginSettingsDialog();
-
-        bool StartSvnCloneDialog();
-        bool StartSvnDcommitDialog();
-        bool StartSvnFetchDialog();
-        bool StartSvnRebaseDialog();
+        bool StartPullDialog();
+        bool StartPushDialog();
+        bool StartRebaseDialog(IWin32Window owner, string onto);
+        bool StartRemotesDialog();
+        bool StartResolveConflictsDialog();
+        bool StartSettingsDialog();
+        bool StartSettingsDialog(IGitPlugin gitPlugin);
+        bool StartStashDialog();
         bool StartSubmodulesDialog();
         bool StartSyncSubmodulesDialog();
         bool StartUpdateSubmodulesDialog();
