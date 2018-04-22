@@ -24,7 +24,7 @@ namespace GitCommands
 
         public string[] ParentGuids;
 
-        private IList<IGitItem> _subItems;
+        // private IList<IGitItem> _subItems;
         private readonly List<GitRef> _refs = new List<GitRef>();
         private readonly GitModule _module;
         private BuildInfo _buildStatus;

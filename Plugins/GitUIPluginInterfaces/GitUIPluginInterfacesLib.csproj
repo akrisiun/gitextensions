@@ -3,10 +3,11 @@
   <PropertyGroup>
     <TargetFrameworks>net461</TargetFrameworks>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <LangVersion>7</LangVersion>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <EnableDefaultEmbededResourceItems>false</EnableDefaultEmbededResourceItems>
-  
-    <Version>9.0.4-beta1</Version>
+    <Version>9.0.5-beta1</Version>
+
     <RootNamespace>GitUIPluginInterfaces</RootNamespace>
     <AssemblyName>GitUIPluginInterfacesLib</AssemblyName>
   </PropertyGroup>
@@ -18,9 +19,9 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>..\..\FxCopRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet></CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,24 +33,38 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <RunCodeAnalysis>true</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>..\..\FxCopRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet></CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
+    <NoWarn>;1573;1591;1712;3003;3001;</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="packages.config" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <!--
     <Reference Include="System.Reactive.Interfaces">
       <HintPath>..\..\..\..\packages\Rx-Interfaces.2.2.5\lib\net40\System.Reactive.Interfaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <package id="Microsoft.VisualStudio.Threading" version="15.6.46" targetFramework="net461" />
+    <package id="Microsoft.VisualStudio.Validation" version="15.3.15" targetFramework="net461" />
+    <package id="System.Reactive.Interfaces" version="3.1.1" targetFramework="net461" />
+    System.Reactive.Interfaces 3.1.1
+    -->
     <Reference Include="System.Windows.Forms" />
+    <PackageReference Include="System.Reactive.Interfaces" Version="3.1.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="IGitCommand.cs" />
     <Compile Include="BuildServerIntegration\BuildInfo.cs" />
     <Compile Include="BuildServerIntegration\BuildServerAdapterMetadataAttribute.cs" />
     <Compile Include="BuildServerIntegration\BuildServerCredentials.cs" />
@@ -95,9 +110,6 @@
     <Compile Include="Settings\ChoiceSetting.cs" />
     <Compile Include="Settings\PasswordSetting.cs" />
     <Compile Include="Settings\StringSetting.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\GitExtUtils\GitExtUtilsLib.csproj">

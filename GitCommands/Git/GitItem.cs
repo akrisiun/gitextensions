@@ -2,10 +2,8 @@
 using GitUIPluginInterfaces;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System;
-using System.Diagnostics;
-using GitUIPluginInterfaces;
+//using GitUIPluginInterfaces;
 
 namespace GitCommands.Git
 {

@@ -36,6 +36,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
+    <LangVersion>7</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <None Remove="Properties\AssemblyInfo.cs" />
   </ItemGroup>

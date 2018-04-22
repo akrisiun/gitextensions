@@ -8,52 +8,37 @@ namespace Gravatar
 {
     public interface IImageCache2
     {
-        /// <summary>
-        /// Occurs whenever the cache is invalidated.
-        /// </summary>
+        // Occurs whenever the cache is invalidated.
         event EventHandler Invalidated;
 
-        /// <summary>
-        /// Adds the image to the cache from the supplied stream.
-        /// </summary>
-        /// <param name="imageFileName">The image file name.</param>
-        /// <param name="imageStream">The stream which contains the image.</param>
+        // Adds the image to the cache from the supplied stream.
         Task AddImageAsync(string imageFileName, Stream imageStream);
 
-        /// <summary>
-        /// Clears the cache by deleting all images.
-        /// </summary>
+        // Clears the cache by deleting all images.
         Task ClearAsync();
 
-        /// <summary>
-        /// Deletes the specified image from the cache.
-        /// </summary>
-        /// <param name="imageFileName">The image file name.</param>
+        // Deletes the specified image from the cache.
         Task DeleteImageAsync(string imageFileName);
 
-        /// <summary>
-        /// Retrieves the image from the cache.
-        /// </summary>
-        /// <param name="imageFileName">The image file name.</param>
-        /// <param name="defaultBitmap">The default image to return
-        /// if the requested image does not exist in the cache.</param>
+        // Retrieves the image from the cache.
         Image GetImage(string imageFileName, Bitmap defaultBitmap);
 
-        /// <summary>
-        /// Retrieves the image from the cache.
-        /// </summary>
-        /// <param name="imageFileName">The image file name.</param>
-        /// <param name="defaultBitmap">The default image to return
-        /// if the requested image does not exist in the cache.</param>
+        // Retrieves the image from the cache.
         Task<Image> GetImageAsync(string imageFileName, Bitmap defaultBitmap);
+
+        void ClearCache();
+        bool FileIsCached(string imageFileName);
+        bool FileIsExpired(string imageFileName, int cacheDays);
+        void DeleteCachedFile(string imageFileName);
+        void CacheImage(string imageFileName, Stream imageStream);
+        Image LoadImageFromCache(string imageFileName, Bitmap data);
     }
 
-    public sealed class DirectoryImageCache // : IImageCache
+    public sealed class DirectoryImageCache : IImageCache2
     {
         private const int DefaultCacheDays = 30;
         private readonly string _cachePath;
         private readonly int _cacheDays;
-        // private readonly IFileSystem _fileSystem;
 
         public DirectoryImageCache(string cachePath, int? cacheDays = null) // , IFileSystem fileSystem)
         {
@@ -66,11 +51,25 @@ namespace Gravatar
             }
         }
 
-        //public DirectoryImageCache(string cachePath, int cacheDays)
-        //    : this(cachePath, cacheDays, new FileSystem())
-        //{
-        //}
+#if IOABSTRACT
+        // private readonly IFileSystem _fileSystem;
 
+        public DirectoryImageCache(string cachePath, int? cacheDays, IFileSystem fileSystem)
+        {
+            _cachePath = cachePath;
+            _fileSystem = fileSystem;
+            _cacheDays = cacheDays ?? DefaultCacheDays;
+            if (_cacheDays < 1)
+            {
+                _cacheDays = DefaultCacheDays;
+            }
+        }
+
+        public DirectoryImageCache(string cachePath, int cacheDays)
+            : this(cachePath, cacheDays, new FileSystem())
+        {
+        }
+#endif
         /// <summary>
         /// Occurs whenever the cache is invalidated.
         /// </summary>
@@ -109,6 +108,11 @@ namespace Gravatar
             OnInvalidated(EventArgs.Empty);
         }
 
+        public void CacheImage(string imageFileName, Stream imageStream)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Clears the cache by deleting all images.
         /// </summary>
@@ -134,6 +138,16 @@ namespace Gravatar
                 }
             });
             OnInvalidated(EventArgs.Empty);
+        }
+
+        public void ClearCache()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteCachedFile(string imageFileName)
+        {
+            DeleteImageAsync(imageFileName).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -165,12 +179,19 @@ namespace Gravatar
             OnInvalidated(EventArgs.Empty);
         }
 
-        /// <summary>
-        /// Retrieves the image from the cache.
-        /// </summary>
-        /// <param name="imageFileName">The image file name.</param>
-        /// <param name="defaultBitmap">The default image to return
-        /// if the requested image does not exist in the cache.</param>
+        public bool FileIsCached(string imageFileName)
+        {
+            return false;
+        }
+
+        public bool FileIsExpired(string imageFileName, int cacheDays)
+        {
+            return HasExpired(imageFileName);
+        }
+
+        public Image LoadImageFromCache(string imageFileName, Bitmap data) => GetImage(imageFileName, data);
+
+        // Retrieves the image from the cache.
         public Image GetImage(string imageFileName, Bitmap defaultBitmap)
         {
             if (string.IsNullOrWhiteSpace(imageFileName))
@@ -197,12 +218,7 @@ namespace Gravatar
             }
         }
 
-        /// <summary>
-        /// Retrieves the image from the cache.
-        /// </summary>
-        /// <param name="imageFileName">The image file name.</param>
-        /// <param name="defaultBitmap">The default image to return
-        /// if the requested image does not exist in the cache.</param>
+        // Retrieves the image from the cache.
         public async Task<Image> GetImageAsync(string imageFileName, Bitmap defaultBitmap)
         {
             return await Task.Run(() => GetImage(imageFileName, defaultBitmap));

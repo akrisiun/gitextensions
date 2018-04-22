@@ -19,25 +19,10 @@ namespace GitCommands
         /// </returns>
         string[] GetCommandLineArgs();
 
-        /// <summary>
-        /// Retrieves the value of an environment variable from the current process or
-        /// from the Windows operating system registry key for the current user.
-        /// </summary>
-        /// <param name="variable">The name of an environment variable.</param>
-        /// <returns>
-        /// The value of the environment variable specified by the <paramref name="variable" />, or <see langword="null"/> if the environment variable is not found.
-        /// </returns>
         string GetEnvironmentVariable(string variable);
 
-        /// <summary>
-        /// Retrieves the value of an environment variable from the current process or
-        /// from the Windows operating system registry key for the current user or local machine.
-        /// </summary>
-        /// <param name="variable">The name of an environment variable.</param>
-        /// <param name="target">One of the <see cref="T:System.EnvironmentVariableTarget" /> values.</param>
-        /// <returns>
-        /// The value of the environment variable specified by the <paramref name="variable" /> and <paramref name="target" /> parameters, or <see langword="null"/> if the environment variable is not found.
-        /// </returns>
+        string SetEnvironmentVariable(string variable, string value);
+
         string GetEnvironmentVariable(string variable, EnvironmentVariableTarget target);
 
         /// <summary>Gets the path to the system special folder that is identified by the specified enumeration.</summary>
@@ -69,24 +54,19 @@ namespace GitCommands
             return Environment.GetCommandLineArgs();
         }
 
-        /// <summary>Retrieves the value of an environment variable from the current process or
-        /// from the Windows operating system registry key for the current user.</summary>
-        /// <param name="variable">The name of an environment variable.</param>
-        /// <returns>
-        /// The value of the environment variable specified by the <paramref name="variable" />, or <see langword="null"/> if the environment variable is not found.
-        /// </returns>
         public string GetEnvironmentVariable(string variable)
         {
+            if (string.IsNullOrWhiteSpace(variable))
+                return null;
             return Environment.GetEnvironmentVariable(variable);
         }
 
-        /// <summary>Retrieves the value of an environment variable from the current process or
-        /// from the Windows operating system registry key for the current user or local machine.</summary>
-        /// <param name="variable">The name of an environment variable.</param>
-        /// <param name="target">One of the <see cref="T:System.EnvironmentVariableTarget" /> values.</param>
-        /// <returns>
-        /// The value of the environment variable specified by the <paramref name="variable" /> and <paramref name="target" /> parameters, or <see langword="null"/> if the environment variable is not found.
-        /// </returns>
+        public string SetEnvironmentVariable(string variable, string value)
+        {
+            Environment.SetEnvironmentVariable(variable, value);
+            return GetEnvironmentVariable(variable);
+        }
+
         public string GetEnvironmentVariable(string variable, EnvironmentVariableTarget target)
         {
             return Environment.GetEnvironmentVariable(variable, target);

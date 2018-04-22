@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace GitCommands.Git
 {
@@ -16,7 +13,7 @@ namespace GitCommands.Git
             _branchName = branchName;
         }
 
-        public override IEnumerable<string> CollectArguments()
+        protected override IEnumerable<string> CollectArguments()
         {
             yield return "--delete";
             yield return _remote;

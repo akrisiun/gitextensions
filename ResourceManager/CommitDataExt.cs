@@ -8,6 +8,9 @@ namespace ResourceManager
 {
     public static class CommitDataExt
     {
+        // CommitDataExt.COMMITHEADER_STRING_LENGTH
+        public const int COMMITHEADER_STRING_LENGTH = 16;
+
         private static string GetEmail(string author)
         {
             if (String.IsNullOrEmpty(author))
@@ -86,7 +89,7 @@ namespace ResourceManager
             string authorEmail = GetEmail(commitData.Author);
             header.AppendLine(
 
-                FillToLength(WebUtility.HtmlEncode(Strings.GetAuthorText()) + ":", COMMITHEADER_STRING_LENGTH) +
+            FillToLength(WebUtility.HtmlEncode(Strings.GetAuthorText()) + ":", COMMITHEADER_STRING_LENGTH) +
                 (WebUtility.HtmlEncode(Strings.GetAuthorText()) + ":").PadRight(GetHeaderPadding()) +
                 linkFactory.CreateLink(commitData.Author, "mailto:" + authorEmail));
 
@@ -111,7 +114,7 @@ namespace ResourceManager
 
             if (!authorIsCommiter)
             {
-                string committerEmail = GetEmail(commitData.Committer);
+                committerEmail = GetEmail(commitData.Committer);
                 header.AppendLine(
                     (WebUtility.HtmlEncode(Strings.GetCommitterText()) + ":").PadRight(GetHeaderPadding()) +
                     "<a href='mailto:" + WebUtility.HtmlEncode(committerEmail) + "'>" +
@@ -157,6 +160,24 @@ namespace ResourceManager
             }
 
             return header.ToString();
+        }
+
+        public static string FillToLength(string input, int length)
+        {
+            return FillToLength(input, length, 0);
+        }
+
+        public static string FillToLength(string input, int length, int skip)
+        {
+            // length
+            const int tabsize = 8;
+            if ((input.Length - skip) < length)
+            {
+                int l = length - (input.Length - skip);
+                return input + new string('\t', (l / tabsize) + ((l % tabsize) == 0 ? 0 : 1));
+            }
+
+            return input;
         }
     }
 }

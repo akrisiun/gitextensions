@@ -75,7 +75,7 @@ namespace Gravatar
 
     public class GravatarService
     {
-        static IImageCache cache;
+        static IImageCache2 cache;
         static object gravatarServiceLock = new object();
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Gravatar
             try
             {
                 if (cache == null)
-                    cache = new DirectoryImageCache(imageCachePath); //or: new IsolatedStorageImageCache();
+                    cache = new DirectoryImageCache(imageCachePath) as IImageCache2; //or: new IsolatedStorageImageCache();
 
                 // If the user image is not cached yet, download it from gravatar and store it in the isolatedStorage
                 if (!cache.FileIsCached(imageFileName) ||

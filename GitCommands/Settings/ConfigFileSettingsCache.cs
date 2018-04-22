@@ -92,7 +92,8 @@ namespace GitCommands.Settings
             return LockedAction(() =>
             {
                 EnsureSettingsAreUpToDate();
-                return _configFile.Value.GetValues(key);
+                var list = new List<string>(_configFile.Value.GetValues(key));
+                return list;
             });
         }
 
@@ -137,12 +138,13 @@ namespace GitCommands.Settings
             {
                 EnsureSettingsAreUpToDate();
 
-                return null; // _configFile.Value.GetConfigSections(configSectionName);
+                // return null; // _configFile.Value.GetConfigSections(configSectionName);
                 _configFile.Value.RemoveConfigSection(configSectionName);
                 if (performSave)
                 {
                     _configFile.Value.Save();
                 }
+                return null;
             });
         }
     }

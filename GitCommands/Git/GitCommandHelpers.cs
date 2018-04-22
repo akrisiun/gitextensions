@@ -46,9 +46,17 @@ namespace GitCommands
         All = 5
     }
 
+#if !WITHSSH
+    public interface ISshPathLocator
+    { }
+    public class SshPathLocator : ISshPathLocator
+    { }
+
+#endif
+
     public static class GitCommandHelpers
     {
-        // private static readonly ISshPathLocator SshPathLocatorInstance = new SshPathLocator();
+        private static readonly ISshPathLocator SshPathLocatorInstance = new SshPathLocator();
 
         public static void SetEnvironmentVariable(bool reload = false)
         {

@@ -154,7 +154,7 @@ namespace GitCommands
         public string Name { get; private set; }
 
         public IEnumerable<IGitItem> SubItems {
-            get { return _subItems ?? (_subItems = (Module as GitModule)?.GetTree(Guid, false)); }
+            get { return _subItems ?? (_subItems = new List<IGitItem>((Module as GitModule)?.GetTree(Guid, false))); }
         }
 
         #endregion

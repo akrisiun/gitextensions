@@ -23,8 +23,9 @@ namespace GitCommands
             return "branch";
         }
 
-        public override IEnumerable<string> CollectArguments()
+        protected override IEnumerable<string> CollectArguments()
         {
+            // base.CollectArguments
             yield return force ? "-D" : "-d";
 
             var hasRemoteBranch = branches.Any(branch => branch.IsRemote);
