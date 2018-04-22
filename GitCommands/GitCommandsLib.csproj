@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net45</TargetFrameworks>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultEmbededResourceItems>false</EnableDefaultEmbededResourceItems>
+    <ContinueOnError>true</ContinueOnError>
+    <RuntimeIdentifiers>win7-x64;win7-x32;osx.10-11-x64;ubuntu.16.04-x64</RuntimeIdentifiers>
+
+    <Version>9.0.4-beta2</Version>
+    <RootNamespace>GitCommands</RootNamespace>
+    <AssemblyName>GitCommandsLib</AssemblyName>
+
+    <!--<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+        <Import Project="..\FxCop.targets" />-->
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET45;NETCORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>1573;3001;3014;</NoWarn>
+    <CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETCORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+    <WarningsAsErrors />
+    <LangVersion>7</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="GitCommandsLib.9.0.5-beta1.nupkg" />
+    <None Remove="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="SmartFormat">
+      <HintPath>..\Bin\SmartFormat.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Annotations.cs" />
+    <Compile Include="AsyncLoader.cs" />
+    <Compile Include="CommitData.cs" />
+    <Compile Include="Config\SettingKeyString.cs" />
+    <Compile Include="Core\SimpleStructured.cs" />
+    <Compile Include="DateTimeUtils.cs" />
+    <Compile Include="ExceptionUtils.cs" />
+    <Compile Include="FileHelper.cs" />
+    <Compile Include="Git\AuthorEmailEqualityComparer.cs" />
+    <Compile Include="Git\BranchComparison.cs" />
+    <Compile Include="Git\GitBranchNameNormaliser.cs" />
+    <Compile Include="Git\GitBranchNameOptions.cs" />
+    <Compile Include="Git\GitCommandResult.cs" />
+    <Compile Include="Git\RemoteInfo.cs" />
+    <Compile Include="ITranslate.cs" />
+    <Compile Include="ITranslation.cs" />
+    <Compile Include="Logging\CommandLogEntry.cs" />
+    <Compile Include="RemoteActionResult.cs" />
+    <Compile Include="Settings\BasicSettingTypes.cs" />
+    <Compile Include="Settings\CommonSettingsTypes.cs" />
+    <Compile Include="Settings\ConfigFileSettings.cs" />
+    <Compile Include="Settings\ConfigFileSettingsCache.cs" />
+    <Compile Include="Settings\FileSettingsCache.cs" />
+    <Compile Include="Settings\GitExtSettingsCache.cs" />
+    <Compile Include="Settings\RepoDistSettings.cs" />
+    <Compile Include="Settings\Setting.cs" />
+    <Compile Include="Settings\SettingsCache.cs" />
+    <Compile Include="Settings\SettingsContainer.cs" />
+    <Compile Include="Settings\SettingsPath.cs" />
+    <Compile Include="Strings.cs" />
+    <Compile Include="TranslationString.cs" />
+    <Compile Include="Utils\EnvUtils.cs" />
+    <Compile Include="GitExtLinks\GitExtLink.cs" />
+    <Compile Include="Git\GitBisectOption.cs" />
+    <Compile Include="Git\GitCheckoutBranchCmd.cs" />
+    <Compile Include="Git\GitCommand.cs" />
+    <Compile Include="Utils\EncodingHelper.cs" />
+    <Compile Include="Git\GitConvert.cs" />
+    <Compile Include="Git\GitDeleteBranchCmd.cs" />
+    <Compile Include="Git\GitCommandHelpers.cs" />
+    <Compile Include="Git\GitModule.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Git\GitSubmoduleStatus.cs" />
+    <Compile Include="Git\GitSvnCommandHelpers.cs" />
+    <Compile Include="Git\GitCommandsInstance.cs" />
+    <Compile Include="LockableNotifier.cs" />
+    <Compile Include="Logging\CommandLogger.cs" />
+    <Compile Include="CommitHelper.cs" />
+    <Compile Include="Config\ConfigFile.cs" />
+    <Compile Include="Config\ConfigSection.cs" />
+    <Compile Include="Git\GitCommandCache.cs" />
+    <Compile Include="Patch\PatchProcessor.cs" />
+    <Compile Include="PathUtil.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\RepositoryCategory.cs" />
+    <Compile Include="Git\GitBlame.cs" />
+    <Compile Include="Git\GitItemStatus.cs" />
+    <Compile Include="Git\GitPushAction.cs" />
+    <Compile Include="Git\GitRevision.cs" />
+    <Compile Include="Git\GitRef.cs" />
+    <Compile Include="Git\GitItem.cs" />
+    <Compile Include="Git\GitStash.cs" />
+    <Compile Include="Git\GitSubmoduleInfo.cs" />
+    <Compile Include="Git\GitVersion.cs" />
+    <Compile Include="Git\IGitItem.cs" />
+    <Compile Include="Patch\Patch.cs" />
+    <Compile Include="Patch\PatchFile.cs" />
+    <Compile Include="Patch\PatchManager.cs" />
+    <Compile Include="Repository\Repositories.cs" />
+    <Compile Include="Repository\RepositoryCategoryType.cs" />
+    <Compile Include="Repository\RepositoryHistory.cs" />
+    <Compile Include="Repository\RepositoryType.cs" />
+    <Compile Include="RevisionGraph.cs" />
+    <Compile Include="Settings\AppSettings.cs" />
+    <Compile Include="Statistics\CommitCounter.cs" />
+    <Compile Include="Statistics\ImpactLoader.cs" />
+    <Compile Include="FileInfoExtensions.cs" />
+    <Compile Include="SynchronizedProcessReader.cs" />
+    <Compile Include="System.cs" />
+    <Compile Include="Utils\JsonSerializer.cs" />
+    <Compile Include="Utils\RFC2047Decoder.cs" />
+    <Compile Include="Utils\WeakRefCache.cs" />
+    <Compile Include="XmlSerializableDictionary.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="gitcommandkey.snk.pfx" />
+    <Compile Include="Repository\RecentRepoInfo.cs" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GitExtUtils\GitExtUtilsLib.csproj" />
+    <ProjectReference Include="..\Plugins\GitUIPluginInterfaces\GitUIPluginInterfacesLib.csproj" />
+  </ItemGroup>
+</Project>

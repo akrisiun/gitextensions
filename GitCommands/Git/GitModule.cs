@@ -2144,10 +2144,10 @@ namespace GitCommands
         }
 
         /// <summary>Executes the specified 'git remote' command.</summary>
-        public string RemoteCmd(GitRemote remoteCommand)
-        {
-            return RunGitCmd(remoteCommand.ToString());
-        }
+        //public string RemoteCmd(GitRemote remoteCommand)
+        //{
+        //    return RunGitCmd(remoteCommand.ToString());
+        //}
 
         /// <summary>Gets the number of commits which appear in a branch/revision that are NOT in another branch/revision.
         /// <example>If a feature branch is behind master by 2 commits; '2' will be returned.</example></summary>

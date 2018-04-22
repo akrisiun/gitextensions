@@ -5,12 +5,12 @@ using SmartFormat;
 namespace GitCommands
 {
     /// <summary>Contains common string literals which are translated.</summary>
-    public class Strings : Translate
+    public class Strings // : Translate
     {
         // public only because of FormTranslate
         public Strings()
         {
-            Translator.Translate(this, AppSettings.CurrentTranslation);
+            // Translator.Translate(this, AppSettings.CurrentTranslation);
         }
 
         private static Lazy<Strings> _instance = new Lazy<Strings>();

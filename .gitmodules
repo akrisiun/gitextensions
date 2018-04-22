@@ -1,6 +1,8 @@
 [submodule "Externals/NBug"]
 	path = Externals/NBug
-	url = git://github.com/gitextensions/NBug.git
+	url = https://github.com/akrisiun/NBug.git
+    ignore = dirty
 [submodule "Externals/Git.hub"]
 	path = Externals/Git.hub
-	url = git://github.com/gitextensions/Git.hub.git
+	url = https://github.com/akrisiun/Git.hub.git
+    ignore = dirty    

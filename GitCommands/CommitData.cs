@@ -8,6 +8,7 @@ using System.Text;
 
 namespace GitCommands
 {
+    [CLSCompliant(true)]
     public class CommitData
     {
         /// <summary>

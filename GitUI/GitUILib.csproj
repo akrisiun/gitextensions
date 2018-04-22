@@ -1,0 +1,2215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <!--
+    <Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+    -->
+    <TargetFramework>net461</TargetFramework>
+    <Configurations>Debug</Configurations>
+    <Platforms>AnyCPU</Platforms>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <SetTargetFramework>TargetFramework=net461</SetTargetFramework>
+    <LangVersion>7</LangVersion>
+    <RuntimeIdentifiers>win7-x64</RuntimeIdentifiers>
+
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+
+    <!--<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\FxCop.targets" />
+  <PropertyGroup>
+  -->
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A19AF7D5-2BD9-470D-A4D0-0519C2694258}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GitUI</RootNamespace>
+    <AssemblyName>GitUI</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>gituikey.snk.pfx</AssemblyOriginatorKeyFile>
+    <!--<SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>-->
+    <RestorePackages>false</RestorePackages>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <ReleaseVersion>2.48</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\net461</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;NET45;__MonoCS__;WIN;NOAPICODE;TRANS;NOSKIN;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <NoWarn>1573,3003</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>1573</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\net461\Release</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet></CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="CommandsDialogs\GitIgnoreDialog\**" />
+    <None Remove="CommandsDialogs\WorktreeDialog\**" />
+    <None Remove="UserControls\ToolStripClasses\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PSTaskDialog">
+      <HintPath>..\Bin\PSTaskDialog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+    </Reference>
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ICSharpCode.TextEditor">
+      <HintPath>..\Bin\ICSharpCode.TextEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <!--<Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>-->
+    
+    <Compile Include="AutoCompletion\CommitAutoCompleteProvider.cs" />
+    <Compile Include="AutoCompletion\IAutoCompleteProvider.cs" />
+    <Compile Include="BuildServerIntegration\BuildInfoDrawingLogic.cs" />
+    <Compile Include="BuildServerIntegration\BuildServerWatcher.cs" />
+    <Compile Include="CommandsDialogs\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormOpenDirectory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormOpenDirectory.Designer.cs">
+      <DependentUpon>FormOpenDirectory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormUpdates.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormUpdates.Designer.cs">
+      <DependentUpon>FormUpdates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\BuildReportTabPageExtension.cs" />
+    <Compile Include="CommandsDialogs\BrowseDialog\FormBrowseUtil.cs" />
+    <Compile Include="CommandsDialogs\BrowseDialog\FormBrowseMenus.cs" />
+    <Compile Include="CommandsDialogs\BrowseDialog\FormBrowseMenuCommands.cs" />
+    <Compile Include="CommandsDialogs\BrowseDialog\MenuCommand.cs" />
+    <Compile Include="CommandsDialogs\BrowseDialog\MenuCommandsBase.cs" />
+    <Compile Include="CommandsDialogs\FormCompareToBranch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormCompareToBranch.Designer.cs">
+      <DependentUpon>FormCompareToBranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormDiff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormDiff.Designer.cs">
+      <DependentUpon>FormDiff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormSparseWorkingCopyViewModel.cs" />
+    <Compile Include="CommandsDialogs\FormMergeSubmodule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormMergeSubmodule.Designer.cs">
+      <DependentUpon>FormMergeSubmodule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormSparseWorkingCopy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\RepoHosting\CreatePullRequestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\RepoHosting\CreatePullRequestForm.Designer.cs">
+      <DependentUpon>CreatePullRequestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\RepoHosting\DiscussionHtmlCreator.cs" />
+    <Compile Include="CommandsDialogs\RepoHosting\ForkAndCloneForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\RepoHosting\ForkAndCloneForm.Designer.cs">
+      <DependentUpon>ForkAndCloneForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\RepoHosting\ViewPullRequestsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\RepoHosting\ViewPullRequestsForm.Designer.cs">
+      <DependentUpon>ViewPullRequestsForm.cs</DependentUpon>
+    </Compile>
+
+    <Compile Include="CommandsDialogs\SearchControl.cs" />
+    <Compile Include="CommandsDialogs\SearchControl.Designer.cs" />
+    <!--
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SearchControl.resx</DependentUpon>
+    </Compile> 
+    -->
+    <EmbeddedResource Include="CommandsDialogs\SearchControl.resx">
+      <DependentUpon>SearchControl.cs</DependentUpon>
+    </EmbeddedResource>
+    
+    <Compile Include="CommandsDialogs\SearchWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SearchWindow.Designer.cs">
+      <DependentUpon>SearchWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\MergeToolsHelper.cs" />
+    
+    
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\BuildServerIntegrationSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\BuildServerIntegrationSettingsPage.Designer.cs">
+      <DependentUpon>BuildServerIntegrationSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\CommitDialogSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\CommitDialogSettingsPage.Designer.cs">
+      <DependentUpon>CommitDialogSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\EditorHelper.cs" />
+    <Compile Include="CommandsDialogs\SettingsDialog\AutoLayoutSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\AutoLayoutSettingsPage.Designer.cs">
+      <DependentUpon>AutoLayoutSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\DetailedSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\DetailedSettingsPage.Designer.cs">
+      <DependentUpon>DetailedSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStatusOutputLog.cs" />
+    
+    <Compile Include="Editor\Diff\CombinedDiffHighlightService.cs" />
+    <Compile Include="Editor\Diff\DiffHighlightService.cs" />
+    <Compile Include="Editor\Diff\DiffLineNumAnalyzer.cs" />
+    <Compile Include="Editor\Diff\DiffViewerLineNumberCtrl.cs" />
+    <Compile Include="Editor\Diff\LinePrefixHelper.cs" />
+    <Compile Include="Editor\Diff\LineSegmentGetter.cs" />
+    <Compile Include="HelperDialogs\FormBuildServerCredentials.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelperDialogs\FormBuildServerCredentials.Designer.cs">
+      <DependentUpon>FormBuildServerCredentials.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormatPatchDialog\SmtpCredentials.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormatPatchDialog\SmtpCredentials.Designer.cs">
+      <DependentUpon>SmtpCredentials.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\RevisionLinksSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\RevisionLinksSettingsPage.Designer.cs">
+      <DependentUpon>RevisionLinksSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\ConfigFileSettingsSet.cs" />
+    <Compile Include="CommandsDialogs\SettingsDialog\RepoDistSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\ConfigFileSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\SettingsPageHeader.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\SettingsPageHeader.Designer.cs">
+      <DependentUpon>SettingsPageHeader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Plugins\PluginRootIntroductionPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Plugins\PluginRootIntroductionPage.Designer.cs">
+      <DependentUpon>PluginRootIntroductionPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\RepoDistSettingsSet.cs" />
+    <Compile Include="CommandsDialogs\SettingsDialog\SettingsPageWithHeader.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Helpers\SystemExtensions.cs" />
+    <Compile Include="Helpers\TreeViewExtensions.cs" />
+    <Compile Include="Hotkey\KeysExtensions.cs" />
+    <Compile Include="Notifications\NotificationFeed.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Notifications\NotificationList.cs" />
+    <Compile Include="Notifications\NotificationManager.cs" />
+    <Compile Include="Notifications\NotificationPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Notifications\NotificationPopup.Designer.cs">
+      <DependentUpon>NotificationPopup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Notifications\NotificationsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Notifications\NotificationsForm.Designer.cs">
+      <DependentUpon>NotificationsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Notifications\NotifierHelpers.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RepoHosts.cs" />
+    <Compile Include="Script\ScriptRunner.cs" />
+    <Compile Include="AutoCompletion\AutoCompleteWord.cs" />
+    <Compile Include="RepoObjectsTree\RepoObjectsTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\RepoObjectsTree.Designer.cs">
+      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="RepoObjectsTree\RepoObjectsTree.resx">
+      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
+    </EmbeddedResource>
+    
+    <Compile Include="RepoObjectsTree\ROT.ContextActions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    
+    <Compile Include="RepoObjectsTree\ROT.DragDrops.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Branches.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Remotes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Stashes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Submodules.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Tags.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <!-- 
+    <Compile Include="RepoObjectsTree\ROT.ContextActions.cs" />
+    <Compile Include="RepoObjectsTree\ROT.DragDrops.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Branches.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Stashes.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Submodules.cs" />
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Tags.cs" />
+	-->
+    <Compile Include="UserControls\BranchComboBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\BranchComboBox.Designer.cs">
+      <DependentUpon>BranchComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommitInfo\CommandEventArgs.cs" />
+    <Compile Include="UserControls\BranchSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\BranchSelector.Designer.cs">
+      <DependentUpon>BranchSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ComboBoxHelper.cs" />
+    <Compile Include="UserControls\CommitPickerSmallControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\CommitPickerSmallControl.Designer.cs">
+      <DependentUpon>CommitPickerSmallControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CommitSummaryUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\CommitSummaryUserControl.Designer.cs">
+      <DependentUpon>CommitSummaryUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ConsoleEmulatorOutputControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\ConsoleOutputControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\EditboxBasedConsoleOutputControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\ExListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\GotoUserManualControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\GotoUserManualControl.Designer.cs">
+      <DependentUpon>GotoUserManualControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\IRevisionGrid.cs" />
+    <Compile Include="UserControls\PathFormatter.cs" />
+    <Compile Include="UserControls\RevisionGridClasses\CopyToClipboardMenuHelper.cs" />
+    <Compile Include="UserControls\RevisionGridClasses\CaptionCustomMenuRenderer.cs" />
+    <Compile Include="UserControls\RevisionGridClasses\FollowParentRewriter.cs" />
+    <Compile Include="UserControls\RevisionGridClasses\GitRefListsForRevision.cs" />
+    <Compile Include="UserControls\RevisionGridClasses\MenuUtil.cs" />
+    <Compile Include="UserControls\RevisionGridClasses\NavigationHistory.cs" />
+    <Compile Include="UserControls\RevisionGridClasses\ParentChildNavigationHistory.cs" />
+    <Compile Include="UserControls\AuthorEmailBasedRevisionHighlighting.cs" />
+    <Compile Include="UserControls\TextEventArgs.cs" />
+    <Compile Include="UserControls\WebBrowserCtrl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserManual\UserManual.cs" />
+    <Compile Include="UserManual\SingleHtmlUserManual.cs" />
+    <Compile Include="UserManual\StandardHtmlUserManual.cs" />
+    <Compile Include="UserManual\IProvideUserManual.cs" />
+    <Compile Include="UserControls\RemotesComboboxControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\RemotesComboboxControl.Designer.cs">
+      <DependentUpon>RemotesComboboxControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\RevisionGridClasses\DoubleClickRevisionEventArgs.cs" />
+    <Compile Include="UserControls\RevisionGridClasses\DvcsGraph.Graph.cs">
+      <DependentUpon>DvcsGraph.cs</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\RevisionGridClasses\DvcsGraph.Junction.cs">
+      <DependentUpon>DvcsGraph.cs</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\RevisionGridClasses\DvcsGraph.Lanes.cs">
+      <DependentUpon>DvcsGraph.cs</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Editor\FormGoToLine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\FormGoToLine.Designer.cs">
+      <DependentUpon>FormGoToLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilterBranchHelper.cs" />
+    <Compile Include="FilterRevisionsHelper.cs" />
+    <Compile Include="CommandsDialogs\FormCheckoutBranch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelperDialogs\FormChooseCommit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelperDialogs\FormChooseCommit.Designer.cs">
+      <DependentUpon>FormChooseCommit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\CommitDialog\FormCommitTemplateSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormCheckoutBranch.Designer.cs">
+      <DependentUpon>FormCheckoutBranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\CommitDialog\FormCommitTemplateSettings.Designer.cs">
+      <DependentUpon>FormCommitTemplateSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormRecentReposSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormRecentReposSettings.Designer.cs">
+      <DependentUpon>FormRecentReposSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormRenameBranch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormRenameBranch.Designer.cs">
+      <DependentUpon>FormRenameBranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\DataGridViewCheckBoxHeaderCell.cs" />
+    <Compile Include="Editor\RichTextBoxXhtmlSupportExtension.cs" />
+    <Compile Include="CommandsDialogs\AboutBoxDialog\FormContributors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormGoToCommit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormGoToCommit.Designer.cs">
+      <DependentUpon>FormGoToCommit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormResetChanges.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormResetChanges.Designer.cs">
+      <DependentUpon>FormResetChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HelperDialogs\FormSelectMultipleBranches.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelperDialogs\FormSelectMultipleBranches.Designer.cs">
+      <DependentUpon>FormSelectMultipleBranches.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormSvnClone.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormSvnClone.Designer.cs">
+      <DependentUpon>FormSvnClone.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormVerify.LostObject.cs">
+      <DependentUpon>FormVerify.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GitModuleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GitModuleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GitUIExtensions.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="UserControls\HelpImageDisplayUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\HelpImageDisplayUserControl.Designer.cs">
+      <DependentUpon>HelpImageDisplayUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\ControlHotkeys.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\ControlHotkeys.Designer.cs">
+      <DependentUpon>ControlHotkeys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Hotkey\HotkeySettings.cs" />
+    <Compile Include="Hotkey\HotkeySettingsManager.cs" />
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\TextboxHotkey.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IGitUICommandsSource.cs" />
+    <Compile Include="UserControls\RevisionGridClasses\IndexWatcher.cs" />
+    <Compile Include="UserControls\MenuStripEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MessageBoxes.cs" />
+    <Compile Include="MouseWheelRedirector.cs" />
+    <Compile Include="Editor\FileViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editor\FileViewer.Designer.cs">
+      <DependentUpon>FileViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormViewPatch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormViewPatch.Designer.cs">
+      <DependentUpon>FormViewPatch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\BlameControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\BlameControl.Designer.cs">
+      <DependentUpon>BlameControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormBlame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormBlame.Designer.cs">
+      <DependentUpon>FormBlame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\FileViewerInternal.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editor\FileViewerInternal.Designer.cs">
+      <DependentUpon>FileViewerInternal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\IFileViewer.cs" />
+    <Compile Include="CommandsDialogs\BrowseDialog\FormBisect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormBisect.Designer.cs">
+      <DependentUpon>FormBisect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\FormChooseTranslation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\FormChooseTranslation.Designer.cs">
+      <DependentUpon>FormChooseTranslation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormEditor.Designer.cs">
+      <DependentUpon>FormEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormGitAttributes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormGitAttributes.Designer.cs">
+      <DependentUpon>FormGitAttributes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\FormFixHome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelperDialogs\FormRunScriptSpecify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelperDialogs\FormRunScriptSpecify.Designer.cs">
+      <DependentUpon>FormRunScriptSpecify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\FormFixHome.Designer.cs">
+      <DependentUpon>FormFixHome.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStatus.Designer.cs">
+      <DependentUpon>FormStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSplash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSplash.Designer.cs">
+      <DependentUpon>FormSplash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormBrowse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormBrowse.Designer.cs">
+      <DependentUpon>FormBrowse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\ColorHelper.cs" />
+    <Compile Include="CommandsDialogs\FormCommit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormCommit.Designer.cs">
+      <DependentUpon>FormCommit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommitInfo\CommitInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommitInfo\CommitInfo.Designer.cs">
+      <DependentUpon>CommitInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\DashboardControl\Dashboard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\DashboardControl\Dashboard.Designer.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\DashboardControl\DashboardCategory.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\DashboardControl\DashboardCategory.Designer.cs">
+      <DependentUpon>DashboardCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\DashboardControl\DashboardEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\DashboardControl\DashboardEditor.Designer.cs">
+      <DependentUpon>DashboardEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\DashboardControl\DashboardItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\DashboardControl\DashboardItem.Designer.cs">
+      <DependentUpon>DashboardItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\RevisionGridClasses\DvcsGraph.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\RevisionGridClasses\DvcsGraph.Designer.cs">
+      <DependentUpon>DvcsGraph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\FileStatusList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\FileStatusList.Designer.cs">
+      <DependentUpon>FileStatusList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormCherryPick.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormCherryPick.Designer.cs">
+      <DependentUpon>FormCherryPick.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\GitFileTreeComparer.cs" />
+    <Compile Include="Lemmings.cs" />
+    <Compile Include="Plugin\GitPluginSettingsContainer.cs" />
+    <Compile Include="Plugin\LoadPlugins.cs" />
+    <Compile Include="Plugin\PluginExtraction.cs" />
+    <Compile Include="ProcessOutputTimer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    
+    <Compile Include="Properties\Resources.Custom.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    
+    
+    <Compile Include="Script\ScriptInfo.cs" />
+    <Compile Include="Script\ScriptManager.cs" />
+    <Compile Include="CommandsDialogs\SettingsDialog\CheckSettingsLogic.cs" />
+    <Compile Include="CommandsDialogs\SettingsDialog\CommonLogic.cs" />
+    <Compile Include="CommandsDialogs\SettingsDialog\ISettingsPage.cs" />
+    <Compile Include="CommandsDialogs\SettingsDialog\ISettingsPageHost.cs" />
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\AdvancedSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\AdvancedSettingsPage.Designer.cs">
+      <DependentUpon>AdvancedSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\AppearanceSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\AppearanceSettingsPage.Designer.cs">
+      <DependentUpon>AppearanceSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\ChecklistSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\ChecklistSettingsPage.Designer.cs">
+      <DependentUpon>ChecklistSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\ColorsSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\ColorsSettingsPage.Designer.cs">
+      <DependentUpon>ColorsSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\ConfirmationsSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\ConfirmationsSettingsPage.Designer.cs">
+      <DependentUpon>ConfirmationsSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\SettingsGroupPages.cs" />
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\GitExtensionsSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\GitExtensionsSettingsPage.Designer.cs">
+      <DependentUpon>GitExtensionsSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\GitSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\GitSettingsPage.Designer.cs">
+      <DependentUpon>GitSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\GitConfigSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\GitConfigSettingsPage.Designer.cs">
+      <DependentUpon>GitConfigSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\GroupSettingsPage.cs" />
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\HotkeysSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\HotkeysSettingsPage.Designer.cs">
+      <DependentUpon>HotkeysSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\ScriptsSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\ScriptsSettingsPage.Designer.cs">
+      <DependentUpon>ScriptsSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\ShellExtensionSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\ShellExtensionSettingsPage.Designer.cs">
+      <DependentUpon>ShellExtensionSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\SshSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\SshSettingsPage.Designer.cs">
+      <DependentUpon>SshSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\StartPageSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Pages\StartPageSettingsPage.Designer.cs">
+      <DependentUpon>StartPageSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\Plugins\PluginSettingsPage.cs" />
+    <Compile Include="CommandsDialogs\SettingsDialog\Plugins\PluginSettingsPage.Designer.cs">
+      <DependentUpon>PluginSettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\SettingsPageBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\SettingsPageReference.cs" />
+    <Compile Include="CommandsDialogs\SettingsDialog\SettingsTreeViewUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\SettingsTreeViewUserControl.Designer.cs">
+      <DependentUpon>SettingsTreeViewUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\SimpleHelpDisplayDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SettingsDialog\SimpleHelpDisplayDialog.Designer.cs">
+      <DependentUpon>SimpleHelpDisplayDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SpellChecker\EditNetSpell.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SpellChecker\EditNetSpell.Designer.cs">
+      <DependentUpon>EditNetSpell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\FindAndReplaceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\FindAndReplaceForm.Designer.cs">
+      <DependentUpon>FindAndReplaceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormAddFiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormAddFiles.Designer.cs">
+      <DependentUpon>FormAddFiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\SubmodulesDialog\FormAddSubmodule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\SubmodulesDialog\FormAddSubmodule.Designer.cs">
+      <DependentUpon>FormAddSubmodule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormAddToGitIgnore.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormAddToGitIgnore.Designer.cs">
+      <DependentUpon>FormAddToGitIgnore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormArchive.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormArchive.Designer.cs">
+      <DependentUpon>FormArchive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormCreateBranch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormCreateBranch.Designer.cs">
+      <DependentUpon>FormCreateBranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormChangeLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormChangeLog.Designer.cs">
+      <DependentUpon>FormChangeLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormCheckoutRevision.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormCheckoutRevision.Designer.cs">
+      <DependentUpon>FormCheckoutRevision.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormCleanupRepository.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormCleanupRepository.Designer.cs">
+      <DependentUpon>FormCleanupRepository.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormClone.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormClone.Designer.cs">
+      <DependentUpon>FormClone.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormCommandlineHelp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormCommandlineHelp.Designer.cs">
+      <DependentUpon>FormCommandlineHelp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormCommitCount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormCommitCount.Designer.cs">
+      <DependentUpon>FormCommitCount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\DashboardControl\FormDashboardCategoryTitle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\DashboardControl\FormDashboardCategoryTitle.Designer.cs">
+      <DependentUpon>FormDashboardCategoryTitle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\DashboardControl\FormDashboardEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\DashboardControl\FormDashboardEditor.Designer.cs">
+      <DependentUpon>FormDashboardEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormDeleteBranch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormDeleteBranch.Designer.cs">
+      <DependentUpon>FormDeleteBranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormDeleteTag.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormDeleteTag.Designer.cs">
+      <DependentUpon>FormDeleteTag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormLog.Designer.cs">
+      <DependentUpon>FormLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HelperDialogs\FormCommitDiff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelperDialogs\FormCommitDiff.Designer.cs">
+      <DependentUpon>FormCommitDiff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormDonate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormDonate.Designer.cs">
+      <DependentUpon>FormDonate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HelperDialogs\FormEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelperDialogs\FormEdit.Designer.cs">
+      <DependentUpon>FormEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormFileHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormFileHistory.Designer.cs">
+      <DependentUpon>FormFileHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormFormatPatch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormFormatPatch.Designer.cs">
+      <DependentUpon>FormFormatPatch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormGitIgnore.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormGitIgnore.Designer.cs">
+      <DependentUpon>FormGitIgnore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormInit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormInit.Designer.cs">
+      <DependentUpon>FormInit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BrowseForPrivateKey.cs" />
+    <Compile Include="CommandsDialogs\FormMailMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormMailMap.Designer.cs">
+      <DependentUpon>FormMailMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormMergeBranch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormMergeBranch.Designer.cs">
+      <DependentUpon>FormMergeBranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\ResolveConflictsDialog\FormModifiedDeletedCreated.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\ResolveConflictsDialog\FormModifiedDeletedCreated.Designer.cs">
+      <DependentUpon>FormModifiedDeletedCreated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormProcess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormPull.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormPull.Designer.cs">
+      <DependentUpon>FormPull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormPush.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormPush.Designer.cs">
+      <DependentUpon>FormPush.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormPuttyError.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPuttyError.Designer.cs">
+      <DependentUpon>FormPuttyError.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormRebase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormRebase.Designer.cs">
+      <DependentUpon>FormRebase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormRemotes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormRemotes.Designer.cs">
+      <DependentUpon>FormRemotes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HelperDialogs\FormResetCurrentBranch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelperDialogs\FormResetCurrentBranch.Designer.cs">
+      <DependentUpon>FormResetCurrentBranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormResolveConflicts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormResolveConflicts.Designer.cs">
+      <DependentUpon>FormResolveConflicts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormRevertCommit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormRevertCommit.Designer.cs">
+      <DependentUpon>FormRevertCommit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\RevisionGridClasses\FormRevisionFilter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\RevisionGridClasses\FormRevisionFilter.Designer.cs">
+      <DependentUpon>FormRevisionFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormSettings.Designer.cs">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormStash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormStash.Designer.cs">
+      <DependentUpon>FormStash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormSubmodules.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormSubmodules.Designer.cs">
+      <DependentUpon>FormSubmodules.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormCreateTag.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormCreateTag.Designer.cs">
+      <DependentUpon>FormCreateTag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormVerify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormVerify.Designer.cs">
+      <DependentUpon>FormVerify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GitExtensionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormGitLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\BrowseDialog\FormGitLog.Designer.cs">
+      <DependentUpon>FormGitLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GitUICommands.cs" />
+    <Compile Include="GitUIEventArgs.cs" />
+    <Compile Include="Plugin\LoadedPlugins.cs" />
+    <Compile Include="UserControls\GravatarControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\GravatarControl.Designer.cs">
+      <DependentUpon>GravatarControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\MergeConflictHandler.cs" />
+    <Compile Include="CommandsDialogs\FormApplyPatch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormApplyPatch.Designer.cs">
+      <DependentUpon>FormApplyPatch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Native.cs" />
+    <Compile Include="OsShellUtil.cs" />
+    <Compile Include="UserControls\PatchGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\PatchGrid.Designer.cs">
+      <DependentUpon>PatchGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\RevisionGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\RevisionGrid.Designer.cs">
+      <DependentUpon>RevisionGrid.cs</DependentUpon>
+    </Compile>
+    
+    <Compile Include="SpellChecker\SpellCheckEditControl.cs" />
+    <Compile Include="SpellChecker\TextBoxHelper.cs" />
+    <Compile Include="UserControls\RevisionGridClasses\RevisionGridMenuCommands.cs" />
+    <Compile Include="UserControls\ToolStripEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\ToolStripGitStatus.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\ToolStripGitStatus.Designer.cs">
+      <DependentUpon>ToolStripGitStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SpellChecker\TextPos.cs" />
+    <Compile Include="UserControls\FolderBrowserButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\FolderBrowserButton.Designer.cs">
+      <DependentUpon>FolderBrowserButton.cs</DependentUpon>
+    </Compile>
+    
+    <!-- 
+    <Compile Include="RepoObjectsTree\ROT.Nodes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Branches.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\RepoObjectsTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\RepoObjectsTree.Designer.cs">
+      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Remotes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepoObjectsTree\ROT.Nodes.Tags.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    -->
+    <Compile Include="UserControls\WarningToolStripItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebBrowserEmulationMode.cs" />
+    <Compile Include="WindowPositionList.cs" />
+    <Compile Include="CommandsDialogs\CommitDialog\WordWrapper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CommandsDialogs\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\BrowseDialog\FormOpenDirectory.resx">
+      <DependentUpon>FormOpenDirectory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\BrowseDialog\FormUpdates.resx">
+      <DependentUpon>FormUpdates.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormCompareToBranch.resx">
+      <DependentUpon>FormCompareToBranch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormDiff.resx">
+      <DependentUpon>FormDiff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormMergeSubmodule.resx">
+      <DependentUpon>FormMergeSubmodule.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\RepoHosting\CreatePullRequestForm.resx">
+      <DependentUpon>CreatePullRequestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\RepoHosting\ForkAndCloneForm.resx">
+      <DependentUpon>ForkAndCloneForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\RepoHosting\ViewPullRequestsForm.resx">
+      <DependentUpon>ViewPullRequestsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    
+    <EmbeddedResource Include="CommandsDialogs\SearchWindow.resx">
+      <DependentUpon>SearchWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\BuildServerIntegrationSettingsPage.resx">
+      <DependentUpon>BuildServerIntegrationSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\CommitDialogSettingsPage.resx">
+      <DependentUpon>CommitDialogSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\AutoLayoutSettingsPage.resx">
+      <DependentUpon>AutoLayoutSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\RepoDistSettingsPage.resx">
+      <DependentUpon>RepoDistSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelperDialogs\FormBuildServerCredentials.resx">
+      <DependentUpon>FormBuildServerCredentials.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormatPatchDialog\SmtpCredentials.resx">
+      <DependentUpon>SmtpCredentials.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\RevisionLinksSettingsPage.resx">
+      <DependentUpon>RevisionLinksSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\SettingsPageHeader.resx">
+      <DependentUpon>SettingsPageHeader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Plugins\PluginRootIntroductionPage.resx">
+      <DependentUpon>PluginRootIntroductionPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Notifications\NotificationPopup.resx">
+      <DependentUpon>NotificationPopup.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="UserControls\BranchSelector.resx">
+      <DependentUpon>BranchSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\CommitPickerSmallControl.resx">
+      <DependentUpon>CommitPickerSmallControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\CommitSummaryUserControl.resx">
+      <DependentUpon>CommitSummaryUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\FormGoToLine.resx">
+      <DependentUpon>FormGoToLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelperDialogs\FormChooseCommit.resx">
+      <DependentUpon>FormChooseCommit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\CommitDialog\FormCommitTemplateSettings.resx">
+      <DependentUpon>FormCommitTemplateSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormCheckoutBranch.resx">
+      <DependentUpon>FormCheckoutBranch.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\BrowseDialog\FormRecentReposSettings.resx">
+      <DependentUpon>FormRecentReposSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormRenameBranch.resx">
+      <DependentUpon>FormRenameBranch.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\BranchComboBox.resx">
+      <DependentUpon>BranchComboBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\FileViewer.resx">
+      <DependentUpon>FileViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\BrowseDialog\FormGoToCommit.resx">
+      <DependentUpon>FormGoToCommit.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormResetChanges.resx">
+      <DependentUpon>FormResetChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelperDialogs\FormSelectMultipleBranches.resx">
+      <DependentUpon>FormSelectMultipleBranches.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormSvnClone.resx">
+      <DependentUpon>FormSvnClone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormViewPatch.resx">
+      <DependentUpon>FormViewPatch.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\BlameControl.resx">
+      <DependentUpon>BlameControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormBlame.resx">
+      <DependentUpon>FormBlame.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\FileViewerInternal.resx">
+      <DependentUpon>FileViewerInternal.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\BrowseDialog\FormBisect.resx">
+      <DependentUpon>FormBisect.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\FormChooseTranslation.resx">
+      <DependentUpon>FormChooseTranslation.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormEditor.resx">
+      <DependentUpon>FormEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormGitAttributes.resx">
+      <DependentUpon>FormGitAttributes.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormBrowse.resx">
+      <DependentUpon>FormBrowse.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormCommit.resx">
+      <DependentUpon>FormCommit.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommitInfo\CommitInfo.resx">
+      <DependentUpon>CommitInfo.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\BrowseDialog\DashboardControl\Dashboard.resx">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\BrowseDialog\DashboardControl\DashboardCategory.resx">
+      <DependentUpon>DashboardCategory.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\BrowseDialog\DashboardControl\DashboardEditor.resx">
+      <DependentUpon>DashboardEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\BrowseDialog\DashboardControl\DashboardItem.resx">
+      <DependentUpon>DashboardItem.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\GotoUserManualControl.resx">
+      <DependentUpon>GotoUserManualControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\RemotesComboboxControl.resx">
+      <DependentUpon>RemotesComboboxControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\RevisionGridClasses\DvcsGraph.resx">
+      <DependentUpon>DvcsGraph.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\FileStatusList.resx">
+      <DependentUpon>FileStatusList.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormCherryPick.resx">
+      <DependentUpon>FormCherryPick.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelperDialogs\FormRunScriptSpecify.resx">
+      <DependentUpon>FormRunScriptSpecify.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\HelpImageDisplayUserControl.resx">
+      <DependentUpon>HelpImageDisplayUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\ControlHotkeys.resx">
+      <DependentUpon>ControlHotkeys.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Script\SimplePrompt.resx">
+      <DependentUpon>SimplePrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\AdvancedSettingsPage.resx">
+      <DependentUpon>AdvancedSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\AppearanceSettingsPage.resx">
+      <DependentUpon>AppearanceSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\ChecklistSettingsPage.resx">
+      <DependentUpon>ChecklistSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\ColorsSettingsPage.resx">
+      <DependentUpon>ColorsSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\ConfirmationsSettingsPage.resx">
+      <DependentUpon>ConfirmationsSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\GitExtensionsSettingsPage.resx">
+      <DependentUpon>GitExtensionsSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\GitSettingsPage.resx">
+      <DependentUpon>GitSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\GitConfigSettingsPage.resx">
+      <DependentUpon>GitConfigSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\HotkeysSettingsPage.resx">
+      <DependentUpon>HotkeysSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\ScriptsSettingsPage.resx">
+      <DependentUpon>ScriptsSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\ShellExtensionSettingsPage.resx">
+      <DependentUpon>ShellExtensionSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\SshSettingsPage.resx">
+      <DependentUpon>SshSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\StartPageSettingsPage.resx">
+      <DependentUpon>StartPageSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Plugins\PluginSettingsPage.resx">
+      <DependentUpon>PluginSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\SettingsTreeViewUserControl.resx">
+      <DependentUpon>SettingsTreeViewUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\SimpleHelpDisplayDialog.resx">
+      <DependentUpon>SimpleHelpDisplayDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpellChecker\EditNetSpell.resx">
+      <DependentUpon>EditNetSpell.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\FindAndReplaceForm.resx">
+      <DependentUpon>FindAndReplaceForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormAddFiles.resx">
+      <DependentUpon>FormAddFiles.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SubmodulesDialog\FormAddSubmodule.resx">
+      <DependentUpon>FormAddSubmodule.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormAddToGitIgnore.resx">
+      <DependentUpon>FormAddToGitIgnore.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormArchive.resx">
+      <DependentUpon>FormArchive.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormCreateBranch.resx">
+      <DependentUpon>FormCreateBranch.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\BrowseDialog\FormChangeLog.resx">
+      <DependentUpon>FormChangeLog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormCheckoutRevision.resx">
+      <DependentUpon>FormCheckoutRevision.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormCleanupRepository.resx">
+      <DependentUpon>FormCleanupRepository.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormClone.resx">
+      <DependentUpon>FormClone.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormCommandlineHelp.resx">
+      <DependentUpon>FormCommandlineHelp.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\BrowseDialog\FormCommitCount.resx">
+      <DependentUpon>FormCommitCount.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\BrowseDialog\DashboardControl\FormDashboardCategoryTitle.resx">
+      <DependentUpon>FormDashboardCategoryTitle.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\BrowseDialog\DashboardControl\FormDashboardEditor.resx">
+      <DependentUpon>FormDashboardEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormDeleteBranch.resx">
+      <DependentUpon>FormDeleteBranch.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormDeleteTag.resx">
+      <DependentUpon>FormDeleteTag.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormLog.resx">
+      <DependentUpon>FormLog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelperDialogs\FormCommitDiff.resx">
+      <DependentUpon>FormCommitDiff.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\BrowseDialog\FormDonate.resx">
+      <DependentUpon>FormDonate.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelperDialogs\FormEdit.resx">
+      <DependentUpon>FormEdit.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormFileHistory.resx">
+      <DependentUpon>FormFileHistory.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\FormFixHome.resx">
+      <DependentUpon>FormFixHome.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormFormatPatch.resx">
+      <DependentUpon>FormFormatPatch.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormGitIgnore.resx">
+      <DependentUpon>FormGitIgnore.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormInit.resx">
+      <DependentUpon>FormInit.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormMailMap.resx">
+      <DependentUpon>FormMailMap.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormMergeBranch.resx">
+      <DependentUpon>FormMergeBranch.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\ResolveConflictsDialog\FormModifiedDeletedCreated.resx">
+      <DependentUpon>FormModifiedDeletedCreated.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormPull.resx">
+      <DependentUpon>FormPull.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormPush.resx">
+      <DependentUpon>FormPush.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPuttyError.resx">
+      <DependentUpon>FormPuttyError.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormRebase.resx">
+      <DependentUpon>FormRebase.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormRemotes.resx">
+      <DependentUpon>FormRemotes.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelperDialogs\FormResetCurrentBranch.resx">
+      <DependentUpon>FormResetCurrentBranch.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormResolveConflicts.resx">
+      <DependentUpon>FormResolveConflicts.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormRevertCommit.resx">
+      <DependentUpon>FormRevertCommit.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\RevisionGridClasses\FormRevisionFilter.resx">
+      <DependentUpon>FormRevisionFilter.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormSettings.resx">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSplash.resx">
+      <DependentUpon>FormSplash.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormStash.resx">
+      <DependentUpon>FormStash.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStatus.resx">
+      <DependentUpon>FormStatus.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormSubmodules.resx">
+      <DependentUpon>FormSubmodules.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormCreateTag.resx">
+      <DependentUpon>FormCreateTag.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormVerify.resx">
+      <DependentUpon>FormVerify.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\BrowseDialog\FormGitLog.resx">
+      <DependentUpon>FormGitLog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\GravatarControl.resx">
+      <DependentUpon>GravatarControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommandsDialogs\FormApplyPatch.resx">
+      <DependentUpon>FormApplyPatch.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\PatchGrid.resx">
+      <DependentUpon>PatchGrid.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <CustomToolNamespace>GitUI.Properties</CustomToolNamespace>
+      <LogicalName>GitUI.Properties.Resources.resources</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\RevisionGrid.resx">
+      <DependentUpon>RevisionGrid.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ToolStripGitStatus.resx">
+      <DependentUpon>ToolStripGitStatus.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    
+    <EmbeddedResource Include="UserControls\FolderBrowserButton.resx">
+      <DependentUpon>FolderBrowserButton.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <!--<ProjectReference Include="..\..\conemu-inside\ConEmuWinForms\ConEmuWinFormsLib.csproj" />-->
+    <ProjectReference Include="..\Externals\conemu-inside\ConEmuWinForms\ConEmuWinForms.csproj" />
+    <ProjectReference Include="..\Externals\Git.hub\Git.hub\Git.hubLib.csproj" />
+    <ProjectReference Include="..\GitCommands\GitCommandsLib.csproj">
+      <Project>{bd6aa2a2-997d-4aff-acc7-b64f6e51d181}</Project>
+      <Name>GitCommandsLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GitExtUtils\GitExtUtilsLib.csproj">
+      <Project>{0f1f1168-a4b2-4fa2-b17b-735140d17f39}</Project>
+      <Name>GitExtUtilsLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gravatar\GravatarLib.csproj">
+      <Project>{4041B976-50D0-4C6E-ABAF-7E67458A1264}</Project>
+      <Name>Gravatar</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\GitUIPluginInterfaces\GitUIPluginInterfacesLib.csproj">
+      <Project>{27559302-f35e-4b62-a6ec-11ff21a5fa6f}</Project>
+      <Name>GitUIPluginInterfacesLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ResourceManager\ResourceManagerLib.csproj">
+      <Project>{d3440fd7-afc5-4351-8741-6cdbf15ce944}</Project>
+      <Name>ResourceManager</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Bin\Logo\git-extensions-logo-final-128.png">
+      <Link>Resources\Icons\git-extensions-logo-final-128.png</Link>
+    </None>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Compile Include="FormRemoteProcess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRemoteProcess.Designer.cs">
+      <DependentUpon>FormRemoteProcess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandsDialogs\FormVerify.SortableLostObjectsList.cs">
+      <DependentUpon>FormVerify.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Script\SimplePrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Script\SimplePrompt.Designer.cs">
+      <DependentUpon>SimplePrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Script\SplitButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <None Include="gituikey.snk.pfx" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\GitCommands.GitItem.datasource" />
+    <None Include="Properties\DataSources\GitCommands.GitItemStatus.datasource" />
+    <None Include="Properties\DataSources\GitCommands.GitRevision.datasource" />
+    <None Include="Resources\Icons\3.png" />
+    <None Include="Resources\Icons\33.png" />
+    <None Include="Resources\Icons\35.png" />
+    <None Include="Resources\Icons\4.png" />
+    <None Include="Resources\Icons\40.png" />
+    <None Include="Resources\Icons\50.png" />
+    <None Include="Resources\Icons\7.png" />
+    <None Include="Resources\Icons\71.png" />
+    <None Include="Resources\Icons\77.png" />
+    <None Include="Resources\Icons\82.png" />
+    <None Include="Resources\Icons\Added.png" />
+    <None Include="Resources\Icons\arrow_refresh.png" />
+    <None Include="Resources\Icons\arrow_refresh_dirty.png" />
+    <None Include="Resources\Icons\bash.png" />
+    <None Include="Resources\Icons\BranchCheckout.png" />
+    <None Include="Resources\Icons\BranchCreate.png" />
+    <None Include="Resources\Icons\BranchDelete.png" />
+    <None Include="Resources\Icons\bug.png" />
+    <None Include="Resources\Icons\Copied.png" />
+    <None Include="Resources\Icons\Cow.png" />
+    <None Include="Resources\Icons\Cow_sunglass.png" />
+    <None Include="Resources\Icons\Cow_xmass.png" />
+    <None Include="Resources\Icons\Delete.png" />
+    <None Include="Resources\Icons\develop.ico" />
+    <None Include="Resources\Icons\dollar.ico" />
+    <None Include="Resources\Icons\Donate.jpg" />
+    <None Include="Resources\Icons\double_arrow_down.png" />
+    <None Include="Resources\Icons\double_arrow_up.png" />
+    <None Include="Resources\Icons\edit_clear_2_16.png" />
+    <None Include="Resources\Icons\error.png" />
+    <None Include="Resources\Icons\folder_remote_2_16.png" />
+    <None Include="Resources\Icons\HelpCommandMergeFastForward.png" />
+    <None Include="Resources\Icons\HelpPullMergeFastForward.png" />
+    <None Include="Resources\Icons\history.png" />
+    <None Include="Resources\Icons\IconAddToGitIgnore.png" />
+    <None Include="Resources\Icons\IconBlame.png" />
+    <None Include="Resources\Icons\IconBlank.png" />
+    <None Include="Resources\Icons\IconCherryPick.png" />
+    <None Include="Resources\Icons\IconClean.png" />
+    <None Include="Resources\Icons\IconCloneRepoGit.png" />
+    <None Include="Resources\Icons\IconCloneRepoGithub.png" />
+    <None Include="Resources\Icons\IconCloneRepoSvn.png" />
+    <None Include="Resources\Icons\IconCommit.png" />
+    <None Include="Resources\Icons\IconCopyToClipboard.png" />
+    <None Include="Resources\Icons\IconDiff.png" />
+    <None Include="Resources\Icons\IconDiffTool.png" />
+    <None Include="Resources\Icons\IconDirty.png" />
+    <None Include="Resources\Icons\IconDirtySubmodules.png" />
+    <None Include="Resources\Icons\IconEditFile.png" />
+    <None Include="Resources\Icons\IconEditGitIgnore.png" />
+    <None Include="Resources\Icons\IconFileHistory.png" />
+    <None Include="Resources\Icons\IconFileStatusUnknown.png" />
+    <None Include="Resources\Icons\IconFileTree.png" />
+    <None Include="Resources\Icons\IconFilter.png" />
+    <None Include="Resources\Icons\IconFind.png" />
+    <None Include="Resources\Icons\IconGotoCommit.png" />
+    <None Include="Resources\Icons\IconGotoCurrentRevision.png" />
+    <None Include="Resources\Icons\IconGotoManual.png" />
+    <None Include="Resources\Icons\IconMixed.png" />
+    <None Include="Resources\Icons\IconPreview.png" />
+    <None Include="Resources\Icons\IconRecoverLostObjects.png" />
+    <None Include="Resources\Icons\IconRepoCreate.png" />
+    <None Include="Resources\Icons\IconRepoOpen.png" />
+    <None Include="Resources\Icons\IconResetCurrentBranchToHere.png" />
+    <None Include="Resources\Icons\IconResetFileTo.png" />
+    <None Include="Resources\Icons\IconResetWorkingDirChanges.png" />
+    <None Include="Resources\Icons\IconRevertCommit.png" />
+    <None Include="Resources\Icons\IconSave.png" />
+    <None Include="Resources\Icons\IconSelectBranch.png" />
+    <None Include="Resources\Icons\IconSelectRevision.png" />
+    <None Include="Resources\Icons\IconShowFirstParent.png" />
+    <None Include="Resources\Icons\IconStage.png" />
+    <None Include="Resources\Icons\IconStageAll.png" />
+    <None Include="Resources\Icons\IconStaged.png" />
+    <None Include="Resources\Icons\IconSubmoduleDirty.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionDown.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionDownDirty.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionSemiDown.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionSemiDownDirty.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionSemiUp.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionSemiUpDirty.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionUp.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionUpDirty.png" />
+    <None Include="Resources\Icons\IconSubmodulesManage.png" />
+    <None Include="Resources\Icons\IconSubmodulesSync.png" />
+    <None Include="Resources\Icons\IconSubmodulesUpdate.png" />
+    <None Include="Resources\Icons\IconUnstage.png" />
+    <None Include="Resources\Icons\IconUnstageAll.png" />
+    <None Include="Resources\Icons\IconViewFile.png" />
+    <None Include="Resources\Icons\IconWarning.png" />
+    <None Include="Resources\Icons\loadingpanel.gif" />
+    <None Include="Resources\Icons\loadingpanel_static.png" />
+    <None Include="Resources\Icons\Modified.png" />
+    <None Include="Resources\Icons\nonprintchar.png" />
+    <None Include="Resources\Icons\pageant.png" />
+    <None Include="Resources\Icons\pageant_16.png" />
+    <None Include="Resources\Icons\PullFetch.png" />
+    <None Include="Resources\Icons\PullFetchAll.png" />
+    <None Include="Resources\Icons\PullMerge.png" />
+    <None Include="Resources\Icons\PullRebase.png" />
+    <None Include="Resources\Icons\putty.png" />
+    <None Include="Resources\Icons\puttygen.png" />
+    <None Include="Resources\Icons\RecentRepositories.png" />
+    <None Include="Resources\Icons\Removed.png" />
+    <None Include="Resources\Icons\Renamed.png" />
+    <None Include="Resources\Icons\RevisionCheckout.png" />
+    <None Include="Resources\Icons\rss.png" />
+    <None Include="Resources\Icons\showEntireFile.png" />
+    <None Include="Resources\Icons\SplitViewLayout.png" />
+    <None Include="Resources\Icons\stash.png" />
+    <None Include="Resources\Icons\statistic.png" />
+    <None Include="Resources\Icons\StatusHourglass.png" />
+    <None Include="Resources\Icons\success.png" />
+    <None Include="Resources\Icons\TagCreate.png" />
+    <None Include="Resources\Icons\TagDelete.png" />
+    <None Include="Resources\Icons\User.PNG" />
+    <None Include="Translation\Czech.Plugins.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Czech.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Dutch.Plugins.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Dutch.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\French.Plugins.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\French.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\German.Plugins.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\German.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Italian.Plugins.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Italian.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Japanese.Plugins.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Japanese.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Korean.Plugins.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Korean.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Polish.Plugins.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Polish.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Portuguese %28Brazil%29.Plugins.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Portuguese %28Brazil%29.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Portuguese %28Portugal%29.Plugins.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Portuguese %28Portugal%29.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Romanian.Plugins.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Romanian.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Russian.Plugins.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Russian.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Simplified Chinese.Plugins.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Simplified Chinese.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Spanish.Plugins.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Spanish.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Traditional Chinese.Plugins.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Translation\Traditional Chinese.xlf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <!--
+	<Content Include="RepoObjectsTree\BlankIcon.png" />
+	-->
+    <Content Include="RepoObjectsTree\BlankIcon.png" />
+    <Content Include="Resources\Icons\commit_error.png" />
+    <Content Include="Resources\Icons\commit_ok.png" />
+    <Content Include="Resources\Icons\commit_warning.png" />
+    <Content Include="Resources\Icons\certificate_error.png" />
+    <Content Include="Resources\Icons\certificate_ok.png" />
+    <Content Include="Resources\Icons\14.png" />
+    <Content Include="Resources\Icons\2.png" />
+    <Content Include="Resources\Icons\21.png" />
+    <Content Include="Resources\Icons\24.png" />
+    <Content Include="Resources\Icons\26.png" />
+    <Content Include="Resources\Icons\27.png" />
+    <Content Include="Resources\Icons\49.png" />
+    <Content Include="Resources\Icons\5.png" />
+    <Content Include="Resources\Icons\52.png" />
+    <Content Include="Resources\Icons\53.png" />
+    <Content Include="Resources\Icons\6.png" />
+    <Content Include="Resources\Icons\8.png" />
+    <Content Include="Resources\Icons\86.png" />
+    <Content Include="Resources\Icons\90.png" />
+    <Content Include="Resources\Icons\BuildCancelled.png" />
+    <Content Include="Resources\Icons\BuildFailed.png" />
+    <Content Include="Resources\Icons\BuildSuccessful.png" />
+    <Content Include="Resources\Icons\decrease.png" />
+    <Content Include="Resources\Icons\gitex.png" />
+    <Content Include="Resources\Icons\HelpCommandMerge.png" />
+    <Content Include="Resources\Icons\HelpCommandRebase.png" />
+    <Content Include="Resources\Icons\HelpPullFetch.png" />
+    <Content Include="Resources\Icons\HelpPullMerge.png" />
+    <Content Include="Resources\Icons\HelpPullRebase.png" />
+    <Content Include="Resources\Icons\IconArchiveRevision.png" />
+    <Content Include="Resources\Icons\IconBranchCheckout.png" />
+    <Content Include="Resources\Icons\IconBranchCreate.png" />
+    <Content Include="Resources\Icons\IconBrowseFileExplorer.png" />
+    <Content Include="Resources\Icons\IconConsole.png" />
+    <Content Include="Resources\Icons\IconFolderSubmodule.png" />
+    <Content Include="Resources\Icons\IconKey.png" />
+    <Content Include="Resources\Icons\IconManageRemotes.png" />
+    <Content Include="Resources\Icons\IconMerge.png" />
+    <Content Include="Resources\Icons\IconRebase.png" />
+    <Content Include="Resources\Icons\IconSaveAs.png" />
+    <Content Include="Resources\Icons\IconSubmoduleAdded.png" />
+    <Content Include="Resources\Icons\IconUntrackedOnly.png" />
+    <Content Include="Resources\Icons\increase.png" />
+    <Content Include="Resources\Icons\light_bulb_icon_off_16.png" />
+    <Content Include="Resources\Icons\light_bulb_icon_on_16.png" />
+    <Content Include="Resources\Icons\whitespace.png" />
+    <Content Include="Resources\Icons\tag_error.png" />
+    <Content Include="Resources\Icons\tag_ok.png" />
+    <Content Include="Resources\Icons\tag_many.png" />
+    <Content Include="Resources\Icons\tag_error.png" />
+    <Content Include="Resources\Icons\tag_many.png" />
+    <Content Include="Resources\Icons\tag_ok.png" />
+    <Content Include="Resources\Icons\tag_warning.png" />
+    <Content Include="Resources\Icons\CollapseAll.png" />
+    <Content Include="Resources\Icons\ExpandAll.png" />
+    <Content Include="Resources\Icons\Branch.png" />
+    <Content Include="Resources\Icons\CheckOut.png" />
+    <Content Include="Resources\Icons\DeleteRed.png" />
+    <Content Include="Resources\Icons\BranchFrom.png" />
+    <Content Include="Resources\Icons\RemoteBranch.png" />
+    <Content Include="Resources\Icons\RemoteRepo.png" />
+    <Content Include="Resources\Icons\LocalRepo.png" />
+    <Content Include="Translation\Czech.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Translation\Dutch.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Translation\English.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Translation\French.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Translation\German.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Translation\Italian.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Translation\Japanese.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Translation\Korean.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Translation\Polish.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Translation\Portuguese %28Brazil%29.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Translation\Portuguese %28Portugal%29.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Translation\Romanian.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Translation\Russian.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Translation\Simplified Chinese.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Translation\Spanish.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Translation\Traditional Chinese.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="..\Bin\Logo\cow-head-blue.ico">
+      <Link>Resources\ApplicationIcons\cow-head-blue.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\cow-head-green.ico">
+      <Link>Resources\ApplicationIcons\cow-head-green.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\cow-head-purple.ico">
+      <Link>Resources\ApplicationIcons\cow-head-purple.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\cow-head-red.ico">
+      <Link>Resources\ApplicationIcons\cow-head-red.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\cow-head-yellow.ico">
+      <Link>Resources\ApplicationIcons\cow-head-yellow.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\cow-head.ico">
+      <Link>Resources\ApplicationIcons\cow-head.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\git-extensions-logo-final.ico">
+      <Link>Resources\ApplicationIcons\git-extensions-logo-final.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\git-extensions-logo-final_blue.ico">
+      <Link>Resources\ApplicationIcons\git-extensions-logo-final_blue.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\git-extensions-logo-final_green.ico">
+      <Link>Resources\ApplicationIcons\git-extensions-logo-final_green.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\git-extensions-logo-final_lightblue.ico">
+      <Link>Resources\ApplicationIcons\git-extensions-logo-final_lightblue.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\git-extensions-logo-final_mixed.ico">
+      <Link>Resources\ApplicationIcons\git-extensions-logo-final_mixed.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\git-extensions-logo-final_mixed_blue.ico">
+      <Link>Resources\ApplicationIcons\git-extensions-logo-final_mixed_blue.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\git-extensions-logo-final_mixed_green.ico">
+      <Link>Resources\ApplicationIcons\git-extensions-logo-final_mixed_green.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\git-extensions-logo-final_mixed_lightblue.ico">
+      <Link>Resources\ApplicationIcons\git-extensions-logo-final_mixed_lightblue.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\git-extensions-logo-final_mixed_purple.ico">
+      <Link>Resources\ApplicationIcons\git-extensions-logo-final_mixed_purple.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\git-extensions-logo-final_mixed_red.ico">
+      <Link>Resources\ApplicationIcons\git-extensions-logo-final_mixed_red.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\git-extensions-logo-final_mixed_yellow.ico">
+      <Link>Resources\ApplicationIcons\git-extensions-logo-final_mixed_yellow.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\git-extensions-logo-final_purple.ico">
+      <Link>Resources\ApplicationIcons\git-extensions-logo-final_purple.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\git-extensions-logo-final_red.ico">
+      <Link>Resources\ApplicationIcons\git-extensions-logo-final_red.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\git-extensions-logo-final_yellow.ico">
+      <Link>Resources\ApplicationIcons\git-extensions-logo-final_yellow.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\x-with-arrow.ico">
+      <Link>Resources\ApplicationIcons\x-with-arrow.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\x-with-arrow_blue.ico">
+      <Link>Resources\ApplicationIcons\x-with-arrow_blue.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\x-with-arrow_green.ico">
+      <Link>Resources\ApplicationIcons\x-with-arrow_green.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\x-with-arrow_lightblue.ico">
+      <Link>Resources\ApplicationIcons\x-with-arrow_lightblue.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\x-with-arrow_purple.ico">
+      <Link>Resources\ApplicationIcons\x-with-arrow_purple.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\x-with-arrow_red.ico">
+      <Link>Resources\ApplicationIcons\x-with-arrow_red.ico</Link>
+    </None>
+    <None Include="..\Bin\Logo\x-with-arrow_yellow.ico">
+      <Link>Resources\ApplicationIcons\x-with-arrow_yellow.ico</Link>
+    </None>
+    <None Include="Resources\Icons\IconDirty.png" />
+    <None Include="Resources\Icons\IconMixed.png" />
+    <None Include="Resources\Icons\IconClean.png" />
+    <None Include="Resources\Icons\arrow_refresh_dirty.png" />
+    <None Include="Resources\Icons\double_arrow_down.png" />
+    <None Include="Resources\Icons\double_arrow_up.png" />
+    <None Include="Resources\Icons\Added.png" />
+    <None Include="Resources\Icons\Modified.png" />
+    <None Include="Resources\Icons\pageant.png" />
+    <None Include="Resources\Icons\putty.png" />
+    <None Include="Resources\Icons\success.png" />
+    <None Include="Resources\Icons\rss.png" />
+    <None Include="Resources\Icons\history.png" />
+    <None Include="Resources\Icons\IconDirtySubmodules.png" />
+    <None Include="Resources\Icons\stash.png" />
+    <None Include="Resources\Icons\50.png" />
+    <None Include="Resources\Icons\showEntireFile.png" />
+    <None Include="Resources\Icons\33.png" />
+    <None Include="Resources\Icons\35.png" />
+    <None Include="Resources\Icons\3.png" />
+    <None Include="Resources\Icons\4.png" />
+    <None Include="Resources\Icons\bash.png" />
+    <None Include="Resources\Icons\40.png" />
+    <None Include="Resources\Icons\71.png" />
+    <None Include="Resources\Icons\77.png" />
+    <None Include="Resources\Icons\pageant_16.png" />
+    <None Include="Resources\Icons\puttygen.png" />
+    <None Include="Resources\Icons\82.png" />
+    <None Include="Resources\Icons\statistic.png" />
+    <None Include="Resources\Icons\PullFetch.png" />
+    <None Include="Resources\Icons\PullMerge.png" />
+    <None Include="Resources\Icons\PullRebase.png" />
+    <None Include="Resources\Icons\PullFetchAll.png" />
+    <None Include="Resources\Icons\loadingpanel_static.png" />
+    <None Include="Resources\Icons\Delete.png" />
+    <None Include="Resources\Icons\edit_clear_2_16.png" />
+    <None Include="Resources\Icons\folder_remote_2_16.png" />
+    <None Include="Resources\Icons\BranchCreate.png" />
+    <None Include="Resources\Icons\TagCreate.png" />
+    <None Include="Resources\Icons\BranchCheckout.png" />
+    <None Include="Resources\Icons\RevisionCheckout.png" />
+    <None Include="Resources\Icons\BranchDelete.png" />
+    <None Include="Resources\Icons\IconCherryPick.png" />
+    <None Include="Resources\Icons\TagDelete.png" />
+    <None Include="Resources\Icons\IconPreview.png" />
+    <None Include="Resources\Icons\7.png" />
+    <None Include="Resources\Icons\StatusHourglass.png" />
+    <None Include="Resources\Icons\IconResetWorkingDirChanges.png" />
+    <None Include="Resources\Icons\IconResetCurrentBranchToHere.png" />
+    <None Include="Resources\Icons\IconFileHistory.png" />
+    <None Include="Resources\Icons\IconCopyToClipboard.png" />
+    <None Include="Resources\Icons\IconBlame.png" />
+    <None Include="Resources\Icons\IconEditFile.png" />
+    <None Include="Resources\Icons\IconFind.png" />
+    <None Include="Resources\Icons\IconDiff.png" />
+    <None Include="Resources\Icons\IconRecoverLostObjects.png" />
+    <None Include="Resources\Icons\IconViewFile.png" />
+    <None Include="Resources\Icons\IconFileTree.png" />
+    <None Include="Resources\Icons\IconCommit.png" />
+    <None Include="Resources\Icons\IconFilter.png" />
+    <None Include="Resources\Icons\IconDiffTool.png" />
+    <None Include="Resources\Icons\IconCloneRepoGit.png" />
+    <None Include="Resources\Icons\IconCloneRepoGithub.png" />
+    <None Include="Resources\Icons\IconCloneRepoSvn.png" />
+    <None Include="Resources\Icons\IconSave.png" />
+    <None Include="Resources\Icons\IconResetFileTo.png" />
+    <None Include="Resources\Icons\IconGotoCommit.png" />
+    <None Include="Resources\Icons\IconSelectBranch.png" />
+    <None Include="Resources\Icons\IconSelectRevision.png" />
+    <None Include="Resources\Icons\IconEditGitIgnore.png" />
+    <None Include="Resources\Icons\IconAddToGitIgnore.png" />
+    <None Include="Resources\Icons\IconStage.png" />
+    <None Include="Resources\Icons\IconStageAll.png" />
+    <None Include="Resources\Icons\IconSubmodulesManage.png" />
+    <None Include="Resources\Icons\IconSubmodulesSync.png" />
+    <None Include="Resources\Icons\IconSubmodulesUpdate.png" />
+    <None Include="Resources\Icons\IconUnstage.png" />
+    <None Include="Resources\Icons\IconUnstageAll.png" />
+    <None Include="Resources\Icons\RecentRepositories.png" />
+    <None Include="Resources\Icons\IconRepoCreate.png" />
+    <None Include="Resources\Icons\IconRepoOpen.png" />
+    <None Include="Resources\Icons\IconSubmoduleDirty.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionDown.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionUp.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionDownDirty.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionUpDirty.png" />
+    <None Include="Resources\Icons\IconRevertCommit.png" />
+    <None Include="Resources\Icons\HelpPullMergeFastForward.png" />
+    <None Include="Resources\Icons\HelpCommandMergeFastForward.png" />
+    <Content Include="Resources\Icons\BuildCancelled.png" />
+    <Content Include="Resources\Icons\BuildFailed.png" />
+    <Content Include="Resources\Icons\BuildSuccessful.png" />
+    <None Include="Resources\Icons\IconGotoManual.png" />
+    <None Include="Resources\Icons\IconWarning.png" />
+    <None Include="Resources\Icons\IconGotoCurrentRevision.png" />
+    <None Include="Resources\Icons\IconFileStatusUnknown.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionDown2.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionSemiDown.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionSemiDownDirty.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionSemiUp.png" />
+    <None Include="Resources\Icons\IconSubmoduleRevisionSemiUpDirty.png" />
+    <Content Include="Resources\Sounds\cow-moo.wav" />
+    <None Include="Properties\DataSources\GitUI.Script.ScriptInfo.datasource" />
+    <None Include="Properties\DataSources\GitCommands.Repository.datasource" />
+    <None Include="Properties\DataSources\GitCommands.GitSubmodule.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Resources\ChangeLog.md" />
+    <None Include="Properties\DataSources\GitCommands.GitBlame.datasource" />
+    <None Include="Properties\DataSources\GitCommands.GitHead.datasource" />
+    <None Include="Properties\DataSources\GitCommands.GitStash.datasource" />
+    <None Include="Properties\DataSources\PatchApply.PatchFile.datasource" />
+  </ItemGroup>
+  <ItemGroup />
+
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!--
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
+  <Import Project="..\packages\ConEmu.Core.16.3.10.0\build\ConEmu.Core.Targets" Condition="Exists('..\packages\ConEmu.Core.16.3.10.0\build\ConEmu.Core.Targets')" />-->
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <!-- 
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\ConEmu.Core.16.3.10.0\build\ConEmu.Core.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ConEmu.Core.16.3.10.0\build\ConEmu.Core.Targets'))" />
+    -->
+  </Target>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <TextStylePolicy TabWidth="4" IndentWidth="4" RemoveTrailingWhitespace="True" NoTabsAfterNonTabs="False" EolMarker="Native" FileWidth="80" TabsToSpaces="True" scope="text/x-csharp">
+            <inheritsSet />
+            <inheritsScope />
+          </TextStylePolicy>
+          <CSharpFormattingPolicy IndentBlock="True" IndentBraces="False" IndentSwitchCaseSection="True" LabelPositioning="OneLess" NewLinesForBracesInTypes="True" NewLinesForBracesInMethods="True" SpaceWithinMethodDeclarationParenthesis="False" SpaceBetweenEmptyMethodDeclarationParentheses="False" SpaceWithinMethodCallParentheses="False" SpaceBetweenEmptyMethodCallParentheses="False" SpaceAfterControlFlowStatementKeyword="True" SpaceWithinExpressionParentheses="False" SpaceWithinCastParentheses="False" SpaceWithinOtherParentheses="False" SpaceAfterCast="False" SpacesIgnoreAroundVariableDeclaration="False" SpaceBetweenEmptySquareBrackets="False" SpaceWithinSquareBrackets="False" SpaceAfterColonInBaseTypeDeclaration="True" SpaceAfterComma="True" SpaceAfterDot="False" SpaceAfterSemicolonsInForStatement="True" SpaceBeforeColonInBaseTypeDeclaration="True" SpaceBeforeComma="False" SpaceBeforeDot="False" SpaceBeforeSemicolonsInForStatement="False" SpacingAroundBinaryOperator="Single" WrappingPreserveSingleLine="True" WrappingKeepStatementsOnSingleLine="True" PlaceSystemDirectiveFirst="True" IndentSwitchSection="True" NewLinesForBracesInProperties="True" NewLinesForBracesInAccessors="True" NewLinesForBracesInAnonymousMethods="True" NewLinesForBracesInControlBlocks="True" NewLinesForBracesInAnonymousTypes="True" NewLinesForBracesInObjectCollectionArrayInitializers="True" NewLinesForBracesInLambdaExpressionBody="True" NewLineForElse="True" NewLineForCatch="True" NewLineForFinally="True" NewLineForMembersInObjectInit="True" NewLineForMembersInAnonymousTypes="True" NewLineForClausesInQuery="True" SpacingAfterMethodDeclarationName="False" SpaceAfterMethodCallName="False" SpaceBeforeOpenSquareBracket="False" scope="text/x-csharp">
+            <inheritsSet />
+            <inheritsScope />
+          </CSharpFormattingPolicy>
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>

@@ -5,8 +5,8 @@ using System.Windows.Forms;
 using GitCommands;
 using GitCommands.Utils;
 using GitUI;
-using GitUI.CommandsDialogs.SettingsDialog;
-using GitUI.CommandsDialogs.SettingsDialog.Pages;
+//using GitUI.CommandsDialogs.SettingsDialog;
+//using GitUI.CommandsDialogs.SettingsDialog.Pages;
 
 namespace GitExtensions
 {
@@ -53,38 +53,39 @@ namespace GitExtensions
             }
 
             string[] args = Environment.GetCommandLineArgs();
-            FormSplash.ShowSplash();
+            //FormSplash.ShowSplash();
             //Store here SynchronizationContext.Current, because later sometimes it can be null
             //see http://stackoverflow.com/questions/11621372/synchronizationcontext-current-is-null-in-continuation-on-the-main-ui-thread
-            GitUIExtensions.UISynchronizationContext = SynchronizationContext.Current;
+            // GitUIExtensions.UISynchronizationContext = SynchronizationContext.Current;
             Application.DoEvents();
 
             AppSettings.LoadSettings();
             if (EnvUtils.RunningOnWindows())
             {
-              WebBrowserEmulationMode.SetBrowserFeatureControl();
+                // WebBrowserEmulationMode.SetBrowserFeatureControl();
 
-              //Quick HOME check:
-                FormSplash.SetAction("Checking home path...");
+                //Quick HOME check:
+                //FormSplash.SetAction("Checking home path...");
                 Application.DoEvents();
 
-                FormFixHome.CheckHomePath();
+                // FormFixHome.CheckHomePath();
             }
             //Register plugins
-            FormSplash.SetAction("Loading plugins...");
+            //FormSplash.SetAction("Loading plugins...");
             Application.DoEvents();
 
-            if (string.IsNullOrEmpty(AppSettings.Translation))
-            {
-                using (var formChoose = new FormChooseTranslation())
-                {
-                    formChoose.ShowDialog();
-                }
-            }
+            AppSettings.Translation = "English";
+            //if (string.IsNullOrEmpty(AppSettings.Translation))
+            //{
+            //    using (var formChoose = new FormChooseTranslation())
+            //    {
+            //        formChoose.ShowDialog();
+            //    }
+            //}
 
             try
             {
-                if (AppSettings.CheckSettings 
+                if (AppSettings.CheckSettings
                     || string.IsNullOrEmpty(AppSettings.GitCommandValue)
                     || !File.Exists(AppSettings.GitCommandValue))
                 {
