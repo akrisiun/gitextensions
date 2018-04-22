@@ -5,7 +5,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <EnableDefaultEmbededResourceItems>false</EnableDefaultEmbededResourceItems>
-    <Version>9.0.4-beta1</Version>
+    <Version>9.0.5-beta1</Version>
     <!--<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" 
     Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />-->
