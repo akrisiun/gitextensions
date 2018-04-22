@@ -77,3 +77,8 @@ Bin/*.vshost.*
 Bin/*.exe.manifest
 vendor/bin/
 *.pfx
+
+.vs/
+Externals/conemu-inside/
+*.zip
+*.nupkg
