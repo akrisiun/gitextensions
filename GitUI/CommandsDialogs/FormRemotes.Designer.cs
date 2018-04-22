@@ -630,6 +630,7 @@ namespace GitUI.CommandsDialogs
             this.Remotes.TileSize = new System.Drawing.Size(136, 18);
             this.Remotes.UseCompatibleStateImageBehavior = false;
             this.Remotes.View = System.Windows.Forms.View.Details;
+
             this.Remotes.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Remotes_MouseUp);
             // 
             // columnHeader1
@@ -1024,8 +1025,8 @@ namespace GitUI.CommandsDialogs
 
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ListBox Remotes;
-        private System.Windows.Forms.ListView Remotes;
+        protected System.Windows.Forms.ListBox Remotes;
+        // private System.Windows.Forms.ListView Remotes;
 
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
@@ -1093,9 +1094,10 @@ namespace GitUI.CommandsDialogs
         private System.Windows.Forms.Panel pnlMgtDetails;
         private System.Windows.Forms.TableLayoutPanel tblpnlMgtDetails;
         private System.Windows.Forms.Panel pnlManagementContainer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BranchName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RemoteCombo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MergeWith;
+
+        //private System.Windows.Forms.DataGridViewTextBoxColumn BranchName;
+        //private System.Windows.Forms.DataGridViewTextBoxColumn RemoteCombo;
+        //private System.Windows.Forms.DataGridViewTextBoxColumn MergeWith;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnToggleState;
         private System.Windows.Forms.ColumnHeader columnHeader1;

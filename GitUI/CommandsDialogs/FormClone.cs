@@ -18,7 +18,7 @@ namespace GitUI.CommandsDialogs
     public partial class FormClone : GitModuleForm
     {
         private readonly TranslationString _infoNewRepositoryLocation =
-            new TranslationString("The repository will be cloned to a new directory located here:"  + Environment.NewLine +
+            new TranslationString("The repository will be cloned to a new directory located here:" + Environment.NewLine +
                                   "{0}");
 
         private readonly TranslationString _infoDirectoryExists =
@@ -56,7 +56,7 @@ namespace GitUI.CommandsDialogs
             Translate();
             this.openedFromProtocolHandler = openedFromProtocolHandler;
             this.url = url;
-            _defaultBranchItems = new[] {_branchDefaultRemoteHead.Text, _branchNone.Text};
+            _defaultBranchItems = new[] { _branchDefaultRemoteHead.Text, _branchNone.Text };
             _NO_TRANSLATE_Branches.DataSource = _defaultBranchItems;
         }
 
@@ -133,13 +133,17 @@ namespace GitUI.CommandsDialogs
                 cbLfs.Checked = false;
         }
 
-        private bool CanBeGitURL(string anURL)
+        private void // bool
+            CanBeGitURL(string anURL)
         {
-            if (anURL == null)
+            try
             {
-                //if there is no destination directory, then use the parent directory of the current repository
-                if (_NO_TRANSLATE_To.Text.IsNullOrWhiteSpace() && Module.WorkingDir.IsNotNullOrWhitespace())
-                    _NO_TRANSLATE_To.Text = Path.GetDirectoryName(Module.WorkingDir.TrimEnd(Path.DirectorySeparatorChar));
+                if (anURL == null)
+                {
+                    //if there is no destination directory, then use the parent directory of the current repository
+                    if (_NO_TRANSLATE_To.Text.IsNullOrWhiteSpace() && Module.WorkingDir.IsNotNullOrWhitespace())
+                        _NO_TRANSLATE_To.Text = Path.GetDirectoryName(Module.WorkingDir.TrimEnd(Path.DirectorySeparatorChar));
+                }
             }
             catch (Exception)
             { }
@@ -164,7 +168,7 @@ namespace GitUI.CommandsDialogs
                 // Shallow clone params
                 int? depth = null;
                 bool? isSingleBranch = null;
-                if(!cbDownloadFullHistory.Checked)
+                if (!cbDownloadFullHistory.Checked)
                 {
                     depth = 1;
                     // Single branch considerations:
@@ -177,11 +181,11 @@ namespace GitUI.CommandsDialogs
 
                 // Branch name param
                 string branch = _NO_TRANSLATE_Branches.Text;
-                if(branch == _branchDefaultRemoteHead.Text)
+                if (branch == _branchDefaultRemoteHead.Text)
                     branch = "";
-                else if(branch == _branchNone.Text)
+                else if (branch == _branchNone.Text)
                     branch = null;
-                
+
                 var cloneCmd = GitCommandHelpers.CloneCmd(_NO_TRANSLATE_From.Text, dirTo,
                             CentralRepository.Checked, cbIntializeAllSubmodules.Checked, branch, depth, isSingleBranch, cbLfs.Checked);
                 using (var fromProcess = new FormRemoteProcess(Module, AppSettings.GitCommand, cloneCmd))
@@ -273,8 +277,8 @@ namespace GitUI.CommandsDialogs
 
         private void FormCloneLoad(object sender, EventArgs e)
         {
-            if (!GitCommandHelpers.Plink())
-                LoadSSHKey.Visible = false;
+            //if (!GitCommandHelpers.Plink())
+            //    LoadSSHKey.Visible = false;
         }
 
 
@@ -289,11 +293,11 @@ namespace GitUI.CommandsDialogs
 
             if (path != "")
             {
-              _NO_TRANSLATE_NewDirectory.Text = path;
+                _NO_TRANSLATE_NewDirectory.Text = path;
             }
 
             _NO_TRANSLATE_Branches.DataSource = _defaultBranchItems;
-            _NO_TRANSLATE_Branches.Select(0,0);   // Kill full selection on the default branch text
+            _NO_TRANSLATE_Branches.Select(0, 0);   // Kill full selection on the default branch text
 
             ToTextUpdate(sender, e);
         }

@@ -102,27 +102,29 @@ namespace GitUI.CommandsDialogs
 
             int width = 300;
 
+            //using (Graphics g = listBox1.CreateGraphics())
+            //{
+            //for (int i1 = 0; i1 < listBox1.Items.Count; i1++)
+            //{
+            //    int itemWidth = Convert.ToInt32(g.MeasureString(Convert.ToString(listBox1.Items[i1]), listBox1.Font).Width);
+
+            //    // listBoxSearchResult <- listBox1
+            //    if (listBox1.Items.Count == 0)
+            //    {
+            //        listBox1.Visible = false;
+            //        return;
+            //    }
+
+            listBox1.Visible = true;
+
+            int width = 300;
+
             using (Graphics g = listBox1.CreateGraphics())
             {
                 for (int i1 = 0; i1 < listBox1.Items.Count; i1++)
                 {
-                    int itemWidth = Convert.ToInt32(g.MeasureString(Convert.ToString(listBox1.Items[i1]), listBox1.Font).Width);
-
-            if (listBoxSearchResult.Items.Count == 0)
-            {
-                listBoxSearchResult.Visible = false;
-                return;
-            }
-
-            listBoxSearchResult.Visible = true;
-
-            int width = 300;
-
-            using (Graphics g = listBoxSearchResult.CreateGraphics())
-            {
-                for (int i1 = 0; i1 < listBoxSearchResult.Items.Count; i1++)
-                {
-                    int itemWidth = Convert.ToInt32(g.MeasureString(Convert.ToString(listBoxSearchResult.Items[i1]), listBoxSearchResult.Font).Width);
+                    int itemWidth = Convert.ToInt32(g.MeasureString(Convert.ToString(listBox1.Items[i1]),
+                        listBox1.Font).Width);
 
                     width = Math.Max(width, itemWidth);
                 }
@@ -135,8 +137,9 @@ namespace GitUI.CommandsDialogs
             Width = listBox1.Width;
             _onSizeChanged(new Size(width + Margin.Right + Margin.Left,
                 listBox1.Height + textBox1.Height));
-            var txtBoxOnScreen = PointToScreen(textBox1.Location + new Size(0, textBox1.Height));
+            // var txtBoxOnScreen = PointToScreen(textBox1.Location + new Size(0, textBox1.Height));
 
+            var txtBoxOnScreen = PointToScreen(textBox1.Location + new Size(0, textBox1.Height));
             if (ParentForm != null && !ParentForm.Controls.Contains(listBox1))
             {
                 ParentForm.Controls.Add(listBox1);
@@ -145,31 +148,29 @@ namespace GitUI.CommandsDialogs
             }
             listBox1.BringToFront();
 
-            listBoxSearchResult.Width = width;
-            listBoxSearchResult.Height = Math.Min(800, listBoxSearchResult.Font.Height * (listBoxSearchResult.Items.Count + 1));
 
-            Width = listBoxSearchResult.Width;
-            _onSizeChanged(new Size(width + Margin.Right + Margin.Left,
-                listBoxSearchResult.Height + txtSearchBox.Height));
-            var txtBoxOnScreen = PointToScreen(txtSearchBox.Location + new Size(0, txtSearchBox.Height));
+            //listBox1.Width = width;
+            //listBox1.Height = Math.Min(800, listBox1.Font.Height * (listBox1.Items.Count + 1));
 
-            if (ParentForm != null && !ParentForm.Controls.Contains(listBoxSearchResult))
-            {
-                ParentForm.Controls.Add(listBoxSearchResult);
-                var listBoxLocationOnScreen = txtBoxOnScreen;
-                listBoxSearchResult.Location = ParentForm.PointToClient(listBoxLocationOnScreen);
-            }
-            listBoxSearchResult.BringToFront();
+            //Width = listBox1.Width;
+            //_onSizeChanged(new Size(width + Margin.Right + Margin.Left,
+            //    listBox1.Height + txtSearchBox.Height));
+            //var txtBoxOnScreen = PointToScreen(txtSearchBox.Location + new Size(0, txtSearchBox.Height));
+
+            //if (ParentForm != null && !ParentForm.Controls.Contains(listBox1))
+            //{
+            //    ParentForm.Controls.Add(listBox1);
+            //    var listBoxLocationOnScreen = txtBoxOnScreen;
+            //    listBox1.Location = ParentForm.PointToClient(listBoxLocationOnScreen);
+            //}
+            //listBox1.BringToFront();
 
         }
 
         public T SelectedItem
         {
-
             get { return (T)listBox1.SelectedItem; }
-
-            get { return (T)listBoxSearchResult.SelectedItem; }
-
+            // get { return (T)listBoxSearchResult.SelectedItem; }
         }
 
         void IDisposable.Dispose()

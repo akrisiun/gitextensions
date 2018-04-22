@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GitCommands.Config;
 using GitUIPluginInterfaces;
+using System.Diagnostics.CodeAnalysis;
 
 namespace GitCommands.Remote
 {
@@ -62,7 +63,6 @@ namespace GitCommands.Remote
         internal static readonly string DisabledSectionPrefix = "-";
         internal static readonly string SectionRemote = "remote";
         private readonly IGitModule _module;
-
 
         public GitRemoteManager(IGitModule module)
         {
@@ -138,6 +138,8 @@ namespace GitCommands.Remote
                                           .ToArray();
         }
 
+        public IList<GitRemote> Remotes { get; protected set; }
+
         /// <summary>
         /// Loads the list of remotes configured in .git/config file.
         /// </summary>
@@ -150,15 +152,19 @@ namespace GitCommands.Remote
                 return remotes;
             }
 
-            PopulateRemotes(remotes, true);
+            //PopulateRemotes(remotes, true);
+
             if (loadDisabled)
             {
                 Remotes.Clear();
 
-                IEnumerable<GitRemote> gitRemotes = null; // _module.GetRemotes().Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+                IEnumerable<string> gitRemotes =
+                    _module.GetRemotesEmpty(true)
+                    .Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+
                 if (gitRemotes.Any())
                 {
-                    var remotes = gitRemotes.Select(remote => new GitRemote
+                    var remotesNew = gitRemotes.Select(remote => new GitRemote
                     {
                         // Name = remote,
                         Url = _module.GetSetting(string.Format(SettingKeyString.RemoteUrl, remote)),
@@ -167,7 +173,7 @@ namespace GitCommands.Remote
                         //PuttySshKey = _module.GetSetting(string.Format(SettingKeyString.RemotePuttySshKey, remote)),
                     }).ToList();
 
-                    Remotes.AddAll(remotes.OrderBy(x => x.Name));
+                    Remotes.AddAll(remotesNew.OrderBy(x => x.Name));
                 }
                 PopulateRemotes(remotes, false);
             }
@@ -258,12 +264,13 @@ namespace GitCommands.Remote
                 }
             }
 
-            UpdateSettings(string.Format(SettingKeyString.RemoteUrl, remoteName), remoteUrl);
-            UpdateSettings(string.Format(SettingKeyString.RemotePushUrl, remoteName), remotePushUrl);
+            //UpdateSettings(string.Format(SettingKeyString.RemoteUrl, remoteName), remoteUrl);
+            //UpdateSettings(string.Format(SettingKeyString.RemotePushUrl, remoteName), remotePushUrl);
+
             //UpdateSettings(string.Format(SettingKeyString.RemotePuttySshKey, remoteName), remotePuttySshKey);
             UpdateSettings(remoteName, remoteDisabled, SettingKeyString.RemoteUrl, remoteUrl);
             UpdateSettings(remoteName, remoteDisabled, SettingKeyString.RemotePushUrl, remotePushUrl);
-            UpdateSettings(remoteName, remoteDisabled, SettingKeyString.RemotePuttySshKey, remotePuttySshKey);
+            // UpdateSettings(remoteName, remoteDisabled, SettingKeyString.RemotePuttySshKey, remotePuttySshKey);
 
             return new GitRemoteSaveResult(output, updateRemoteRequired);
         }
@@ -339,9 +346,9 @@ namespace GitCommands.Remote
                     Disabled = !enabled,
                     Name = remote,
                     Url = _module.GetSetting(GetSettingKey(SettingKeyString.RemoteUrl, remote, enabled)),
-                    Push = _module.GetSettings(GetSettingKey(SettingKeyString.RemotePush, remote, enabled)).ToList(),
+                    // Push = _module.GetSettings(GetSettingKey(SettingKeyString.RemotePush, remote, enabled)).ToList(),
                     PushUrl = _module.GetSetting(GetSettingKey(SettingKeyString.RemotePushUrl, remote, enabled)),
-                    PuttySshKey = _module.GetSetting(GetSettingKey(SettingKeyString.RemotePuttySshKey, remote, enabled)),
+                    // PuttySshKey = _module.GetSetting(GetSettingKey(SettingKeyString.RemotePuttySshKey, remote, enabled)),
                 }));
             }
         }

@@ -43,6 +43,11 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Remote\GitRemoteController.cs" />
+    <Compile Include="Remote\GitRemoteManager.cs" />
+    <Compile Include="Remote\RepoNameExtractor.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="System.Reactive.Interfaces" Version="3.1.1" />
     <PackageReference Include="System.IO.Abstractions" Version="2.0.0.144" />
     <Reference Include="SmartFormat, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -52,7 +57,8 @@
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     
-    <!--<Reference Include="System.IO.Abstractions, Version=2.0.0.144, Culture=neutral, processorArchitecture=MSIL">
+    <!--
+    <Reference Include="System.IO.Abstractions, Version=2.0.0.144, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Abstractions.2.0.0.144\lib\net40\System.IO.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>-->

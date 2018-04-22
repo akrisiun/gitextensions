@@ -20,13 +20,10 @@ namespace GitUI
 {
     using GitItemsWithParents = IDictionary<string, IList<GitItemStatus>>;
 
-
     public sealed partial class FileStatusList : GitModuleControl, IFileStatusList
+    { 
+        public delegate string DescribeRevisionDelegate(string sha1);
 
-    public delegate string DescribeRevisionDelegate(string sha1);
-
-    public sealed partial class FileStatusList : GitModuleControl
-    {
         private readonly TranslationString _UnsupportedMultiselectAction =
             new TranslationString("Operation not supported");
         private readonly TranslationString _DiffWithParent =
@@ -58,6 +55,7 @@ namespace GitUI
                 .Throttle(SelectedIndexChangeThrottleDuration)
                 .ObserveOn(SynchronizationContext.Current)
                 .Subscribe(_ => FileStatusListView_SelectedIndexChanged());
+
 
             SelectFirstItemOnSetItems = true;
             _noDiffFilesChangesDefaultText = NoFiles.Text;
@@ -1191,4 +1189,19 @@ namespace GitUI
         }
     }
 
+    internal class Observable
+    {
+        public static IDisposable FromEventPattern(object obj, params object[] data)
+        {
+            selectedIndexChangeSubscription = Observable.FromEventPattern(
+                h => FileStatusListView.SelectedIndexChanged += h,
+                h => FileStatusListView.SelectedIndexChanged -= h)
+                .Throttle(SelectedIndexChangeThrottleDuration)
+                .ObserveOn(SynchronizationContext.Current)
+                .Subscribe(_ => FileStatusListView_SelectedIndexChanged());
+
+
+            return null;
+        }
+    }
 }

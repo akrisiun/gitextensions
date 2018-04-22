@@ -1,17 +1,10 @@
 ﻿
 ﻿using GitCommands;
+using GitUIPluginInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-namespace GitUI.UserControls.RevisionGridClasses
-{
-    public class GitRefListsForRevision
-using System.Collections.Generic;
-using System.Linq;
-using GitCommands;
-using GitUIPluginInterfaces;
 
 namespace GitUI.UserControls.RevisionGridClasses
 {
@@ -54,11 +47,11 @@ namespace GitUI.UserControls.RevisionGridClasses
             get { return _tags; }
         }
 
-        public IEnumerable<IGitRef> AllBranches => _allBranches.AsEnumerable();
+        //public IEnumerable<IGitRef> AllBranches => _allBranches.AsEnumerable();
 
-        public IEnumerable<IGitRef> AllTags => _tags.AsEnumerable();
+        //public IEnumerable<IGitRef> AllTags => _tags.AsEnumerable();
 
-        public IEnumerable<IGitRef> BranchesWithNoIdenticalRemotes => _branchesWithNoIdenticalRemotes.AsEnumerable();
+        //public IEnumerable<IGitRef> BranchesWithNoIdenticalRemotes => _branchesWithNoIdenticalRemotes.AsEnumerable();
 
         public string[] GetAllBranchNames()
         {

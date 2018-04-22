@@ -328,7 +328,7 @@ namespace GitUI.CommitInfo
 
         }
 
-        private void updateText()
+        private void updateText() { } 
         private void DisplayAvatarSetup(bool right)
         {
             tableLayout.SuspendLayout();
@@ -359,7 +359,7 @@ namespace GitUI.CommitInfo
             tableLayout.ResumeLayout(true);
         }
 
-        public void DisplayAvatarOnRight()
+        public void DisplayAvatarOnRight2()
         {
             DisplayAvatarSetup(true);
         }
@@ -457,7 +457,9 @@ namespace GitUI.CommitInfo
             gravatar1.Visible = AppSettings.ShowAuthorGravatar;
             if (AppSettings.ShowAuthorGravatar)
             {
-                gravatar1.LoadImageForEmail("");
+                // gravatar1.LoadImageForEmail("");
+            }
+
             _linkFactory.Clear();
             UpdateRevisionInfo();
             gravatar1.Visible = AppSettings.ShowAuthorGravatar;
@@ -478,7 +480,7 @@ namespace GitUI.CommitInfo
             if (AppSettings.ShowAuthorGravatar)
             {
 
-                gravatar1.LoadImageForEmail(matches[0].Groups[1].Value);
+                // gravatar1.LoadImageForEmail(matches[0].Groups[1].Value);
                 gravatar1.LoadImage(matches[0].Groups[1].Value);
 
             }
@@ -542,16 +544,17 @@ namespace GitUI.CommitInfo
         private string GetTagsWhichContainsThisCommit(IEnumerable<string> tags, bool showBranchesAsLinks)
         {
             var tagString = tags
-
                 .Select(s =>
                     // showBranchesAsLinks ? _linkFactory.CreateTagLink(s) :
                     WebUtility.HtmlEncode(s)
                 ).Join(", ");
-                .Select(s => showBranchesAsLinks ? _linkFactory.CreateTagLink(s) : WebUtility.HtmlEncode(s)).Join(", ");
 
+            //var tags2 = tagString
+            //    .Select(s => showBranchesAsLinks ? _linkFactory.CreateTagLink(s) : WebUtility.HtmlEncode(s)).Join(", ");
 
             if (!String.IsNullOrEmpty(tagString))
                 return Environment.NewLine + WebUtility.HtmlEncode(containedInTags.Text) + " " + tagString;
+
             return Environment.NewLine + WebUtility.HtmlEncode(containedInNoTag.Text);
         }
 
@@ -565,10 +568,10 @@ namespace GitUI.CommitInfo
             //    linksString = linksString.Combine(", ", _linkFactory.CreateLink(link.Caption, link.URI));
             //}
 
-            foreach (var link in links)
-            {
-                linksString = linksString.Combine(", ", _linkFactory.CreateLink(link.Caption, link.URI));
-            }
+            //foreach (var link in links)
+            //{
+            //    linksString = linksString.Combine(", ", _linkFactory.CreateLink(link.Caption, link.URI));
+            //}
 
 
             if (linksString.IsNullOrEmpty())

@@ -31,7 +31,6 @@ using ResourceManager;
 
 using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 using Settings = GitCommands.AppSettings;
-using System.Configuration;
 
 #if !__MonoCS__
 using Microsoft.WindowsAPICodePack.Taskbar;
@@ -163,7 +162,8 @@ namespace GitUI.CommandsDialogs
 
         public static Lazy<IRepoObjectsTree> LazyTree { get; set; }
         public static Action<string> StartCommit { get; set; }
-        public ITree Tree { get; set; } // IRepoObjectsTree
+        public IRepoObjectsTree Tree { get; set; } // ITree 
+
         IGitUICommands IFormBrowse.UICommands { get { return UICommands; } } // -> GitModuleForm
 
         public FormBrowse(GitUICommands aCommands, string filter)
@@ -221,7 +221,8 @@ namespace GitUI.CommandsDialogs
             RevisionGrid.OnToggleLeftPanelRequested = () => toggleLeftPanel_Click(null, null);
             _filterRevisionsHelper = new FilterRevisionsHelper(toolStripRevisionFilterTextBox, toolStripRevisionFilterDropDownButton, RevisionGrid, toolStripRevisionFilterLabel, ShowFirstParent, form: this);
             _filterBranchHelper = new FilterBranchHelper(toolStripBranchFilterComboBox, toolStripBranchFilterDropDownButton, RevisionGrid);
-            repoObjectsTree.FilterBranchHelper = _filterBranchHelper;
+
+            // repoObjectsTree.FilterBranchHelper = _filterBranchHelper;
             toolStripBranchFilterComboBox.DropDown += toolStripBranches_DropDown_ResizeDropDownWidth;
             revisionDiff.Bind(RevisionGrid, fileTree);
 
@@ -232,10 +233,6 @@ namespace GitUI.CommandsDialogs
             if (AppSettings.ShowGitStatusInBrowseToolbar && !Module.IsBareRepository())
             {
                 _toolStripGitStatus = new ToolStripGitStatus
-
-                                 {
-                                     ImageTransparentColor = Color.Magenta
-                                 };
                 {
                     ImageTransparentColor = Color.Magenta,
                     ImageScaling = ToolStripItemImageScaling.SizeToFit,
@@ -266,8 +263,8 @@ namespace GitUI.CommandsDialogs
 
             this.HotkeysEnabled = true;
             this.Hotkeys = HotkeySettingsManager.LoadHotkeys(HotkeySettingsName);
-            this.toolPanel.SplitterDistance = this.ToolStrip.Height;
-            this._dontUpdateOnIndexChange = false;
+            //this.toolPanel.SplitterDistance = this.ToolStrip.Height;
+            //this._dontUpdateOnIndexChange = false;
 
             GitUICommandsChanged += (a, e) =>
             {
@@ -297,7 +294,7 @@ namespace GitUI.CommandsDialogs
             FillTerminalTab();
 
             RecoverSplitterContainerLayout();
-            ManageWorktreeSupport();
+            // ManageWorktreeSupport();
             RecoverSplitterContainerLayout();
         }
 
@@ -307,7 +304,7 @@ namespace GitUI.CommandsDialogs
             {
                 RevisionInfo.Parent = RevisionsSplitContainer.Panel2;
                 RevisionsSplitContainer.SplitterDistance = RevisionsSplitContainer.Width - 420;
-                RevisionInfo.DisplayAvatarOnRight();
+                // RevisionInfo.DisplayAvatarOnRight();
                 CommitInfoTabControl.SuspendLayout();
                 CommitInfoTabControl.RemoveIfExists(CommitInfoTabPage);
                 CommitInfoTabControl.RemoveIfExists(TreeTabPage);
@@ -413,7 +410,7 @@ namespace GitUI.CommandsDialogs
                 TaskbarManager.Instance.ApplicationId = "GitExtensions";
             }
 #endif
-            SetSplitterPositions();
+            // SetSplitterPositions();
             HideVariableMainMenuItems();
 
             RevisionGrid.Load();
@@ -651,7 +648,7 @@ namespace GitUI.CommandsDialogs
         {
             CheckForMergeConflicts();
             UpdateStashCount();
-            UpdateSubmodulesList();
+            // UpdateSubmodulesList();
         }
 
         internal Keys GetShortcutKeys(Commands cmd)
@@ -1186,7 +1183,7 @@ namespace GitUI.CommandsDialogs
             revisionGpgInfo1.DisplayGpgInfo(info);
         }
 
-        private void FillBuildReport()
+        private void FillBuildReport1()
         {
             if (EnvUtils.IsMonoRuntime())
                 return;
@@ -1194,29 +1191,29 @@ namespace GitUI.CommandsDialogs
             var selectedRevisions = RevisionGrid.GetSelectedRevisions();
             var revision = selectedRevisions.Count == 1 ? selectedRevisions[0] : null;
 
-            if (_buildReportTabPageExtension == null)
-                _buildReportTabPageExtension = new BuildReportTabPageExtension(CommitInfoTabControl, _buildReportTabCaption.Text);
+            //if (_buildReportTabPageExtension == null)
+            //    _buildReportTabPageExtension = new BuildReportTabPageExtension(CommitInfoTabControl, _buildReportTabCaption.Text);
 
 
-                if (gitItem == null)
-                    subNode.Nodes.Add(new TreeNode());
-                else
-                {
-                    if (gitItem.IsTree)
-                    {
-                        subNode.ImageIndex = 1;
-                        subNode.SelectedImageIndex = 1;
-                        subNode.Nodes.Add(new TreeNode());
-                    }
-                    else
-                        if (gitItem.IsCommit)
-                        {
-                            subNode.ImageIndex = 2;
-                            subNode.SelectedImageIndex = 2;
-                            subNode.Text = item.Name + " (Submodule)";
-                        }
-                }
-            }
+            //if (gitItem == null)
+            //    subNode.Nodes.Add(new TreeNode());
+            //else
+            //{
+            //    if (gitItem.IsTree)
+            //    {
+            //        subNode.ImageIndex = 1;
+            //        subNode.SelectedImageIndex = 1;
+            //        subNode.Nodes.Add(new TreeNode());
+            //    }
+            //    else
+            //        if (gitItem.IsCommit)
+            //    {
+            //        subNode.ImageIndex = 2;
+            //        subNode.SelectedImageIndex = 2;
+            //        subNode.Text = item.Name + " (Submodule)";
+            //    }
+            //}
+
             _buildReportTabPageExtension.FillBuildReport(revision);
 
         }
@@ -2389,51 +2386,52 @@ namespace GitUI.CommandsDialogs
 
         }
 
-        private void CommandsToolStripMenuItem_DropDownOpening(object sender, System.EventArgs e)
+    private void CommandsToolStripMenuItem_DropDownOpening(object sender, System.EventArgs e)
+    {
+
+        base.OnClosing(e);
+        if (_dashboard != null)
+            _dashboard.SaveSplitterPositions();
+        try
         {
-
-            base.OnClosing(e);
-            if (_dashboard != null)
-                _dashboard.SaveSplitterPositions();
-            try
-            {
-                var settings = Properties.Settings.Default;
-                settings.FormBrowse_FileTreeSplitContainer_SplitterDistance = FileTreeSplitContainer.SplitterDistance;
-                settings.FormBrowse_DiffSplitContainer_SplitterDistance = DiffSplitContainer.SplitterDistance;
-                settings.FormBrowse_MainSplitContainer_SplitterDistance = MainSplitContainer.SplitterDistance;
-                settings.FormBrowse_LeftPanel_Collapsed = MainSplitContainer.Panel1Collapsed;
-                settings.Save();
-            }
-            catch (ConfigurationException)
-            {
-                //TODO: howto restore a corrupted config? Properties.Settings.Default.Reset() doesn't work.
-            }
+            var settings = Properties.Settings.Default;
+            settings.FormBrowse_FileTreeSplitContainer_SplitterDistance = FileTreeSplitContainer.SplitterDistance;
+            settings.FormBrowse_DiffSplitContainer_SplitterDistance = DiffSplitContainer.SplitterDistance;
+            settings.FormBrowse_MainSplitContainer_SplitterDistance = MainSplitContainer.SplitterDistance;
+            settings.FormBrowse_LeftPanel_Collapsed = MainSplitContainer.Panel1Collapsed;
+            settings.Save();
         }
-            //Most options do not make sense for artificial commits or no revision selected at all
-            var selectedRevisions = RevisionGrid.GetSelectedRevisions();
-            bool enabled = selectedRevisions.Count == 1 && !selectedRevisions[0].IsArtificial();
+        catch (ConfigurationException)
+        {
+            //TODO: howto restore a corrupted config? Properties.Settings.Default.Reset() doesn't work.
+        }
 
 
-            this.branchToolStripMenuItem.Enabled =
-            this.deleteBranchToolStripMenuItem.Enabled =
-            this.mergeBranchToolStripMenuItem.Enabled =
-            this.rebaseToolStripMenuItem.Enabled =
-            this.stashToolStripMenuItem.Enabled =
-              selectedRevisions.Count>0 && !Module.IsBareRepository();
+        //Most options do not make sense for artificial commits or no revision selected at all
+        var selectedRevisions = RevisionGrid.GetSelectedRevisions();
+        bool enabled = selectedRevisions.Count == 1 && !selectedRevisions[0].IsArtificial();
 
-            this.resetToolStripMenuItem.Enabled =
-            this.checkoutBranchToolStripMenuItem.Enabled =
-            this.runMergetoolToolStripMenuItem.Enabled =
-            this.cherryPickToolStripMenuItem.Enabled =
-            this.checkoutToolStripMenuItem.Enabled =
-            this.bisectToolStripMenuItem.Enabled =
-              enabled && !Module.IsBareRepository();
 
-            this.tagToolStripMenuItem.Enabled =
+        this.branchToolStripMenuItem.Enabled =
+        this.deleteBranchToolStripMenuItem.Enabled =
+        this.mergeBranchToolStripMenuItem.Enabled =
+        this.rebaseToolStripMenuItem.Enabled =
+        this.stashToolStripMenuItem.Enabled =
+          selectedRevisions.Count > 0 && !Module.IsBareRepository();
+
+        this.resetToolStripMenuItem.Enabled =
+        this.checkoutBranchToolStripMenuItem.Enabled =
+        this.runMergetoolToolStripMenuItem.Enabled =
+        this.cherryPickToolStripMenuItem.Enabled =
+        this.checkoutToolStripMenuItem.Enabled =
+        this.bisectToolStripMenuItem.Enabled =
+          enabled && !Module.IsBareRepository();
+
+        this.tagToolStripMenuItem.Enabled =
             this.deleteTagToolStripMenuItem.Enabled =
             this.archiveToolStripMenuItem.Enabled =
-              enabled;
-        }
+          enabled;
+    }
 
         private void CloneSvnToolStripMenuItemClick(object sender, EventArgs e)
         {
@@ -3041,14 +3039,14 @@ namespace GitUI.CommandsDialogs
 					    startinfo.SetEnv("PATH", dirGit + ";" + "%PATH%");
 			    }
 
-			    terminal.Start(startinfo);
+			    // terminal.Start(startinfo);
 		    };
 	    }
 
         /// <summary>
         /// Adds a tab with console interface to Git over the current working copy. Recreates the terminal on tab activation if user exits the shell.
         /// </summary>
-        private void FillTerminalTab()
+        private void FillTerminalTab1()
         {
             if (!EnvUtils.RunningOnWindows() || !AppSettings.ShowConEmuTab.ValueOrDefault)
             {
@@ -3253,7 +3251,7 @@ namespace GitUI.CommandsDialogs
             ComboBoxHelper.ResizeComboBoxDropDownWidth (toolStripBranchFilterComboBox.ComboBox, AppSettings.BranchDropDownMinWidth, AppSettings.BranchDropDownMaxWidth);
         }
 
-        private void toggleLeftPanel_Click(object sender, EventArgs e)
+        private void toggleLeftPanel_Click1(object sender, EventArgs e)
         {
 
             MainSplitContainer.Panel1Collapsed = !MainSplitContainer.Panel1Collapsed;
@@ -3286,7 +3284,7 @@ namespace GitUI.CommandsDialogs
             MainSplitContainer.Panel1Collapsed = !MainSplitContainer.Panel1Collapsed;
         }
 
-        private void RecoverSplitterContainerLayout()
+        private void RecoverSplitterContainerLayout1()
         {
             var settings = Properties.Settings.Default;
             MainSplitContainer.SplitterDistance = settings.FormBrowse_MainSplitContainer_SplitterDistance;
@@ -3295,18 +3293,18 @@ namespace GitUI.CommandsDialogs
 
         private void manageWorktreeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var formManageWorktree = new FormManageWorktree(UICommands);
-            formManageWorktree.ShowDialog(this);
+            //var formManageWorktree = new FormManageWorktree(UICommands);
+            //formManageWorktree.ShowDialog(this);
 
         }
 
-        public void FormCommit_Shown(IFormCommit form)
+        public void FormCommit_Shown(Form form) // IFormCommit form)
         {
             throw new NotImplementedException();
         }
 
 
-        public bool StartCommitDialog(GitUIPluginInterfaces.IWin32Window owner, bool showOnlyWhenChanges)
+        public bool StartCommitDialog(IWin32Window owner, bool showOnlyWhenChanges)
         {
             throw new NotImplementedException();
         }

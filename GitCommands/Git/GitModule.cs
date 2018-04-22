@@ -1029,6 +1029,9 @@ namespace GitCommands
 
         #endregion
 
+
+        #region Shell Run UI
+
         public void RunGitK()
         {
             if (EnvUtils.RunningOnUnix())
@@ -1173,6 +1176,10 @@ namespace GitCommands
             shellPath = null;
             return false;
         }
+
+        #endregion
+
+        #region Init, Funcs
 
         public string Init(bool bare, bool shared)
         {
@@ -1335,6 +1342,8 @@ namespace GitCommands
         {
             return new ConfigFile(_workingDir + ".gitmodules", true);
         }
+
+        #endregion
 
         public string GetCurrentSubmoduleLocalPath()
         {
@@ -2306,12 +2315,14 @@ namespace GitCommands
             return GetRemotes(true);
         }
 
+        public string[] GetRemotesEmpty(bool allowEmpty) => GetRemotes(allowEmpty);
+
         /// <summary>
         /// Retrieves registered remotes by running <c>git remote show</c> command.
         /// </summary>
         /// <param name="allowEmpty"></param>
         /// <returns>Registered remotes.</returns>
-        public string[] GetRemotes(bool allowEmpty)
+        string[] GetRemotes(bool allowEmpty)
         {
             string remotes = RunGitCmd("remote show");
             return allowEmpty ? remotes.Split('\n') : remotes.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);

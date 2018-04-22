@@ -3,9 +3,22 @@ using System;
 
 namespace GitUI
 {
-    public class GitUICommandsChangedEventArgs2 : EventArgs
+    /// <summary>Provides <see cref="GitUICommands"/> and a change notification.</summary>
+    public interface IGitUICommandsSource
     {
-        public GitUICommandsChangedEventArgs2(GitUICommands oldCommands)
+        /// <summary>Raised after <see cref="UICommands"/> changes.</summary>
+        /// GitUICommandsChangedEventArgs
+        /// GitUICommandsSourceEventArgs
+        event EventHandler<GitUICommandsSourceEventArgs> GitUICommandsChanged;
+
+        /// <summary>Gets the <see cref="GitUICommands"/> value.</summary>
+        GitUICommands UICommands { get; }
+        IGitUICommands ICommands { get; }
+    }
+
+    public class GitUICommandsChangedEventArgs : EventArgs
+    {
+        public GitUICommandsChangedEventArgs(GitUICommands oldCommands)
         {
             OldCommands = oldCommands;
         }
@@ -23,13 +36,7 @@ namespace GitUI
         public IGitUICommandsSource GitUICommandsSource { get; private set; }
     }
 
-    /// <summary>Provides <see cref="GitUICommands"/> and a change notification.</summary>
-    public interface IGitUICommandsSource2
-    {
-        /// <summary>Raised after <see cref="UICommands"/> changes.</summary>
-        event EventHandler<GitUICommandsChangedEventArgs> GitUICommandsChanged;
-        /// <summary>Gets the <see cref="GitUICommands"/> value.</summary>
-        GitUICommands UICommands { get; }
-        IGitUICommands ICommands { get; }
-    }
+    public interface IGitUICommandsSource2 : IGitUICommandsSource { } 
+
+    
 }

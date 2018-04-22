@@ -1,7 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!--
+    <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <PropertyGroup>
+    -->
+    <TargetFramework>net461</TargetFramework>
+    <Configurations>Debug</Configurations>
+    <Platforms>AnyCPU</Platforms>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <SetTargetFramework>TargetFramework=net461</SetTargetFramework>
+    <LangVersion>7</LangVersion>
+
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+
+    <!--<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\FxCop.targets" />
   <PropertyGroup>
+  -->
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
@@ -16,44 +40,22 @@
     <AssemblyOriginatorKeyFile>gituikey.snk.pfx</AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <!--<SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>-->
+    <!--<RestorePackages>true</RestorePackages>-->
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <ReleaseVersion>2.48</ReleaseVersion>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <!--<TargetFrameworkProfile>
+    </TargetFrameworkProfile>-->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\net461</OutputPath>
     <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;NET45;__MonoCS__;WIN;NOAPICODE;TRANS;NOSKIN;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
@@ -63,52 +65,31 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NoWarn>1573</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
-
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\net461\Release</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-
-    <CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet></CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ConEmu.WinForms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=00340228797aafb8, processorArchitecture=MSIL">
-      <HintPath>..\packages\ConEmu.Control.WinForms.1.0.20160313.1\lib\net40\ConEmu.WinForms.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PSTaskDialog">
       <HintPath>..\Bin\PSTaskDialog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
     </Reference>
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Reactive.Core, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reactive.Core.3.1.1\lib\net46\System.Reactive.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reactive.Interfaces.3.1.1\lib\net45\System.Reactive.Interfaces.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reactive.Linq, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reactive.Linq.3.1.1\lib\net46\System.Reactive.Linq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reactive.PlatformServices, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reactive.PlatformServices.3.1.1\lib\net46\System.Reactive.PlatformServices.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data" />
@@ -118,9 +99,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\CommonAssemblyInfo.cs">
+    <!--<Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
-    </Compile>
+    </Compile>-->
+    
     <Compile Include="AutoCompletion\CommitAutoCompleteProvider.cs" />
     <Compile Include="AutoCompletion\IAutoCompleteProvider.cs" />
     <Compile Include="BuildServerIntegration\BuildInfoDrawingLogic.cs" />
@@ -220,7 +202,18 @@
       <DependentUpon>ViewPullRequestsForm.cs</DependentUpon>
     </Compile>
 
-    <Compile Include="CommandsDialogs\SearchControl.cs">
+    <Compile Include="CommandsDialogs\SearchControl.cs" />
+    <Compile Include="CommandsDialogs\SearchControl.Designer.cs" />
+    <!--
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SearchControl.resx</DependentUpon>
+    </Compile> 
+    -->
+    <EmbeddedResource Include="CommandsDialogs\SearchControl.resx">
+      <DependentUpon>SearchControl.cs</DependentUpon>
+    </EmbeddedResource>
+    
     <Compile Include="CommandsDialogs\SearchWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -242,12 +235,10 @@
       <DependentUpon>FormAvailableEncodings.cs</DependentUpon>
     </Compile>
     <Compile Include="CommandsDialogs\SettingsDialog\Pages\DiffViewerSettingsPage.cs">
-
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CommandsDialogs\SearchControl.Designer.cs">
-      <DependentUpon>SearchControl.cs</DependentUpon>
-    </Compile>
+    
+    
     <Compile Include="CommandsDialogs\SettingsDialog\Pages\BuildServerIntegrationSettingsPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -288,7 +279,6 @@
     <Compile Include="RevisionDiffInfoProvider.cs" />
     <Compile Include="RevisionDiffKind.cs" />
     <Compile Include="FormStatusOutputLog.cs" />
-
     <Compile Include="CommandsDialogs\WorktreeDialog\FormCreateWorktree.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -301,7 +291,7 @@
     <Compile Include="CommandsDialogs\WorktreeDialog\FormManageWorktree.Designer.cs">
       <DependentUpon>FormManageWorktree.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStatusOutputLog.cs" />
+    
     <Compile Include="Editor\Diff\CombinedDiffHighlightService.cs" />
     <Compile Include="Editor\Diff\DiffHighlightService.cs" />
     <Compile Include="Editor\Diff\DiffLineNumAnalyzer.cs" />
@@ -352,7 +342,6 @@
     <Compile Include="Helpers\SystemExtensions.cs" />
     <Compile Include="Helpers\TreeViewExtensions.cs" />
     <Compile Include="Hotkey\KeysExtensions.cs" />
-
     <Compile Include="Notifications\NotificationFeed.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -377,12 +366,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Script\PowerShellHelper.cs" />
-
     <Compile Include="RepoHosts.cs" />
     <Compile Include="Script\ScriptRunner.cs" />
     <Compile Include="AutoCompletion\AutoCompleteWord.cs" />
-
     <Compile Include="HelperDialogs\IFileStatusList.cs" />
+    
     <Compile Include="RepoObjectsTree\IRepoObjectsTree.cs" />
     <Compile Include="RepoObjectsTree\RepoObjectsTree.cs">
       <SubType>UserControl</SubType>
@@ -390,9 +378,14 @@
     <Compile Include="RepoObjectsTree\RepoObjectsTree.Designer.cs">
       <DependentUpon>RepoObjectsTree.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RepoObjectsTree\RepoObjectsTree.resx">
+      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
+    </EmbeddedResource>
+    
     <Compile Include="RepoObjectsTree\ROT.ContextActions.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    
     <Compile Include="RepoObjectsTree\ROT.DragDrops.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -415,14 +408,10 @@
       <SubType>UserControl</SubType>
     </Compile>
     <!-- 
-    <Compile Include="RepoObjectsTree\RepoObjectsTree.cs" />
-    <Compile Include="RepoObjectsTree\RepoObjectsTree.Designer.cs">
-    </Compile>
     <Compile Include="RepoObjectsTree\ROT.ContextActions.cs" />
     <Compile Include="RepoObjectsTree\ROT.DragDrops.cs" />
     <Compile Include="RepoObjectsTree\ROT.Nodes.Branches.cs" />
     <Compile Include="RepoObjectsTree\ROT.Nodes.cs" />
-    <Compile Include="RepoObjectsTree\ROT.Nodes.Remotes.cs" />
     <Compile Include="RepoObjectsTree\ROT.Nodes.Stashes.cs" />
     <Compile Include="RepoObjectsTree\ROT.Nodes.Submodules.cs" />
     <Compile Include="RepoObjectsTree\ROT.Nodes.Tags.cs" />
@@ -430,7 +419,6 @@
     <Compile Include="SplitterManager.cs" />
     <Compile Include="SpellChecker\SpellCheckerHelper.cs" />
     <Compile Include="SpellChecker\WordAtCursorExtractor.cs" />
-
     <Compile Include="UserControls\BranchComboBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -475,10 +463,8 @@
     <Compile Include="UserControls\GotoUserManualControl.Designer.cs">
       <DependentUpon>GotoUserManualControl.cs</DependentUpon>
     </Compile>
-
     <Compile Include="UserControls\IRevisionGrid.cs" />
     <Compile Include="UserControls\PathFormatter.cs" />
-
     <Compile Include="UserControls\RevisionGridClasses\CopyToClipboardMenuHelper.cs" />
     <Compile Include="UserControls\RevisionGridClasses\CaptionCustomMenuRenderer.cs" />
     <Compile Include="UserControls\RevisionGridClasses\FollowParentRewriter.cs" />
@@ -772,12 +758,12 @@
     <Compile Include="Plugin\PluginExtraction.cs" />
     <Compile Include="ProcessOutputTimer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    
     <Compile Include="Properties\Resources.Custom.cs">
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="RepoObjectsTree\ROT.ContextActions.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    
+    
     <Compile Include="Script\ScriptInfo.cs" />
     <Compile Include="Script\ScriptManager.cs" />
     <Compile Include="CommandsDialogs\SettingsDialog\CheckSettingsLogic.cs" />
@@ -1184,12 +1170,7 @@
     <Compile Include="UserControls\RevisionGrid.Designer.cs">
       <DependentUpon>RevisionGrid.cs</DependentUpon>
     </Compile>
-    <Compile Include="CommandsDialogs\SearchControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CommandsDialogs\SearchControl.Designer.cs">
-      <DependentUpon>SearchControl.cs</DependentUpon>
-    </Compile>
+    
     <Compile Include="SpellChecker\SpellCheckEditControl.cs" />
     <Compile Include="SpellChecker\TextBoxHelper.cs" />
     <Compile Include="UserControls\RevisionGridClasses\RevisionGridMenuCommands.cs" />
@@ -1209,6 +1190,8 @@
     <Compile Include="UserControls\FolderBrowserButton.Designer.cs">
       <DependentUpon>FolderBrowserButton.cs</DependentUpon>
     </Compile>
+    
+    <!-- 
     <Compile Include="RepoObjectsTree\ROT.Nodes.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1227,6 +1210,7 @@
     <Compile Include="RepoObjectsTree\ROT.Nodes.Tags.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    -->
     <Compile Include="UserControls\WarningToolStripItem.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1281,10 +1265,7 @@
       <DependentUpon>ViewPullRequestsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-
-    <EmbeddedResource Include="CommandsDialogs\SearchControl.resx">
-      <DependentUpon>SearchControl.cs</DependentUpon>
-    </EmbeddedResource>
+    
     <EmbeddedResource Include="CommandsDialogs\SearchWindow.resx">
       <DependentUpon>SearchWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -1296,7 +1277,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\DiffViewerSettingsPage.resx">
       <DependentUpon>DiffViewerSettingsPage.cs</DependentUpon>
-
     </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\BuildServerIntegrationSettingsPage.resx">
       <DependentUpon>BuildServerIntegrationSettingsPage.cs</DependentUpon>
@@ -1304,7 +1284,6 @@
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\CommitDialogSettingsPage.resx">
       <DependentUpon>CommitDialogSettingsPage.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\AutoLayoutSettingsPage.resx">
       <DependentUpon>AutoLayoutSettingsPage.cs</DependentUpon>
     </EmbeddedResource>
@@ -1320,7 +1299,6 @@
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\RepoDistSettingsPage.resx">
       <DependentUpon>RepoDistSettingsPage.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="CommandsDialogs\WorktreeDialog\FormCreateWorktree.resx">
       <DependentUpon>FormCreateWorktree.cs</DependentUpon>
     </EmbeddedResource>
@@ -1346,14 +1324,7 @@
     <EmbeddedResource Include="Notifications\NotificationPopup.resx">
       <DependentUpon>NotificationPopup.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RepoObjectsTree\RepoObjectsTree.resx">
-      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
-    </EmbeddedResource>
-    <!-- 
-    <EmbeddedResource Include="RepoObjectsTree\RepoObjectsTree.resx">
-      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
-    </EmbeddedResource>
-	-->
+
     <EmbeddedResource Include="UserControls\BranchSelector.resx">
       <DependentUpon>BranchSelector.cs</DependentUpon>
     </EmbeddedResource>
@@ -1757,18 +1728,13 @@
       <DependentUpon>ToolStripGitStatus.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="CommandsDialogs\SearchControl.resx">
-      <DependentUpon>SearchControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+    
     <EmbeddedResource Include="UserControls\FolderBrowserButton.resx">
       <DependentUpon>FolderBrowserButton.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RepoObjectsTree\RepoObjectsTree.resx">
-      <DependentUpon>RepoObjectsTree.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\conemu-inside\ConEmuWinForms\ConEmuWinFormsLib.csproj" />
     <ProjectReference Include="..\Externals\Git.hub\Git.hub\Git.hub.csproj">
       <Project>{f50b1dbf-1c9f-4437-87ec-7aba805cc446}</Project>
       <Name>Git.hub</Name>
@@ -1777,23 +1743,19 @@
       <Project>{bd6aa2a2-997d-4aff-acc7-b64f6e51d181}</Project>
       <Name>GitCommandsLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GitExtUtils\GitExtUtils.csproj">
+    <ProjectReference Include="..\GitExtUtils\GitExtUtilsLib.csproj">
       <Project>{0f1f1168-a4b2-4fa2-b17b-735140d17f39}</Project>
-      <Name>GitExtUtils</Name>
+      <Name>GitExtUtilsLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Gravatar\Gravatar.csproj">
+    <ProjectReference Include="..\Gravatar\GravatarLib.csproj">
       <Project>{4041B976-50D0-4C6E-ABAF-7E67458A1264}</Project>
       <Name>Gravatar</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NetSpell.SpellChecker\SpellChecker.csproj">
-      <Project>{A426EE0B-E52E-4D74-AF24-06797142D7B2}</Project>
-      <Name>SpellChecker</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Plugins\GitUIPluginInterfaces\GitUIPluginInterfacesLib.csproj">
-      <Project>{569aa141-87a2-4b9c-b4b0-5af26ec264d2}</Project>
+      <Project>{27559302-f35e-4b62-a6ec-11ff21a5fa6f}</Project>
       <Name>GitUIPluginInterfacesLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ResourceManager\ResourceManager.csproj">
+    <ProjectReference Include="..\ResourceManager\ResourceManagerLib.csproj">
       <Project>{d3440fd7-afc5-4351-8741-6cdbf15ce944}</Project>
       <Name>ResourceManager</Name>
     </ProjectReference>
@@ -2037,7 +1999,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-
     <!--
 	<Content Include="RepoObjectsTree\BlankIcon.png" />
 	-->
@@ -2104,7 +2065,6 @@
     <Content Include="Resources\Icons\RemoteBranch.png" />
     <Content Include="Resources\Icons\RemoteRepo.png" />
     <Content Include="Resources\Icons\LocalRepo.png" />
-
     <Content Include="Translation\Czech.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2234,7 +2194,6 @@
     <None Include="..\Bin\Logo\x-with-arrow_yellow.ico">
       <Link>Resources\ApplicationIcons\x-with-arrow_yellow.ico</Link>
     </None>
-
     <None Include="Resources\Icons\IconDirty.png" />
     <None Include="Resources\Icons\IconMixed.png" />
     <None Include="Resources\Icons\IconClean.png" />
@@ -2351,10 +2310,11 @@
     <None Include="Properties\DataSources\PatchApply.PatchFile.datasource" />
   </ItemGroup>
   <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 
+  <!--<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
-  <Import Project="..\packages\ConEmu.Core.16.3.10.0\build\ConEmu.Core.Targets" Condition="Exists('..\packages\ConEmu.Core.16.3.10.0\build\ConEmu.Core.Targets')" />
+  <Import Project="..\packages\ConEmu.Core.16.3.10.0\build\ConEmu.Core.Targets" Condition="Exists('..\packages\ConEmu.Core.16.3.10.0\build\ConEmu.Core.Targets')" />-->
+  
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <!-- 
     <PropertyGroup>

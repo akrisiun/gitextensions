@@ -14,6 +14,7 @@ using GitCommands.Remote;
 using GitUI.Script;
 using GitUI.UserControls;
 using ResourceManager;
+using GitUIPluginInterfaces;
 
 namespace GitUI.CommandsDialogs
 {
@@ -310,13 +311,8 @@ namespace GitUI.CommandsDialogs
                 //If the current branch is not the default push, and not known by the remote
                 //(as far as we know since we are disconnected....)
                 if (_NO_TRANSLATE_Branch.Text != AllRefs &&
-
                     RemoteBranch.Text != GetDefaultPushRemote(_NO_TRANSLATE_Remotes.Text, _NO_TRANSLATE_Branch.Text) &&
                     !IsBranchKnownToRemote(_NO_TRANSLATE_Remotes.Text, RemoteBranch.Text))
-
-                    RemoteBranch.Text != _remoteManager.GetDefaultPushRemote(_selectedRemote, _NO_TRANSLATE_Branch.Text) &&
-                    !IsBranchKnownToRemote(selectedRemoteName, RemoteBranch.Text))
-
                 {
                     //Ask if this is really what the user wants
                     if (!AppSettings.DontConfirmPushNewBranch &&

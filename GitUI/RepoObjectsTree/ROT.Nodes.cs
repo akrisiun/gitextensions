@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +13,7 @@ namespace GitUI.UserControls
 {
     partial class RepoObjectsTree
     {
-        class Nodes
+        public class Nodes
         {
             public readonly Tree Tree;
             public readonly Node OwnerNode;
@@ -110,7 +108,7 @@ namespace GitUI.UserControls
             public int Count { get { return NodesList.Count; } }
         }
 
-        abstract class Tree
+        public abstract class Tree
         {
             public readonly Nodes Nodes;
             private readonly IGitUICommandsSource UICommandsSource;
@@ -176,7 +174,7 @@ namespace GitUI.UserControls
             }
         }
 
-        abstract class Node
+        public abstract class Node
         {
             /// <summary>Gets the parent node.</summary>
             public Node ParentNode { get; internal set; }

@@ -25,7 +25,7 @@ namespace GitUI.UserControls
 
         public FilterBranchHelper FilterBranchHelper { private get; set; }
 
-        List<Tree> rootNodes = new List<Tree>();
+        // List<Tree> rootNodes = new List<Tree>();
         /// <summary>Image key for a head branch.</summary>
         private SearchControl<string> txtBranchCriterion;
         private readonly HashSet<string> _branchCriterionAutoCompletionSrc = new HashSet<string>();
@@ -45,8 +45,8 @@ namespace GitUI.UserControls
 
             treeMain.ShowNodeToolTips = true;
             treeMain.HideSelection = false;
-            treeMain.NodeMouseClick += OnNodeClick;
-            treeMain.NodeMouseDoubleClick += OnNodeDoubleClick;
+            //treeMain.NodeMouseClick += OnNodeClick;
+            //treeMain.NodeMouseDoubleClick += OnNodeDoubleClick;
 
             mnubtnFilterRemoteBranchInRevisionGrid.ToolTipText = showBranchOnly.Text;
             mnubtnFilterLocalBranchInRevisionGrid.ToolTipText = showBranchOnly.Text;
@@ -62,6 +62,7 @@ namespace GitUI.UserControls
                 OnBranchFilterChanged(null, null);
                 OnBtnSearchClicked(null, null);
             };
+
             //
             // txtBranchFilter
             //
@@ -69,7 +70,7 @@ namespace GitUI.UserControls
             this.txtBranchFilter.Name = "txtBranchFilter";
             this.txtBranchFilter.TabIndex = 1;
             this.txtBranchFilter.TextChanged += OnBranchFilterChanged;
-            this.txtBranchFilter.KeyDown += txtBranchFilter_KeyDown;
+            // this.txtBranchFilter.KeyDown += txtBranchFilter_KeyDown;
             this.branchFilterPanel.Controls.Add(txtBranchFilter, 1, 0);
 
             txtBranchFilter.PreviewKeyDown += OnPreviewKeyDown;
@@ -77,7 +78,7 @@ namespace GitUI.UserControls
 
         private IList<string> FilterBranch(string arg)
         {
-            return _branchFilterAutoCompletionSrc
+            // return _branchFilterAutoCompletionSrc
             txtBranchCriterion = new SearchControl<string>(SearchForBranch, i => { });
             txtBranchCriterion.OnTextEntered += () =>
             {
@@ -95,12 +96,12 @@ namespace GitUI.UserControls
             this.branchSearchPanel.Controls.Add(txtBranchCriterion, 1, 0);
 
             txtBranchCriterion.PreviewKeyDown += OnPreviewKeyDown;
+            return null;
         }
 
         private IList<string> SearchForBranch(string arg)
         {
             return _branchCriterionAutoCompletionSrc
-
                 .Where(r => r.IndexOf(arg, StringComparison.OrdinalIgnoreCase) != -1)
                 .ToList();
         }
@@ -113,7 +114,8 @@ namespace GitUI.UserControls
             }
         }
 
-        protected override void OnUICommandsSourceChanged(object sender, IGitUICommandsSource newSource)
+        protected // override
+            void OnUICommandsSourceChanged(object sender, IGitUICommandsSource2 newSource)
         {
             base.OnUICommandsSourceChanged(sender, newSource);
 
@@ -125,14 +127,9 @@ namespace GitUI.UserControls
             var localBranchesRootNode = new TreeNode(Strings.branches.Text)
             {
                 ImageKey = "RemoteRepo.png",
-
-            var localBranchesRootNode = new TreeNode(Strings.branches.Text)
-            {
-                ImageKey = "LocalRepo.png",
-
             };
             localBranchesRootNode.SelectedImageKey = localBranchesRootNode.ImageKey;
-            AddTree(new BranchTree(localBranchesRootNode, newSource));
+            // AddTree(new BranchTree(localBranchesRootNode, newSource));
 
             var remoteBranchesRootNode = new TreeNode(Strings.remotes.Text)
             {
@@ -141,11 +138,12 @@ namespace GitUI.UserControls
                 // ImageKey = "RemoteRepo.png",
             };
             remoteBranchesRootNode.SelectedImageKey = remoteBranchesRootNode.ImageKey;
-            _remoteTree = new RemoteBranchTree(remoteBranchesRootNode, newSource)
-            {
-                TreeViewNode = {ContextMenuStrip = menuRemotes}
-            };
-            AddTree(_remoteTree);
+
+            //_remoteTree = new RemoteBranchTree(remoteBranchesRootNode, newSource)
+            //{
+            //    TreeViewNode = {ContextMenuStrip = menuRemotes}
+            //};
+            //AddTree(_remoteTree);
 
             if (showTagsToolStripMenuItem.Checked)
             {
@@ -169,11 +167,13 @@ namespace GitUI.UserControls
 
             _branchFilterAutoCompletionSrc.Add(branchFullPath);
 
-            if(lastPart != null && lastPart != branchFullPath)
-            {
-                if (!_branchFilterAutoCompletionSrc.Contains(lastPart))
-                {
-                    _branchFilterAutoCompletionSrc.Add(lastPart);
+            //if (lastPart != null && lastPart != branchFullPath)
+            //{
+            //    if (!_branchFilterAutoCompletionSrc.Contains(lastPart))
+            //    {
+            //        _branchFilterAutoCompletionSrc.Add(lastPart);
+            //    }
+            //}
 
             _branchCriterionAutoCompletionSrc.Add(branchFullPath);
 
@@ -187,7 +187,7 @@ namespace GitUI.UserControls
             }
         }
 
-        void AddTree(Tree aTree)
+        public void AddTree(Tree aTree)
         {
             aTree.OnBranchesAdded += AddBranchesToAutoCompletionSrc;
             aTree.TreeViewNode.SelectedImageKey = aTree.TreeViewNode.ImageKey;
@@ -248,29 +248,30 @@ namespace GitUI.UserControls
             // todo: task exception handling
             CancelBackgroundTasks();
             var token = _cancelledTokenSource.Token;
-            _tasks = rootNodes.Select(r => r.ReloadTask(token)).ToArray();
-            Task.Factory.ContinueWhenAll(_tasks,
-                (t) =>
-                {
-                    if (!t.All(r => r.Status == TaskStatus.RanToCompletion))
-                    {
-                        return;
-                    }
-                    if (token.IsCancellationRequested)
-                    {
-                        return;
-                    }
-                    BeginInvoke(new Action(() =>
-                    {
-                        var autoCompletionSrc = new AutoCompleteStringCollection();
-                        autoCompletionSrc.AddRange(
+            //_tasks = rootNodes.Select(r => r.ReloadTask(token)).ToArray();
 
-                            _branchFilterAutoCompletionSrc.ToArray());
-                            _branchCriterionAutoCompletionSrc.ToArray());
+            //Task.Factory.ContinueWhenAll(_tasks,
+            //    (t) =>
+            //    {
+            //        if (!t.All(r => r.Status == TaskStatus.RanToCompletion))
+            //        {
+            //            return;
+            //        }
+            //        if (token.IsCancellationRequested)
+            //        {
+            //            return;
+            //        }
+            //        BeginInvoke(new Action(() =>
+            //        {
+            //            var autoCompletionSrc = new AutoCompleteStringCollection();
+            //            autoCompletionSrc.AddRange(
 
-                    }));
-                }, _cancelledTokenSource.Token);
-            _tasks.ToList().ForEach(t => t.Start());
+            //                _branchFilterAutoCompletionSrc.ToArray());
+            //                _branchCriterionAutoCompletionSrc.ToArray());
+
+            //        }));
+            //    }, _cancelledTokenSource.Token);
+            //_tasks.ToList().ForEach(t => t.Start());
         }
 
         private void OnBtnSettingsClicked(object sender, EventArgs e)
@@ -321,31 +322,33 @@ namespace GitUI.UserControls
                 if (txtBranchFilter.Text.IsNullOrWhiteSpace())
                 {
                     txtBranchFilter.Focus();
-                if (txtBranchCriterion.Text.IsNullOrWhiteSpace())
-                {
-                    txtBranchCriterion.Focus();
+                    if (txtBranchCriterion.Text.IsNullOrWhiteSpace())
+                    {
+                        txtBranchCriterion.Focus();
 
-                    return;
+                        return;
+                    }
                 }
-            }
-            if (_searchResult == null || !_searchResult.Any())
-            {
-
-                if (txtBranchFilter.Text.IsNotNullOrWhitespace())
+                if (_searchResult == null || !_searchResult.Any())
                 {
-                    _searchResult = SearchTree(txtBranchFilter.Text, treeMain.Nodes);
 
-                if (txtBranchCriterion.Text.IsNotNullOrWhitespace())
-                {
-                    _searchResult = SearchTree(txtBranchCriterion.Text, treeMain.Nodes);
+                    if (txtBranchFilter.Text.IsNotNullOrWhitespace())
+                    {
+                        _searchResult = SearchTree(txtBranchFilter.Text, treeMain.Nodes);
 
+                        if (txtBranchCriterion.Text.IsNotNullOrWhitespace())
+                        {
+                            _searchResult = SearchTree(txtBranchCriterion.Text, treeMain.Nodes);
+
+                        }
+                    }
+                    var node = GetNextSearchResult();
+                    if (node != null)
+                    {
+                        node.EnsureVisible();
+                        treeMain.SelectedNode = node;
+                    }
                 }
-            }
-            var node = GetNextSearchResult();
-            if (node != null)
-            {
-                node.EnsureVisible();
-                treeMain.SelectedNode = node;
             }
         }
 
@@ -395,15 +398,18 @@ namespace GitUI.UserControls
 
 
         private void OnBranchFilterChanged(object sender, EventArgs e)
+        {
+            _searchCriteriaChanged = true;
+        }
 
         private void OnBranchCriterionChanged(object sender, EventArgs e)
-
         {
             _searchCriteriaChanged = true;
         }
 
 
         private void txtBranchFilter_KeyDown(object sender, KeyEventArgs e)
+        { }
         private void txtBranchCriterion_KeyDown(object sender, KeyEventArgs e)
 
         {

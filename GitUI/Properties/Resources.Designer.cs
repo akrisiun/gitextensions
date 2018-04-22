@@ -10,8 +10,9 @@
 
 namespace GitUI.Properties {
     using System;
-    
-    
+    using System.Drawing;
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -310,7 +311,7 @@ namespace GitUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap CollapseAll {
+        internal static System.Drawing.Bitmap CollapseAll2 {
             get {
                 object obj = ResourceManager.GetObject("CollapseAll", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -795,6 +796,7 @@ namespace GitUI.Properties {
         public static System.Drawing.Bitmap HeadBranch {
             get {
                 object obj = ResourceManager.GetObject("HeadBranch", resourceCulture);
+                return obj as System.Drawing.Bitmap;
             }
         }
 
@@ -1790,16 +1792,6 @@ namespace GitUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap light_bulb_icon_off_16 {
-            get {
-                object obj = ResourceManager.GetObject("light_bulb_icon_off_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap light_bulb_icon_on_16 {
             get {
                 object obj = ResourceManager.GetObject("light_bulb_icon_on_16", resourceCulture);
@@ -2033,6 +2025,7 @@ namespace GitUI.Properties {
         public static System.Drawing.Bitmap RemoteMirror {
             get {
                 object obj = ResourceManager.GetObject("RemoteMirror", resourceCulture);
+                return obj as Bitmap;
             }
         }
         
@@ -2239,7 +2232,7 @@ namespace GitUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap light_bulb_icon_on_16 {
+        internal static System.Drawing.Bitmap light_bulb_icon_on_16_B {
             get {
                 object obj = ResourceManager.GetObject("light_bulb_icon_on_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));

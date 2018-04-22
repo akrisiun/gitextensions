@@ -21,14 +21,14 @@ using JetBrains.Annotations;
 
 using Settings = GitCommands.AppSettings;
 using GitUI.UserControls;
-using IWin32Window = GitUI.IWin32Window;
+// using IWin32Window = GitUI.IWin32Window;
 
 namespace GitUI
 {
     /// <summary>Contains methods to invoke GitEx forms, dialogs, etc.</summary>
     public sealed class GitUICommands : IGitUICommands
     {
-        private readonly IAvatarService _gravatarService;
+        // private readonly IAvatarService _gravatarService;
         private readonly ICommitTemplateManager _commitTemplateManager;
 
 
