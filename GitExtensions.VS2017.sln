@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{3D5CA0E0-EF51-4488-A8B7-86CC330D7AD8}"
 EndProject
@@ -432,5 +432,8 @@ Global
 		{452CBBA1-8AF0-4F3B-8BEB-B8B31DC2B749} = {F1B97F5D-CA42-4280-94A1-CE412BEA20DF}
 		{699CE23D-8BBD-4C15-82E9-7A628ACCA4C6} = {F1B97F5D-CA42-4280-94A1-CE412BEA20DF}
 		{101D3C78-27CC-446A-98EC-E2DE88BF0641} = {F1B97F5D-CA42-4280-94A1-CE412BEA20DF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A8320AE-8449-4D43-A660-0EC03A3ED818}
 	EndGlobalSection
 EndGlobal
