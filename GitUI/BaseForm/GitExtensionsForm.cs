@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -22,7 +21,10 @@ namespace GitUI
     /// </remarks></summary>
     public class GitExtensionsForm : GitUI.GitExtensionsFormBase, GitUI.IWin32Window
     {
-        internal static Icon ApplicationIcon = GetApplicationIcon(Settings.IconStyle, Settings.IconColor);
+        #region ctor
+
+        // internal
+        public static Icon ApplicationIcon = GetApplicationIcon(Settings.IconStyle, Settings.IconColor);
 
         /// <summary>indicates whether the <see cref="Form"/>'s position will be restored</summary>
         readonly bool _enablePositionRestore;
@@ -75,14 +77,9 @@ namespace GitUI
 #if NOTRANS
         public virtual void Translate() { }
 #endif
+        #endregion
 
         #region icon
-
-        protected void RotateApplicationIcon()
-        {
-            ApplicationIcon = GetApplicationIcon(Settings.IconStyle, Settings.IconColor);
-            Icon = ApplicationIcon;
-        }
 
         /// <summary>Specifies a Git Extensions' color index.</summary>
         protected enum ColorIndex
@@ -99,24 +96,23 @@ namespace GitUI
 
         protected static ColorIndex GetColorIndexByName(string color)
         {
-            switch (color)
-            {
+            switch (color) {
                 case "default":
-                    return ColorIndex.Default;
+                return ColorIndex.Default;
                 case "blue":
-                    return ColorIndex.Blue;
+                return ColorIndex.Blue;
                 case "green":
-                    return ColorIndex.Green;
+                return ColorIndex.Green;
                 case "lightblue":
-                    return ColorIndex.LightBlue;
+                return ColorIndex.LightBlue;
                 case "purple":
-                    return ColorIndex.Purple;
+                return ColorIndex.Purple;
                 case "red":
-                    return ColorIndex.Red;
+                return ColorIndex.Red;
                 case "yellow":
-                    return ColorIndex.Yellow;
+                return ColorIndex.Yellow;
                 case "random":
-                    return (ColorIndex)new Random(DateTime.Now.Millisecond).Next(7);
+                return (ColorIndex)new Random(DateTime.Now.Millisecond).Next(7);
             }
             return ColorIndex.Unknown;
         }
@@ -128,8 +124,7 @@ namespace GitUI
                 colorIndex = 0;
 
             Icon appIcon;
-            if (iconStyle.Equals("small", StringComparison.OrdinalIgnoreCase))
-            {
+            if (iconStyle.Equals("small", StringComparison.OrdinalIgnoreCase)) {
                 Icon[] icons = {
                                     Resources.x_with_arrow,
                                     Resources.x_with_arrow_blue,
@@ -141,9 +136,7 @@ namespace GitUI
                                 };
                 Debug.Assert(icons.Length == 7);
                 appIcon = icons[colorIndex];
-            }
-            else if (iconStyle.Equals("large", StringComparison.OrdinalIgnoreCase))
-            {
+            } else if (iconStyle.Equals("large", StringComparison.OrdinalIgnoreCase)) {
                 Icon[] icons = {
                                     Resources.git_extensions_logo_final,
                                     Resources.git_extensions_logo_final_blue,
@@ -155,9 +148,7 @@ namespace GitUI
                                 };
                 Debug.Assert(icons.Length == 7);
                 appIcon = icons[colorIndex];
-            }
-            else if (iconStyle.Equals("cow", StringComparison.OrdinalIgnoreCase))
-            {
+            } else if (iconStyle.Equals("cow", StringComparison.OrdinalIgnoreCase)) {
                 Icon[] icons = {
                                     Resources.cow_head,
                                     Resources.cow_head_blue,
@@ -169,9 +160,7 @@ namespace GitUI
                                 };
                 Debug.Assert(icons.Length == 7);
                 appIcon = icons[colorIndex];
-            }
-            else
-            {
+            } else {
                 Icon[] icons = {
                                     Resources.git_extensions_logo_final_mixed,
                                     Resources.git_extensions_logo_final_mixed_blue,
@@ -190,6 +179,16 @@ namespace GitUI
 
         #endregion icon
 
+        #region Load, Shown
+
+        public bool IsSkinLoaded { get; protected set; }
+        public override void SetSkin()
+        {
+            if (!IsSkinLoaded) {
+                base.SetSkin();
+                IsSkinLoaded = true;
+            }
+        }
 
         /// <summary>Sets <see cref="AutoScaleMode"/>,
         /// restores position, raises the <see cref="Form.Load"/> event,
@@ -197,8 +196,9 @@ namespace GitUI
         /// </summary>
         protected override void OnLoad(EventArgs e)
         {
-
             base.OnLoad(e);
+
+            SetSkin();
 
             if (_enablePositionRestore)
                 RestorePosition(GetType().Name);
@@ -224,6 +224,8 @@ namespace GitUI
         {
 
         }
+
+        #endregion Load, Shown
 
         #region Position
 

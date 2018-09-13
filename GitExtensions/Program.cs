@@ -208,10 +208,10 @@ namespace GitExtensions
             try
             {
                 // perhaps this should be checked for if it is null
-                var in3 = ce.InnerException.InnerException;
+                var in3 = ce.InnerException?.InnerException;
 
                 // saves having to have a reference to System.Xml just to check that we have an XmlException
-                if (in3.GetType().Name.Equals("XmlException"))
+                if (in3 != null && in3.GetType().Name.Equals("XmlException"))
                 {
                     var localSettingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GitExtensions");
 

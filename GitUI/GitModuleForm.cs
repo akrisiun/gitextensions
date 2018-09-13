@@ -66,10 +66,13 @@ namespace GitUI
             UICommands = aCommands;
         }
 
+        public bool DoExecuteCommand(int command) => ExecuteCommand(command);
         protected override bool ExecuteCommand(int command)
         {
-            if (ExecuteScriptCommand(command))
+            if (ExecuteScriptCommand(command)) {
                 return true;
+            }
+
             return base.ExecuteCommand(command);
         }
 

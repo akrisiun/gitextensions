@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26711.1
+VisualStudioVersion = 15.0.26823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{3D5CA0E0-EF51-4488-A8B7-86CC330D7AD8}"
 EndProject
@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Github3", "Plugins\Github3\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{BB46D906-E5AC-4CAB-B53E-BCC26AA74146}"
 	ProjectSection(SolutionItems) = preProject
+		GitExtensions\copy_plugins.cmd = GitExtensions\copy_plugins.cmd
+		GitExtensions\copy_plugins.sh = GitExtensions\copy_plugins.sh
 		FxCop.targets = FxCop.targets
 		FxCopRules.ruleset = FxCopRules.ruleset
 		.nuget\NuGet.Config = .nuget\NuGet.Config

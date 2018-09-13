@@ -6,8 +6,6 @@ using System.Collections.Generic;
 namespace GitUIPluginInterfaces
 {
     using GitUI;
-    using System.Collections.Generic;
-    using System.ComponentModel;
 
     public interface IFormBrowse
     {

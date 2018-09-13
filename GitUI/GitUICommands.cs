@@ -1916,7 +1916,7 @@ namespace GitUI
         #endregion
 
         // Please update FormCommandlineHelp if you add or change commands
-        private void RunCommandBasedOnArgument(string[] args, Dictionary<string, string> arguments)
+        public void RunCommandBasedOnArgument(string[] args, Dictionary<string, string> arguments)
         {
             switch (args[1])
             {
@@ -2130,7 +2130,7 @@ namespace GitUI
             Push(arguments);
         }
 
-        private void RunRebaseCommand(Dictionary<string, string> arguments)
+        public  void RunRebaseCommand(Dictionary<string, string> arguments)
         {
             string branch = null;
             if (arguments.ContainsKey("branch"))
@@ -2210,7 +2210,7 @@ namespace GitUI
         #endregion
 
         #region Commit, Push, Pull with arguments
-
+      
         private void Commit(Dictionary<string, string> arguments)
         {
             StartCommitDialog(arguments.ContainsKey("quiet"));

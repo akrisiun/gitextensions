@@ -64,6 +64,8 @@ namespace GitCommands
             }
         }
 
+        public static string Get(string key) => System.Configuration.ConfigurationManager.AppSettings.Get(key);
+
         public static bool AutoNormaliseBranchName
         {
             get { return GetBool("AutoNormaliseBranchName", true); }

@@ -125,6 +125,10 @@ namespace GitUI.Revision
         SelectAsBaseToCompare,
         CompareToBase,
         ToggleLeftPanel,
+
+        Commit,
+        GitBash,
+        FocusFileTree
     }
 }
 

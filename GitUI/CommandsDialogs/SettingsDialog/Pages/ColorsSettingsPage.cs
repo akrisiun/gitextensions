@@ -150,7 +150,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
             AppSettings.IconStyle = GetIconStyleString(IconStyle.SelectedIndex);
         }
 
-        private string GetSelectedApplicationIconColor()
+        public string GetSelectedApplicationIconColor()
         {
             if (BlueIcon.Checked)
                 return "blue";
