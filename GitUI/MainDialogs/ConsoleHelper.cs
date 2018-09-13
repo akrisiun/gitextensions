@@ -77,7 +77,8 @@ namespace GitUI
 
             sGitBashFromBinOrCmd = @"c:\Windows\System32\bash.exe";
 
-            var gitDir = Path.GetDirectoryName(AppSettings.GitCommandValue);
+            var directoryName = AppSettings.GitCommandValue;
+            var gitDir = directoryName.Length > 0 ? Path.GetDirectoryName(directoryName) : "";
             string sJustBash = Path.Combine(gitDir, "bash.exe"); // Generic bash, should generally be in the git dir, less configured than the specific git-bash
 
             string sJustSh = Path.Combine(gitDir, "sh.exe"); // Fallback to SH

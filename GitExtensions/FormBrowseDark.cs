@@ -2771,6 +2771,9 @@ namespace GitUI.CommandsDialogs
                     return;
 
                 ConsoleHelper.Instance.FillTerminalTab(terminal, Module);
+                if (terminal.RunningSession != null && !terminal.Visible) {
+                    terminal.Visible = true;
+                }
              };
         }
 
