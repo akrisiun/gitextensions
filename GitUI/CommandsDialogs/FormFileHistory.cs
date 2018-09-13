@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using GitCommands;
@@ -17,7 +15,7 @@ namespace GitUI.CommandsDialogs
         private readonly FilterRevisionsHelper _filterRevisionsHelper;
         private readonly FilterBranchHelper _filterBranchHelper;
         private readonly AsyncLoader _asyncLoader;
-        private readonly FormBrowseMenus _formBrowseMenus;
+        // private readonly FormBrowseMenus _formBrowseMenus;
 
         private FormFileHistory()
             : this(null)
@@ -480,7 +478,7 @@ namespace GitUI.CommandsDialogs
                 _asyncLoader.Dispose();
                 _filterRevisionsHelper.Dispose();
                 _filterBranchHelper.Dispose();
-                _formBrowseMenus.Dispose();
+                // _formBrowseMenus.Dispose();
 
                 if (components != null)
                     components.Dispose();
