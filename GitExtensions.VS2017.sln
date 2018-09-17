@@ -39,11 +39,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildServerIntegration", "B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Externals", "Externals", "{0E859634-B3DF-46AC-A73C-D49734F19D6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Git.hub", "Externals\Git.hub\Git.hub\Git.hub.csproj", "{F50B1DBF-1C9F-4437-87EC-7ABA805CC446}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Git.hub", "Externals\Git.hub\Git.hub\Git.hub.csproj", "{F50B1DBF-1C9F-4437-87EC-7ABA805CC446}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitExtUtils", "GitExtUtils\GitExtUtils.csproj", "{0F1F1168-A4B2-4FA2-B17B-735140D17F39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBugLib", "Externals\NBugLib.csproj", "{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBugLib", "Externals\NBugLib.csproj", "{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConEmuWinFormsLib", "Externals\conemu-inside\ConEmuWinForms\ConEmuWinFormsLib.csproj", "{1DC7D403-484B-43B4-B017-1356397A32CB}"
 EndProject
@@ -205,6 +205,18 @@ Global
 		{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}.ReleaseTC|Any CPU.Build.0 = Release|Any CPU
 		{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}.ReleaseTC|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}.ReleaseTC|Mixed Platforms.Build.0 = Release|Any CPU
+		{1DC7D403-484B-43B4-B017-1356397A32CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DC7D403-484B-43B4-B017-1356397A32CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DC7D403-484B-43B4-B017-1356397A32CB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1DC7D403-484B-43B4-B017-1356397A32CB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1DC7D403-484B-43B4-B017-1356397A32CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DC7D403-484B-43B4-B017-1356397A32CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DC7D403-484B-43B4-B017-1356397A32CB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1DC7D403-484B-43B4-B017-1356397A32CB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1DC7D403-484B-43B4-B017-1356397A32CB}.ReleaseTC|Any CPU.ActiveCfg = Release|Any CPU
+		{1DC7D403-484B-43B4-B017-1356397A32CB}.ReleaseTC|Any CPU.Build.0 = Release|Any CPU
+		{1DC7D403-484B-43B4-B017-1356397A32CB}.ReleaseTC|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1DC7D403-484B-43B4-B017-1356397A32CB}.ReleaseTC|Mixed Platforms.Build.0 = Release|Any CPU
 		{8EB7611B-68CD-4B8B-987A-11717E2B250C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8EB7611B-68CD-4B8B-987A-11717E2B250C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EB7611B-68CD-4B8B-987A-11717E2B250C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

@@ -22,6 +22,7 @@ namespace GitUI.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    // internal 
     public partial class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
@@ -1787,21 +1788,21 @@ namespace GitUI.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap PullFetch {
+        internal static System.Drawing.Bitmap PullFetch {
             get {
                 object obj = ResourceManager.GetObject("PullFetch", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap PullFetchAll {
+        internal static System.Drawing.Bitmap PullFetchAll {
             get {
                 object obj = ResourceManager.GetObject("PullFetchAll", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
