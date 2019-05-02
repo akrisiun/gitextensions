@@ -64,3 +64,6 @@ GitExtensions.*.sln.VisualState.xml
 GitExtensions.settings.backup
 *.opendb
 *.pfx
+.vs*/
+Externals/
+Bin/s*/

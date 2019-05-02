@@ -36,6 +36,8 @@ namespace GitUI.Editor
 
             GitUICommandsSourceSet += FileViewer_GitUICommandsSourceSet;
 
+            // FileNotFoundException: 'Could not load file or assembly
+            //    'ICSharpCode.TextEditor, Version=4.0.2.6466, Culture=neutral, PublicKeyToken=4d61825e8dd49f1a' or one 
             _internalFileViewer = new FileViewerInternal();
             _internalFileViewer.MouseEnter += _internalFileViewer_MouseEnter;
             _internalFileViewer.MouseLeave += _internalFileViewer_MouseLeave;

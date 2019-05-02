@@ -19,11 +19,11 @@ namespace GitUI.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal partial class Resources
-    {
+    internal partial class Resources {
+        
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
@@ -164,13 +164,15 @@ namespace GitUI.Properties {
         ///   Looks up a localized string similar to Changelog
         ///=========
         ///### Version 2.49 (no due date)
-        ///* Cherry pick selected file/selected lines.
-        ///* Added an option to remember the ignore-white-spaces preference for all the diff viewers.
-        ///* Fixed an intermittent bug where ObjectDisposedException occurs on launch.
+        ///* Cherry pick selected file/selected lines
+        ///* Added an option to remember the ignore-white-spaces preference for all the diff viewers
+        ///* Fixed an intermittent bug where ObjectDisposedException occurs on launch
         ///* Fixed a bug where branch filter throws null reference exception when no repository selected
+        ///* Support combined diff for merge commit
+        ///* Support showing the real line number for diff
+        ///
         ///### Version 2.48.05 (16 May 2015)
-        ///* Fixed issue #2493: StartBrowseDialog failed after clone
-        ///* Fixed issue #2783: Fixed crash when right click on bl [rest of string was truncated]&quot;;.
+        ///* Fixed issue #2493: Sta [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ChangeLog {
             get {
