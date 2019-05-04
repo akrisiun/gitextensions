@@ -23,10 +23,6 @@ namespace GitUIPluginInterfaces
         //void RevisionGrid_ContextMenuOpening(CancelEventArgs e);
     }
 
-    public interface ITree
-    {
-    }
-
     public interface IBrowseRepo
     {
         void GoToRef(string refName, bool showNoRevisionMsg);

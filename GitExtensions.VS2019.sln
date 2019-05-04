@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26823.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{3D5CA0E0-EF51-4488-A8B7-86CC330D7AD8}"
 EndProject
@@ -39,17 +39,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildServerIntegration", "B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Externals", "Externals", "{0E859634-B3DF-46AC-A73C-D49734F19D6A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Git.hub", "Externals\Git.hub\Git.hub\Git.hub.csproj", "{F50B1DBF-1C9F-4437-87EC-7ABA805CC446}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Git.hub", "Externals\Git.hub\Git.hub\Git.hub.csproj", "{F50B1DBF-1C9F-4437-87EC-7ABA805CC446}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitExtUtils", "GitExtUtils\GitExtUtils.csproj", "{0F1F1168-A4B2-4FA2-B17B-735140D17F39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBugLib", "Externals\NBugLib.csproj", "{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConEmuWinFormsLib", "Externals\conemu-inside\ConEmuWinForms\ConEmuWinFormsLib.csproj", "{1DC7D403-484B-43B4-B017-1356397A32CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBugLib", "Externals\NBugLib.csproj", "{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaterialSkinLib", "Externals\MaterialSkin\MaterialSkin\MaterialSkinLib.csproj", "{8EB7611B-68CD-4B8B-987A-11717E2B250C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitExt.Commit", "GitExt.Commit\GitExt.Commit.csproj", "{0EA99AD1-A03F-45D6-9AC8-EE0EECEDEF4F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConEmuWinFormsLib", "Externals\conemu-inside\ConEmuWinForms\ConEmuWinFormsLib.csproj", "{FDA20B9D-6DF4-4229-816F-16B78B63A914}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -205,18 +205,6 @@ Global
 		{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}.ReleaseTC|Any CPU.Build.0 = Release|Any CPU
 		{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}.ReleaseTC|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}.ReleaseTC|Mixed Platforms.Build.0 = Release|Any CPU
-		{1DC7D403-484B-43B4-B017-1356397A32CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1DC7D403-484B-43B4-B017-1356397A32CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1DC7D403-484B-43B4-B017-1356397A32CB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{1DC7D403-484B-43B4-B017-1356397A32CB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{1DC7D403-484B-43B4-B017-1356397A32CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1DC7D403-484B-43B4-B017-1356397A32CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1DC7D403-484B-43B4-B017-1356397A32CB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{1DC7D403-484B-43B4-B017-1356397A32CB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{1DC7D403-484B-43B4-B017-1356397A32CB}.ReleaseTC|Any CPU.ActiveCfg = Release|Any CPU
-		{1DC7D403-484B-43B4-B017-1356397A32CB}.ReleaseTC|Any CPU.Build.0 = Release|Any CPU
-		{1DC7D403-484B-43B4-B017-1356397A32CB}.ReleaseTC|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{1DC7D403-484B-43B4-B017-1356397A32CB}.ReleaseTC|Mixed Platforms.Build.0 = Release|Any CPU
 		{8EB7611B-68CD-4B8B-987A-11717E2B250C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8EB7611B-68CD-4B8B-987A-11717E2B250C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EB7611B-68CD-4B8B-987A-11717E2B250C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -241,6 +229,18 @@ Global
 		{0EA99AD1-A03F-45D6-9AC8-EE0EECEDEF4F}.ReleaseTC|Any CPU.Build.0 = Release|Any CPU
 		{0EA99AD1-A03F-45D6-9AC8-EE0EECEDEF4F}.ReleaseTC|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0EA99AD1-A03F-45D6-9AC8-EE0EECEDEF4F}.ReleaseTC|Mixed Platforms.Build.0 = Release|Any CPU
+		{FDA20B9D-6DF4-4229-816F-16B78B63A914}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDA20B9D-6DF4-4229-816F-16B78B63A914}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDA20B9D-6DF4-4229-816F-16B78B63A914}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{FDA20B9D-6DF4-4229-816F-16B78B63A914}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{FDA20B9D-6DF4-4229-816F-16B78B63A914}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDA20B9D-6DF4-4229-816F-16B78B63A914}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDA20B9D-6DF4-4229-816F-16B78B63A914}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{FDA20B9D-6DF4-4229-816F-16B78B63A914}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{FDA20B9D-6DF4-4229-816F-16B78B63A914}.ReleaseTC|Any CPU.ActiveCfg = Release|Any CPU
+		{FDA20B9D-6DF4-4229-816F-16B78B63A914}.ReleaseTC|Any CPU.Build.0 = Release|Any CPU
+		{FDA20B9D-6DF4-4229-816F-16B78B63A914}.ReleaseTC|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{FDA20B9D-6DF4-4229-816F-16B78B63A914}.ReleaseTC|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -253,8 +253,8 @@ Global
 		{F1B97F5D-CA42-4280-94A1-CE412BEA20DF} = {3D5CA0E0-EF51-4488-A8B7-86CC330D7AD8}
 		{F50B1DBF-1C9F-4437-87EC-7ABA805CC446} = {0E859634-B3DF-46AC-A73C-D49734F19D6A}
 		{62CED1D5-F603-40DE-8BF5-3E49D3A392F4} = {0E859634-B3DF-46AC-A73C-D49734F19D6A}
-		{1DC7D403-484B-43B4-B017-1356397A32CB} = {0E859634-B3DF-46AC-A73C-D49734F19D6A}
 		{8EB7611B-68CD-4B8B-987A-11717E2B250C} = {0E859634-B3DF-46AC-A73C-D49734F19D6A}
+		{FDA20B9D-6DF4-4229-816F-16B78B63A914} = {0E859634-B3DF-46AC-A73C-D49734F19D6A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9AAC93BE-03EA-4161-A934-C4CDCCB8760C}

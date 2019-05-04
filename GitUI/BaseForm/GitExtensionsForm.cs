@@ -187,6 +187,10 @@ namespace GitUI
             if (!IsSkinLoaded) {
                 base.SetSkin();
                 IsSkinLoaded = true;
+                if (this.SkinManager.Theme == MaterialSkin.MaterialSkinManager.Themes.LIGHT)
+                {
+                    this.BackColor = System.Drawing.SystemColors.Window;
+                }
             }
         }
 

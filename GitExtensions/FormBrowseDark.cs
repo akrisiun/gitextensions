@@ -37,7 +37,7 @@ using GitUI.Revision;
 namespace GitUI.CommandsDialogs
 {
     [CLSCompliant(true)]
-    public partial class FormBrowseDark : GitModuleForm, IBrowseRepo, IFormBrowse, GitUI.IWin32Window
+    public partial class FormBrowseDark : GitModuleForm, GitUI.IWin32Window, IBrowseRepo, IFormBrowse
     {
         #region Private
 
@@ -87,8 +87,9 @@ namespace GitUI.CommandsDialogs
         public static Lazy<IRepoObjectsTree> LazyTree { get; set; }
         public static Action<string> StartCommit { get; set; }
         // public
-        public ITree Tree { get; set; } // IRepoObjectsTree
         public Dashboard _dashboard;
+
+        public ITree Tree { get; set; } // IRepoObjectsTree
         IGitUICommands IFormBrowse.UICommands { get { return UICommands; } } // -> GitModuleForm
 
         static FormBrowseDark()
@@ -104,7 +105,10 @@ namespace GitUI.CommandsDialogs
 
             var skin = AppSettings.Get("skin")?.ToUpper() ?? "LIGHT";
             var manager = MaterialSkin.MaterialSkinManager.Instance;
-            manager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;
+            if (skin.Equals("DARK"))
+                manager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;
+            else
+                manager.Theme = MaterialSkin.MaterialSkinManager.Themes.LIGHT;
         }
 
         public FormBrowseDark(GitUICommands aCommands, string filter)
@@ -2762,6 +2766,7 @@ namespace GitUI.CommandsDialogs
                 if (args.TabPage != tabTerminal)
                     return;
 
+                /*
                 if (terminal == null) // Lazy-create on first opening the tab
                 {
                     tabpage.Controls.Clear();
@@ -2774,6 +2779,7 @@ namespace GitUI.CommandsDialogs
                 if (terminal.RunningSession != null && !terminal.Visible) {
                     terminal.Visible = true;
                 }
+                */
              };
         }
 

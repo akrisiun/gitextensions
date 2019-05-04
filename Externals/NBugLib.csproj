@@ -1,33 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
-    <!--<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">-->
-        <!--"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\"-->
-    <PropertyGroup>
-        <RootNamespace>GitTestProject3</RootNamespace>
-        <AssemblyName>GitTestProject3</AssemblyName>
-        <TargetFrameworks>net45</TargetFrameworks>
-        <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-        <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-        <EnableDefaultEmbededResourceItems>false</EnableDefaultEmbededResourceItems>
-
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProductVersion>8.0.30703</ProductVersion>
-        <SchemaVersion>2.0</SchemaVersion>
-        <!--<ProjectGuid>{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}</ProjectGuid>-->
-        <OutputType>Library</OutputType>
-        <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>NBug</RootNamespace>
-        <AssemblyName>NBug</AssemblyName>
-      
-        <FileAlignment>512</FileAlignment>
-      
-        <!--ToolPath="$(AlToolPath)"
-        ToolExe ="$(AlToolExe)"
-        SdkToolsPath="$(TargetFrameworkSDKToolsDirectory)"--> 
-        <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-        <RestorePackages>true</RestorePackages>
-    </PropertyGroup>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NBug</RootNamespace>
+    <AssemblyName>NBug</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -36,10 +25,15 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <DocumentationFile />
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+    <DocumentationFile>
+    </DocumentationFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,50 +43,18 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>bin\Release\NBug.XML</DocumentationFile>
     <NoWarn>1591;1574</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <!--<AssemblyOriginatorKeyFile>..\Signing.snk</AssemblyOriginatorKeyFile>-->
   </PropertyGroup>
   <ItemGroup>
-    <EmbeddedResource Remove="conemu-inside\**" />
-    <EmbeddedResource Remove="Git.hub\**" />
-    <EmbeddedResource Remove="MaterialSkin\**" />
-    <EmbeddedResource Remove="NBug\Destinations\**" />
-    <EmbeddedResource Remove="NBug\Documentation\**" />
-    <EmbeddedResource Remove="NBug\Examples\**" />
-    <EmbeddedResource Remove="NBug\NBug.Configurator\**" />
-    <EmbeddedResource Remove="NBug\NBug.Tests\**" />
-    <EmbeddedResource Remove="NBug\NBug\bin\**" />
-    <EmbeddedResource Remove="NBug\NBug\Core\UI\WPF\**" />
-    <EmbeddedResource Remove="NBug\NBug\obj\**" />
-    <EmbeddedResource Remove="NBug\NBug\Properties\**" />
-    <EmbeddedResource Remove="NBug\NBug\Core\**" />
-    
-    <None Remove="conemu-inside\**" />
-    <None Remove="Git.hub\**" />
-    <None Remove="MaterialSkin\**" />
-    <None Remove="NBug\Destinations\**" />
-    <None Remove="NBug\Documentation\**" />
-    <None Remove="NBug\Examples\**" />
-    <None Remove="NBug\NBug.Configurator\**" />
-    <None Remove="NBug\NBug.Tests\**" />
-    <None Remove="NBug\NBug\bin\**" />
-    <None Remove="NBug\NBug\Core\UI\WPF\**" />
-    <None Remove="NBug\NBug\obj\**" />
-    <None Remove="NBug\NBug\Properties\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Remove="NBug\NBug\Core\UI\WinForms\Feedback.resx" />
-    <EmbeddedResource Remove="NBug\NBug\Core\UI\WinForms\Full.resx" />
-    <EmbeddedResource Remove="NBug\NBug\Core\UI\WinForms\Normal.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.Threading">
-      <HintPath>..\Build\Microsoft.VisualStudio.Threading.dll</HintPath>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net4-client\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -104,6 +66,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Full.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Full.Designer.cs">
+      <DependentUpon>Full.cs</DependentUpon>
+    </Compile>
     <Compile Include="NBug\NBug\Core\Reporting\BugReport.cs" />
     <Compile Include="NBug\NBug\Core\Reporting\Feedback.cs" />
     <Compile Include="NBug\NBug\Core\Reporting\Info\AssemblyInfo.cs" />
@@ -159,17 +127,12 @@
       <DependentUpon>InternalLogViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="NBug\NBug\Core\UI\UIDialogResult.cs" />
+    <Compile Include="NBug\NBug\Core\UI\UISelector.cs" />
     <Compile Include="NBug\NBug\Core\UI\WinForms\Feedback.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="NBug\NBug\Core\UI\WinForms\Feedback.Designer.cs">
       <DependentUpon>Feedback.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Full.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Full.Designer.cs">
-      <DependentUpon>Full.cs</DependentUpon>
     </Compile>
     <Compile Include="NBug\NBug\Core\UI\WinForms\Minimal.cs" />
     <Compile Include="NBug\NBug\Core\UI\WinForms\Normal.cs">
@@ -217,6 +180,9 @@
     <Compile Include="NBug\NBug\Exceptions.cs" />
     <Compile Include="NBug\NBug\Handler.cs" />
     <Compile Include="NBug\NBug\Helpers\EmailDestinationBuilder.cs" />
+    <Compile Include="NBug\NBug\Properties\AssemblyInfo.cs" />
+    <Compile Include="NBug\NBug\Properties\Localization.de.Designer.cs" />
+    <Compile Include="NBug\NBug\Properties\Localization.Designer.cs" />
     <Compile Include="NBug\NBug\Properties\Resources.Designer.cs" />
     <Compile Include="NBug\NBug\Properties\Settings.Designer.cs" />
     <Compile Include="NBug\NBug\Properties\SettingsOverride.cs" />
@@ -225,6 +191,7 @@
   <ItemGroup>
     <None Include="NBug\NBug\Core\Submission\Tracker\Mantis\nusoap.php.patch" />
     <None Include="NBug\NBug\Properties\Settings.settings" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="NBug\NBug\Core\UI\Developer\InternalExceptionViewer.resx">
@@ -233,17 +200,23 @@
     <EmbeddedResource Include="NBug\NBug\Core\UI\Developer\InternalLogViewer.resx">
       <DependentUpon>InternalLogViewer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NBug\NBug\Core\UI\WinForms\Feedback.resx">
+      <DependentUpon>Feedback.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NBug\NBug\Core\UI\WinForms\Normal.resx">
+      <DependentUpon>Normal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NBug\NBug\Core\UI\WinForms\Panels\ExceptionDetails.resx">
       <DependentUpon>ExceptionDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NBug\NBug\Core\UI\WinForms\Panels\ExceptionDetailView.resx">
       <DependentUpon>ExceptionDetailView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NBug\NBug\Properties\Localization.resx" />
+    <EmbeddedResource Include="NBug\NBug\Properties\Resources.resx" />
   </ItemGroup>
-
-    <!--<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />-->
-    <PropertyGroup>
-<!--
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
     <PostBuildEvent Condition="$(OS) == 'WINDOWS_NT'">if $(ConfigurationName)==Release (
 xcopy "$(TargetPath)" "$(SolutionDir)packages\NBug\lib\net40-client\" /Y
 xcopy "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)packages\NBug\lib\net40-client\" /Y
@@ -251,15 +224,5 @@ xcopy "$(TargetDir)$(TargetName).xml" "$(SolutionDir)packages\NBug\lib\net40-cli
 xcopy "$(TargetPath)" "$(SolutionDir)packages\NBug\tools\" /Y
 xcopy "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)packages\NBug\tools\" /Y
 )</PostBuildEvent>
--->
   </PropertyGroup>
-  <!-- 
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
