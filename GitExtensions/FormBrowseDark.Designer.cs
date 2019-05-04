@@ -543,8 +543,8 @@ namespace GitUI.CommandsDialogs
             this.GitBash.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.GitBash.Name = "GitBash";
             this.GitBash.Size = new System.Drawing.Size(36, 22);
-            this.GitBash.Text = "Bash";
-            this.GitBash.ToolTipText = "Git bash";
+            this.GitBash.Text = "Pwsh";
+            this.GitBash.ToolTipText = "PowerShell core for Git";
             this.GitBash.Click += new System.EventHandler(Cmd.GitBashClick);
             // 
             // EditSettings

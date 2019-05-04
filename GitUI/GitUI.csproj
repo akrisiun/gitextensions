@@ -47,7 +47,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET45;__MonoCS__;WIN;NOAPICODE;NOTRANS;SKIN;</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET45;WIN;NOAPICODE;NOTRANS;SKIN;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -599,10 +599,10 @@
     <Compile Include="FormStatus.Designer.cs">
       <DependentUpon>FormStatus.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormSplash.cs">
+    <Compile Include="MainDialogs\FormSplash.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormSplash.Designer.cs">
+    <Compile Include="MainDialogs\FormSplash.Designer.cs">
       <DependentUpon>FormSplash.cs</DependentUpon>
     </Compile>
     <Compile Include="Editor\ColorHelper.cs" />
@@ -960,16 +960,16 @@
     <Compile Include="CommandsDialogs\FormPull.Designer.cs">
       <DependentUpon>FormPull.cs</DependentUpon>
     </Compile>
-    <Compile Include="CommandsDialogs\FormPush.cs">
+    <Compile Include="FormPush.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CommandsDialogs\FormPush.Designer.cs">
+    <Compile Include="FormPush.Designer.cs">
       <DependentUpon>FormPush.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPuttyError.cs">
+    <Compile Include="MainDialogs\FormPuttyError.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPuttyError.Designer.cs">
+    <Compile Include="MainDialogs\FormPuttyError.Designer.cs">
       <DependentUpon>FormPuttyError.cs</DependentUpon>
     </Compile>
     <Compile Include="CommandsDialogs\FormRebase.cs">
@@ -1498,11 +1498,11 @@
       <DependentUpon>FormPull.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="CommandsDialogs\FormPush.resx">
+    <EmbeddedResource Include="FormPush.resx">
       <DependentUpon>FormPush.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPuttyError.resx">
+    <EmbeddedResource Include="MainDialogs\FormPuttyError.resx">
       <DependentUpon>FormPuttyError.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -1534,7 +1534,7 @@
       <DependentUpon>FormSettings.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormSplash.resx">
+    <EmbeddedResource Include="MainDialogs\FormSplash.resx">
       <DependentUpon>FormSplash.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

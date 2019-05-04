@@ -35,16 +35,17 @@ namespace GitUI
             : base(true)
         {
             UseDialogSettings = useDialogSettings;
-            if (aConsoleOutput == null)
-            {
-                ConsoleOutput = ConsoleOutputControl.CreateInstance();
+
+            var isComponentInDesignMode = CheckComponent(this);
+            if (!isComponentInDesignMode) {
+                if (aConsoleOutput == null) {
+                    ConsoleOutput = ConsoleOutputControl.CreateInstance();
+                } else {
+                    ConsoleOutput = aConsoleOutput;
+                }
+                ConsoleOutput.Dock = DockStyle.Fill;
+                ConsoleOutput.Terminated += delegate { Close(); }; // This means the control is not visible anymore, no use in keeping. Expected scenario: user hits ESC in the prompt after the git process exits
             }
-            else
-            {
-                ConsoleOutput = aConsoleOutput;
-            }
-            ConsoleOutput.Dock = DockStyle.Fill;
-            ConsoleOutput.Terminated += delegate { Close(); }; // This means the control is not visible anymore, no use in keeping. Expected scenario: user hits ESC in the prompt after the git process exits
 
             InitializeComponent();
             Translate();

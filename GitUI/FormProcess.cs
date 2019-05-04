@@ -45,8 +45,10 @@ namespace GitUI
             WorkingDirectory = aWorkingDirectory;
             Text = Text + " (" + WorkingDirectory + ")";
 
-            ConsoleOutput.ProcessExited += delegate { OnExit(ConsoleOutput.ExitCode); };
-            ConsoleOutput.DataReceived += DataReceivedCore;
+            if (ConsoleOutput != null) {
+                ConsoleOutput.ProcessExited += delegate { OnExit(ConsoleOutput.ExitCode); };
+                ConsoleOutput.DataReceived += DataReceivedCore;
+            }
         }
 
         public static bool ShowDialog(IWin32Window owner, GitModule module, string arguments)

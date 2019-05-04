@@ -1052,6 +1052,7 @@ namespace GitCommands
             {
                 string[] termEmuCmds =
                 {
+                    "pwsh",
                     "gnome-terminal",
                     "konsole",
                     "Terminal",
@@ -1063,8 +1064,9 @@ namespace GitCommands
 
                 if (string.IsNullOrEmpty(cmd))
                 {
-                    cmd = "bash";
-                    args = "--login -i";
+                    cmd = "pwsh";
+                    //cmd = "bash";
+                    //args = "--login -i";
                 }
 
                 return RunExternalCmdDetachedShowConsole(cmd, args);
@@ -1072,6 +1074,11 @@ namespace GitCommands
             else
             {
                 string shellPath;
+                if (TryFindShellPath("pwsh.exe", out shellPath))
+                {
+                    return RunExternalCmdDetachedShowConsole(shellPath, string.Empty); // .Format(args, shellPath));
+                }
+
                 if (TryFindShellPath("git-bash.exe", out shellPath))
                 {
                     return RunExternalCmdDetachedShowConsole(shellPath, string.Empty);

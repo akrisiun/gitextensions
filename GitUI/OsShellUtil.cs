@@ -5,7 +5,7 @@
     using System.Windows.Forms;
 
     using Microsoft.Win32;
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
     using Microsoft.WindowsAPICodePack.Dialogs;
 #endif
 
@@ -60,7 +60,7 @@
         /// <returns>The path selected by the user, or null if the user cancels the dialog.</returns>
         public static string PickFolder(IWin32Window ownerWindow, string selectedPath = null)
         {
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
             if (GitCommands.Utils.EnvUtils.IsWindowsVistaOrGreater())
             {
                 // use Vista+ dialog
@@ -91,7 +91,7 @@
                     if (result == DialogResult.OK)
                         return dialog.SelectedPath;
                 }
-#if !__MonoCS__
+#if !__MonoCS__ && !NET45
             }
 #endif
 

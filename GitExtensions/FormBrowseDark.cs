@@ -2770,7 +2770,6 @@ namespace GitUI.CommandsDialogs
                 if (args.TabPage != tabTerminal)
                     return;
 
-                /*
                 if (terminal == null) // Lazy-create on first opening the tab
                 {
                     tabpage.Controls.Clear();
@@ -2783,7 +2782,6 @@ namespace GitUI.CommandsDialogs
                 if (terminal.RunningSession != null && !terminal.Visible) {
                     terminal.Visible = true;
                 }
-                */
              };
         }
 

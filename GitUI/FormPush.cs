@@ -97,6 +97,8 @@ namespace GitUI.CommandsDialogs
             //they are reset to false
             if (aCommands != null)
                 Init();
+
+            this.PushDestination.Enabled = true;
         }
 
         private void Init()
@@ -285,22 +287,23 @@ namespace GitUI.CommandsDialogs
 
                 if (ForcePushBranches.Checked)
                 {
-                    if (GitCommandHelpers.VersionInUse.SupportPushForceWithLease)
+                    /* if (GitCommandHelpers.VersionInUse.SupportPushForceWithLease)
                     {
-                        var choice = MessageBox.Show(this,
+                        var choice = DialogResult.Yes;
+                        / * MessageBox.Show(this,
                             _useForceWithLeaseInstead.Text,
                             "", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
-                            MessageBoxDefaultButton.Button1);
-                        switch (choice)
+                            MessageBoxDefaultButton.Button1); */
+                    /*  switch (choice)
                         {
                             case DialogResult.Yes:
                                 ForcePushBranches.Checked = false;
-                                ckForceWithLease.Checked = true;
+                                // ckForceWithLease.Checked = true;
                                 break;
                             case DialogResult.Cancel:
                                 return false;
                         }
-                    }
+                    } */
                 }
 
                 if (_NO_TRANSLATE_Branch.Text == AllRefs)

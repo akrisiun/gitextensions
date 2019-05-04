@@ -20,7 +20,7 @@ namespace GitUI
         {
             var manager = MaterialSkin.MaterialSkinManager.Instance;
             if (CurrentTheme == null)
-                manager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;
+                manager.Theme = MaterialSkin.MaterialSkinManager.Themes.LIGHT; // .DARK;
 
             CurrentTheme = manager.Theme;
         }
