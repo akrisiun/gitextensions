@@ -189,7 +189,7 @@ namespace GitUI
                 IsSkinLoaded = true;
                 if (this.SkinManager.Theme == MaterialSkin.MaterialSkinManager.Themes.LIGHT)
                 {
-                    this.BackColor = System.Drawing.SystemColors.Window;
+                    this.BackColor = System.Drawing.SystemColors.Control;
                 }
             }
         }

@@ -39,7 +39,6 @@ namespace GitExtensions
                 Application.Run(form);
             }
 
-            // InvokeEvent(owner, PostBrowse);
             return true;
         }
 

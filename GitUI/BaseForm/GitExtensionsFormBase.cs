@@ -7,15 +7,22 @@ using GitCommands;
 
 namespace GitUI
 {
+    using MaterialSkin;
     using MaterialSkin.Controls;
     using ResourceManager;
 
     public class GitExtensionsFormBase : MaterialForm, IWin32Window // ITranslate
     {
+        /// <summary> GitExtensionsFormBase.CurrentTheme main theme </summary>
+        public static MaterialSkinManager.Themes? CurrentTheme { get; set; }
+
         static GitExtensionsFormBase()
         {
             var manager = MaterialSkin.MaterialSkinManager.Instance;
-            manager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;
+            if (CurrentTheme == null)
+                manager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;
+
+            CurrentTheme = manager.Theme;
         }
 
         /// <summary>indicates whether the <see cref="Form"/> has been translated</summary>

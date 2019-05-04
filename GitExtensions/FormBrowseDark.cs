@@ -105,10 +105,14 @@ namespace GitUI.CommandsDialogs
 
             var skin = AppSettings.Get("skin")?.ToUpper() ?? "LIGHT";
             var manager = MaterialSkin.MaterialSkinManager.Instance;
+            GitExtensionsFormBase.CurrentTheme = manager.Theme; // init value
+
             if (skin.Equals("DARK"))
                 manager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;
             else
                 manager.Theme = MaterialSkin.MaterialSkinManager.Themes.LIGHT;
+
+            GitExtensionsFormBase.CurrentTheme = manager.Theme;
         }
 
         public FormBrowseDark(GitUICommands aCommands, string filter)
