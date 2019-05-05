@@ -166,6 +166,9 @@ namespace GitUI.CommandsDialogs.Commit
             Message.TextChanged += Message_TextChanged;
             Message.TextAssigned += Message_TextAssigned;
 
+            // F4 edit
+            editFileToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
+
             if (Module != null)
                 Message.AddAutoCompleteProvider(new CommitAutoCompleteProvider(Module));
 
