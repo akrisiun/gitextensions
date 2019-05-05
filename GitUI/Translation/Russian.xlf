@@ -5635,14 +5635,10 @@ _ReSharper*/</target>
         
       </trans-unit>
       <trans-unit id="lnkGitIgnoreGenerate.Text">
-        <source>Generate a custom gitignore</source>
-        <target>Создавать пользовательский gitignore</target>
-        
+        <source>Generate a custom ignore file for git</source>
       </trans-unit>
       <trans-unit id="lnkGitIgnorePatterns.Text">
-        <source>More gitignore patterns</source>
-        <target>Коллекция шаблонов игнорирования</target>
-        
+        <source>Example ignore patterns</source>
       </trans-unit>
     </body>
   </file>
@@ -6398,7 +6394,7 @@ Do you want to continue?</source>
         
       </trans-unit>
       <trans-unit id="_pruneBranchesBranch.Text">
-        <source>Do you want deletes all stale remote-tracking branches?</source>
+        <source>Do you want to delete all stale remote-tracking branches?</source>
         <target>Вы хотите удалить все устаревшие ветки отслеживания?</target>
         
       </trans-unit>
@@ -9035,8 +9031,8 @@ global settings.
         
       </trans-unit>
       <trans-unit id="chkShowCurrentChangesInRevisionGraph.Text">
-        <source>Show current working directory changes in revision graph (slow!)</source>
-        <target>Показывать текущие изменения в списке коммитов (медленно!)</target>
+        <source>Show current working directory changes in revision graph</source>
+        <target>Показывать текущие изменения в списке коммитов</target>
         
       </trans-unit>
       <trans-unit id="chkShowGitCommandLine.Text">

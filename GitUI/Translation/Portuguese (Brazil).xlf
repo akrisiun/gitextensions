@@ -3095,8 +3095,8 @@ Quer interromper e removê-lo da lista de repositórios recentes?</target>
         
       </trans-unit>
       <trans-unit id="pullToolStripMenuItem.Text">
-        <source>Pull...</source>
-        <target>Pull...</target>
+        <source>Pull/Fetch...</source>
+        <target>Pull/Fetch...</target>
         
       </trans-unit>
       <trans-unit id="pullToolStripMenuItem1.Text">
@@ -5576,14 +5576,10 @@ _ReSharper*/</source>
         
       </trans-unit>
       <trans-unit id="lnkGitIgnoreGenerate.Text">
-        <source>Generate a custom gitignore</source>
-        <target>Gerar gitignore customizado</target>
-        
+        <source>Generate a custom ignore file for git</source>
       </trans-unit>
       <trans-unit id="lnkGitIgnorePatterns.Text">
-        <source>More gitignore patterns</source>
-        <target>Mais modelos do gitignore</target>
-        
+        <source>Example ignore patterns</source>
       </trans-unit>
     </body>
   </file>
@@ -6299,7 +6295,7 @@ Do you want to continue?</source>
         
       </trans-unit>
       <trans-unit id="_pruneBranchesBranch.Text">
-        <source>Do you want deletes all stale remote-tracking branches?</source>
+        <source>Do you want to delete all stale remote-tracking branches?</source>
         
       </trans-unit>
       <trans-unit id="_pruneBranchesButtons.Text">
@@ -8875,7 +8871,7 @@ configurações globais.
         
       </trans-unit>
       <trans-unit id="chkShowCurrentChangesInRevisionGraph.Text">
-        <source>Show current working directory changes in revision graph (slow!)</source>
+        <source>Show current working directory changes in revision graph</source>
         
       </trans-unit>
       <trans-unit id="chkShowGitCommandLine.Text">
@@ -10155,8 +10151,8 @@ Current Branch:
         
       </trans-unit>
       <trans-unit id="chlMenuEntries.Item11">
-        <source>Pull...</source>
-        <target>Pull...</target>
+        <source>Pull/Fetch...</source>
+        <target>Pull/Fetch...</target>
         
       </trans-unit>
       <trans-unit id="chlMenuEntries.Item12">

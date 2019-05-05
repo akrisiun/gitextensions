@@ -5521,13 +5521,10 @@ _ReSharper*/</source>
         
       </trans-unit>
       <trans-unit id="lnkGitIgnoreGenerate.Text">
-        <source>Generate a custom gitignore</source>
-        
+        <source>Generate a custom ignore file for git</source>
       </trans-unit>
       <trans-unit id="lnkGitIgnorePatterns.Text">
-        <source>More gitignore patterns</source>
-        <target>さらなるパターン</target>
-        
+        <source>Example ignore patterns</source>
       </trans-unit>
     </body>
   </file>
@@ -6275,7 +6272,7 @@ Do you want to continue?</source>
         
       </trans-unit>
       <trans-unit id="_pruneBranchesBranch.Text">
-        <source>Do you want deletes all stale remote-tracking branches?</source>
+        <source>Do you want to delete all stale remote-tracking branches?</source>
         <target>全ての古いリモート追跡ブランチを削除しますか？</target>
         
       </trans-unit>
@@ -8894,8 +8891,8 @@ Git の 正しいパスを入力してください。</target>
         
       </trans-unit>
       <trans-unit id="chkShowCurrentChangesInRevisionGraph.Text">
-        <source>Show current working directory changes in revision graph (slow!)</source>
-        <target>作業ディレクトリの変更をリビジョングラフ上に表示する (動作は遅くなります)</target>
+        <source>Show current working directory changes in revision graph</source>
+        <target>作業ディレクトリの変更をリビジョングラフ上に表示する</target>
         
       </trans-unit>
       <trans-unit id="chkShowGitCommandLine.Text">

@@ -3083,8 +3083,8 @@ Do you want to abort and remove it from the recent repositories list?</source>
         
       </trans-unit>
       <trans-unit id="pullToolStripMenuItem.Text">
-        <source>Pull...</source>
-        <target>Pull...</target>
+        <source>Pull/Fetch...</source>
+        <target>Pull/Fetch...</target>
         
       </trans-unit>
       <trans-unit id="pullToolStripMenuItem1.Text">
@@ -5615,14 +5615,10 @@ _ReSharper*/</target>
         
       </trans-unit>
       <trans-unit id="lnkGitIgnoreGenerate.Text">
-        <source>Generate a custom gitignore</source>
-        <target>Generar un gitignore personalizado</target>
-        
+        <source>Generate a custom ignore file for git</source>
       </trans-unit>
       <trans-unit id="lnkGitIgnorePatterns.Text">
-        <source>More gitignore patterns</source>
-        <target>Más patrones gitignore</target>
-        
+        <source>Example ignore patterns</source>
       </trans-unit>
     </body>
   </file>
@@ -6381,7 +6377,7 @@ Do you want to continue?</source>
         
       </trans-unit>
       <trans-unit id="_pruneBranchesBranch.Text">
-        <source>Do you want deletes all stale remote-tracking branches?</source>
+        <source>Do you want to delete all stale remote-tracking branches?</source>
         <target>¿Quiere borrar todas las ramas de seguimiento remotas obsoletas?</target>
         
       </trans-unit>
@@ -9004,8 +9000,8 @@ la configuración global.</target>
         
       </trans-unit>
       <trans-unit id="chkShowCurrentChangesInRevisionGraph.Text">
-        <source>Show current working directory changes in revision graph (slow!)</source>
-        <target>Mostrar cambios del directorio de trabajo actual en el gráfico de revisiones (lento)</target>
+        <source>Show current working directory changes in revision graph</source>
+        <target>Mostrar cambios del directorio de trabajo actual en el gráfico de revisiones</target>
         
       </trans-unit>
       <trans-unit id="chkShowGitCommandLine.Text">
@@ -10315,8 +10311,8 @@ Current Branch:
         
       </trans-unit>
       <trans-unit id="chlMenuEntries.Item11">
-        <source>Pull...</source>
-        <target>Pull...</target>
+        <source>Pull/Fetch...</source>
+        <target>Pull/Fetch...</target>
         
       </trans-unit>
       <trans-unit id="chlMenuEntries.Item12">

@@ -1355,6 +1355,10 @@ Do you want to open it?</source>
         <source>Treat all files as text</source>
         <target />
       </trans-unit>
+      <trans-unit id="viewThisLineOnGitHubToolStripMenuItem.Text">
+        <source>View this line on GitHub</source>
+        <target />
+      </trans-unit>
     </body>
   </file>
   <file datatype="plaintext" original="FileViewerWindows" source-language="en">
@@ -2503,7 +2507,7 @@ Do you want to abort and remove it from the recent repositories list?</source>
         <target />
       </trans-unit>
       <trans-unit id="pullToolStripMenuItem.Text">
-        <source>Pull...</source>
+        <source>Pull/Fetch...</source>
         <target />
       </trans-unit>
       <trans-unit id="pullToolStripMenuItem1.Text">
@@ -2630,6 +2634,10 @@ Do you want to abort and remove it from the recent repositories list?</source>
         <source>Tag</source>
         <target />
       </trans-unit>
+      <trans-unit id="toggleLeftPanel.ToolTipText">
+        <source>Toggle left panel</source>
+          <target />
+        </trans-unit>
       <trans-unit id="toggleSplitViewLayout.ToolTipText">
         <source>Toggle split view layout</source>
         <target />
@@ -2731,7 +2739,7 @@ Do you want to abort and remove it from the recent repositories list?</source>
         <target />
       </trans-unit>
       <trans-unit id="chkShowRevisionInfoNextToRevisionGrid.Text">
-        <source>Show revision details next to the revision list (restart required)</source>
+        <source>Show revision details next to the revision list</source>
         <target />
       </trans-unit>
       <trans-unit id="groupBoxConsoleSettings.Text">
@@ -3518,11 +3526,11 @@ Do you want to continue?</source>
         <target />
       </trans-unit>
       <trans-unit id="openDiffMenuItem.Text">
-        <source>Open with Difftool</source>
+        <source>Open with difftool</source>
         <target />
       </trans-unit>
       <trans-unit id="openFolderMenuItem.Text">
-        <source>Open folder</source>
+        <source>Open containing folder</source>
         <target />
       </trans-unit>
       <trans-unit id="openSubmoduleMenuItem.Text">
@@ -3538,7 +3546,7 @@ Do you want to continue?</source>
         <target />
       </trans-unit>
       <trans-unit id="openWithToolStripMenuItem.Text">
-        <source>Open with</source>
+        <source>Open with...</source>
         <target />
       </trans-unit>
       <trans-unit id="refreshDialogOnFormFocusToolStripMenuItem.Text">
@@ -4531,11 +4539,11 @@ _ReSharper*/</source>
         <target />
       </trans-unit>
       <trans-unit id="lnkGitIgnoreGenerate.Text">
-        <source>Generate a custom gitignore</source>
+        <source>Generate a custom ignore file for git</source>
         <target />
       </trans-unit>
       <trans-unit id="lnkGitIgnorePatterns.Text">
-        <source>More gitignore patterns</source>
+        <source>Example ignore patterns</source>
         <target />
       </trans-unit>
     </body>
@@ -5133,7 +5141,7 @@ Do you want to continue?</source>
         <target />
       </trans-unit>
       <trans-unit id="_pruneBranchesBranch.Text">
-        <source>Do you want deletes all stale remote-tracking branches?</source>
+        <source>Do you want to delete all stale remote-tracking branches?</source>
         <target />
       </trans-unit>
       <trans-unit id="_pruneBranchesButtons.Text">
@@ -7257,7 +7265,7 @@ global settings.
         <target />
       </trans-unit>
       <trans-unit id="chkShowCurrentChangesInRevisionGraph.Text">
-        <source>Show current working directory changes in revision graph (slow!)</source>
+        <source>Show current working directory changes in revision graph</source>
         <target />
       </trans-unit>
       <trans-unit id="chkShowGitCommandLine.Text">
@@ -7587,6 +7595,10 @@ help</source>
   </file>
   <file datatype="plaintext" original="MessageBoxes" source-language="en">
     <body>
+      <trans-unit id="_confirmDeleteRemoteBranch.Text">
+        <source>Do you want to delete the branch {0} from {1}?</source>
+        <target />
+      </trans-unit>
       <trans-unit id="_error.Text">
         <source>Error</source>
         <target />
@@ -7813,6 +7825,10 @@ This will just checkout on the submodule the commit determined by the superproje
       </trans-unit>
       <trans-unit id="ToggleHighlightSelectedBranch.Text">
         <source>Highlight selected branch (until refresh)</source>
+        <target />
+      </trans-unit>
+      <trans-unit id="ToggleLeftPanel.Text">
+        <source>Toggle left panel</source>
         <target />
       </trans-unit>
       <trans-unit id="ToggleRevisionCardLayout.Text">
@@ -8340,7 +8356,7 @@ Current Branch:
         <target />
       </trans-unit>
       <trans-unit id="chlMenuEntries.Item11">
-        <source>Pull...</source>
+        <source>Pull/Fetch...</source>
         <target />
       </trans-unit>
       <trans-unit id="chlMenuEntries.Item12">

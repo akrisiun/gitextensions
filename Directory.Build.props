@@ -1,0 +1,24 @@
+<Project>
+
+  <PropertyGroup>
+    <LangVersion>7.2</LangVersion>
+    <NoWarn>$(NoWarn);1573;1591;1712</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)Build\stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)Build\vs-threading.MainThreadAssertingMethods.txt">
+      <Visible>False</Visible>
+    </AdditionalFiles>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)Build\vs-threading.MainThreadSwitchingMethods.txt">
+      <Visible>False</Visible>
+    </AdditionalFiles>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)Build\vs-threading.TypesRequiringMainThread.txt">
+      <Visible>False</Visible>
+    </AdditionalFiles>
+  </ItemGroup>
+
+</Project>
