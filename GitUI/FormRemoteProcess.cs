@@ -99,8 +99,10 @@ namespace GitUI
                 }
                 */
 
+                var output = GetOutputString();
+
                 // If the authentication failed because of a missing key, ask the user to supply one. 
-                if (GetOutputString().Contains("FATAL ERROR") && GetOutputString().Contains("authentication"))
+                if (output.Contains("FATAL ERROR") && output.Contains("authentication"))
                 {
                     string loadedKey;
                     if (FormPuttyError.AskForKey(this, out loadedKey))
@@ -115,7 +117,7 @@ namespace GitUI
                         return true;
                     }
                 }
-                if (GetOutputString().ToLower().Contains("the server's host key is not cached in the registry"))
+                if (output.ToLower().Contains("the server's host key is not cached in the registry"))
                 {
                     string remoteUrl;
 
@@ -159,7 +161,14 @@ namespace GitUI
         {
             if (Plink)
             {
-                if (e.Text.StartsWith("If you trust this host, enter \"y\" to add the key to"))
+                var text = e.Text;
+                if (text.Contains("lock")) {
+                    // lock file ??
+                    // restart = true;
+                    // KillGitCommand();
+                }
+
+                if (text.StartsWith("If you trust this host, enter \"y\" to add the key to"))
                 {
                     if (MessageBox.Show(this, _fingerprintNotRegistredText.Text, _fingerprintNotRegistredTextCaption.Text, MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {

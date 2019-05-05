@@ -1,12 +1,8 @@
 ﻿using System.Windows.Forms;
-
 using ConEmu.WinForms;
-
 using GitCommands;
 using GitCommands.Utils;
-
 using JetBrains.Annotations;
-
 using Microsoft.Build.Utilities;
 
 namespace GitUI.UserControls
@@ -19,6 +15,8 @@ namespace GitUI.UserControls
 		private int _nLastExitCode;
 
 		private ConEmuControl _terminal;
+
+        public ConEmuControl Terminal { get => _terminal; }
 
 		public ConsoleEmulatorOutputControl()
 		{
