@@ -99,6 +99,8 @@ namespace GitUI.CommandsDialogs
                 Init();
 
             this.PushDestination.Enabled = true;
+            if (AppSettings.AlwaysShowAdvOpt && Height < 360)
+                Height = 360;  // fit to screen
         }
 
         private void Init()
