@@ -79,14 +79,11 @@ namespace GitUI.CommandsDialogs
             InitializeComponent();
             Translate();
 
-            if (!GitCommandHelpers.VersionInUse.SupportPushForceWithLease)
-            {
+            if (!GitCommandHelpers.VersionInUse.SupportPushForceWithLease) {
                 ckForceWithLease.Visible = false;
                 ForcePushTags.DataBindings.Add("Checked", ForcePushBranches, "Checked",
                     formattingEnabled: false, updateMode: DataSourceUpdateMode.OnPropertyChanged);
-            }
-            else
-            {
+            } else {
                 ForcePushTags.DataBindings.Add("Checked", ckForceWithLease, "Checked",
                     formattingEnabled: false, updateMode: DataSourceUpdateMode.OnPropertyChanged);
                 toolTip1.SetToolTip(ckForceWithLease, _forceWithLeaseTooltips.Text);
@@ -99,8 +96,16 @@ namespace GitUI.CommandsDialogs
                 Init();
 
             this.PushDestination.Enabled = true;
-            if (AppSettings.AlwaysShowAdvOpt && Height < 360)
-                Height = 360;  // fit to screen
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+
+            if (AppSettings.AlwaysShowAdvOpt && Height <= 400) {
+                Height = 400;  // fit to screen
+                // this.PerformLayout();
+            }
         }
 
         private void Init()

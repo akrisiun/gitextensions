@@ -20,7 +20,7 @@ namespace Stash
         public override bool Execute(GitUIBaseEventArgs gitUiCommands)
         {
             using (var frm = new StashPullRequestForm(gitUiCommands, base.Settings))
-                frm.ShowDialog(gitUiCommands.OwnerForm);
+                frm.ShowDialog(gitUiCommands.OwnerForm as Form);
             return true;
         }
 

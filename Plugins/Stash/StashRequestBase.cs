@@ -45,7 +45,7 @@ namespace Stash
                 if (RequestBody is string)
                     request.AddParameter("application/json", RequestBody, ParameterType.RequestBody);
                 else
-                    request.AddBody(RequestBody);
+                    request.AddJsonBody(RequestBody);
             }
 
             var response = client.Execute(request);

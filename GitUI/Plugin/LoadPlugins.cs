@@ -57,7 +57,8 @@ namespace GitUI
                         if (!pluginFile.Name.StartsWith("Jenkins", StringComparison.InvariantCultureIgnoreCase)
                             && !pluginFile.Name.StartsWith("TeamCityIntegration", StringComparison.InvariantCultureIgnoreCase)
                             && !pluginFile.Name.StartsWith("TfsIntegration", StringComparison.InvariantCultureIgnoreCase)
-                            && !pluginFile.Name.StartsWith("Gerrit", StringComparison.InvariantCultureIgnoreCase))
+                            && !pluginFile.Name.StartsWith("Gerrit", StringComparison.InvariantCultureIgnoreCase)
+                            && !exInfo.Contains("load file or assembly 'GitUIPluginInterfaces"))
                             MessageBox.Show(string.Format("Failed to load plugin {0} : \r\n{1}", pluginFile, exInfo));
 
                         Trace.WriteLine(ex.Message);
