@@ -25,7 +25,6 @@ namespace GitUI.UserControls
         Padding Margin { get; set; }
         string Name { get; set; }
 
-        TreeView TreeMain { get; }
         ContextMenuStrip menuBranch { get; }
 
         TableLayoutPanel repoTreePanel { get; }

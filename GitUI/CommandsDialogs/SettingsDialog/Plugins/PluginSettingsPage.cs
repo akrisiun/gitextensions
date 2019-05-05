@@ -1,35 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using GitUIPluginInterfaces;
-using GitCommands.Settings;
-using System.Diagnostics;
 
 namespace GitUI.CommandsDialogs.SettingsDialog.Plugins
 {
-    public partial class PluginSettingsPage : ISettingsPage, IDisposable // : AutoLayoutSettingsPage
+    public partial class PluginSettingsPage : SettingsPageBase, ISettingsPage, IDisposable // : AutoLayoutSettingsPage
     {
         private IGitPlugin _gitPlugin;
         private GitPluginSettingsContainer settingsCointainer;
 
-        public Control GuiControl { get; protected set; }
+        // public Control GuiControl { get; protected set; }
+
+        public PluginSettingsPage() : this(null) { }
 
         public PluginSettingsPage(Control ui = null)
         {
             InitializeComponent();
-            // Translate();
         }
 
         private void CreateSettingsControls()
         {
-            var settings = GetSettings();
-
-            foreach (var setting in settings)
-            {
-               // this.AddSetting(setting);
-            }
+            //var settings = GetSettings();
+            //TODO
+            //foreach (var setting in settings)
+            //{
+            //   this.AddSetting(setting);
+            //}
         }
 
         private void Init(IGitPlugin _gitPlugin)
@@ -43,20 +40,24 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Plugins
         // CreateSettingsPageFromPlugin(this, gitPlugin);
         public static PluginSettingsPage CreateSettingsPageFromPlugin(ISettingsPageHost aPageHost, IGitPlugin gitPlugin)
         {
-            //var result = SettingsPageBase.Create<PluginSettingsPage>(aPageHost);
-            //result.Init(gitPlugin);
-            //return result;
+            var result = SettingsPageBase.Create<PluginSettingsPage>(aPageHost);
+            result.Init(gitPlugin);
+            return result;
 
-            Debugger.Break();  // TODO
+            //Debugger.Break();  // TODO
 
-            return null;
+            //return null;
         }
 
-        //protected override ISettingsSource GetCurrentSettings()
-        //{
-        //    settingsCointainer.SetSettingsSource(base.GetCurrentSettings());
-        //    return settingsCointainer;
-        //}
+        
+        protected override bool AreEffectiveSettings { get => true; }
+
+        protected override ISettingsSource GetCurrentSettings()
+        {
+            // settingsCointainer.SetSettingsSource(base.GetCurrentSettings());
+
+            return settingsCointainer;
+        }
 
         //public override string GetTitle()
         //{
@@ -71,7 +72,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Plugins
             return _gitPlugin.GetSettings();
         }
 
-        public // override 
+        public override 
             SettingsPageReference PageReference
         {
             get { return new SettingsPageReferenceByType(_gitPlugin.GetType()); }
@@ -90,25 +91,30 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Plugins
         //    return layout;
         //}
 
-        public void Dispose()
-        {
-            this.Dispose(true);
-            tableLayoutPanel1.Dispose();
-            labelNoSettings.Dispose();
-        }
+        //void IDisposable.Dispose()
+        //{
+        //    this.Dispose(true);
+        //    GC.SuppressFinalize(this);
+        //}
 
-        public void OnPageShown() { }
-        public void LoadSettings() { }
-        public void SaveSettings() { }
+        //protected virtual void Dispose(bool isDispose)
+        //{
+        //    tableLayoutPanel1.Dispose();
+        //    labelNoSettings.Dispose();
+        //}
 
-        public string GetTitle() { return null; }
+        //public void OnPageShown() { }
+        //public void LoadSettings() { }
+        //public void SaveSettings() { }
+
+        //public string GetTitle() { return null; }
 
         /// <summary>
         /// true if the page cannot properly react to cancel or discard
         /// </summary>
-        public bool IsInstantSavePage { get; protected set; }
+        //public bool IsInstantSavePage { get; protected set; }
 
-        public IEnumerable<string> GetSearchKeywords() { return null; }
+        //public IEnumerable<string> GetSearchKeywords() { return null; }
 
     }
 }

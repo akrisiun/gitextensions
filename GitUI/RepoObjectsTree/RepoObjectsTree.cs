@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -10,8 +11,12 @@ using ResourceManager;
 
 namespace GitUI.UserControls
 {
+
+    #pragma warning disable CA1065
+    [SuppressMessage("Microsoft.Usage", "warning CA1065: Microsoft.Design")]
+
     /// <summary>Tree-like structure for a repo's objects.</summary>
-    public partial class RepoObjectsTree : GitModuleControl, IRepoObjectsTree
+    public sealed partial class RepoObjectsTree : GitModuleControl, IRepoObjectsTree
     {
         List<Tree> rootNodes = new List<Tree>();
         /// <summary>Image key for a head branch.</summary>
@@ -37,11 +42,12 @@ namespace GitUI.UserControls
             treeMain.NodeMouseDoubleClick += OnNodeDoubleClick;
         }
 
+        #region UI methods
+
         private void InitiliazeSearchBox()
         {
             txtBranchFilter = new SearchControl<string>(FilterBranch, i => { });
-            txtBranchFilter.OnTextEntered += () =>
-            {
+            txtBranchFilter.OnTextEntered += () => {
                 OnBranchFilterChanged(null, null);
                 OnBtnSearchClicked(null, null);
             };
@@ -67,8 +73,7 @@ namespace GitUI.UserControls
 
         private void OnPreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (e.KeyCode == Keys.F3 || e.KeyCode == Keys.Enter)
-            {
+            if (e.KeyCode == Keys.F3 || e.KeyCode == Keys.Enter) {
                 OnBtnSearchClicked(null, null);
             }
         }
@@ -81,34 +86,29 @@ namespace GitUI.UserControls
 
             DragDrops();
 
-            var localBranchesRootNode = new TreeNode(Strings.branches.Text)
-            {
+            var localBranchesRootNode = new TreeNode(Strings.branches.Text) {
                 ImageKey = "RemoteRepo.png",
             };
             localBranchesRootNode.SelectedImageKey = localBranchesRootNode.ImageKey;
             AddTree(new BranchTree(localBranchesRootNode, newSource));
 
-            var remoteBranchesRootNode = new TreeNode(Strings.remotes.Text)
-            {
+            var remoteBranchesRootNode = new TreeNode(Strings.remotes.Text) {
                 ImageKey = "RemoteMirror.png",
             };
             remoteBranchesRootNode.SelectedImageKey = remoteBranchesRootNode.ImageKey;
-            _remoteTree = new RemoteBranchTree(remoteBranchesRootNode, newSource)
-            {
-                TreeViewNode = {ContextMenuStrip = menuRemotes}
+            _remoteTree = new RemoteBranchTree(remoteBranchesRootNode, newSource) {
+                TreeViewNode = { ContextMenuStrip = menuRemotes }
             };
             AddTree(_remoteTree);
 
-            if (showTagsToolStripMenuItem.Checked)
-            {
+            if (showTagsToolStripMenuItem.Checked) {
                 AddTags();
             }
         }
 
         private void AddBranchesToAutoCompletionSrc(List<string> branchPaths)
         {
-            foreach (var branchFullPath in branchPaths)
-            {
+            foreach (var branchFullPath in branchPaths) {
                 AddBranchToAutoCompletionSrc(branchFullPath);
             }
         }
@@ -120,10 +120,8 @@ namespace GitUI.UserControls
 
             _branchFilterAutoCompletionSrc.Add(branchFullPath);
 
-            if(lastPart != null && lastPart != branchFullPath)
-            {
-                if (!_branchFilterAutoCompletionSrc.Contains(lastPart))
-                {
+            if (lastPart != null && lastPart != branchFullPath) {
+                if (!_branchFilterAutoCompletionSrc.Contains(lastPart)) {
                     _branchFilterAutoCompletionSrc.Add(lastPart);
                 }
             }
@@ -138,6 +136,8 @@ namespace GitUI.UserControls
             rootNodes.Add(aTree);
         }
 
+        #endregion
+
         private CancellationTokenSource _cancelledTokenSource;
         private TreeNode _tagTreeRootNode;
         private TagTree _tagTree;
@@ -146,23 +146,23 @@ namespace GitUI.UserControls
         private bool _searchCriteriaChanged = false;
         private Task[] _tasks;
 
-        public TreeView TreeView => throw new NotImplementedException();
+        public TreeView TreeView { get => null; }
 
-        public TreeView TreeMain => throw new NotImplementedException();
+        // public TreeView TreeMain => throw new NotImplementedException(); }
 
-        ContextMenuStrip IRepoObjectsTree.menuBranch => throw new NotImplementedException();
+        ContextMenuStrip IRepoObjectsTree.menuBranch { get => null; } // throw new NotImplementedException(); }
 
-        TableLayoutPanel IRepoObjectsTree.repoTreePanel => throw new NotImplementedException();
+        TableLayoutPanel IRepoObjectsTree.repoTreePanel { get => null; }
 
-        TableLayoutPanel IRepoObjectsTree.branchFilterPanel => throw new NotImplementedException();
+        TableLayoutPanel IRepoObjectsTree.branchFilterPanel { get => null; }
 
-        Label IRepoObjectsTree.lblSearchBranch => throw new NotImplementedException();
+        Label IRepoObjectsTree.lblSearchBranch { get => null; }
 
-        Button IRepoObjectsTree.btnSearch => throw new NotImplementedException();
+        Button IRepoObjectsTree.btnSearch { get => null; }
 
-        Button IRepoObjectsTree.btnSettings => throw new NotImplementedException();
+        Button IRepoObjectsTree.btnSettings { get => null; }
 
-        ContextMenuStrip IRepoObjectsTree.menuSettings => throw new NotImplementedException();
+        ContextMenuStrip IRepoObjectsTree.menuSettings { get => null; }
 
         private void CancelBackgroundTasks()
         {

@@ -1,6 +1,8 @@
-﻿namespace GitUI.CommandsDialogs.SettingsDialog.Plugins
+﻿using System;
+
+namespace GitUI.CommandsDialogs.SettingsDialog.Plugins
 {
-    partial class PluginSettingsPage
+    partial class PluginSettingsPage : IDisposable
     {
         /// <summary> 
         /// Required designer variable.
@@ -11,14 +13,15 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected // override 
-             void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
                 components.Dispose();
             }
-            //  base.Dispose(disposing);
+            labelNoSettings.Dispose();
+            tableLayoutPanel1.Dispose();
+            base.Dispose(disposing);
         }
 
         #region Component Designer generated code

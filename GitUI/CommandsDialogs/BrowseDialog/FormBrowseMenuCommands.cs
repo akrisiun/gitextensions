@@ -21,7 +21,13 @@ namespace GitUI.CommandsDialogs
             _formBrowse = formBrowse;
         }
 
-        public void Dispose() { _formBrowse = null; }
+        public void Dispose() {
+            _formBrowse = null;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool isDispose) { }
 
         public IEnumerable<MenuCommand> GetNavigateMenuCommands()
         {

@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GitExtensions</RootNamespace>
     <AssemblyName>GitExtensionsTree</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <ApplicationIcon>..\Bin\Logo\x.ico</ApplicationIcon>
@@ -48,8 +48,9 @@
     <WarningLevel>3</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>3008,3001,3003,3009</NoWarn>
-    <Prefer32Bit>false</Prefer32Bit>
-    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>true</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -153,17 +154,25 @@
       <Project>{14e7137b-7f0e-44d2-af0b-cdaec9bf9a6d}</Project>
       <Name>NBugLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GitCommands\GitCommands.csproj">
+      <Project>{bd6aa2a2-997d-4aff-acc7-b64f6e51d181}</Project>
+      <Name>GitCommands</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GitExtUtils\GitExtUtils.csproj">
       <Project>{0f1f1168-a4b2-4fa2-b17b-735140d17f39}</Project>
       <Name>GitExtUtils</Name>
     </ProjectReference>
-    <Reference Include="GitUI">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\GitUI\bin\Debug\GitUI.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\GitUI\GitUI.csproj">
+      <Project>{a19af7d5-2bd9-470d-a4d0-0519c2694258}</Project>
+      <Name>GitUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gravatar\Gravatar.csproj">
       <Project>{4041b976-50d0-4c6e-abaf-7e67458a1264}</Project>
       <Name>Gravatar</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NetSpell.SpellChecker\SpellChecker.csproj">
+      <Project>{a426ee0b-e52e-4d74-af24-06797142d7b2}</Project>
+      <Name>SpellChecker</Name>
     </ProjectReference>
     <ProjectReference Include="..\Plugins\BackgroundFetch\BackgroundFetch.csproj">
       <Project>{F261BCD1-F5F7-4664-A230-E52032E6E9FD}</Project>
@@ -173,10 +182,6 @@
     <ProjectReference Include="..\Plugins\Github3\Github3.csproj">
       <Project>{b1b0c273-ab3f-48bf-92c7-de0be90d5870}</Project>
       <Name>Github3</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GitCommands\GitCommands.csproj">
-      <Project>{BD6AA2A2-997D-4AFF-ACC7-B64F6E51D181}</Project>
-      <Name>GitCommands</Name>
     </ProjectReference>
     <ProjectReference Include="..\Plugins\GitUIPluginInterfaces\GitUIPluginInterfaces.csproj">
       <Project>{27559302-f35e-4b62-a6ec-11ff21a5fa6f}</Project>

@@ -60,14 +60,29 @@ namespace GitUI.UserControls
 
         protected class NativeMethods
         {
+            public static bool IsLVHITTESTINFO(Control ctrl, Message m)
+            {
+                var info = new NativeMethods.LVHITTESTINFO();
+
+                info.pt = NativeMethods.LParamToPOINT((uint)m.LParam);
+
+                //if the click is on the group header, exit, otherwise send message
+                var handleRef = new HandleRef(ctrl, ctrl.Handle);
+                if (NativeMethods.SendMessage(handleRef, NativeMethods.LVM_SUBITEMHITTEST, (IntPtr)(-1), ref info) != new IntPtr(-1))
+                    if ((info.flags & NativeMethods.LVHITTESTFLAGS.LVHT_EX_GROUP_HEADER) != 0)
+                        return true;
+
+                return false;
+            }
+
             [DllImport("user32", CharSet = CharSet.Auto)]
-            public static extern IntPtr SendMessage(HandleRef hWnd,
+            internal static extern IntPtr SendMessage(HandleRef hWnd,
                                                    int msg,
                                                    IntPtr wParam,
                                                    ref LVHITTESTINFO lParam);
 
             [DllImport("user32", CharSet = CharSet.Auto)]
-            public static extern IntPtr SendMessage(HandleRef hWnd,
+            internal static extern IntPtr SendMessage(HandleRef hWnd,
                                                    int msg,
                                                    IntPtr wParam,
                                                    ref LVGROUP lParam);
@@ -116,8 +131,15 @@ namespace GitUI.UserControls
                     (int)((ulParam & 0xffff0000) >> 16));
             }
 
+            public static int GetNMHDRCode(Message m)
+            {
+                var nmhdr = (NativeMethods.NMHDR)m.GetLParam(typeof(NativeMethods.NMHDR));
+                return nmhdr.code;
+            }
+
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct NMHDR
+            private struct NMHDR
             {
                 public IntPtr hwndFrom;
                 public IntPtr idFrom;
@@ -182,7 +204,7 @@ namespace GitUI.UserControls
             }
 
             [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-            public struct LVGROUP
+            internal struct LVGROUP
             {
                 public int CbSize;
                 public ListViewGroupMask Mask;
@@ -215,27 +237,32 @@ namespace GitUI.UserControls
                     _isInWmPaintMsg = false;
                     break;
                 case NativeMethods.WM_REFLECT_NOTIFY:
-                    var nmhdr = (NativeMethods.NMHDR)m.GetLParam(typeof(NativeMethods.NMHDR));
-                    if (nmhdr.code == -12)
-                    {
+
+                    var nmhdr_code = NativeMethods.GetNMHDRCode(m);
+                    if (nmhdr_code == -12) {
                         // NM_CUSTOMDRAW
                         if (_isInWmPaintMsg)
                             base.WndProc(ref m);
-                    }
-                    else
+                    } else {
                         base.WndProc(ref m);
+                    }
+
                     break;
                 case NativeMethods.WM_LBUTTONUP:
                 case NativeMethods.WM_LBUTTONDOWN:
-                    var info = new NativeMethods.LVHITTESTINFO();
 
-                    info.pt = NativeMethods.LParamToPOINT((uint)m.LParam);
+                    if (NativeMethods.IsLVHITTESTINFO(this, m))
+                        return;
 
-                    //if the click is on the group header, exit, otherwise send message
-                    var handleRef = new HandleRef(this, Handle);
-                    if (NativeMethods.SendMessage(handleRef, NativeMethods.LVM_SUBITEMHITTEST, (IntPtr)(-1), ref info) != new IntPtr(-1))
-                        if ((info.flags & NativeMethods.LVHITTESTFLAGS.LVHT_EX_GROUP_HEADER) != 0)
-                            return;
+                    //var info = new NativeMethods.LVHITTESTINFO();
+                    //info.pt = NativeMethods.LParamToPOINT((uint)m.LParam);
+
+                    ////if the click is on the group header, exit, otherwise send message
+                    //var handleRef = new HandleRef(this, Handle);
+                    //if (NativeMethods.SendMessage(handleRef, NativeMethods.LVM_SUBITEMHITTEST, (IntPtr)(-1), ref info) != new IntPtr(-1))
+                    //    if ((info.flags & NativeMethods.LVHITTESTFLAGS.LVHT_EX_GROUP_HEADER) != 0)
+                    //        return;
+
                     base.WndProc(ref m);
                     break;
                 default:
@@ -272,6 +299,7 @@ namespace GitUI.UserControls
             group.CbSize = Marshal.SizeOf(group);
             group.State = state;
             group.Mask = NativeMethods.ListViewGroupMask.State;
+
             var handleRef = new HandleRef(this, Handle);
             group.IGroupId = GrpId ?? gIndex;
             NativeMethods.SendMessage(handleRef,

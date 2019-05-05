@@ -66,6 +66,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dispatcher.cs" />
     <Compile Include="Full.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,7 +87,6 @@
     <Compile Include="NBug\NBug\Core\Submission\Database\Ado.cs" />
     <Compile Include="NBug\NBug\Core\Submission\Database\MsSql.cs" />
     <Compile Include="NBug\NBug\Core\Submission\Database\MySql.cs" />
-    <Compile Include="NBug\NBug\Core\Submission\Dispatcher.cs" />
     <Compile Include="NBug\NBug\Core\Submission\IProtocol.cs" />
     <Compile Include="NBug\NBug\Core\Submission\IProtocolFactory.cs" />
     <Compile Include="NBug\NBug\Core\Submission\ProtocolBase.cs" />
@@ -120,10 +120,10 @@
     <Compile Include="NBug\NBug\Core\UI\Developer\InternalExceptionViewer.Designer.cs">
       <DependentUpon>InternalExceptionViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="NBug\NBug\Core\UI\Developer\InternalLogViewer.cs">
+    <Compile Include="InternalLogViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NBug\NBug\Core\UI\Developer\InternalLogViewer.Designer.cs">
+    <Compile Include="InternalLogViewer.Designer.cs">
       <DependentUpon>InternalLogViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="NBug\NBug\Core\UI\UIDialogResult.cs" />
@@ -197,7 +197,7 @@
     <EmbeddedResource Include="NBug\NBug\Core\UI\Developer\InternalExceptionViewer.resx">
       <DependentUpon>InternalExceptionViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NBug\NBug\Core\UI\Developer\InternalLogViewer.resx">
+    <EmbeddedResource Include="InternalLogViewer.resx">
       <DependentUpon>InternalLogViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NBug\NBug\Core\UI\WinForms\Feedback.resx">

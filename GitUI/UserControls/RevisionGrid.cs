@@ -2762,9 +2762,10 @@ namespace GitUI
         {
             AppSettings.ShowFirstParent = !AppSettings.ShowFirstParent;
 
-            var handler = ShowFirstParentsToggled;
-            if (handler != null)
-                handler(this, this);
+            //TODO:
+            //var handler = ShowFirstParentsToggled;
+            //if (handler != null)
+            //    handler(this, this);
 
             ForceRefreshRevisions();
         }
@@ -3255,7 +3256,7 @@ namespace GitUI
         }
 
         // TODO
-        public event EventHandler<IRevisionGrid> ShowFirstParentsToggled;
+        //public event EventHandler<IRevisionGrid> ShowFirstParentsToggled;
         //    add { this.ShowFirstParentsToggled += value; } remove { }
         //}
 

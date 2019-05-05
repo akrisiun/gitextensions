@@ -32,22 +32,25 @@ namespace GitExtensions
             FormBrowse.LazyTree = FormBrowseDark.LazyTree;
 
             var form = new FormBrowseDark(this, filter);
-            bool showDebug = Debugger.IsAttached;
+            bool showDebug = false; // Debugger.IsAttached;
 #if DEBUG
-            showDebug = true;
-#endif
-
+            // TODO args
+            // showDebug = true;
             if (showDebug) {
                 form.Cmd.ShowLog();
 
                 AppSettings.GitLog.Log("form created");
                 form.Cmd.UpdateLog(); // invalidate
             }
-
+#endif
+            // browse form init
             form.InitForm();
 
-            AppSettings.GitLog.Log("form after InitForm");
-            form.Cmd.UpdateLog(); // invalidate
+            Program.LogMessage("form after InitForm");
+            if (showDebug) {
+                AppSettings.GitLog.Log("form after InitForm");
+                form.Cmd.UpdateLog(); // invalidate
+            }
 
             if (Application.MessageLoop)
             {

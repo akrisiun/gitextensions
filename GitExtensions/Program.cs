@@ -10,6 +10,8 @@ using GitUI.CommandsDialogs.SettingsDialog.Pages;
 using System.Reflection;
 using System.Diagnostics;
 using GitUI.CommandsDialogs;
+using System.Collections.Generic;
+using GitUIPluginInterfaces;
 
 namespace GitExtensions
 {
@@ -21,6 +23,15 @@ namespace GitExtensions
         [STAThread]
         private static void Main()
         {
+            LogMessage(".. start");
+            #region Startup sequence
+
+            ListAsm.Add(typeof(ExceptionUtils).Assembly); // GitCommands
+            ListAsm.Add(typeof(IGitItem).Assembly);       // GitUIPluginInterfaces
+            ListAsm.Add(typeof(GitExtensionsFormBase).Assembly); // GitUI
+
+            LogMessage("#0 Assemblies loaded.");
+
             if (EnvUtils.RunningOnWindows())
             {
                 Application.EnableVisualStyles();
@@ -32,6 +43,9 @@ namespace GitExtensions
                 try
                 {
                     NBug.Settings.UIMode = NBug.Enums.UIMode.Full;
+#if DEBUG
+                    // NBug.Settings.SkipDispatching = true;
+#endif
 
                     // Uncomment the following after testing to see that NBug is working as configured
                     NBug.Settings.ReleaseMode = true;
@@ -42,9 +56,10 @@ namespace GitExtensions
                     NBug.Settings.SleepBeforeSend = 30;
                     NBug.Settings.StoragePath = NBug.Enums.StoragePath.WindowsTemp;
 
-                    AppDomain.CurrentDomain.UnhandledException += NBug.Handler.UnhandledException;
-                    Application.ThreadException += NBug.Handler.ThreadException;
-
+                    if (NBug.Settings.HandleProcessCorruptedStateExceptions) {
+                        AppDomain.CurrentDomain.UnhandledException += NBug.Handler.UnhandledException;
+                        Application.ThreadException += NBug.Handler.ThreadException;
+                    }
                 }
                 catch (TypeInitializationException tie)
                 {
@@ -59,6 +74,10 @@ namespace GitExtensions
             }
 
             string[] args = Environment.GetCommandLineArgs();
+
+            LogMessage("#1 Settings.Default");
+            var settings = GitExtensions.Properties.Settings.Default;
+            LogMessage("#2 ShowSplash");
             FormSplash.ShowSplash();
 
             //Store here SynchronizationContext.Current, because later sometimes it can be null
@@ -82,6 +101,7 @@ namespace GitExtensions
 
             //Register plugins
             FormSplash.SetAction("Loading plugins...");
+            LogMessage("#3 Loading plugins");
             if (EnvUtils.RunningOnWindows())
                 Application.DoEvents();
 
@@ -130,8 +150,11 @@ namespace GitExtensions
                 FormBrowse.StartCommit =
                     (path) => Program.StartCommit(path);
             }
+            #endregion
 
             GitUICommands uCommands = new GitUICommandsThread(GetWorkingDir(args));
+
+            LogMessage("#10: GitUICommands start");
             if (args.Length <= 1)
             {
                 uCommands.StartBrowseDialog(null, "");
@@ -259,6 +282,19 @@ namespace GitExtensions
                 System.Console.WriteLine("Configuration Error");
                 System.Environment.Exit(1);
             }
+        }
+
+        /// <summary>
+        /// Log routines
+        /// </summary>
+        public static IList<string> Log = new List<string>();
+        public static IList<Assembly> ListAsm = new List<Assembly>();
+        public static void LogMessage(string msg)
+        {
+            var line = DateTime.Now.ToLongTimeString() + " " + (msg ?? "");
+            Log.Add(line);
+            if (Debugger.IsAttached)
+                Debugger.Log(0, "", line + Environment.NewLine);
         }
 
     }

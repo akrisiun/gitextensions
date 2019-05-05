@@ -10,7 +10,6 @@ using System.Drawing;
 using MaterialSkin;
 #endif
 // using Microsoft.WindowsAPICodePack.Taskbar;
-//using ResourceManager;
 
 namespace GitUI
 {

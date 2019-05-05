@@ -61,13 +61,15 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;CODE_ANALYSIS;NET45;NOTRANS;</DefineConstants>
+    <DefineConstants>TRACE;CODE_ANALYSIS;NET45;NOTRANS;SKIN;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>1033;1065;1009;1401</NoWarn>
+    <WarningsAsErrors>1063;1401;2111</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -292,6 +294,9 @@
       <DependentUpon>NotificationsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Notifications\NotifierHelpers.cs" />
+    <Compile Include="Objects\GitRemote.cs" />
+    <Compile Include="Objects\GitRemoteController.cs" />
+    <Compile Include="Objects\GitRemoteSaveResult.cs" />
     <Compile Include="RepoHosts.cs" />
     <Compile Include="AutoCompletion\AutoCompleteWord.cs" />
     <Compile Include="HelperDialogs\IFileStatusList.cs" />
@@ -762,7 +767,9 @@
     <Compile Include="CommandsDialogs\SettingsDialog\Pages\StartPageSettingsPage.Designer.cs">
       <DependentUpon>StartPageSettingsPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="CommandsDialogs\SettingsDialog\Plugins\PluginSettingsPage.cs" />
+    <Compile Include="CommandsDialogs\SettingsDialog\Plugins\PluginSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="CommandsDialogs\SettingsDialog\Plugins\PluginSettingsPage.Designer.cs">
       <DependentUpon>PluginSettingsPage.cs</DependentUpon>
     </Compile>
