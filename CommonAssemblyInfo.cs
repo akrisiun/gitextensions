@@ -6,10 +6,7 @@
 
 //[assembly: AssemblyTitle("GitExtensions")]
 //[assembly: AssemblyDescription("GitExtensions is a graphical interface for Git")]
-//[assembly: AssemblyConfiguration("")]
-//[assembly: AssemblyCompany("GitExtensions")]
-//[assembly: AssemblyProduct("GitExtensions")]
-[assembly: AssemblyCopyright("Copyright © 2008-2017 GitExt Team")]
+[assembly: AssemblyCopyright("Copyright © 2008-2019 GitExt Team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -21,7 +18,7 @@
 //      Revision
 //
 #if !NETCORE
-[assembly: AssemblyVersion("2.51.01")]
-[assembly: AssemblyFileVersion("2.51.01")]
+[assembly: AssemblyVersion("2.51.02")]
+[assembly: AssemblyFileVersion("2.51.02")]
 [assembly: AssemblyInformationalVersion("2.51.01-beta")]
 #endif

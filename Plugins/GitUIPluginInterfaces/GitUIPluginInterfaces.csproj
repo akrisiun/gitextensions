@@ -1,15 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project>
     <Sdk Name="Microsoft.NET.Sdk" />
-    <!--ToolsVersion="14.0" DefaultTargets="Build"
-    xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
-            Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-    -->
     <PropertyGroup>
         <TargetFramework>net45</TargetFramework>
         <CodeAnalysisRuleSet></CodeAnalysisRuleSet>
-        <SignAssembly>false</SignAssembly>
+        <SignAssembly>true</SignAssembly>
         <NoWarn>1701;1702;18;19;44;37;</NoWarn>
         <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
         <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
@@ -56,6 +51,7 @@
     </PropertyGroup>
     <PropertyGroup>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <AssemblyOriginatorKeyFile>..\..\mono.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="GitCommands">
@@ -123,8 +119,4 @@
     <ItemGroup>
         <None Include="packages.config" />
     </ItemGroup>
-    <!--
-    <Import Project="..\..\FxCop.targets" />
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />-->
-    <!--<Import Project="$(SolutionDir)\.nuget\NuGet.targets" />-->
 </Project>
