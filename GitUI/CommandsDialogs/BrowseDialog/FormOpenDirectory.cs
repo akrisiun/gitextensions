@@ -27,6 +27,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
             _NO_TRANSLATE_Directory.DataSource = GetDirectories(currentModule);
 
             Load.Select();
+            _NO_TRANSLATE_Directory.Text = Path.GetFullPath(currentModule.WorkingDir);
 
             _NO_TRANSLATE_Directory.Focus();
             _NO_TRANSLATE_Directory.Select();

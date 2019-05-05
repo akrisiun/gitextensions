@@ -19,6 +19,9 @@ namespace GitCommands.Logging
             }
         }
 
+        public void Log(string command, DateTime? started = null)
+            => Log(command, started ?? DateTime.Now, DateTime.Now);
+
         public void Log(string command, DateTime executionStartTimestamp, DateTime executionEndTimestamp)
         {
             CommandLogEntry commandLogEntry = null;

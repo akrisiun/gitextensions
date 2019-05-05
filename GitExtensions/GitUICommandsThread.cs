@@ -1,4 +1,5 @@
-﻿using GitUI;
+﻿using GitCommands;
+using GitUI;
 using GitUI.CommandsDialogs;
 using GitUI.UserControls;
 using GitUIPluginInterfaces;
@@ -11,7 +12,8 @@ namespace GitExtensions
 {
     using IWin32Window = GitUI.IWin32Window;
 
-    class GitUICommandsThread : GitUICommands, IGitUICommands
+    [CLSCompliant(false)]
+    public class GitUICommandsThread : GitUICommands, IGitUICommands
     {
         public GitUICommandsThread(string dir) : base(dir)
         {
@@ -26,9 +28,26 @@ namespace GitExtensions
 
             FormBrowseDark.LazyTree = new Lazy<GitUI.UserControls.IRepoObjectsTree>(
                 () => new RepoObjectsTree());
+
             FormBrowse.LazyTree = FormBrowseDark.LazyTree;
 
             var form = new FormBrowseDark(this, filter);
+            bool showDebug = Debugger.IsAttached;
+#if DEBUG
+            showDebug = true;
+#endif
+
+            if (showDebug) {
+                form.Cmd.ShowLog();
+
+                AppSettings.GitLog.Log("form created");
+                form.Cmd.UpdateLog(); // invalidate
+            }
+
+            form.InitForm();
+
+            AppSettings.GitLog.Log("form after InitForm");
+            form.Cmd.UpdateLog(); // invalidate
 
             if (Application.MessageLoop)
             {

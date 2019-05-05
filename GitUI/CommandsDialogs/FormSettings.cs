@@ -204,7 +204,7 @@ namespace GitUI.CommandsDialogs
                 // and has their day ruined.
                 DialogResult = DialogResult.Abort;
 
-                throw;
+                // throw;
             }
         }
 

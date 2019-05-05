@@ -15,7 +15,9 @@ namespace GitUI.CommandsDialogs
         private readonly FilterRevisionsHelper _filterRevisionsHelper;
         private readonly FilterBranchHelper _filterBranchHelper;
         private readonly AsyncLoader _asyncLoader;
-        // private readonly FormBrowseMenus _formBrowseMenus;
+        #if !SKIN
+        private readonly FormBrowseMenus _formBrowseMenus;
+        #endif
 
         private FormFileHistory()
             : this(null)
@@ -44,6 +46,7 @@ namespace GitUI.CommandsDialogs
                 new FilterRevisionsHelper(
                     toolStripRevisionFilterTextBox, toolStripRevisionFilterDropDownButton, FileChanges, 
                     toolStripRevisionFilterLabel, ShowFirstParent, form: this);
+
             //      ToolStripTextBox textBox, ToolStripDropDownButton dropDownButton, RevisionGrid revisionGrid, 
             //      ToolStripLabel label, ToolStripButton showFirstParentButton, Form form)
 

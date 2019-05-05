@@ -1,12 +1,9 @@
 ﻿using GitCommands;
-//using GitExtensions.Properties;
 using GitUI;
 using GitUI.CommandsDialogs;
 using GitUI.CommandsDialogs.BrowseDialog;
 using GitUI.Hotkey;
 using GitUI.Plugin;
-//using GitUI.Properties;
-//using GitUI.UserControls;
 using GitUIPluginInterfaces;
 using ResourceManager;
 using System;
@@ -1025,6 +1022,15 @@ namespace GitUI.CommandsDialogs
             Form.OpenContainingFolder(Form.DiffFiles, Module);
         }
 
+        public void ShowLog()
+        {
+            FormGitLog.ShowOrActivate(Form);
+        }
+
+        public void UpdateLog()
+        {
+            FormGitLog.Update(Form);
+        }
     }
 
 }

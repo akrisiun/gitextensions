@@ -316,7 +316,7 @@ namespace GitUI
 
         public bool StartBrowseDialog()
         {
-            return StartBrowseDialog("");
+            return StartBrowseDialog(null, "");
         }
 
         public bool StartDeleteBranchDialog(string branch)

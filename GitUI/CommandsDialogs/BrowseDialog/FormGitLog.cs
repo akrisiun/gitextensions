@@ -35,7 +35,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
             instance = null;
         }
 
-        private void RefreshLogItems()
+        public void RefreshLogItems()
         {
             if (TabControl.SelectedTab == tabPageCommandLog)
                 RefreshListBox(LogItems, AppSettings.GitLog.GetCommands().Select(cle => cle.ToString()).ToArray());
@@ -120,9 +120,22 @@ namespace GitUI.CommandsDialogs.BrowseDialog
                 (instance = new FormGitLog()).Show();
             else if (instance.WindowState == FormWindowState.Minimized)
                 instance.WindowState = FormWindowState.Normal;
-            else
+            else {
                 instance.Activate();
+                Update(owner);
+            }
         }
+
+        public static void Update(IWin32Window owner)
+        {
+            if (instance == null || !instance.Visible)
+                return;
+
+            instance.RefreshLogItems();
+            instance.Invalidate();
+            instance.Update();
+        }
+
         #endregion
     }
 }

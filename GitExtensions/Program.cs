@@ -72,7 +72,7 @@ namespace GitExtensions
             {
               WebBrowserEmulationMode.SetBrowserFeatureControl();
 
-              //Quick HOME check:
+                //Quick HOME check:
                 FormSplash.SetAction("Checking home path...");
                 if (EnvUtils.RunningOnWindows())
                     Application.DoEvents();
@@ -101,6 +101,7 @@ namespace GitExtensions
                     var commonLogic = new CommonLogic(uiCommands.Module);
                     var checkSettingsLogic = new CheckSettingsLogic(commonLogic);
                     ISettingsPageHost fakePageHost = new SettingsPageHostMock(checkSettingsLogic);
+
                     using (var checklistSettingsPage = SettingsPageBase.Create<ChecklistSettingsPage>(fakePageHost))
                     {
                         if (!checklistSettingsPage.CheckSettings())
@@ -133,7 +134,7 @@ namespace GitExtensions
             GitUICommands uCommands = new GitUICommandsThread(GetWorkingDir(args));
             if (args.Length <= 1)
             {
-                uCommands.StartBrowseDialog("");
+                uCommands.StartBrowseDialog(null, "");
             }
             else  // if we are here args.Length > 1
             {

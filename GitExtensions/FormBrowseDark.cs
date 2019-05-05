@@ -36,7 +36,7 @@ using GitUI.Revision;
 
 namespace GitUI.CommandsDialogs
 {
-    [CLSCompliant(true)]
+    [CLSCompliant(false)]
     public partial class FormBrowseDark : GitModuleForm, GitUI.IWin32Window, IBrowseRepo, IFormBrowse
     {
         #region Private
@@ -49,15 +49,16 @@ namespace GitUI.CommandsDialogs
         //private ThumbnailToolBarButton _commitButton;
         //private ThumbnailToolBarButton _pushButton;
         //private ThumbnailToolBarButton _pullButton;
-        private bool _toolbarButtonsCreated;
+        //private bool _toolbarButtonsCreated;
 #endif
-        private readonly ToolStripGitStatus _toolStripGitStatus;
-        private readonly FilterRevisionsHelper _filterRevisionsHelper;
-        private readonly FilterBranchHelper _filterBranchHelper;
+        private ToolStripGitStatus _toolStripGitStatus;
+        private FilterRevisionsHelper _filterRevisionsHelper;
+        private FilterBranchHelper _filterBranchHelper;
 
         private string _diffTabPageTitleBase = "";
 
-        private readonly FormBrowseMenus _formBrowseMenus;
+        // readonly 
+        private FormBrowseMenus _formBrowseMenus;
 
         public ConEmuControl Terminal { get => terminal; }
 
@@ -65,7 +66,8 @@ namespace GitUI.CommandsDialogs
         TabPage tabTerminal = null;
 
 #pragma warning disable 0414
-        private readonly FormBrowseMenuCommands _formBrowseMenuCommands;
+        // readonly 
+        private FormBrowseMenuCommands _formBrowseMenuCommands;
 #pragma warning restore 0414
 
         public FormBrowseDarkCommands Cmd { get; protected set; }
@@ -122,6 +124,17 @@ namespace GitUI.CommandsDialogs
                 throw new ArgumentNullException("Repository Tree interface error");
 
             Cmd = new FormBrowseDarkCommands(this);
+            _aCommands = aCommands;
+            _filter = filter;
+        }
+
+        private GitUICommands _aCommands;
+        private string _filter;
+
+        public void InitForm()
+        {
+            var aCommands = _aCommands;
+            var filter = _filter;
             InitializeComponent();
 
             Tree = repoObjectsTree = LazyTree.Value;
@@ -231,6 +244,14 @@ namespace GitUI.CommandsDialogs
             RecoverSplitterContainerLayout();
         }
 
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+
+            AppSettings.GitLog.Log("form OnLoad finished");
+            Cmd.UpdateLog();
+        }
+
         public GitUI.RevisionGrid RevisionsGrid { get { return this.RevisionGrid; } }
 
         public void DoStartCommit(string path)
@@ -320,6 +341,8 @@ namespace GitUI.CommandsDialogs
                 }
                 RevisionGrid.ForceRefreshRevisions();
                 InternalInitialize(true);
+
+                AppSettings.GitLog.Log("form after InternalInitialize true");
             }
         }
 
@@ -385,6 +408,9 @@ namespace GitUI.CommandsDialogs
 
             Cursor.Current = Cursors.WaitCursor;
             InternalInitialize(false);
+            AppSettings.GitLog.Log("form after InternalInitialize false");
+            Cmd.UpdateLog();
+
             RevisionGrid.Focus();
             RevisionGrid.IndexWatcher.Reset();
 
@@ -1387,9 +1413,12 @@ namespace GitUI.CommandsDialogs
 
         private void OpenToolStripMenuItemClick(object sender, EventArgs e)
         {
-            //GitModule module = FormOpenDirectory.OpenModule(this);
-            //if (module != null)
-            //    SetGitModule(this, new GitModuleEventArgs(module));
+            GitModule current = this.UICommands.Module;
+            GitModule module = FormOpenDirectory.OpenModule(this, current);
+            if (module != null) {
+                SetGitModule(this, new GitModuleEventArgs(module));
+                ChangeTerminalActiveFolder(UICommands.Module?.WorkingDir);
+            }
         }
 
         private void CheckoutToolStripMenuItemClick(object sender, EventArgs e)
@@ -2791,7 +2820,19 @@ namespace GitUI.CommandsDialogs
                 return;
 
             string posixPath;
-            if (PathUtil.TryConvertWindowsPathToPosix(path, out posixPath))
+            bool parsed = false;
+            var cmdLine = terminal.RunningSession.StartInfo.ConsoleProcessCommandLine.ToLower();
+
+            // {Shells::PowerShell}
+            if (cmdLine.Contains("powershell") || cmdLine.Contains(":cmd") || cmdLine.Contains(":pwsh")) {
+                posixPath = Path.GetFullPath(path);
+                parsed = posixPath.Contains(":\\") || posixPath.Contains("\\\\");
+            } else {
+                // Posix: bash, xterm, ..
+                parsed = PathUtil.TryConvertWindowsPathToPosix(path, out posixPath);
+            }
+
+            if (parsed)
             {
                 //Clear terminal line by sending 'backspace' characters
                 for (int i = 0; i < 10000; i++)

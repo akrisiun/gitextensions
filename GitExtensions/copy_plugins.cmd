@@ -1,7 +1,7 @@
 @echo off
 set config=%1
 md Plugins\
-md ComEmu\
+md ConEmu\
 echo Microsoft.TeamFoundation.WorkItemTracking.Client.DataStoreLoader.dll > exclude.txt
 echo Microsoft.WITDataStore.dll >> exclude.txt
 

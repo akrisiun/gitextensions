@@ -185,7 +185,7 @@ namespace GitUI.CommandsDialogs
                 {
                     Hide();
                     GitUICommands uiCommands = new GitUICommands(dirTo);
-                    uiCommands.StartBrowseDialog();
+                    uiCommands.StartBrowseDialog(null, "");
                 }
                 else if (ShowInTaskbar == false && GitModuleChanged != null &&
                     AskIfNewRepositoryShouldBeOpened(dirTo))
