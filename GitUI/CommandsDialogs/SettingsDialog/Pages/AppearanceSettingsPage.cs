@@ -89,7 +89,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
 
             truncatePathMethod.SelectedIndex = GetTruncatePathMethodIndex(AppSettings.TruncatePathMethod);
 
-            if (AppSettings.Dictionary.Equals("none", StringComparison.InvariantCultureIgnoreCase))
+            if (AppSettings.Dictionary.Equals("none", StringComparison.InvariantCultureIgnoreCase) && Dictionary.Items.Count > 0)
                 Dictionary.SelectedIndex = 0;
             else
                 Dictionary.Text = AppSettings.Dictionary;
