@@ -26,6 +26,7 @@ namespace GitUI.CommandsDialogs.Commit
 {
     using IWin32Window2 = GitUI.IWin32Window;
 
+    [CLSCompliant(false)]
     public sealed partial class FormCommit : GitModuleForm, IWin32Window2 //, IHotkeyable
     {
         #region Translation
