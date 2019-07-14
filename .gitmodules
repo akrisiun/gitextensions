@@ -1,6 +1,3 @@
-[submodule "GitExtensionsDoc"]
-	path = GitExtensionsDoc
-	url = https://github.com/gitextensions/GitExtensionsDoc.git
 [submodule "Externals/NBug"]
 	path = Externals/NBug
 	url = https://github.com/gitextensions/NBug.git
@@ -9,4 +6,4 @@
 	url = https://github.com/gitextensions/Git.hub.git
 [submodule "Externals/conemu-inside"]
 	path = Externals/conemu-inside
-	url = https://github.com/gitextensions/conemu-inside.git
+	url = https://github.com/akrisiun/conemu-inside.git

@@ -54,14 +54,21 @@ namespace GitExtensions
             }
 
             string[] args = Environment.GetCommandLineArgs();
-            FormSplash.ShowSplash();
+            //FormSplash.ShowSplash();
+
             //Store here SynchronizationContext.Current, because later sometimes it can be null
             //see http://stackoverflow.com/questions/11621372/synchronizationcontext-current-is-null-in-continuation-on-the-main-ui-thread
             GitUIExtensions.UISynchronizationContext = SynchronizationContext.Current;
-            AsyncLoader.DefaultContinuationTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+            // if not MONO
+            // AsyncLoader.DefaultContinuationTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+
             Application.DoEvents();
 
+            try {
+                UnsafeSettings();
+            } catch (Exception ex) { Console.WriteLine($"Unsafe settings failure {ex}"); }
             AppSettings.LoadSettings();
+
             if (EnvUtils.RunningOnWindows())
             {
               WebBrowserEmulationMode.SetBrowserFeatureControl();
@@ -73,16 +80,17 @@ namespace GitExtensions
                 FormFixHome.CheckHomePath();
             }
             //Register plugins
-            FormSplash.SetAction("Loading plugins...");
+            // FormSplash.SetAction("Loading plugins...");
             Application.DoEvents();
 
-            if (string.IsNullOrEmpty(AppSettings.Translation))
+            AppSettings.Translation = "en";
+            /*  if (string.IsNullOrEmpty(AppSettings.Translation))
             {
                 using (var formChoose = new FormChooseTranslation())
                 {
                     formChoose.ShowDialog();
                 }
-            }
+            } */
 
             try
             {
@@ -91,22 +99,28 @@ namespace GitExtensions
                     || string.IsNullOrEmpty(AppSettings.GitCommandValue)
                     || !File.Exists(AppSettings.GitCommandValue)))
                 {
-                    FormSplash.SetAction("Checking settings...");
+                    // FormSplash.SetAction("Checking settings...");
                     Application.DoEvents();
 
-                    GitUICommands uiCommands = new GitUICommands(string.Empty);
-                    var commonLogic = new CommonLogic(uiCommands.Module);
-                    var checkSettingsLogic = new CheckSettingsLogic(commonLogic);
-                    ISettingsPageHost fakePageHost = new SettingsPageHostMock(checkSettingsLogic);
-                    using (var checklistSettingsPage = SettingsPageBase.Create<ChecklistSettingsPage>(fakePageHost))
-                    {
-                        if (!checklistSettingsPage.CheckSettings())
+                    try {
+                        GitUICommands uiCommands = new GitUICommands(string.Empty);
+                        var commonLogic = new CommonLogic(uiCommands.Module);
+                        var checkSettingsLogic = new CheckSettingsLogic(commonLogic);
+                        ISettingsPageHost fakePageHost = new SettingsPageHostMock(checkSettingsLogic);
+                        
+                        using (var checklistSettingsPage = SettingsPageBase.Create<ChecklistSettingsPage>(fakePageHost))
                         {
-                            if (!checkSettingsLogic.AutoSolveAllSettings())
+                            if (!checklistSettingsPage.CheckSettings())
                             {
-                                uiCommands.StartSettingsDialog();
+                                if (!checkSettingsLogic.AutoSolveAllSettings())
+                                {
+                                    uiCommands.StartSettingsDialog();
+                                }
                             }
                         }
+                    }
+                    catch (Exception ex) {
+                       Console.WriteLine($"Settings failure {ex}");
                     }
                 }
             }
@@ -132,6 +146,13 @@ namespace GitExtensions
             }
 
             AppSettings.SaveSettings();
+        }
+
+        static void UnsafeSettings() {
+
+            AppSettings.LoadSsh(); // .SshPathLocatorInstance  = new SshPathLocator();
+            // Could not load type of field 'GitCommands.SshPathLocator:_fileSystem' (0) due to: Could not load file or assembly 'System.IO.Abstractions, Version=2.0.0.144, Culture=neutral, PublicKeyToken=null' 
+            // or one of its dependencies. assembly:System.IO.Abstractions, Version=2.0.0.144, 
         }
 
         private static string GetWorkingDir(string[] args)

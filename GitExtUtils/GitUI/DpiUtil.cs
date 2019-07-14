@@ -63,6 +63,7 @@ namespace GitExtUtils.GitUI
         /// Modifies <paramref name="size"/> in place so that it takes equivalent screen
         /// space at the current DPI as the original value would at 96 DPI.
         /// </summary>
+        [CLSCompliant(false)]
         public static void Scale(ref Size size)
         {
             size.Width = (int)(size.Width * ScaleX);

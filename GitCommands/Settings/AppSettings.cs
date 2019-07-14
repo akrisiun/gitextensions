@@ -32,7 +32,12 @@ namespace GitCommands
         public static Version AppVersion { get { return Assembly.GetCallingAssembly().GetName().Version; } }
         public static string ProductVersion { get { return Application.ProductVersion; } }
         public static readonly string SettingsFileName = "GitExtensions.settings";
-        private static readonly ISshPathLocator SshPathLocatorInstance = new SshPathLocator();
+        private static ISshPathLocator SshPathLocatorInstance; // = new SshPathLocator();
+
+        public static void LoadSsh()
+        {
+            SshPathLocatorInstance = new SshPathLocator();
+        }
 
         public static readonly Lazy<string> ApplicationDataPath;
         public static string SettingsFilePath { get { return Path.Combine(ApplicationDataPath.Value, SettingsFileName); } }

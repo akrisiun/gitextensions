@@ -133,7 +133,7 @@ namespace GitUI.CommandsDialogs
         private string _diffTabPageTitleBase = "";
 
         private readonly FormBrowseMenus _formBrowseMenus;
-        private ConEmuControl _terminal;
+        // private ConEmuControl _terminal;
         private readonly SplitterManager _splitterManager = new SplitterManager(new AppSettingsPath("FormBrowse"));
         private readonly IFormBrowseController _controller;
         private readonly ICommitDataManager _commitDataManager;
@@ -2574,12 +2574,12 @@ namespace GitUI.CommandsDialogs
                 return; // ConEmu only works on WinNT
             }
 
-            if (_terminal != null)
+            /* if (_terminal != null)
             {
                 // if terminal is already created, then give it focus
                 _terminal.Focus();
                 return;
-            }
+            } */
 
             var tabpageCaption = _consoleTabCaption.Text;
             var tabpageCreated = CommitInfoTabControl.TabPages.ContainsKey(tabpageCaption);
@@ -2602,7 +2602,8 @@ namespace GitUI.CommandsDialogs
             {
                 if (args.TabPage != tabpage)
                     return;
-                if (_terminal == null) // Lazy-create on first opening the tab
+
+                /* if (_terminal == null) // Lazy-create on first opening the tab
                 {
                     tabpage.Controls.Clear();
                     tabpage.Controls.Add(
@@ -2692,14 +2693,16 @@ namespace GitUI.CommandsDialogs
                 }
 
                 _terminal.Start(startinfo);
+                */
             };
         }
 
         public void ChangeTerminalActiveFolder(string path)
         {
-            if (_terminal == null || _terminal.RunningSession == null || string.IsNullOrWhiteSpace(path))
+            // if (_terminal == null || _terminal.RunningSession == null || string.IsNullOrWhiteSpace(path))
                 return;
 
+            /*
             if (AppSettings.ConEmuTerminal.ValueOrDefault == "bash")
             {
                 string posixPath;
@@ -2716,19 +2719,21 @@ namespace GitUI.CommandsDialogs
             {
                 ClearTerminalCommandLineAndRunCommand("cd /D \"" + path + "\"");
             }
+            */
         }
 
         private void ClearTerminalCommandLineAndRunCommand(string command)
         {
-            if (_terminal == null || _terminal.RunningSession == null || string.IsNullOrWhiteSpace(command))
+            // if (_terminal == null || _terminal.RunningSession == null || string.IsNullOrWhiteSpace(command))
                 return;
-
+            /*
             //Clear terminal line by sending 'backspace' characters
             for (int i = 0; i < 10000; i++)
             {
                 _terminal.RunningSession.WriteInputText("\b");
             }
             _terminal.RunningSession.WriteInputText(command + Environment.NewLine);
+            */
         }
 
         /// <summary>

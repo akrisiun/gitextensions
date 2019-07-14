@@ -19,8 +19,12 @@ namespace GitUI.UserControls
         private int _nLastExitCode;
 
         private Panel _panel;
+#if __MonoCS__
+#pragma warning disable 649
+        private IDisposable _terminal;
+#else
         private ConEmuControl _terminal;
-
+#endif
         public ConsoleEmulatorOutputControl()
         {
             InitializeComponent();
@@ -57,14 +61,18 @@ namespace GitUI.UserControls
 
         public override void AppendMessageFreeThreaded(string text)
         {
+#if !__MonoCS__
             ConEmuSession session = _terminal.RunningSession;
             if(session != null)
                 session.WriteOutputText(text);
+#endif                
         }
 
         public override void KillProcess()
         {
+#if !__MonoCS__            
             KillProcess(_terminal);
+#endif
         }
 
         private static void KillProcess(ConEmuControl terminal)
@@ -76,6 +84,7 @@ namespace GitUI.UserControls
 
         public override void Reset()
         {
+#if !__MonoCS__            
             ConEmuControl oldTerminal = _terminal;
 
             _terminal = new ConEmuControl()
@@ -93,18 +102,20 @@ namespace GitUI.UserControls
             }
 
             _panel.Controls.Add(_terminal);
+#endif
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (disposing && _terminal != null)
+            if (disposing && _terminal is IDisposable)
             {
-                _terminal.Dispose();
+                (_terminal as IDisposable)?.Dispose();
             }
         }
 
-        public override void StartProcess(string command, string arguments, string workdir, Dictionary<string, string> envVariables)
+        public override void StartProcess(string command, 
+            string arguments, string workdir, Dictionary<string, string> envVariables)
         {
             var cmdl = new StringBuilder();
             if (command != null)
@@ -138,14 +149,18 @@ namespace GitUI.UserControls
 
             startinfo.ConsoleEmulatorClosedEventSink = (s, e) =>
                 {
+                    #if !__MonoCS__
                     if (s == _terminal.RunningSession)
                     {
                         FireTerminated();
                     }
+                    #endif
                 };
             startinfo.IsEchoingConsoleCommandLine = true;
 
-            _terminal.Start(startinfo);
+#if !__MonoCS__
+            _terminal?.Start(startinfo);
+#endif            
         }
     }
 

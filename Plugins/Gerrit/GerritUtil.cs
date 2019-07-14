@@ -10,9 +10,17 @@ using JetBrains.Annotations;
 
 namespace Gerrit
 {
+    using GitCommands.Utils;
+    
     internal static class GerritUtil
     {
-        private static readonly ISshPathLocator SshPathLocatorInstance = new SshPathLocator();
+        private static ISshPathLocator SshPathLocatorInstance; // = new SshPathLocator();
+
+        static GerritUtil() {
+            try { 
+                SshPathLocatorInstance = new SshPathLocator();
+            } catch (Exception ex) { throw ex; }
+        }
 
         public static string RunGerritCommand([NotNull] IWin32Window owner, [NotNull] IGitModule aModule, [NotNull] string command, [NotNull] string remote, byte[] stdIn)
         {
@@ -45,14 +53,17 @@ namespace Gerrit
 
             StartAgent(owner, aModule, remote);
 
-            var sshCmd = SshPathLocatorInstance.Find(AppSettings.GitBinDir);
-            if (GitCommandHelpers.Plink())
-            {
-                sshCmd = AppSettings.Plink;
-            }
-            if (string.IsNullOrEmpty(sshCmd))
-            {
-                sshCmd = "ssh.exe";
+            var sshCmd = "ssh";
+            if (!EnvUtils.IsMonoRuntime()) {
+                sshCmd = SshPathLocatorInstance.Find(AppSettings.GitBinDir);
+                if (GitCommandHelpers.Plink())
+                {
+                    sshCmd = AppSettings.Plink;
+                }
+                if (string.IsNullOrEmpty(sshCmd))
+                {
+                    sshCmd = "ssh.exe";
+                }
             }
 
             string hostname = fetchUrl.Host;

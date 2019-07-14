@@ -39,7 +39,13 @@ namespace GitCommands.Settings
                 _fileWatcher.Path = dir;
                 _fileWatcher.Filter = Path.GetFileName(SettingsFilePath);
                 _canEnableFileWatcher = true;
+                try {
                 _fileWatcher.EnableRaisingEvents = _canEnableFileWatcher;
+                } catch (Exception) {
+                    // mono problems
+                    //  System.InvalidOperationException: object_op ---> System.IO.IOException: The configured user limit (128) on the number of inotify instances has been reached.
+                    //      at System.IO.CoreFX.FileSystemWatcher.StartRaisingEvents
+                } 
             }
             FileChanged();
         }
