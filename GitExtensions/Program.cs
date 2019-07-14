@@ -63,7 +63,21 @@ namespace GitExtensions
             // AsyncLoader.DefaultContinuationTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
 
             Application.DoEvents();
-
+ 
+            if (!EnvUtils.RunningOnWindows()) {
+                var cmd = File.Exists("/usr/bin/git") ? "/usr/bin/git" : "git";
+                AppSettings.GitCommandValue = cmd;
+                GitUICommands uiCommands = new GitUICommands(string.Empty);
+                var commonLogic = new CommonLogic(uiCommands.Module);
+                var check = new GitUI.CommandsDialogs.SettingsDialog.CheckSettingsLogic(commonLogic);
+                GitCommandHelpers.ShowConsole = true;
+                if (!check.CanFindGitCmd()) {
+                    Console.WriteLine($"no {cmd}");
+                } else {
+                    // git OK
+                    GitCommandHelpers.ShowConsole = false; 
+                }
+            }
             try {
                 UnsafeSettings();
             } catch (Exception ex) { Console.WriteLine($"Unsafe settings failure {ex}"); }
@@ -79,6 +93,7 @@ namespace GitExtensions
 
                 FormFixHome.CheckHomePath();
             }
+
             //Register plugins
             // FormSplash.SetAction("Loading plugins...");
             Application.DoEvents();

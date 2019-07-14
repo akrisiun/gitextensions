@@ -32,7 +32,9 @@ namespace GitUI
 
         protected override void WndProc(ref Message m)
         {
-            base.WndProc(ref m);
+            try {
+              base.WndProc(ref m);
+            } catch (Exception) { this.clickThrough = false; }
 
             if (this.clickThrough &&
                 m.Msg == NativeConstants.WM_MOUSEACTIVATE &&

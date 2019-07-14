@@ -197,8 +197,15 @@ namespace GitUI
                     action(s);
             };
 
+            try {
             if (!control.IsDisposed)
-                UISynchronizationContext.Post(checkDisposedAndInvoke, state);
+                if (UISynchronizationContext != null)
+                    UISynchronizationContext.Post(checkDisposedAndInvoke, state);
+                else 
+                    checkDisposedAndInvoke.Invoke(state);
+            } catch (Exception ex) { 
+                Console.WriteLine($"UI.Post InvokeAsync {ex.Message}"); 
+            }
         }
 
         public static void InvokeSync(this Control control, Action action)

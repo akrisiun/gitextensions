@@ -51,6 +51,8 @@ namespace GitCommands
     {
         private static readonly ISshPathLocator SshPathLocatorInstance = new SshPathLocator();
 
+        public static bool ShowConsole = false; 
+
         public static void SetEnvironmentVariable(bool reload = false)
         {
             string path = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Process);
@@ -334,16 +336,25 @@ namespace GitCommands
             try
             {
                 arguments = arguments.Replace("$QUOTE$", "\\\"");
-                using (var process = StartProcessAndReadAllBytes(arguments, cmd, workingdir, out output, out error, stdInput))
+
+                // MONO debug: (ankr)
+                if (arguments.Length > 0 && arguments.IndexOf("rev-") < 0)
+                    Console.WriteLine($"{workingdir}: {cmd} {arguments}");
+
+                using (var process = StartProcessAndReadAllBytes(arguments, cmd, 
+                    workingdir, out output, out error, stdInput))
                 {
                     process.WaitForExit();
                     return process.ExitCode;
                 }
             }
-            catch (Win32Exception)
+            catch (Win32Exception e)
             {
+                var msg = e.Message;
+                if (ShowConsole)
+                    Console.WriteLine($"git {msg}: {e}");
                 output = error = null;
-                return 1;
+                return string.IsNullOrEmpty(workingdir) ? 0 : 1;
             }
         }
 

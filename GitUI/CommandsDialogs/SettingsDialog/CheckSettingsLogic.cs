@@ -176,7 +176,9 @@ namespace GitUI.CommandsDialogs.SettingsDialog
                 }
                 return false;
             }
-            AppSettings.GitCommandValue = "git";
+
+            AppSettings.GitCommandValue = "/usr/bin/git";
+
             return !string.IsNullOrEmpty(Module.RunGitCmd(""));
         }
 
@@ -248,7 +250,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog
 
         public bool CanFindGitCmd()
         {
-            return !string.IsNullOrEmpty(Module.RunGitCmd(""));
+            return !string.IsNullOrEmpty(Module.RunGitCmd("--version"));
         }
 
         public void AutoConfigMergeToolCmd()

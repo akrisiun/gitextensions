@@ -1,6 +1,9 @@
 export Debug="Debug"
 msbuild ../Gravatar/Gravatar.csproj -v:m /p:GenerateFullPaths=true;Configuration=Debug
+msbuild ../GitExtUtils/GitExtUtils.csproj -v:m /p:GenerateFullPaths=true;Configuration=Debug
+msbuild ../NetSpell.SpellChecker/SpellChecker.csproj -v:m /p:GenerateFullPaths=true;Configuration=Debug
 cp ../Gravatar/bin/$Debug/Gravatar.dll bin/$Debug/
+cp ../GitExtUtils/bin/$Debug/GitExtUtils.dll bin/$Debug/
 msbuild -v:m /p:GenerateFullPaths=true;Configuration=Debug
 
 cp ../packages/System.IO.Abstractions.2.0.0.144/lib/net40/System.IO.Abstractions.dll bin/Debug
