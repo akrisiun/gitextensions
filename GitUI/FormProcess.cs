@@ -151,7 +151,8 @@ namespace GitUI
 
             try
             {
-                ConsoleOutput.StartProcess(ProcessString, ProcessArguments, WorkingDirectory, ProcessEnvVariables);
+                var conOut = ConsoleOutput;
+                conOut.StartProcess(ProcessString, ProcessArguments, WorkingDirectory, ProcessEnvVariables);
 
                 if (!string.IsNullOrEmpty(ProcessInput))
                 {

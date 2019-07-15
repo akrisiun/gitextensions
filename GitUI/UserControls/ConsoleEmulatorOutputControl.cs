@@ -161,6 +161,40 @@ namespace GitUI.UserControls
 
 #if !__MonoCS__
             _terminal?.Start(startinfo);
+#else
+            var startInfo2 = new System.Diagnostics.ProcessStartInfo { Arguments = arguments, WorkingDirectory = workdir };
+            startInfo2.FileName = command;
+            startInfo2.WindowStyle = System.Diagnostics.ProcessWindowStyle.Minimized;
+            startInfo2.UseShellExecute = false;
+            startInfo2.RedirectStandardOutput = true;
+
+            var proc = new System.Diagnostics.Process { StartInfo = startInfo2 };
+            proc.EnableRaisingEvents = true;
+            proc.Start();
+
+            // proc.BeginOutputReadLine();
+            // "Cannot mix synchronous and asynchronous operation on process stream."}
+            var sb = new StringBuilder();
+
+            while (!proc.StandardOutput.EndOfStream)
+            {
+                string line = proc.StandardOutput.ReadLine();
+                sb.AppendLine(line);
+
+                if (GitCommandHelpers.ShowConsole) {
+                    Console.WriteLine(line);
+                }
+
+                FireDataReceived(new TextEventArgs(line));
+            }
+
+            int timeoutMilisec = 3000; // 3 min
+
+            proc.WaitForExit(timeoutMilisec);
+
+            this._nLastExitCode = proc.ExitCode;
+
+            FireProcessExited();
 #endif            
         }
     }
