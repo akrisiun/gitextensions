@@ -182,6 +182,7 @@ namespace GitCommands.Repository
             {
                 if (stringReader != null)
                 {
+#pragma warning disable CA2202
                     stringReader.Dispose();
                 }
             }

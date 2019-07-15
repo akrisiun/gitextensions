@@ -71,7 +71,7 @@ namespace GitCommands.Settings
                 {
                     if (_saveTimer != null)
                     {
-
+#pragma warning disable CA2213
                         _saveTimer.Dispose();
                         _saveTimer = null;
                         _fileWatcher.Changed -= _fileWatcher_Changed;

@@ -2,6 +2,7 @@ using System;
 
 namespace GitCommands.Git
 {
+    [Serializable]
     public class FileDeleteException : Exception
     {
         private const string DefaultMessage = "Could not delete the file";
