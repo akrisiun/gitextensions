@@ -31,7 +31,7 @@ namespace GitUI.CommandsDialogs
         {
             _fileName = fileName;
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
 
             // for translation form
             if (_fileName != null)

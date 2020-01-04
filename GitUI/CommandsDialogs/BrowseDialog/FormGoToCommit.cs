@@ -33,7 +33,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
             : base(commands)
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
         }
 
         private void FormGoToCommit_Load(object sender, EventArgs e)

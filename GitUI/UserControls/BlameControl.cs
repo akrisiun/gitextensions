@@ -7,7 +7,6 @@ using System.Text;
 using System.Windows.Forms;
 using GitCommands;
 using GitExtUtils;
-using GitUI.BranchTreePanel;
 using GitUI.CommitInfo;
 using GitUI.Editor;
 using GitUI.HelperDialogs;
@@ -16,6 +15,7 @@ using JetBrains.Annotations;
 
 namespace GitUI.Blame
 {
+    #pragma warning disable IDE1006
     public sealed partial class BlameControl : GitModuleControl
     {
         public event EventHandler<CommandEventArgs> CommandClick;

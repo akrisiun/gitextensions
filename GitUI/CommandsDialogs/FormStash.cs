@@ -48,7 +48,7 @@ namespace GitUI.CommandsDialogs
             KeyPreview = true;
             View.EscapePressed += () => DialogResult = DialogResult.Cancel;
             splitContainer1.SplitterDistance = DpiUtil.Scale(280);
-            InitializeComplete();
+            //InitializeComplete();
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -213,6 +213,8 @@ namespace GitUI.CommandsDialogs
                     {
                         string extraDiffArguments = View.GetExtraDiffArguments();
                         Encoding encoding = View.Encoding;
+
+                        ThreadHelper.JoinableTaskFactory.Run(async () =>
                         View.ViewPatchAsync(
                             () =>
                             {
@@ -229,7 +231,8 @@ namespace GitUI.CommandsDialogs
                                 }
 
                                 return (text: patch.Text, openWithDifftool: null /* not implemented */, filename: stashedItem.Name);
-                            });
+                            })
+                        );
                     }
                 }
                 else

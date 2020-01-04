@@ -16,7 +16,7 @@ namespace GitUI.Script
         {
             InitializeComponent();
             Translate();
-            InitializeComplete();
+            // InitializeComplete();
         }
 
         protected override void OnRuntimeLoad(EventArgs e)
@@ -67,7 +67,7 @@ namespace GitUI.Script
 
         private void Translate()
         {
-            Translator.Translate(this, AppSettings.CurrentTranslation);
+            //Translator.Translate(this, AppSettings.CurrentTranslation);
         }
     }
 }

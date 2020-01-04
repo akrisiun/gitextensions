@@ -99,7 +99,7 @@ namespace GitUI.CommandsDialogs
             ForceColumn.Width = DpiUtil.Scale(101);
             DeleteColumn.Width = DpiUtil.Scale(108);
 
-            InitializeComplete();
+            //InitializeComplete();
 
             if (!GitVersion.Current.SupportPushForceWithLease)
             {

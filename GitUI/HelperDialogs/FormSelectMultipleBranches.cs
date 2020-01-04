@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GitCommands;
-using ResourceManager;
+using GitUIPluginInterfaces;
 
 namespace GitUI.HelperDialogs
 {
@@ -13,18 +12,20 @@ namespace GitUI.HelperDialogs
             : base(true)
         {
             InitializeComponent();
-            Translate();
+            //InitializeComplete();
         }
 
-        public FormSelectMultipleBranches(IList<GitRef> branchesToSelect)
+        public FormSelectMultipleBranches(IReadOnlyList<IGitRef> branchesToSelect)
         {
             InitializeComponent();
-            Translate();
+            //InitializeComplete();
 
             if (branchesToSelect.Count > 350)
+            {
                 Branches.MultiColumn = true;
+            }
 
-            Branches.DisplayMember = "Name";
+            Branches.DisplayMember = nameof(IGitRef.Name);
             Branches.Items.AddRange(branchesToSelect.ToArray());
         }
 
@@ -33,22 +34,24 @@ namespace GitUI.HelperDialogs
             int index = 0;
             foreach (object item in Branches.Items)
             {
-                GitRef branch = item as GitRef;
-                if (branch != null && branch.Name == name)
+                if (item is IGitRef branch && branch.Name == name)
                 {
                     Branches.SetItemChecked(index, true);
                     return;
                 }
+
                 index++;
             }
         }
 
-        public IList<GitRef> GetSelectedBranches()
+        public IReadOnlyList<IGitRef> GetSelectedBranches()
         {
-            IList<GitRef> branches = new List<GitRef>();
+            var branches = new List<IGitRef>();
 
-            foreach (GitRef head in Branches.CheckedItems)
+            foreach (IGitRef head in Branches.CheckedItems)
+            {
                 branches.Add(head);
+            }
 
             return branches;
         }

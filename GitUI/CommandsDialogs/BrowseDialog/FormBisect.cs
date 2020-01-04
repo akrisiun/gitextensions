@@ -8,6 +8,8 @@ using ResourceManager;
 
 namespace GitUI.CommandsDialogs.BrowseDialog
 {
+    #pragma warning disable IDE1006
+
     public sealed partial class FormBisect : GitModuleForm
     {
         // TODO: Improve me
@@ -26,7 +28,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
             : base(commands)
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
         }
 
         public FormBisect(RevisionGridControl revisionGrid)

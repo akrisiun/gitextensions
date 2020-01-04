@@ -25,7 +25,7 @@ namespace GitUI.CommandsDialogs
             Revision = revision;
 
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
         }
 
         public GitRevision Revision { get; set; }

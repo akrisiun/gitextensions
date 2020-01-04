@@ -19,7 +19,7 @@ namespace GitUI
         }
 
         /// <summary>indicates whether the <see cref="Form"/> has been translated</summary>
-        private bool _translated;
+        //private bool _translated;
 
         /// <summary>Creates a new <see cref="GitExtensionsFormBase"/> indicating position restore.</summary>
         public GitExtensionsFormBase()
@@ -52,7 +52,8 @@ namespace GitUI
                 {
                     if (hotkey != null && hotkey.KeyData == keyData)
                     {
-                        return ExecuteCommand(hotkey.CommandCode);
+                        var ok = ExecuteCommand(hotkey.CommandCode);
+                        return ok.Executed;
                     }
                 }
 
@@ -74,9 +75,9 @@ namespace GitUI
         }
 
         /// <summary>Override this method to handle form-specific Hotkey commands.</summary>
-        protected virtual bool ExecuteCommand(int command)
+        protected virtual CommandStatus ExecuteCommand(int command)
         {
-            return false;
+            return new CommandStatus(false, false);
         }
 
         protected void SetFont()
@@ -112,9 +113,9 @@ namespace GitUI
             // find out if the value is a component and is currently in design mode
             var isComponentInDesignMode = CheckComponent(this);
 
-            if (!_translated && !isComponentInDesignMode)
-                throw new Exception("The control " + GetType().Name +
-                                    " is not translated in the constructor. You need to call Translate() right after InitializeComponent().");
+            //if (!_translated && !isComponentInDesignMode)
+            //    throw new Exception("The control " + GetType().Name +
+            //                        " is not translated in the constructor. You need to call Translate() right after InitializeComponent().");
         }
 
 #if TRANS
@@ -142,7 +143,8 @@ namespace GitUI
                 return;
             foreach (var pair in translation)
             {
-                IEnumerable<Tuple<string, object>> itemsToTranslate = new[] { new Tuple<string, object>(itemName, item) };
+                // IEnumerable<Tuple<string, object>> | new Tuple<string, object>
+                IEnumerable<(string name, object item)> itemsToTranslate = new[] { (itemName, item) };
                 TranslationUtils.TranslateItemsFromList(Name, pair.Value, itemsToTranslate);
             }
         }

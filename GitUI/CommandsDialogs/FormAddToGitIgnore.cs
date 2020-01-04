@@ -31,7 +31,7 @@ namespace GitUI.CommandsDialogs
             _localExclude = localExclude;
 
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
 
             if (localExclude)
             {
@@ -126,7 +126,8 @@ namespace GitUI.CommandsDialogs
                 _NO_TRANSLATE_Preview.Enabled = false;
             }
 
-            _ignoredFilesLoader.LoadAsync(() => Module.GetIgnoredFiles(GetCurrentPatterns()), UpdatePreviewPanel);
+            ThreadHelper.JoinableTaskFactory.Run(async () =>
+            _ignoredFilesLoader.LoadAsync(() => Module.GetIgnoredFiles(GetCurrentPatterns()), UpdatePreviewPanel));
         }
     }
 }

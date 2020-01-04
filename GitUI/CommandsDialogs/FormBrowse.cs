@@ -38,6 +38,7 @@ using ResourceManager;
 
 namespace GitUI.CommandsDialogs
 {
+    #pragma warning disable IDE1006, IDE0018, IDE0019, IDE0060
     public sealed partial class FormBrowse : GitModuleForm, IBrowseRepo
     {
         #region Translation
@@ -128,7 +129,7 @@ namespace GitUI.CommandsDialogs
         private FormBrowse()
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
         }
 
         public FormBrowse([NotNull] GitUICommands commands, string filter, ObjectId selectCommit = null)
@@ -296,7 +297,7 @@ namespace GitUI.CommandsDialogs
                 RevisionGrid.InitialObjectId = selectCommit;
             }
 
-            InitializeComplete();
+            //InitializeComplete();
             UpdateCommitButtonAndGetBrush(null, AppSettings.ShowGitStatusInBrowseToolbar);
             RestorePosition();
 
@@ -1444,7 +1445,7 @@ namespace GitUI.CommandsDialogs
 
             if (translation != AppSettings.Translation)
             {
-                Translator.Translate(this, AppSettings.CurrentTranslation);
+                //Translator.Translate(this, AppSettings.CurrentTranslation);
             }
 
             if (commitInfoPosition != AppSettings.CommitInfoPosition)
@@ -1932,7 +1933,7 @@ namespace GitUI.CommandsDialogs
             if (Module.IsValidGitWorkingDir())
             {
                 var path = Module.WorkingDir;
-                ThreadHelper.JoinableTaskFactory.Run(() => RepositoryHistoryManager.Locals.AddAsMostRecentAsync(path));
+                _ = ThreadHelper.JoinableTaskFactory.Run(() => RepositoryHistoryManager.Locals.AddAsMostRecentAsync(path));
                 AppSettings.RecentWorkingDir = path;
                 ChangeTerminalActiveFolder(path);
 
@@ -2966,7 +2967,7 @@ namespace GitUI.CommandsDialogs
 
                 if (AppSettings.ConEmuStyle.ValueOrDefault != "Default")
                 {
-                    startInfo.ConsoleProcessExtraArgs = " -new_console:P:\"" + AppSettings.ConEmuStyle.ValueOrDefault + "\"";
+                    //startInfo.ConsoleProcessExtraArgs = " -new_console:P:\"" + AppSettings.ConEmuStyle.ValueOrDefault + "\"";
                 }
 
                 // Set path to git in this window (actually, effective with CMD only)
@@ -2981,7 +2982,7 @@ namespace GitUI.CommandsDialogs
 
                 try
                 {
-                    _terminal.Start(startInfo, ThreadHelper.JoinableTaskFactory);
+                    _terminal.Start(startInfo); // , ThreadHelper.JoinableTaskFactory);
                 }
                 catch (InvalidOperationException)
                 {
@@ -3026,12 +3027,12 @@ namespace GitUI.CommandsDialogs
             }
 
             // Clear terminal line by sending 'backspace' characters
-            for (int i = 0; i < 10000; i++)
-            {
-                _terminal.RunningSession.WriteInputTextAsync("\b");
-            }
+            //for (int i = 0; i < 10000; i++)
+            //{
+            //    _terminal.RunningSession.WriteInputTextAsync("\b");
+            //}
 
-            _terminal.RunningSession.WriteInputTextAsync(command + Environment.NewLine);
+            //_terminal.RunningSession.WriteInputTextAsync(command + Environment.NewLine);
         }
 
         private void menuitemSparseWorkingCopy_Click(object sender, EventArgs e)

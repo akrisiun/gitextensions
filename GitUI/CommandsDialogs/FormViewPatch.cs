@@ -28,7 +28,7 @@ namespace GitUI.CommandsDialogs
             typeDataGridViewTextBoxColumn.Width = DpiUtil.Scale(70);
             File.Width = DpiUtil.Scale(50);
 
-            InitializeComplete();
+            //InitializeComplete();
 
             typeDataGridViewTextBoxColumn.DataPropertyName = nameof(Patch.ChangeType);
             File.DataPropertyName = nameof(Patch.FileType);

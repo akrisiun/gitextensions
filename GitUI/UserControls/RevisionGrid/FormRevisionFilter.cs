@@ -9,7 +9,7 @@ namespace GitUI.UserControls.RevisionGrid
         public FormRevisionFilter()
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
 
             LimitCheck.Checked = AppSettings.MaxRevisionGraphCommits > 0;
             _NO_TRANSLATE_Limit.Value = AppSettings.MaxRevisionGraphCommits;

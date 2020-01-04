@@ -1813,7 +1813,7 @@ namespace GitUI.CommandsDialogs
         private ToolStripEx ToolStrip;
         private CommitInfo.CommitInfo RevisionInfo;
         private StatusStrip statusStrip;
-        //private MenuStripEx menuStrip1;
+        private MenuStripEx menuStrip1;
         private GitUI.BranchTreePanel.RepoObjectsTree repoObjectsTree;
         private ToolTip FilterToolTip;
         private RevisionFileTreeControl fileTree;

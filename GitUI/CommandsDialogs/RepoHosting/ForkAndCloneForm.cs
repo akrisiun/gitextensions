@@ -50,7 +50,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
             _gitModuleChanged = gitModuleChanged;
             _gitHoster = gitHoster;
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
 
             foreach (ColumnHeader column in myReposLV.Columns)
             {

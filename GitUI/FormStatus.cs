@@ -45,7 +45,7 @@ namespace GitUI
                 KeepDialogOpen.Hide();
             }
 
-            InitializeComplete();
+            //InitializeComplete();
         }
 
         public FormStatus(Action<FormStatus> process, string text)

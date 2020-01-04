@@ -63,7 +63,7 @@ namespace GitUI.CommandsDialogs
         {
             _branchNameNormaliser = new GitBranchNameNormaliser();
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
             _rbResetBranchDefaultText = rbResetBranch.Text;
 
             ApplyLayout();

@@ -304,7 +304,7 @@ namespace GitUI.CommandsDialogs
 
             SelectedDiff.EscapePressed += () => DialogResult = DialogResult.Cancel;
 
-            InitializeComplete();
+            // InitializeComplete();
 
             // By calling this in the constructor, we prevent flickering caused by resizing the
             // form, for example when it is restored to maximised, but first drawn as a smaller window.
@@ -392,14 +392,15 @@ namespace GitUI.CommandsDialogs
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hwnd, int msg, IntPtr wp, IntPtr lp);
 
-        protected override void OnApplicationActivated()
+        //override protected 
+        void OnApplicationActivated()
         {
             if (!_bypassActivatedEventHandler && AppSettings.RefreshCommitDialogOnFormFocus)
             {
                 RescanChanges();
             }
 
-            base.OnApplicationActivated();
+            //base.OnApplicationActivated();
         }
 
         protected override void OnActivated(EventArgs e)

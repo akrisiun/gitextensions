@@ -3,7 +3,8 @@
   <Sdk Name="Microsoft.NET.Sdk" />
   <PropertyGroup>
     <DefineConstants>TRACE;NETCORE;NET471</DefineConstants>
-
+    <TargetFramework>net471</TargetFramework>
+    
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
@@ -13,9 +14,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GitHub3</RootNamespace>
     <AssemblyName>GitHub3</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

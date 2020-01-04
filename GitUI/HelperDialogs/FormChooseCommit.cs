@@ -19,7 +19,7 @@ namespace GitUI.HelperDialogs
             : base(commands)
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
         }
 
         public FormChooseCommit([NotNull] GitUICommands commands, [CanBeNull] string preselectCommit, bool showArtificial = false)

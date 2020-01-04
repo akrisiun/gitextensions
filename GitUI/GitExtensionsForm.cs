@@ -63,10 +63,10 @@ namespace GitUI
             // Should be called after restoring position
             base.OnLoad(e);
 
-            if (!IsDesignModeActive)
-            {
+            //if (!IsDesignModeActive)
+            //{
                 OnRuntimeLoad(e);
-            }
+            //}
         }
 
         /// <summary>Invoked at runtime during the <see cref="OnLoad"/> method.</summary>

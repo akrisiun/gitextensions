@@ -74,7 +74,7 @@ namespace GitUI.CommandsDialogs
         {
             _localExclude = localExclude;
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
 
             _dialogModel = CreateGitIgnoreDialogModel(localExclude);
 

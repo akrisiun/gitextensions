@@ -25,7 +25,8 @@ namespace GitUI.Editor.Diff
         /// </summary>
         public int MaxLineNumber { get; private set; }
 
-        public override int Width
+        //override
+        public  int Width
         {
             get
             {

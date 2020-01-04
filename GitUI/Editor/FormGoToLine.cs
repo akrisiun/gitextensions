@@ -7,7 +7,7 @@ namespace GitUI.Editor
         public FormGoToLine()
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
         }
 
         public int GetLineNumber()

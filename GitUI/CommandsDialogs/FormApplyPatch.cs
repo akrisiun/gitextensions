@@ -40,7 +40,7 @@ namespace GitUI.CommandsDialogs
             : base(commands)
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
             EnableButtons();
         }
 

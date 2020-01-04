@@ -16,6 +16,11 @@ namespace GitUI
         /// <inheritdoc />
         public event EventHandler<GitUICommandsChangedEventArgs> UICommandsChanged;
 
+        public event EventHandler<GitUICommandsChangedEventArgs> GitUICommandsChanged {
+            add { UICommandsChanged += value; }
+            remove { UICommandsChanged -= value; }
+        }
+
         /// <summary>
         /// Indicates that the process is run by unit tests runner.
         /// </summary>
@@ -75,6 +80,7 @@ namespace GitUI
             if (!result.Executed)
             {
                 result = base.ExecuteCommand(command);
+                // result = new CommandStatus(executed: ok, needsGridRefresh: true);
             }
 
             return result;

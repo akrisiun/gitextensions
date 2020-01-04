@@ -16,7 +16,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
             : base(true)
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
 
             ThreadHelper.JoinableTaskFactory.Run(async () =>
             {

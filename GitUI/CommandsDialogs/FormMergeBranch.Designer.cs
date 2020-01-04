@@ -456,7 +456,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ToolTip strategyToolTip;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        //private Help.HelpImageDisplayUserControl helpImageDisplayUserControl1;
+        private Help.HelpImageDisplayUserControl helpImageDisplayUserControl1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label currentBranchLabel;
         private System.Windows.Forms.Label Currentbranch;

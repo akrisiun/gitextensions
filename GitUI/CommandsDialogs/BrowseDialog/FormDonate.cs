@@ -18,7 +18,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
         public FormDonate()
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
 
             lblText.Text = _donateText.Text;
             lblText.MaximumSize = new Size(lblText.Width, 0);

@@ -13,6 +13,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace GitUI.RevisionGridClasses
 {
+    #pragma warning disable IDE1006, IDE0018, IDE0019, IDE0059
     public partial class DvcsGraph : DataGridView
     {
         #region Delegates
@@ -599,19 +600,20 @@ namespace GitUI.RevisionGridClasses
         {
             // We have to post this since the thread owns a lock on GraphData that we'll
             // need in order to re-draw the graph.
+            ThreadHelper.JoinableTaskFactory.RunAsync(async () => await
             this.InvokeAsync(() =>
                 {
                     ClearDrawCache();
                     Invalidate();
-                });
+                }));
         }
 
         // private 
         public void dataGrid_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             var rowIndex = e.RowIndex;
-            var cell = Rows[rowIndex].Cells[1];
-            Graph.ILaneRow row = _graphData[rowIndex];
+            //var cell = Rows[rowIndex].Cells[1];
+            Graph.ILaneRow row; // = _graphData[rowIndex];
 
             if (e.ColumnIndex > 0 || e.RowIndex < 0)
                 return;
@@ -742,14 +744,16 @@ namespace GitUI.RevisionGridClasses
                     if (curCount < _visibleBottom || _toBeSelected.Count > 0)
                     {
                         if (VirtualMode)
-                            this.InvokeAsync(o => UpdateRow((int)o), curCount);
+                            ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+                            this.InvokeAsync(o => UpdateRow((int)o), curCount));
                     }
 
                     int count = 0;
                     if (FirstDisplayedCell != null)
                         count = FirstDisplayedCell.RowIndex + DisplayedRowCount(true);
                     if (curCount == count)
-                        this.InvokeAsync(UpdateColumnWidth);
+                        ThreadHelper.JoinableTaskFactory.RunAsync(async () => await
+                            this.InvokeAsync(UpdateColumnWidth));
 
                     curCount = _graphData.CachedCount;
                     _graphDataCount = curCount;
@@ -1054,15 +1058,15 @@ namespace GitUI.RevisionGridClasses
             }
 
             // Adjust the head of the cache
-            _cacheHead = _cacheHead + neededHeadAdjustment;
+            _cacheHead += neededHeadAdjustment;
             _cacheHeadRow = (_cacheHeadRow + neededHeadAdjustment) % _cacheCountMax;
             if (_cacheHeadRow < 0)
             {
                 _cacheHeadRow = _cacheCountMax + _cacheHeadRow;
             }
 
-            int start = 0;
-            int end = 0;
+            int start; // = 0;
+            int end;
             if (newRows > 0)
             {
                 start = _cacheHead + _cacheCount;
@@ -1215,9 +1219,9 @@ namespace GitUI.RevisionGridClasses
                     Pen brushLineColorPen = null;
                     try
                     {
-                        bool drawBorder = highLight && AppSettings.BranchBorders; //hide border for "non-relatives"
+                        bool drawBorder = highLight; // && AppSettings.BranchBorders; //hide border for "non-relatives"
 
-                        if (curColors.Count == 1 || !AppSettings.StripedBranchChange)
+                        if (curColors.Count == 1) // || !AppSettings.StripedBranchChange)
                         {
                             if (curColors[0] != _nonRelativeColor)
                             {

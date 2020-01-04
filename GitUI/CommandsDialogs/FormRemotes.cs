@@ -100,7 +100,7 @@ Inactive remote is completely invisible to git.");
             : base(commands)
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
 
             // remove text from 'new' and 'delete' buttons because now they are represented by icons
             New.Text = string.Empty;

@@ -28,11 +28,12 @@
     <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;NET45;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <!--<CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>-->
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <NoWarn>1573</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
+    <WarningsAsErrors />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -46,6 +47,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="PSTaskDialog">
       <HintPath>..\Bin\PSTaskDialog.dll</HintPath>
     </Reference>
@@ -66,6 +69,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -258,6 +262,10 @@
     <Compile Include="CommitInfo\CommitInfoHeader.Designer.cs" />
     <Compile Include="CommitInfo\RefsFormatter.cs" />
     <Compile Include="Editor\CommitMessageHighlightingStrategy.cs" />
+    <Compile Include="Editor\Diff\DiffLineInfo.cs" />
+    <Compile Include="Editor\Diff\DiffLinesInfo.cs" />
+    <Compile Include="Editor\Diff\DiffLineType.cs" />
+    <Compile Include="Editor\Diff\DiffViewerLineNumberControl.cs" />
     <Compile Include="Editor\GitHighlightingStrategyBase.cs" />
     <Compile Include="Editor\RebaseTodoHighlightingStrategy.cs" />
     <Compile Include="FindFilePredicateProvider.cs" />
@@ -311,8 +319,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="HelperDialogs\IFileStatusList.cs" />
-    <Compile Include="Helpers\SystemExtensions.cs" />
-    <Compile Include="Helpers\TreeViewExtensions.cs" />
     <Compile Include="Hotkey\KeysExtensions.cs" />
     <Compile Include="AutoCompletion\AutoCompleteWord.cs" />
     <Compile Include="Infrastructure\Telemetry\AppEnvironmentTelemetryInitializer.cs" />
@@ -399,18 +405,28 @@
     <Compile Include="UserControls\GotoUserManualControl.Designer.cs">
       <DependentUpon>GotoUserManualControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\HelpImageDisplayUserControl.cs" />
+    <Compile Include="UserControls\HelpImageDisplayUserControl.Designer.cs" />
     <Compile Include="UserControls\IRevisionGrid.cs" />
     <Compile Include="UserControls\ListViewGroupHitInfo.cs" />
     <Compile Include="UserControls\ListViewGroupMouseEventArgs.cs" />
     <Compile Include="UserControls\MainThreadScheduler.cs" />
+    <Compile Include="UserControls\MenuStripEx.cs" />
     <Compile Include="UserControls\NativeListView.cs" />
     <Compile Include="UserControls\NativeTreeView.cs" />
     <Compile Include="UserControls\NativeTreeViewDoubleClickDecorator.cs" />
     <Compile Include="UserControls\NativeTreeViewExplorerNavigationDecorator.cs" />
+    <Compile Include="UserControls\PatchGrid.cs" />
+    <Compile Include="UserControls\PatchGrid.Designer.cs" />
+    <Compile Include="UserControls\PathFormatter.cs" />
+    <Compile Include="UserControls\RemotesComboboxControl.cs" />
+    <Compile Include="UserControls\RemotesComboboxControl.Designer.cs" />
     <Compile Include="UserControls\RepoStateVisualiser.cs" />
     <Compile Include="UserControls\RevisionGridClasses\CopyToClipboardMenuHelper.cs" />
     <Compile Include="UserControls\RevisionGridClasses\CaptionCustomMenuRenderer.cs" />
     <Compile Include="UserControls\RevisionGridClasses\FollowParentRewriter.cs" />
+    <Compile Include="UserControls\RevisionGridClasses\FormQuickGitRefSelector.cs" />
+    <Compile Include="UserControls\RevisionGridClasses\FormQuickGitRefSelector.Designer.cs" />
     <Compile Include="UserControls\RevisionGridClasses\GitRefListsForRevision.cs" />
     <Compile Include="UserControls\RevisionGridClasses\MenuUtil.cs" />
     <Compile Include="UserControls\RevisionGridClasses\NavigationHistory.cs" />
@@ -548,9 +564,7 @@
       <DependentUpon>FormVerify.cs</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GitModuleControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="GitModuleControl.cs" />
     <Compile Include="GitModuleForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -630,12 +644,6 @@
     <Compile Include="CommandsDialogs\SettingsDialog\Pages\FormFixHome.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="HelperDialogs\FormRunScriptSpecify.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="HelperDialogs\FormRunScriptSpecify.Designer.cs">
-      <DependentUpon>FormRunScriptSpecify.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormStatus.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -644,12 +652,6 @@
     </Compile>
     <Compile Include="FormStatus.Designer.cs">
       <DependentUpon>FormStatus.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormSplash.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormSplash.Designer.cs">
-      <DependentUpon>FormSplash.cs</DependentUpon>
     </Compile>
     <Compile Include="CommandsDialogs\FormBrowse.cs">
       <SubType>Form</SubType>
@@ -695,7 +697,6 @@
       <DependentUpon>FormCherryPick.cs</DependentUpon>
     </Compile>
     <Compile Include="CommandsDialogs\BrowseDialog\GitFileTreeComparer.cs" />
-    <Compile Include="Lemmings.cs" />
     <Compile Include="Plugin\GitPluginSettingsContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -1071,7 +1072,6 @@
     </Compile>
     <Compile Include="SpellChecker\SpellCheckEditControl.cs" />
     <Compile Include="SpellChecker\TextBoxHelper.cs" />
-    <Compile Include="UserControls\RevisionGridClasses\RevisionGridMenuCommands.cs" />
     <Compile Include="UserControls\ToolStripEx.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1290,10 +1290,6 @@
       <DependentUpon>FormCherryPick.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="HelperDialogs\FormRunScriptSpecify.resx">
-      <DependentUpon>FormRunScriptSpecify.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\SettingsDialog\Pages\ControlHotkeys.resx">
       <DependentUpon>ControlHotkeys.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1483,16 +1479,13 @@
       <DependentUpon>FormRevertCommit.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\RevisionGridClasses\FormQuickGitRefSelector.resx" />
     <EmbeddedResource Include="UserControls\RevisionGridClasses\FormRevisionFilter.resx">
       <DependentUpon>FormRevisionFilter.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\FormSettings.resx">
       <DependentUpon>FormSettings.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormSplash.resx">
-      <DependentUpon>FormSplash.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\FormStash.resx">

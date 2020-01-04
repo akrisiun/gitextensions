@@ -45,7 +45,7 @@ namespace GitUI.CommandsDialogs
         {
             _gitModuleChanged = gitModuleChanged;
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
             _openedFromProtocolHandler = openedFromProtocolHandler;
             _url = url;
             _defaultBranchItems = new[] { _branchDefaultRemoteHead.Text, _branchNone.Text };
@@ -269,10 +269,10 @@ namespace GitUI.CommandsDialogs
                     }
                 }
 
-                ThreadHelper.JoinableTaskFactory.Run(() =>
+                ThreadHelper.JoinableTaskFactory.Run(async () =>
                 {
-                    RepositoryHistoryManager.Remotes.AddAsMostRecentAsync(sourceRepo);
-                    RepositoryHistoryManager.Locals.AddAsMostRecentAsync(dirTo);
+                    await RepositoryHistoryManager.Remotes.AddAsMostRecentAsync(sourceRepo);
+                    await RepositoryHistoryManager.Locals.AddAsMostRecentAsync(dirTo);
                     return Task.CompletedTask;
                 });
 

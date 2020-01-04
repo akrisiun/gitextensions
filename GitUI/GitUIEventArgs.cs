@@ -1,14 +1,16 @@
 ﻿using System.Windows.Forms;
-using GitUIPluginInterfaces;
 
-namespace GitUI
+namespace GitUIPluginInterfaces // GitUI
 {
     using IWin32Window = System.Windows.Forms.IWin32Window;
-    public class GitUIEventArgs : GitUIBaseEventArgs
+
+    public class GitUIEventArgs2 // : GitUIBaseEventArgs
     {
-        public GitUIEventArgs(IWin32Window ownerForm, IGitUICommands gitUICommands)
-            : base(ownerForm, gitUICommands)
+        public GitUIEventArgs2(IWin32Window ownerForm, IGitUICommands gitUICommands)
+            // : base(ownerForm, gitUICommands)
         {
         }
+
+        public bool Cancel { get; set; }
     }
 }

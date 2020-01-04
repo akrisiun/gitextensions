@@ -44,7 +44,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
             _chooseRemote = chooseRemote;
             _currentBranch = chooseBranch;
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
             _prevTitle = _titleTB.Text;
             _pullReqTargetsCB.DisplayMember = nameof(IHostedRemote.DisplayData);
         }

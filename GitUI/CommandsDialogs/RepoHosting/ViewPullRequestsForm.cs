@@ -52,7 +52,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
                     MessageBox.Show(this, ex.Exception.ToString(), _strError.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.UnMask();
                 };
-            InitializeComplete();
+            //InitializeComplete();
         }
 
         public ViewPullRequestsForm(GitUICommands commands, IRepositoryHostPlugin gitHoster)
@@ -69,6 +69,8 @@ namespace GitUI.CommandsDialogs.RepoHosting
             _isFirstLoad = true;
 
             this.Mask();
+
+            ThreadHelper.JoinableTaskFactory.Run(async () =>
             _loader.LoadAsync(
                 () =>
                 {
@@ -91,7 +93,8 @@ namespace GitUI.CommandsDialogs.RepoHosting
 
                     SelectHostedRepositoryForCurrentRemote();
                     this.UnMask();
-                });
+                })
+            );
         }
 
         private void _selectedOwner_SelectedIndexChanged(object sender, EventArgs e)

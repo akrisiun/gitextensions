@@ -9,7 +9,7 @@ using GitCommands.Utils;
 
 namespace GitUI
 {
-    public class ConsoleHelper : IConsoleHelper
+    public class ConsoleHelper // : IConsoleHelper
     {
         public static ConsoleHelper Instance { get; protected set; }
         static ConsoleHelper()
@@ -17,8 +17,8 @@ namespace GitUI
             Instance = Instance ?? new ConsoleHelper();
         }
 
-
-        public GitUIPluginInterfaces.IWin32Window Window { get; set; }
+        //GitUIPluginInterfaces.
+        public IWin32Window Window { get; set; }
         public GitUIPluginInterfaces.IGitUICommands UICommands { get; set; }
         public string WorkingDir => Directory.GetCurrentDirectory();
 

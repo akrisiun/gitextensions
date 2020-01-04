@@ -22,7 +22,7 @@ namespace GitUI.CommandsDialogs
         public FormResetChanges(bool hasExistingFiles, bool hasNewFiles)
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
 
             if (!hasExistingFiles)
             {

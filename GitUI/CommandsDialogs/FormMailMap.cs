@@ -37,7 +37,7 @@ namespace GitUI.CommandsDialogs
             : base(commands)
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
             _fullPathResolver = new FullPathResolver(() => Module.WorkingDir);
         }
 
@@ -55,7 +55,7 @@ namespace GitUI.CommandsDialogs
                 var path = _fullPathResolver.Resolve(".mailmap");
                 if (File.Exists(path))
                 {
-                    _NO_TRANSLATE_MailMapText.ViewFileAsync(path);
+                    //_NO_TRANSLATE_MailMapText.ViewFileAsync(path);
                 }
             }
             catch (Exception ex)

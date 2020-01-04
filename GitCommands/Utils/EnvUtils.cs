@@ -5,6 +5,9 @@ namespace GitCommands.Utils
 {
     public static class EnvUtils
     {
+
+        public static bool IsMonoRuntime() => false;
+
         public static bool RunningOnWindows()
         {
             switch (Environment.OSVersion.Platform)

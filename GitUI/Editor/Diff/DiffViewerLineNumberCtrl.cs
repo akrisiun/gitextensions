@@ -13,7 +13,7 @@ namespace GitUI.Editor.Diff
     {
         const int TextHorizontalMargin = 4;
 
-        private int _maxValueOfLineNum;
+        //private int _maxValueOfLineNum;
         private bool _visible = true;
 
         public DiffViewerLineNumberCtrl(TextArea textArea) : base(textArea)
@@ -21,18 +21,17 @@ namespace GitUI.Editor.Diff
             DiffLines = new Dictionary<int, DiffLineNum>();
         }
 
-        public override Size Size
-        {
-            get
-            {
+        public override Size Size {
+            get {
                 if (!DiffLines.Any() || !_visible)
                 {
                     return new Size(0, 0);
                 }
 
+                int _maxValueOfLineNum = 5000;
                 var size = Graphics.FromHwnd(textArea.Handle).MeasureString(_maxValueOfLineNum.ToString(), textArea.Font);
                 // Workaround that right most numbers get clipped when using mono.
-                var monoTextWidthAdjustment = EnvUtils.IsMonoRuntime()? 10 : 0;
+                var monoTextWidthAdjustment = EnvUtils.IsMonoRuntime() ? 10 : 0;
                 return new Size((int)size.Width * 2 + TextHorizontalMargin + monoTextWidthAdjustment, 0);
             }
         }
@@ -45,7 +44,7 @@ namespace GitUI.Editor.Diff
             }
 
             var totalWidth = Size.Width;
-            var leftWidth = (int)(totalWidth/2.0);
+            var leftWidth = (int)(totalWidth / 2.0);
             var rightWidth = rect.Width - leftWidth;
 
             var fontHeight = textArea.TextView.FontHeight;
@@ -73,42 +72,42 @@ namespace GitUI.Editor.Diff
                     continue;
                 }
                 var diffLine = DiffLines[curLine + 1];
-                if (diffLine.Style != DiffLineNum.DiffLineStyle.Context)
-                {
-                    var brush = default(Brush);
-                    switch (diffLine.Style)
-                    {
-                        case DiffLineNum.DiffLineStyle.Plus:
-                            brush = new SolidBrush(AppSettings.DiffAddedColor);
-                            break;
-                        case DiffLineNum.DiffLineStyle.Minus:
-                            brush = new SolidBrush(AppSettings.DiffRemovedColor);
-                            break;
-                        case DiffLineNum.DiffLineStyle.Header:
-                            brush = new SolidBrush(AppSettings.DiffSectionColor);
-                            break;
-                    }
+                //if (diffLine.Style != DiffLineNum.DiffLineStyle.Context)
+                //{
+                //    var brush = default(Brush);
+                //    switch (diffLine.Style)
+                //    {
+                //        case DiffLineNum.DiffLineStyle.Plus:
+                //            brush = new SolidBrush(AppSettings.DiffAddedColor);
+                //            break;
+                //        case DiffLineNum.DiffLineStyle.Minus:
+                //            brush = new SolidBrush(AppSettings.DiffRemovedColor);
+                //            break;
+                //        case DiffLineNum.DiffLineStyle.Header:
+                //            brush = new SolidBrush(AppSettings.DiffSectionColor);
+                //            break;
+                //    }
 
-                    Debug.Assert(brush != null, string.Format("brush != null, unknow diff line style {0}", diffLine.Style));
-                    g.FillRectangle(brush, new Rectangle(0, backgroundRectangle.Top, leftWidth, backgroundRectangle.Height));
+                //    Debug.Assert(brush != null, string.Format("brush != null, unknow diff line style {0}", diffLine.Style));
+                //    g.FillRectangle(brush, new Rectangle(0, backgroundRectangle.Top, leftWidth, backgroundRectangle.Height));
 
-                    g.FillRectangle(brush, new Rectangle(leftWidth, backgroundRectangle.Top, rightWidth, backgroundRectangle.Height));
-                }
-                if (diffLine.LeftLineNum != DiffLineNum.NotApplicableLineNum)
-                {
-                    g.DrawString(diffLine.LeftLineNum.ToString(),
-                        lineNumberPainterColor.GetFont(TextEditorProperties.FontContainer),
-                        drawBrush,
-                        new Point(TextHorizontalMargin, backgroundRectangle.Top));
-                }
+                //    g.FillRectangle(brush, new Rectangle(leftWidth, backgroundRectangle.Top, rightWidth, backgroundRectangle.Height));
+                //}
+                //if (diffLine.LeftLineNum != DiffLineNum.NotApplicableLineNum)
+                //{
+                //    g.DrawString(diffLine.LeftLineNum.ToString(),
+                //        lineNumberPainterColor.GetFont(TextEditorProperties.FontContainer),
+                //        drawBrush,
+                //        new Point(TextHorizontalMargin, backgroundRectangle.Top));
+                //}
 
-                if (diffLine.RightLineNum != DiffLineNum.NotApplicableLineNum)
-                {
-                    g.DrawString(diffLine.RightLineNum.ToString(),
-                        lineNumberPainterColor.GetFont(TextEditorProperties.FontContainer),
-                        drawBrush,
-                        new Point(TextHorizontalMargin + totalWidth / 2, backgroundRectangle.Top));
-                }
+                //if (diffLine.RightLineNum != DiffLineNum.NotApplicableLineNum)
+                //{
+                //    g.DrawString(diffLine.RightLineNum.ToString(),
+                //        lineNumberPainterColor.GetFont(TextEditorProperties.FontContainer),
+                //        drawBrush,
+                //        new Point(TextHorizontalMargin + totalWidth / 2, backgroundRectangle.Top));
+                //}
             }
         }
 
@@ -116,8 +115,8 @@ namespace GitUI.Editor.Diff
 
         public void AddDiffLineNum(DiffLineNum diffLineNum)
         {
-            DiffLines[diffLineNum.LineNumInDiff] = diffLineNum;
-            _maxValueOfLineNum = Math.Max(diffLineNum.LeftLineNum, diffLineNum.RightLineNum);
+            //DiffLines[diffLineNum.LineNumInDiff] = diffLineNum;
+            //_maxValueOfLineNum = Math.Max(diffLineNum.LeftLineNum, diffLineNum.RightLineNum);
         }
 
         public void Clear()
@@ -128,16 +127,18 @@ namespace GitUI.Editor.Diff
         public string GetLineDesc(int lineNumInDiffFile)
         {
             DiffLineNum line;
-            if (!DiffLines.TryGetValue(lineNumInDiffFile, out line)) return null;
+            if (!DiffLines.TryGetValue(lineNumInDiffFile, out line))
+                return null;
 
-            if (line.LeftLineNum != DiffLineNum.NotApplicableLineNum)
-            {
-                return "L" + line.LeftLineNum;
-            }
-            if (line.RightLineNum != DiffLineNum.NotApplicableLineNum)
-            {
-                return "R" + line.RightLineNum;
-            }
+            //if (line.LeftLineNum != DiffLineNum.NotApplicableLineNum)
+            //{
+            //    return "L" + line.LeftLineNum;
+            //}
+            //if (line.RightLineNum != DiffLineNum.NotApplicableLineNum)
+            //{
+            //    return "R" + line.RightLineNum;
+            //}
+
             return null;
         }
 
@@ -146,4 +147,9 @@ namespace GitUI.Editor.Diff
             _visible = visible;
         }
     }
+
+    public class DiffLineNum
+    {
+        public string Value { get; set; }
+     }
 }

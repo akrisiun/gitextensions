@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using GitUI.Properties;
-
 using Settings = GitCommands.AppSettings;
 #if !__MonoCS__
 using Microsoft.WindowsAPICodePack.Taskbar;
@@ -13,8 +10,7 @@ using Microsoft.WindowsAPICodePack.Taskbar;
 
 namespace GitUI
 {
-    // using ResourceManager; // GitExtensionsFormBase
-
+    
     /// <summary>Base class for a Git Extensions <see cref="Form"/>.
     /// <remarks>
     /// Includes support for font, hotkey, icon, translation, and position restore.
@@ -24,7 +20,7 @@ namespace GitUI
         #region ctor
 
         // internal
-        public static Icon ApplicationIcon = GetApplicationIcon(Settings.IconStyle, Settings.IconColor);
+        //public static Icon ApplicationIcon = GetApplicationIcon(Settings.IconStyle, Settings.IconColor);
 
         /// <summary>indicates whether the <see cref="Form"/>'s position will be restored</summary>
         readonly bool _enablePositionRestore;
@@ -43,7 +39,7 @@ namespace GitUI
         {
             _enablePositionRestore = enablePositionRestore;
 
-            Icon = ApplicationIcon;
+            //Icon = ApplicationIcon;
             FormClosing += GitExtensionsForm_FormClosing;
 
             var cancelButton = new Button();
@@ -117,63 +113,65 @@ namespace GitUI
             return ColorIndex.Unknown;
         }
 
-        public static Icon GetApplicationIcon(string iconStyle, string iconColor)
+        [Obsolete]
+        static Icon GetApplicationIcon(string iconStyle, string iconColor)
         {
-            var colorIndex = (int)GetColorIndexByName(iconColor);
-            if (colorIndex == (int)ColorIndex.Unknown)
-                colorIndex = 0;
+            //var colorIndex = (int)GetColorIndexByName(iconColor);
+            //if (colorIndex == (int)ColorIndex.Unknown)
+            //    colorIndex = 0;
 
-            Icon appIcon;
-            if (iconStyle.Equals("small", StringComparison.OrdinalIgnoreCase)) {
-                Icon[] icons = {
-                                    Resources.x_with_arrow,
-                                    Resources.x_with_arrow_blue,
-                                    Resources.x_with_arrow_green,
-                                    Resources.x_with_arrow_lightblue,
-                                    Resources.x_with_arrow_purple,
-                                    Resources.x_with_arrow_red,
-                                    Resources.x_with_arrow_yellow
-                                };
-                Debug.Assert(icons.Length == 7);
-                appIcon = icons[colorIndex];
-            } else if (iconStyle.Equals("large", StringComparison.OrdinalIgnoreCase)) {
-                Icon[] icons = {
-                                    Resources.git_extensions_logo_final,
-                                    Resources.git_extensions_logo_final_blue,
-                                    Resources.git_extensions_logo_final_green,
-                                    Resources.git_extensions_logo_final_lightblue,
-                                    Resources.git_extensions_logo_final_purple,
-                                    Resources.git_extensions_logo_final_red,
-                                    Resources.git_extensions_logo_final_yellow
-                                };
-                Debug.Assert(icons.Length == 7);
-                appIcon = icons[colorIndex];
-            } else if (iconStyle.Equals("cow", StringComparison.OrdinalIgnoreCase)) {
-                Icon[] icons = {
-                                    Resources.cow_head,
-                                    Resources.cow_head_blue,
-                                    Resources.cow_head_green,
-                                    Resources.cow_head_blue,
-                                    Resources.cow_head_purple,
-                                    Resources.cow_head_red,
-                                    Resources.cow_head_yellow
-                                };
-                Debug.Assert(icons.Length == 7);
-                appIcon = icons[colorIndex];
-            } else {
-                Icon[] icons = {
-                                    Resources.git_extensions_logo_final_mixed,
-                                    Resources.git_extensions_logo_final_mixed_blue,
-                                    Resources.git_extensions_logo_final_mixed_green,
-                                    Resources.git_extensions_logo_final_mixed_lightblue,
-                                    Resources.git_extensions_logo_final_mixed_purple,
-                                    Resources.git_extensions_logo_final_mixed_red,
-                                    Resources.git_extensions_logo_final_mixed_yellow
-                                };
-                Debug.Assert(icons.Length == 7);
-                appIcon = icons[colorIndex];
-            }
-            Debug.Assert(appIcon != null);
+            Icon appIcon = null;
+            //if (iconStyle.Equals("small", StringComparison.OrdinalIgnoreCase)) {
+            //    Icon[] icons = {
+            //                        Resources.x_with_arrow,
+            //                        Resources.x_with_arrow_blue,
+            //                        Resources.x_with_arrow_green,
+            //                        Resources.x_with_arrow_lightblue,
+            //                        Resources.x_with_arrow_purple,
+            //                        Resources.x_with_arrow_red,
+            //                        Resources.x_with_arrow_yellow
+            //                    };
+            //    Debug.Assert(icons.Length == 7);
+            //    appIcon = icons[colorIndex];
+            //} else if (iconStyle.Equals("large", StringComparison.OrdinalIgnoreCase)) {
+            //    Icon[] icons = {
+            //                        Resources.git_extensions_logo_final,
+            //                        Resources.git_extensions_logo_final_blue,
+            //                        Resources.git_extensions_logo_final_green,
+            //                        Resources.git_extensions_logo_final_lightblue,
+            //                        Resources.git_extensions_logo_final_purple,
+            //                        Resources.git_extensions_logo_final_red,
+            //                        Resources.git_extensions_logo_final_yellow
+            //                    };
+            //    Debug.Assert(icons.Length == 7);
+            //    appIcon = icons[colorIndex];
+            //} else if (iconStyle.Equals("cow", StringComparison.OrdinalIgnoreCase)) {
+            //    Icon[] icons = {
+            //                        Resources.cow_head,
+            //                        Resources.cow_head_blue,
+            //                        Resources.cow_head_green,
+            //                        Resources.cow_head_blue,
+            //                        Resources.cow_head_purple,
+            //                        Resources.cow_head_red,
+            //                        Resources.cow_head_yellow
+            //                    };
+            //    Debug.Assert(icons.Length == 7);
+            //    appIcon = icons[colorIndex];
+            //} else {
+            //    Icon[] icons = {
+            //                        Resources.git_extensions_logo_final_mixed,
+            //                        Resources.git_extensions_logo_final_mixed_blue,
+            //                        Resources.git_extensions_logo_final_mixed_green,
+            //                        Resources.git_extensions_logo_final_mixed_lightblue,
+            //                        Resources.git_extensions_logo_final_mixed_purple,
+            //                        Resources.git_extensions_logo_final_mixed_red,
+            //                        Resources.git_extensions_logo_final_mixed_yellow
+            //                    };
+            //    Debug.Assert(icons.Length == 7);
+            //    appIcon = icons[colorIndex];
+            //}
+
+            //Debug.Assert(appIcon != null);
             return appIcon;
         }
 
@@ -187,7 +185,7 @@ namespace GitUI
         public  void SetSkin()
         {
             if (!IsSkinLoaded) {
-                base.SetSkin();
+                //base.SetSkin();
                 IsSkinLoaded = true;
             }
         }

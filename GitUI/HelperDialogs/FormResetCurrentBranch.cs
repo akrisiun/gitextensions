@@ -33,7 +33,7 @@ namespace GitUI.HelperDialogs
             Revision = revision;
 
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
 
             switch (resetType)
             {

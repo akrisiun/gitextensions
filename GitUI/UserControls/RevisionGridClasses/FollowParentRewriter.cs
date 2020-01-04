@@ -170,14 +170,15 @@ namespace GitUI.UserControls.RevisionGridClasses
         private void LoadParents()
         {
             string arg = "log " + GitCommandHelpers.FindRenamesAndCopiesOpts() + " --simplify-merges --parents --boundary --not --glob=notes --not --all --format=\"%H %P\"";
-            if (AppSettings.OrderRevisionByDate)
+            if (true) // AppSettings.OrderRevisionByDate)
             {
                 arg += " --date-order";
             }
-            else
-            {
-                arg += " --topo-order";
-            }
+            //else
+            //{
+            //    arg += " --topo-order";
+            //}
+
             if (AppSettings.FullHistoryInFileHistory)
             {
                 arg += " --full-history --simplify-by-decoration ";

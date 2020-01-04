@@ -32,7 +32,7 @@
             this.deleteTag = new System.Windows.Forms.CheckBox();
             this.Tags = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.remotesComboboxControl1 = new GitUI.UserControls.RemotesComboboxControl();
+            //this.remotesComboboxControl1 = new GitUI.UserControls.RemotesComboboxControl();
             this.label2 = new System.Windows.Forms.Label();
             this.gotoUserManualControl1 = new GitUI.UserControls.GotoUserManualControl();
             this.label3 = new System.Windows.Forms.Label();
@@ -144,7 +144,7 @@
             this.ClientSize = new System.Drawing.Size(454, 172);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.remotesComboboxControl1);
+            //this.Controls.Add(this.remotesComboboxControl1);
             this.Controls.Add(this.deleteTag);
             this.Controls.Add(this.Ok);
             this.Controls.Add(this.Tags);
@@ -168,7 +168,7 @@
         private System.Windows.Forms.ComboBox Tags;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox deleteTag;
-      //  private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label2;
         private UserControls.GotoUserManualControl gotoUserManualControl1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;

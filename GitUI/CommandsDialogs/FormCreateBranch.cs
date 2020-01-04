@@ -31,7 +31,7 @@ namespace GitUI.CommandsDialogs
             : base(commands)
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
 
             groupBox1.AutoSize = true;
 

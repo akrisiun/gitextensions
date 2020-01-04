@@ -14,7 +14,7 @@ namespace GitUI.HelperDialogs
             : base(commands)
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
             ThreadHelper.JoinableTaskFactory.RunAsync(
                 () => Viewer.ViewTextAsync("", text));
             Viewer.IsReadOnly = false;

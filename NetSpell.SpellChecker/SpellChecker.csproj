@@ -3,7 +3,8 @@
   <Sdk Name="Microsoft.NET.Sdk" />
   <PropertyGroup>
     <DefineConstants>TRACE;NETCORE;NET471</DefineConstants>
-
+    <TargetFramework>net471</TargetFramework>
+    
     <ProjectType>Local</ProjectType>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>

@@ -130,7 +130,7 @@ namespace GitUI.BranchTreePanel
                 TreeViewNode = treeNode;
                 treeNode.Tag = this;
 
-                uiCommands.UICommandsChanged += (a, e) =>
+                uiCommands.GitUICommandsChanged += (a, e) =>
                 {
                     // When GitModule has changed, clear selected node
                     if (TreeViewNode?.TreeView != null)

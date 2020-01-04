@@ -16,10 +16,11 @@ namespace GitUI.UserControls.RevisionGridClasses
         private const short MaxRefLength = 100;
 
 
+        [Obsolete]
         public FormQuickGitRefSelector()
         {
             InitializeComponent();
-            Translate();
+            // Translate();
         }
 
 

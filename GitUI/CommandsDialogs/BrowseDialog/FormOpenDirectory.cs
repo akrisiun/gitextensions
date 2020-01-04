@@ -22,7 +22,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
         public FormOpenDirectory([CanBeNull] GitModule currentModule)
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
 
             ThreadHelper.JoinableTaskFactory.Run(async () =>
             {

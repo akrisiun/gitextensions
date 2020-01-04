@@ -4,6 +4,8 @@ using GitCommands;
 
 namespace GitUI.UserControls.RevisionGrid
 {
+    #pragma warning disable IDE1006
+
     public class IndexChangedEventArgs : EventArgs
     {
         public IndexChangedEventArgs(bool isIndexChanged)
@@ -27,14 +29,15 @@ namespace GitUI.UserControls.RevisionGrid
         public IndexWatcher(IGitUICommandsSource uiCommandsSource)
         {
             _uICommandsSource = uiCommandsSource;
-            _uICommandsSource.UICommandsChanged += OnUICommandsChanged;
+            _uICommandsSource.GitUICommandsChanged += OnUICommandsChanged;
             GitIndexWatcher = new FileSystemWatcher();
             RefsWatcher = new FileSystemWatcher();
             SetFileSystemWatcher();
 
             IndexChanged = true;
             GitIndexWatcher.Changed += fileSystemWatcher_Changed;
-            RefsWatcher.Changed += fileSystemWatcher_Changed;
+            if (RefsWatcher != null) // TODO
+                RefsWatcher.Changed += fileSystemWatcher_Changed;
         }
 
         private void OnUICommandsChanged(object sender, GitUICommandsChangedEventArgs e)

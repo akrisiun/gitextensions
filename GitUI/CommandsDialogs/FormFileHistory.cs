@@ -64,7 +64,7 @@ namespace GitUI.CommandsDialogs
 
             copyToClipboardToolStripMenuItem.SetRevisionFunc(() => FileChanges.GetSelectedRevisions());
 
-            InitializeComplete();
+            //InitializeComplete();
 
             return;
 

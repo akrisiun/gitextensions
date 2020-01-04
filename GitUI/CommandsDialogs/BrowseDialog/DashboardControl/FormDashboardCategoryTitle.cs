@@ -16,7 +16,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog.DashboardControl
         public FormDashboardCategoryTitle()
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
         }
 
         public FormDashboardCategoryTitle(IEnumerable<string> existingCategories, string originalName = null)

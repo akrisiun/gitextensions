@@ -24,7 +24,7 @@ namespace GitUI
         public FormPuttyError()
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
         }
 
         private void LoadSSHKey_Click(object sender, EventArgs e)

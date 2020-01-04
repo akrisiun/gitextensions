@@ -363,7 +363,7 @@
         private System.Windows.Forms.Button Abort;
         private System.Windows.Forms.Button Resolved;
         private System.Windows.Forms.Button AddFiles;
-       // private PatchGrid patchGrid1;
+        private PatchGrid patchGrid1;
         private System.Windows.Forms.TextBox PatchDir;
         private System.Windows.Forms.Button BrowseDir;
         private System.Windows.Forms.RadioButton PatchDirMode;

@@ -22,6 +22,8 @@ using ResourceManager;
 
 namespace GitUI.Editor
 {
+    #pragma warning disable IDE1006
+
     [DefaultEvent("SelectedLineChanged")]
     public partial class FileViewer : GitModuleControl
     {
@@ -102,7 +104,7 @@ namespace GitUI.Editor
 
             IgnoreWhitespace = AppSettings.IgnoreWhitespaceKind;
             OnIgnoreWhitespaceChanged();
-            bool light = ColorHelper.IsLightTheme();
+            bool light = false; // ColorHelper.IsLightTheme();
 
             ignoreWhitespaceAtEol.Image = light ? Images.WhitespaceIgnoreEol : Images.WhitespaceIgnoreEol_inv;
             ignoreWhitespaceAtEolToolStripMenuItem.Image = ignoreWhitespaceAtEol.Image;
@@ -178,13 +180,13 @@ namespace GitUI.Editor
 
         private void OnUICommandsSourceSet(object sender, GitUICommandsSourceEventArgs e)
         {
-            UICommandsSource.UICommandsChanged += OnUICommandsChanged;
+            UICommandsSource.GitUICommandsChanged += OnUICommandsChanged;
             OnUICommandsChanged(UICommandsSource, null);
         }
 
         protected override void DisposeUICommandsSource()
         {
-            UICommandsSource.UICommandsChanged -= OnUICommandsChanged;
+            UICommandsSource.GitUICommandsChanged -= OnUICommandsChanged;
             base.DisposeUICommandsSource();
         }
 
@@ -501,40 +503,48 @@ namespace GitUI.Editor
         private void ViewCurrentChanges(string fileName, string oldFileName, bool staged,
             bool isSubmodule, Func<Task<GitSubmoduleStatus>> getStatusAsync, [CanBeNull] Action openWithDifftool)
         {
-            ShowOrDeferAsync(
-                fileName,
-                async () =>
-                {
-                    if (!isSubmodule)
-                    {
-                        var patch = await Module.GetCurrentChangesAsync(
-                            fileName, oldFileName, staged, GetExtraDiffArguments(), Encoding);
-                        ViewStagingPatch(patch, openWithDifftool, fileName);
-                    }
-                    else
-                    {
-                        var getStatusTask = getStatusAsync();
-                        if (getStatusTask != null)
-                        {
-                            var status = await getStatusTask;
-                            if (status == null)
-                            {
-                                ViewPatch($"Submodule \"{fileName}\" has unresolved conflicts", null);
-                                return;
-                            }
+            // Task.Run(() =>
+            // Task.Factory.StartNew(() =>
 
-                            ViewPatch(LocalizationHelpers.ProcessSubmoduleStatus(Module, status), null);
-                            return;
-                        }
-                        else
-                        {
-                            var changes = await Module.GetCurrentChangesAsync(fileName, oldFileName, staged, GetExtraDiffArguments(), Encoding);
-                            var text = LocalizationHelpers.ProcessSubmodulePatch(Module, fileName, changes);
-                            ViewPatch(text, null);
-                            return;
-                        }
-                    }
-                });
+            // JoinableTaskFactory.RunAsync( Run(async delegate { await
+            // var w = new AwaitExtensions.ExecuteContinuationSynchronouslyAwaitable(
+
+            ThreadHelper.JoinableTaskFactory.RunAsync(async () => await
+                ShowOrDeferAsync(
+                   fileName,
+                   async () =>
+                   {
+                       if (!isSubmodule)
+                       {
+                           var patch = await Module.GetCurrentChangesAsync(
+                               fileName, oldFileName, staged, GetExtraDiffArguments(), Encoding);
+                           ViewStagingPatch(patch, openWithDifftool, fileName);
+                       }
+                       else
+                       {
+                           var getStatusTask = getStatusAsync();
+                           if (getStatusTask != null)
+                           {
+                               var status = await getStatusTask;
+                               if (status == null)
+                               {
+                                   ViewPatch($"Submodule \"{fileName}\" has unresolved conflicts", null);
+                                   return;
+                               }
+
+                               ViewPatch(LocalizationHelpers.ProcessSubmoduleStatus(Module, status), null);
+                               return;
+                           }
+                           else
+                           {
+                               var changes = await Module.GetCurrentChangesAsync(fileName, oldFileName, staged, GetExtraDiffArguments(), Encoding);
+                               var text = LocalizationHelpers.ProcessSubmodulePatch(Module, fileName, changes);
+                               ViewPatch(text, null);
+                               return;
+                           }
+                       }
+                   })
+                );
         }
 
         public void ViewStagingPatch(Patch patch, [CanBeNull] Action openWithDifftool, string filename)

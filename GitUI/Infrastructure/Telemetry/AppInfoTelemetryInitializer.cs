@@ -1,11 +1,11 @@
 ﻿using System.Diagnostics;
 using GitCommands;
-using Microsoft.ApplicationInsights.Channel;
-using Microsoft.ApplicationInsights.Extensibility;
+//using Microsoft.ApplicationInsights.Channel;
+//using Microsoft.ApplicationInsights.Extensibility;
 
 namespace GitUI.Infrastructure.Telemetry
 {
-    internal class AppInfoTelemetryInitializer : ITelemetryInitializer
+    internal class AppInfoTelemetryInitializer // : ITelemetryInitializer
     {
         private readonly bool _isDirty;
         private static readonly string AppCurrentTranslationKey = nameof(AppSettings.CurrentTranslation).FormatKey();
@@ -19,19 +19,19 @@ namespace GitUI.Infrastructure.Telemetry
             _isDirty = isDirty;
         }
 
-        public void Initialize(ITelemetry telemetry)
+        public void Initialize(object telemetry)
         {
-            telemetry.Context.Component.Version = AppSettings.ProductVersion;
-            telemetry.Context.GlobalProperties[AppIsReleaseKey] = (!_isDirty).ToString();
-            telemetry.Context.GlobalProperties[AppIsPortableKey] = AppSettings.IsPortable().ToString();
-            telemetry.Context.GlobalProperties[AppCurrentTranslationKey] = AppSettings.CurrentTranslation;
-            telemetry.Context.GlobalProperties[AppStartWithRecentWorkingDirKey] = AppSettings.StartWithRecentWorkingDir.ToString();
+            //telemetry.Context.Component.Version = AppSettings.ProductVersion;
+            //telemetry.Context.GlobalProperties[AppIsReleaseKey] = (!_isDirty).ToString();
+            //telemetry.Context.GlobalProperties[AppIsPortableKey] = AppSettings.IsPortable().ToString();
+            //telemetry.Context.GlobalProperties[AppCurrentTranslationKey] = AppSettings.CurrentTranslation;
+            //telemetry.Context.GlobalProperties[AppStartWithRecentWorkingDirKey] = AppSettings.StartWithRecentWorkingDir.ToString();
 
-            // Always default to development if we're in the debugger
-            if (Debugger.IsAttached)
-            {
-                telemetry.Context.GlobalProperties[AppEnvironmentKey] = "development";
-            }
+            //// Always default to development if we're in the debugger
+            //if (Debugger.IsAttached)
+            //{
+            //    telemetry.Context.GlobalProperties[AppEnvironmentKey] = "development";
+            //}
         }
     }
 

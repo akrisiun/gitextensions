@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using GitCommands.ExternalLinks;
 using GitExtUtils.GitUI;
-using GitUI.CommandsDialogs.SettingsDialog.RevisionLinks;
+//using GitUI.CommandsDialogs.SettingsDialog.RevisionLinks;
 using GitUIPluginInterfaces;
 using JetBrains.Annotations;
 using ResourceManager;
@@ -127,16 +127,16 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
 
         private void LoadTemplatesInMenu()
         {
-            foreach (var externalLinkDefinitionExtractor in new CloudProviderExternalLinkDefinitionExtractorFactory().GetAllExtractor())
-            {
-                Add.DropDownItems.Add(new ToolStripMenuItem(
-                    string.Format(_addTemplate.Text, externalLinkDefinitionExtractor.ServiceName),
-                    externalLinkDefinitionExtractor.Icon,
-                    (o, i) => ExtractExternalLinkDefinitions(externalLinkDefinitionExtractor))
-                {
-                    Tag = externalLinkDefinitionExtractor
-                });
-            }
+            //foreach (var externalLinkDefinitionExtractor in new CloudProviderExternalLinkDefinitionExtractorFactory().GetAllExtractor())
+            //{
+            //    Add.DropDownItems.Add(new ToolStripMenuItem(
+            //        string.Format(_addTemplate.Text, externalLinkDefinitionExtractor.ServiceName),
+            //        externalLinkDefinitionExtractor.Icon,
+            //        (o, i) => ExtractExternalLinkDefinitions(externalLinkDefinitionExtractor))
+            //    {
+            //        Tag = externalLinkDefinitionExtractor
+            //    });
+            //}
         }
 
         private Remote FindRemoteByPreference(IList<Remote> remotes)
@@ -159,18 +159,18 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
             return remotes.FirstOrDefault();
         }
 
-        private void ExtractExternalLinkDefinitions(ICloudProviderExternalLinkDefinitionExtractor externalLinkDefinitionExtractor)
-        {
-            var remotes = ThreadHelper.JoinableTaskFactory.Run(async () => await Module.GetRemotesAsync()).ToList();
-            var selectedRemote = FindRemoteByPreference(remotes.Where(r => externalLinkDefinitionExtractor.IsValidRemoteUrl(r.FetchUrl)).ToList());
+        //private void ExtractExternalLinkDefinitions(ICloudProviderExternalLinkDefinitionExtractor externalLinkDefinitionExtractor)
+        //{
+        //    var remotes = ThreadHelper.JoinableTaskFactory.Run(async () => await Module.GetRemotesAsync()).ToList();
+        //    var selectedRemote = FindRemoteByPreference(remotes.Where(r => externalLinkDefinitionExtractor.IsValidRemoteUrl(r.FetchUrl)).ToList());
 
-            var externalLinkDefinitions = externalLinkDefinitionExtractor.GetDefinitions(selectedRemote.FetchUrl);
-            _externalLinksManager.AddRange(externalLinkDefinitions);
+        //    var externalLinkDefinitions = externalLinkDefinitionExtractor.GetDefinitions(selectedRemote.FetchUrl);
+        //    _externalLinksManager.AddRange(externalLinkDefinitions);
 
-            ReloadCategories();
-            _NO_TRANSLATE_Categories.SelectedItem = externalLinkDefinitions.First();
-            CategoryChanged();
-        }
+        //    ReloadCategories();
+        //    _NO_TRANSLATE_Categories.SelectedItem = externalLinkDefinitions.First();
+        //    CategoryChanged();
+        //}
 
         private void Remove_Click(object sender, EventArgs e)
         {

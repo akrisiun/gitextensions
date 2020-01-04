@@ -47,6 +47,26 @@ namespace GitUI
         {
         }
 
+        event EventHandler<GitUIPluginInterfaces.GitUIEventArgs> IGitUICommands.PostRepositoryChanged {
+            add { }
+            remove { }
+        }
+
+        event EventHandler<GitUIPluginInterfaces.GitUIEventArgs> IGitUICommands.PostBrowseInitialize {
+            add { }
+            remove { }
+        }
+
+        event EventHandler<GitUIPluginInterfaces.GitUIEventArgs> IGitUICommands.PostRegisterPlugin {
+            add { }
+            remove { }
+        }
+
+        event EventHandler<GitUIPluginInterfaces.GitUIEventArgs> IGitUICommands.PreCommit {
+            add { }
+            remove { }
+        }
+
         public IGitModule GitModule => Module;
 
         #region Events
@@ -1580,7 +1600,7 @@ namespace GitUI
 
                     break;
             }
-#pragma warning restore SA1025 // Code should not contain multiple whitespace in a row
+            #pragma warning restore SA1025 // Code should not contain multiple whitespace in a row
 
             Application.Run(new FormCommandlineHelp { StartPosition = FormStartPosition.CenterScreen });
         }

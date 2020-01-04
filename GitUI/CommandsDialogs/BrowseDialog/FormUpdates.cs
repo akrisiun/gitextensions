@@ -16,6 +16,7 @@ using ResourceManager;
 
 namespace GitUI.CommandsDialogs.BrowseDialog
 {
+    #pragma warning disable IDE1006
     public partial class FormUpdates : GitExtensionsForm
     {
         #region Translation
@@ -38,7 +39,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
             CurrentVersion = currentVersion;
 
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
 
             progressBar1.Visible = true;
             progressBar1.Style = ProgressBarStyle.Marquee;

@@ -61,7 +61,8 @@ namespace GitUI.UserControls.RevisionGridClasses
                 {
                     enabled = GitCommands.AppSettings.UseFastChecks;
 
-                    Path = Module.GetGitDirectory();
+                    System.Diagnostics.Debugger.Break(); // TODO //
+                    Path = GitModule.GetGitDirectory(Directory.GetCurrentDirectory() );
 
                     GitIndexWatcher.Path = Path;
                     GitIndexWatcher.Filter = "index";
@@ -87,7 +88,7 @@ namespace GitUI.UserControls.RevisionGridClasses
                 if (!enabled)
                     return true;
 
-                if (Path != Module.GetGitDirectory())
+                if (Path != GitModule.GetGitDirectory(Path))
                     return true;
 
                 return indexChanged;
@@ -126,7 +127,8 @@ namespace GitUI.UserControls.RevisionGridClasses
 
         private void RefreshWatcher()
         {
-            if (Path != Module.GetGitDirectory() ||
+            System.Diagnostics.Debugger.Break(); // TODO //
+            if (Path != GitModule.GetGitDirectory(null) ||
                 enabled != GitCommands.AppSettings.UseFastChecks)
                 SetFileSystemWatcher();
         }

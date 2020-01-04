@@ -15,27 +15,27 @@ namespace GitUI.BuildServerIntegration
             {
                 Image buildStatusImage = null;
 
-                switch (revision.BuildStatus.Status)
-                {
-                    case BuildInfo.BuildStatus.Success:
-                        buildStatusImage = Resources.BuildSuccessful;
-                        break;
-                    case BuildInfo.BuildStatus.Failure:
-                        buildStatusImage = Resources.BuildFailed;
-                        break;
-                    case BuildInfo.BuildStatus.Unknown:
-                        buildStatusImage = Resources.BuildCancelled;
-                        break;
-                    case BuildInfo.BuildStatus.InProgress:
-                        buildStatusImage = Resources.Icon_77;
-                        break;
-                    case BuildInfo.BuildStatus.Unstable:
-                        buildStatusImage = Resources.IconMixed;
-                        break;
-                    case BuildInfo.BuildStatus.Stopped:
-                        buildStatusImage = Resources.BuildCancelled;
-                        break;
-                }
+                //switch (revision.BuildStatus.Status)
+                //{
+                //    case BuildInfo.BuildStatus.Success:
+                //        buildStatusImage = Resources.BuildSuccessful;
+                //        break;
+                //    case BuildInfo.BuildStatus.Failure:
+                //        buildStatusImage = Resources.BuildFailed;
+                //        break;
+                //    case BuildInfo.BuildStatus.Unknown:
+                //        buildStatusImage = Resources.BuildCancelled;
+                //        break;
+                //    case BuildInfo.BuildStatus.InProgress:
+                //        buildStatusImage = Resources.Icon_77;
+                //        break;
+                //    case BuildInfo.BuildStatus.Unstable:
+                //        buildStatusImage = Resources.IconMixed;
+                //        break;
+                //    case BuildInfo.BuildStatus.Stopped:
+                //        buildStatusImage = Resources.BuildCancelled;
+                //        break;
+                //}
 
                 if (buildStatusImage != null)
                 {

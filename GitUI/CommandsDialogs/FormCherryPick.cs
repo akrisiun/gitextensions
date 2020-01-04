@@ -34,7 +34,7 @@ namespace GitUI.CommandsDialogs
         {
             Revision = revision;
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
         }
 
         private void Form_Load(object sender, EventArgs e)

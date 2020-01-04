@@ -9,7 +9,7 @@ namespace GitUI.RevisionGridClasses
         public FormRevisionFilter()
         {
             InitializeComponent();
-            Translate();
+            // Translate();
 
             LimitCheck.Checked = AppSettings.MaxRevisionGraphCommits > 0;
             _NO_TRANSLATE_Limit.Value = AppSettings.MaxRevisionGraphCommits;
@@ -68,12 +68,12 @@ namespace GitUI.RevisionGridClasses
         public string GetRevisionFilter()
         {
             var filter = "";
-            if (AuthorCheck.Checked && GitCommandHelpers.VersionInUse.IsRegExStringCmdPassable(Author.Text))
-                filter += string.Format(" --author=\"{0}\"", Author.Text);
-            if (CommitterCheck.Checked && GitCommandHelpers.VersionInUse.IsRegExStringCmdPassable(Committer.Text))
-                filter += string.Format(" --committer=\"{0}\"", Committer.Text);
-            if (MessageCheck.Checked && GitCommandHelpers.VersionInUse.IsRegExStringCmdPassable(Message.Text))
-                filter += string.Format(" --grep=\"{0}\"", Message.Text);
+            //if (AuthorCheck.Checked && GitCommandHelpers.VersionInUse.IsRegExStringCmdPassable(Author.Text))
+            //    filter += string.Format(" --author=\"{0}\"", Author.Text);
+            //if (CommitterCheck.Checked && GitCommandHelpers.VersionInUse.IsRegExStringCmdPassable(Committer.Text))
+            //    filter += string.Format(" --committer=\"{0}\"", Committer.Text);
+            //if (MessageCheck.Checked && GitCommandHelpers.VersionInUse.IsRegExStringCmdPassable(Message.Text))
+            //    filter += string.Format(" --grep=\"{0}\"", Message.Text);
             if (!string.IsNullOrEmpty(filter) && IgnoreCase.Checked)
                 filter += " --regexp-ignore-case";
             if (SinceCheck.Checked)
@@ -101,22 +101,22 @@ namespace GitUI.RevisionGridClasses
 
         public string GetInMemAuthorFilter()
         {
-            if (AuthorCheck.Checked && !GitCommandHelpers.VersionInUse.IsRegExStringCmdPassable(Author.Text))
-                return Author.Text;
+            //if (AuthorCheck.Checked && !GitCommandHelpers.VersionInUse.IsRegExStringCmdPassable(Author.Text))
+            //    return Author.Text;
             return string.Empty;
         }
 
         public string GetInMemCommitterFilter()
         {
-            if (CommitterCheck.Checked && !GitCommandHelpers.VersionInUse.IsRegExStringCmdPassable(Committer.Text))
-                return Committer.Text;
+            //if (CommitterCheck.Checked && !GitCommandHelpers.VersionInUse.IsRegExStringCmdPassable(Committer.Text))
+            //    return Committer.Text;
             return string.Empty;
         }
 
         public string GetInMemMessageFilter()
         {
-            if (MessageCheck.Checked && !GitCommandHelpers.VersionInUse.IsRegExStringCmdPassable(Message.Text))
-                return Message.Text;
+            //if (MessageCheck.Checked && !GitCommandHelpers.VersionInUse.IsRegExStringCmdPassable(Message.Text))
+            //    return Message.Text;
             return string.Empty;
         }
 

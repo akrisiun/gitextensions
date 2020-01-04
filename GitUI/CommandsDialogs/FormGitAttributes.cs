@@ -37,7 +37,7 @@ namespace GitUI.CommandsDialogs
             : base(commands)
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
             _fullPathResolver = new FullPathResolver(() => Module.WorkingDir);
         }
 

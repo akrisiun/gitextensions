@@ -27,6 +27,10 @@ namespace GitCommands
 
         private BuildInfo _buildStatus;
 
+        //TODO
+        public string[] ParentGuids { get; set; }
+
+
         public GitRevision([NotNull] ObjectId objectId)
         {
             ObjectId = objectId ?? throw new ArgumentNullException(nameof(objectId));

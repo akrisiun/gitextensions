@@ -3,7 +3,8 @@
   <Sdk Name="Microsoft.NET.Sdk" />
   <PropertyGroup>
     <DefineConstants>TRACE;NETCORE;NET471</DefineConstants>
-
+    <TargetFramework>net471</TargetFramework>
+    
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{626CA9EB-DB83-4BEB-87D5-15E3B397EF57}</ProjectGuid>

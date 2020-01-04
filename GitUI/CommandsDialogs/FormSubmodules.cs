@@ -34,7 +34,7 @@ namespace GitUI.CommandsDialogs
             gitSubmoduleBindingSource.DataSource = _modules;
             splitContainer1.SplitterDistance = DpiUtil.Scale(222);
 
-            InitializeComplete();
+            //InitializeComplete();
         }
 
         private void AddSubmoduleClick(object sender, EventArgs e)
