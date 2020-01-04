@@ -19,7 +19,7 @@ namespace GitUI
     /// <remarks>
     /// Includes support for font, hotkey, icon, translation, and position restore.
     /// </remarks></summary>
-    public class GitExtensionsForm : GitUI.GitExtensionsFormBase, GitUI.IWin32Window
+    public class GitExtensionsForm2 : GitUI.GitExtensionsFormBase, IWin32Window
     {
         #region ctor
 
@@ -30,7 +30,7 @@ namespace GitUI
         readonly bool _enablePositionRestore;
 
         /// <summary>Creates a new <see cref="GitExtensionsForm"/> without position restore.</summary>
-        public GitExtensionsForm()
+        public GitExtensionsForm2()
             : this(false)
         {
         }
@@ -38,7 +38,7 @@ namespace GitUI
         /// <summary>Creates a new <see cref="GitExtensionsForm"/> indicating position restore.</summary>
         /// <param name="enablePositionRestore">Indicates whether the <see cref="Form"/>'s position
         /// will be restored upon being re-opened.</param>
-        public GitExtensionsForm(bool enablePositionRestore)
+        public GitExtensionsForm2(bool enablePositionRestore)
             : base()
         {
             _enablePositionRestore = enablePositionRestore;
@@ -182,7 +182,9 @@ namespace GitUI
         #region Load, Shown
 
         public bool IsSkinLoaded { get; protected set; }
-        public override void SetSkin()
+
+        // override
+        public  void SetSkin()
         {
             if (!IsSkinLoaded) {
                 base.SetSkin();

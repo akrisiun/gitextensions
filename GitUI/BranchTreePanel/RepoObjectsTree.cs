@@ -216,9 +216,10 @@ namespace GitUI.BranchTreePanel
             _ = UICommandsSource;
         }
 
-        protected override void OnUICommandsSourceSet(IGitUICommandsSource source)
+        //override
+        protected  void OnUICommandsSourceSet(IGitUICommandsSource source)
         {
-            base.OnUICommandsSourceSet(source);
+            //base.OnUICommandsSourceSet(source);
 
             CreateBranches();
             CreateRemotes();

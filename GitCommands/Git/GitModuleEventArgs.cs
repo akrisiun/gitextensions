@@ -2,7 +2,8 @@ using System;
 
 namespace GitCommands.Git
 {
-    public sealed class GitModuleEventArgs : EventArgs
+    // sealed
+    public class GitModuleEventArgs : EventArgs
     {
         public GitModuleEventArgs(GitModule gitModule)
         {

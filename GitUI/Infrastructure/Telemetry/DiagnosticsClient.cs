@@ -5,23 +5,23 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using GitCommands;
-using Microsoft.ApplicationInsights;
-using Microsoft.ApplicationInsights.Extensibility;
+//using Microsoft.ApplicationInsights;
+//using Microsoft.ApplicationInsights.Extensibility;
 
 namespace GitUI.Infrastructure.Telemetry
 {
     public static class DiagnosticsClient
     {
         private static bool _initialized;
-        private static TelemetryClient _client;
+        //private static TelemetryClient _client;
 
         private static bool Enabled => _initialized && (AppSettings.TelemetryEnabled ?? false);
 
         public static void Initialize(bool isDirty)
         {
-            TelemetryConfiguration.Active.TelemetryInitializers.Add(new AppEnvironmentTelemetryInitializer());
-            TelemetryConfiguration.Active.TelemetryInitializers.Add(new AppInfoTelemetryInitializer(isDirty));
-            TelemetryConfiguration.Active.TelemetryInitializers.Add(new MonitorsTelemetryInitializer());
+            //TelemetryConfiguration.Active.TelemetryInitializers.Add(new AppEnvironmentTelemetryInitializer());
+            //TelemetryConfiguration.Active.TelemetryInitializers.Add(new AppInfoTelemetryInitializer(isDirty));
+            //TelemetryConfiguration.Active.TelemetryInitializers.Add(new MonitorsTelemetryInitializer());
 
             _initialized = true;
 
@@ -31,12 +31,12 @@ namespace GitUI.Infrastructure.Telemetry
                 OnExit();
             };
 
-            _client = new TelemetryClient();
+            //_client = new TelemetryClient();
 
             // override capture of the hostname
             // https://github.com/Microsoft/ApplicationInsights-dotnet/blob/80025b5d79cc52485510d422cfa5a0a8159dac83/src/Microsoft.ApplicationInsights/TelemetryClient.cs#L544
-            _client.Context.Cloud.RoleInstance = "Git Extensions";
-            _client.Context.Cloud.RoleName = "Git Extensions";
+            //_client.Context.Cloud.RoleInstance = "Git Extensions";
+            //_client.Context.Cloud.RoleName = "Git Extensions";
         }
 
         public static void TrackEvent(string eventName, IDictionary<string, string> properties = null, IDictionary<string, double> metrics = null)
@@ -46,7 +46,7 @@ namespace GitUI.Infrastructure.Telemetry
                 return;
             }
 
-            _client.TrackEvent(eventName, properties, metrics);
+            //_client.TrackEvent(eventName, properties, metrics);
         }
 
         public static void TrackTrace(string evt)
@@ -56,7 +56,7 @@ namespace GitUI.Infrastructure.Telemetry
                 return;
             }
 
-            _client.TrackTrace(evt);
+            //_client.TrackTrace(evt);
         }
 
         public static void Notify(Exception exception)
@@ -66,7 +66,7 @@ namespace GitUI.Infrastructure.Telemetry
                 return;
             }
 
-            _client.TrackException(exception);
+            //_client.TrackException(exception);
         }
 
         public static void TrackPageView(string pageName)
@@ -76,7 +76,7 @@ namespace GitUI.Infrastructure.Telemetry
                 return;
             }
 
-            _client.TrackPageView(pageName);
+            //_client.TrackPageView(pageName);
         }
 
         private static void OnExit()
@@ -86,7 +86,7 @@ namespace GitUI.Infrastructure.Telemetry
                 return;
             }
 
-            _client.Flush();
+            //_client.Flush();
 
             // Allow time for flushing:
             System.Threading.Thread.Sleep(1000);

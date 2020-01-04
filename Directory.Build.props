@@ -3,7 +3,13 @@
   <PropertyGroup>
     <LangVersion>7.3</LangVersion>
     <NoWarn>$(NoWarn);1573;1591;1712</NoWarn>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <TargetFramework>net471</TargetFramework>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableStyleCopAnalyzers>false</EnableStyleCopAnalyzers>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -11,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="$(MSBuildThisFileDirectory)Build\stylecop.json">
+    <!--<AdditionalFiles Include="$(MSBuildThisFileDirectory)Build\stylecop.json">
       <Link>stylecop.json</Link>
     </AdditionalFiles>
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)Build\vs-threading.MainThreadAssertingMethods.txt">
@@ -22,7 +28,7 @@
     </AdditionalFiles>
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)Build\vs-threading.TypesRequiringMainThread.txt">
       <Visible>False</Visible>
-    </AdditionalFiles>
+    </AdditionalFiles>-->
   </ItemGroup>
 
 </Project>

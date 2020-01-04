@@ -1,16 +1,17 @@
 ﻿using GitCommands;
-using Microsoft.ApplicationInsights.Channel;
-using Microsoft.ApplicationInsights.Extensibility;
+//using Microsoft.ApplicationInsights.Channel;
+//using Microsoft.ApplicationInsights.Extensibility;
 
 namespace GitUI.Infrastructure.Telemetry
 {
-    internal class AppEnvironmentTelemetryInitializer : ITelemetryInitializer
+    internal class AppEnvironmentTelemetryInitializer // : ITelemetryInitializer
     {
         private readonly ISshPathLocator _sshPathLocator = new SshPathLocator();
+        public string sshClient;
 
-        public void Initialize(ITelemetry telemetry)
+        public void Initialize(object telemetry) // ITelemetry telemetry)
         {
-            string sshClient;
+            // string sshClient;
             var sshPath = _sshPathLocator.Find(AppSettings.GitBinDir);
             if (string.IsNullOrEmpty(sshPath))
             {
@@ -25,9 +26,9 @@ namespace GitUI.Infrastructure.Telemetry
                 sshClient = "Other";
             }
 
-            telemetry.Context.GlobalProperties["Git"] = GitVersion.Current.ToString();
-            telemetry.Context.GlobalProperties["SSH"] = sshClient;
-            telemetry.Context.GlobalProperties["SSH.Path"] = sshPath;
+            //telemetry.Context.GlobalProperties["Git"] = GitVersion.Current.ToString();
+            //telemetry.Context.GlobalProperties["SSH"] = sshClient;
+            //telemetry.Context.GlobalProperties["SSH.Path"] = sshPath;
         }
     }
 }

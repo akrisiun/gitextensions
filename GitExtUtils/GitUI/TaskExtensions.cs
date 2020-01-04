@@ -18,7 +18,7 @@ namespace GitUI
         /// If there is not enough stack space remaining on the thread that is completing the <paramref name="antecedent"/> <see cref="Task"/>,
         /// the continuation may be scheduled on the threadpool.
         /// </remarks>
-        public static ExecuteContinuationSynchronouslyAwaitable ConfigureAwaitRunInline(this Task antecedent)
+        public static ExecuteContinuationSynchronouslyAwaitable ConfigureAwaitRunInline2(this Task antecedent)
         {
             Requires.NotNull(antecedent, nameof(antecedent));
 
@@ -36,7 +36,7 @@ namespace GitUI
         /// If there is not enough stack space remaining on the thread that is completing the <paramref name="antecedent"/> <see cref="Task"/>,
         /// the continuation may be scheduled on the threadpool.
         /// </remarks>
-        public static ExecuteContinuationSynchronouslyAwaitable<T> ConfigureAwaitRunInline<T>(this Task<T> antecedent)
+        public static ExecuteContinuationSynchronouslyAwaitable<T> ConfigureAwaitRunInline2<T>(this Task<T> antecedent)
         {
             Requires.NotNull(antecedent, nameof(antecedent));
 

@@ -87,21 +87,21 @@
             // 
             // remotesComboboxControl1
             // 
-            this.remotesComboboxControl1.AllowMultiselect = false;
-            this.remotesComboboxControl1.Location = new System.Drawing.Point(10, 106);
-            this.remotesComboboxControl1.Name = "remotesComboboxControl1";
-            this.remotesComboboxControl1.SelectedRemote = "";
-            this.remotesComboboxControl1.Size = new System.Drawing.Size(270, 25);
-            this.remotesComboboxControl1.TabIndex = 12;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 52);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(315, 15);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "This will delete the selected tag from the (local) repository.";
+            //this.remotesComboboxControl1.AllowMultiselect = false;
+            //this.remotesComboboxControl1.Location = new System.Drawing.Point(10, 106);
+            //this.remotesComboboxControl1.Name = "remotesComboboxControl1";
+            //this.remotesComboboxControl1.SelectedRemote = "";
+            //this.remotesComboboxControl1.Size = new System.Drawing.Size(270, 25);
+            //this.remotesComboboxControl1.TabIndex = 12;
+            //// 
+            //// label2
+            //// 
+            //this.label2.AutoSize = true;
+            //this.label2.Location = new System.Drawing.Point(7, 52);
+            //this.label2.Name = "label2";
+            //this.label2.Size = new System.Drawing.Size(315, 15);
+            //this.label2.TabIndex = 13;
+            //this.label2.Text = "This will delete the selected tag from the (local) repository.";
             // 
             // gotoUserManualControl1
             // 
@@ -168,8 +168,7 @@
         private System.Windows.Forms.ComboBox Tags;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox deleteTag;
-        private UserControls.RemotesComboboxControl remotesComboboxControl1;
-        private System.Windows.Forms.Label label2;
+      //  private System.Windows.Forms.Label label2;
         private UserControls.GotoUserManualControl gotoUserManualControl1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
