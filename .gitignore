@@ -45,14 +45,17 @@ GitPlugin/Properties/Resources.resources
 test-results/*
 GitCommandsTests/test-results/*
 /!runTests.bat
+GitExtensionsMono.sln.VisualState.xml
 TestResult.xml
 libgit2sharp
 Setup/GitExtensions/
+Setup/GitExtensions*Mono.zip
 Setup/GitExtensions-pdbs/
 Setup/GitExtensions-Portable-*.zip
 Setup/GitExtensions-pdbs-*.zip
 Setup/tools/tx.exe
-Plugins/GitExtensions.PluginManager/*
+/Bin/Git*.exe
+/Bin/KDiff3*.exe
 
 # Backup & report files from converting an old project file to a newer
 # Visual Studio version. Backup files are not needed, because we have git ;-)
@@ -65,10 +68,20 @@ UpgradeLog*.htm*
 packages/
 GitExtensions.*.sln.VisualState.xml
 GitExtensions.settings.backup
-/Setup/*.zip
+Bin/*.exe.lastcodeanalysissucceeded
+*.resources.dll
+*.opendb
+*.VS2015.VC.db
+*.VS2015.sqlite
+*.zip
 /Setup/Changelog.md
 *.received.*
 Directory.Build.rsp
 GitStatus.txt
 OpenCover.GitExtensions.xml
-tree.txt
+*.txt
+
+*.log
+
+/Externals/NBug/
+/Externals/MaterialSkin/

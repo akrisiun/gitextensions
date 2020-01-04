@@ -1,12 +1,18 @@
-[submodule "GitExtensionsDoc"]
-	path = GitExtensionsDoc
-	url = ../../gitextensions/GitExtensionsDoc.git
+[submodule "Externals/NBug"]
+	path = Externals/NBug
+	url = https://github.com/akrisiun/NBug
+	ignore = dirty
 [submodule "Externals/Git.hub"]
 	path = Externals/Git.hub
-	url = ../../gitextensions/Git.hub.git
+	url = https://github.com/akrisiun/Git.hub
+	ignore = dirty
 [submodule "Externals/conemu-inside"]
 	path = Externals/conemu-inside
-	url = ../../gitextensions/conemu-inside.git
+	url = https://github.com/akrisiun/conemu-inside
+	ignore = dirty
+[submodule "Externals/MaterialSkin"]
+	path = Externals/MaterialSkin
+	url = https://github.com/akrisiun/MaterialSkin
 [submodule "Externals/ICSharpCode.TextEditor"]
 	path = Externals/ICSharpCode.TextEditor
 	url = ../../gitextensions/ICSharpCode.TextEditor.git
