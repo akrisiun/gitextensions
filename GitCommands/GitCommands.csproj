@@ -1,9 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+<Project>
+  <Sdk Name="Microsoft.NET.Sdk.WindowsDesktop" />
   <PropertyGroup>
     <DefineConstants>TRACE;NETCORE;NET471</DefineConstants>
     <EnableDefaultItems>false</EnableDefaultItems>
-    <TargetFramework>net471</TargetFramework>
+
+    <UseWindowsForms>true</UseWindowsForms>
+    <TargetFrameworks>net471;net48</TargetFrameworks>
+    <!--<TargetFrameworks>net471;net48;netcoreapp3.1</TargetFrameworks>-->
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
 
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -48,7 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
+    <!--<PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />-->
     <PackageReference Include="System.IO.Abstractions" Version="2.0.0.144" />
     <PackageReference Include="System.Reactive.Linq" Version="3.1.1" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
@@ -222,6 +226,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="../Bin/ConEmu/ConEmu.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="gitcommandkey.snk.pfx" />
     <Compile Include="UserRepositoryHistory\RecentRepoInfo.cs" />
     <None Include="Properties\Settings.settings">

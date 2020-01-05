@@ -111,6 +111,7 @@ namespace GitUI
 
             try
             {
+#pragma warning disable VSTHRD012, VSTHRD110, CS1998
                 session = terminal.Start(startinfo);
                 if (session == null)
                 {

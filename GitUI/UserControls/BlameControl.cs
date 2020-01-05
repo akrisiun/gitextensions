@@ -93,8 +93,10 @@ namespace GitUI.Blame
             _fileName = fileName;
             _encoding = encoding;
 
+            ThreadHelper.JoinableTaskFactory.RunAsync(async () => await
             _blameLoader.LoadAsync(() => _blame = Module.Blame(fileName, objectId.ToString(), encoding),
-                () => ProcessBlame(fileName, revision, children, controlToMask, line, scrollPos));
+                () => ProcessBlame(fileName, revision, children, controlToMask, line, scrollPos))
+            );
         }
 
         private void commitInfo_CommandClicked(object sender, CommandEventArgs e)

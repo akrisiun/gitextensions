@@ -1,5 +1,11 @@
 ![Git Extensions logo](https://cdn.rawgit.com/gitextensions/gitextensions/master/Logo/git-extensions-logo.svg)
 
+# ConEmu x64
+
+ConEmuC64.exe
+ConEmu64.exe
+ConEmuCD64.dll
+
 # Git Extensions
 
 Git Extensions is a standalone UI tool for managing git repositories.

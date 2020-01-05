@@ -19,8 +19,9 @@
 
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <DebugType>portable</DebugType>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -28,9 +29,8 @@
     <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;NET45;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet></CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <!--<CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>-->
-    <RunCodeAnalysis>true</RunCodeAnalysis>
     <NoWarn>1573</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
     <WarningsAsErrors />
@@ -43,6 +43,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>1573</NoWarn>
     <CodeAnalysisRuleSet>..\FxCopRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -56,18 +59,6 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rx-Core.2.2.5\lib\net40\System.Reactive.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reactive.Linq, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rx-Linq.2.2.5\lib\net40\System.Reactive.Linq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reactive.PlatformServices, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net40\System.Reactive.PlatformServices.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
@@ -422,15 +413,6 @@
     <Compile Include="UserControls\RemotesComboboxControl.cs" />
     <Compile Include="UserControls\RemotesComboboxControl.Designer.cs" />
     <Compile Include="UserControls\RepoStateVisualiser.cs" />
-    <Compile Include="UserControls\RevisionGridClasses\CopyToClipboardMenuHelper.cs" />
-    <Compile Include="UserControls\RevisionGridClasses\CaptionCustomMenuRenderer.cs" />
-    <Compile Include="UserControls\RevisionGridClasses\FollowParentRewriter.cs" />
-    <Compile Include="UserControls\RevisionGridClasses\FormQuickGitRefSelector.cs" />
-    <Compile Include="UserControls\RevisionGridClasses\FormQuickGitRefSelector.Designer.cs" />
-    <Compile Include="UserControls\RevisionGridClasses\GitRefListsForRevision.cs" />
-    <Compile Include="UserControls\RevisionGridClasses\MenuUtil.cs" />
-    <Compile Include="UserControls\RevisionGridClasses\NavigationHistory.cs" />
-    <Compile Include="UserControls\RevisionGridClasses\ParentChildNavigationHistory.cs" />
     <Compile Include="UserControls\RevisionGrid\AuthorRevisionHighlighting.cs" />
     <Compile Include="UserControls\RevisionGrid\CellStyle.cs" />
     <Compile Include="UserControls\RevisionGrid\Columns\AuthorNameColumnProvider.cs" />
@@ -486,19 +468,6 @@
     <Compile Include="UserManual\SingleHtmlUserManual.cs" />
     <Compile Include="UserManual\StandardHtmlUserManual.cs" />
     <Compile Include="UserManual\IProvideUserManual.cs" />
-    <Compile Include="UserControls\RevisionGridClasses\DoubleClickRevisionEventArgs.cs" />
-    <Compile Include="UserControls\RevisionGridClasses\DvcsGraph.Graph.cs">
-      <DependentUpon>DvcsGraph.cs</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UserControls\RevisionGridClasses\DvcsGraph.Junction.cs">
-      <DependentUpon>DvcsGraph.cs</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UserControls\RevisionGridClasses\DvcsGraph.Lanes.cs">
-      <DependentUpon>DvcsGraph.cs</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Editor\FormGoToLine.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -582,7 +551,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="IGitUICommandsSource.cs" />
-    <Compile Include="UserControls\RevisionGridClasses\IndexWatcher.cs" />
     <Compile Include="MessageBoxes.cs" />
     <Compile Include="MouseWheelRedirector.cs" />
     <Compile Include="CommandsDialogs\SettingsDialog\MergeToolsHelper.cs" />
@@ -677,12 +645,6 @@
     </Compile>
     <Compile Include="CommandsDialogs\BrowseDialog\DashboardControl\Dashboard.Designer.cs">
       <DependentUpon>Dashboard.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\RevisionGridClasses\DvcsGraph.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UserControls\RevisionGridClasses\DvcsGraph.Designer.cs">
-      <DependentUpon>DvcsGraph.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\FileStatusList.cs">
       <SubType>UserControl</SubType>
@@ -1009,12 +971,6 @@
     <Compile Include="CommandsDialogs\FormRevertCommit.Designer.cs">
       <DependentUpon>FormRevertCommit.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\RevisionGridClasses\FormRevisionFilter.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UserControls\RevisionGridClasses\FormRevisionFilter.Designer.cs">
-      <DependentUpon>FormRevisionFilter.cs</DependentUpon>
-    </Compile>
     <Compile Include="CommandsDialogs\FormSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1278,10 +1234,6 @@
     <EmbeddedResource Include="UserControls\HelpImageDisplayUserControl.resx" />
     <EmbeddedResource Include="UserControls\PatchGrid.resx" />
     <EmbeddedResource Include="UserControls\RemotesComboboxControl.resx" />
-    <EmbeddedResource Include="UserControls\RevisionGridClasses\DvcsGraph.resx">
-      <DependentUpon>DvcsGraph.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\FileStatusList.resx">
       <DependentUpon>FileStatusList.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1477,11 +1429,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\FormRevertCommit.resx">
       <DependentUpon>FormRevertCommit.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\RevisionGridClasses\FormQuickGitRefSelector.resx" />
-    <EmbeddedResource Include="UserControls\RevisionGridClasses\FormRevisionFilter.resx">
-      <DependentUpon>FormRevisionFilter.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CommandsDialogs\FormSettings.resx">

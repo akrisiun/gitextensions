@@ -5,7 +5,7 @@ using SmartFormat;
 namespace ResourceManager
 {
     /// <summary>Contains common string literals which are translated.</summary>
-    public class Strings // : Translate
+    internal class Strings // : Translate
     {
         // public only because of FormTranslate
         public Strings()
@@ -172,7 +172,7 @@ namespace ResourceManager
         }
     }
 
-    public class TranslationString
+    internal class TranslationString
     {
         public TranslationString(object str)
         {
@@ -190,7 +190,3 @@ namespace ResourceManager
     }
 
 }
-
-//namespace GitCommands.Texts
-//{
-//}
