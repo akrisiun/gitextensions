@@ -13,6 +13,8 @@ using GitExtUtils.GitUI;
 using GitUIPluginInterfaces;
 using ResourceManager;
 
+#pragma warning disable VSTHRD104
+
 namespace GitUI.CommandsDialogs
 {
     public partial class FormClone : GitModuleForm
@@ -69,6 +71,7 @@ namespace GitUI.CommandsDialogs
             MaximumSize = DpiUtil.Scale(new Size(950, 375));
             MinimumSize = DpiUtil.Scale(new Size(450, 375));
 
+#pragma warning disable VSTHRD104
             ThreadHelper.JoinableTaskFactory.Run(async () =>
             {
                 var repositoryHistory = await RepositoryHistoryManager.Remotes.LoadRecentHistoryAsync();
@@ -269,6 +272,7 @@ namespace GitUI.CommandsDialogs
                     }
                 }
 
+#pragma warning disable VSTHRD012, VSTHRD110, VSTHRD105, VSTHRD102
                 ThreadHelper.JoinableTaskFactory.Run(async () =>
                 {
                     await RepositoryHistoryManager.Remotes.AddAsMostRecentAsync(sourceRepo);
@@ -444,6 +448,7 @@ namespace GitUI.CommandsDialogs
         {
             string from = _NO_TRANSLATE_From.Text;
             Cursor = Cursors.AppStarting;
+#pragma warning disable VSTHRD012, VSTHRD110
             _branchListLoader.LoadAsync(() => Module.GetRemoteServerRefs(from, false, true), UpdateBranches);
         }
 

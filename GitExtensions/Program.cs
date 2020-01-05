@@ -259,6 +259,7 @@ namespace GitExtensions
                         MessageBox.Show(messageContent, "Configuration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
+#pragma warning disable IDE0059
                     exceptionHandled = true;
                 }
             }

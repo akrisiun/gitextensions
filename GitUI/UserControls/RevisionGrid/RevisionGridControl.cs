@@ -41,6 +41,8 @@ namespace GitUI
         HighlightSelected
     }
 
+    #pragma warning disable IDE0019, IDE1006
+
     [DefaultEvent("DoubleClick")]
     public sealed partial class RevisionGridControl : GitModuleControl
     {
@@ -1902,7 +1904,7 @@ namespace GitUI
             UICommands.StartSquashCommitDialog(this, LatestSelectedRevision);
         }
 
-        internal void ToggleShowRelativeDate(EventArgs e)
+        internal void ToggleShowRelativeDate(EventArgs _)
         {
             AppSettings.RelativeDate = !AppSettings.RelativeDate;
             MenuCommands.TriggerMenuChanged();
@@ -2439,6 +2441,7 @@ namespace GitUI
             UICommands.ShowFormDiff(IsFirstParentValid(), baseCommit.ObjectId, ObjectId.WorkTreeId, baseCommit.Subject, "Working directory");
         }
 
+#pragma warning disable IDE1006
         private void compareSelectedCommitsMenuItem_Click(object sender, EventArgs e)
         {
             var revisions = GetSelectedRevisions();

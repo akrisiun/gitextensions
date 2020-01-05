@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GitCommands;
 using GitExtUtils;
 using GitUI;
 using GitUI.Avatars;
@@ -13,12 +12,12 @@ using GitUIPluginInterfaces;
 
 namespace Gource
 {
-    public partial class GourceStart : ResourceManager.GitExtensionsFormBase
+    public partial class GourceStart : GitExtensionsFormBase
     {
         public GourceStart(string pathToGource, GitUIEventArgs gitUIArgs, string gourceArguments)
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
             PathToGource = pathToGource;
             GitUIArgs = gitUIArgs;
             GitWorkingDir = gitUIArgs?.GitModule.WorkingDir;
@@ -62,6 +61,7 @@ namespace Gource
                 return;
             }
 
+            #pragma warning disable VSTHRD102
             ThreadHelper.JoinableTaskFactory.Run(
                 async () =>
                 {
@@ -148,6 +148,7 @@ namespace Gource
             }
         }
 
+#pragma warning disable IDE1006
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start(@"https://github.com/acaudwell/Gource/");

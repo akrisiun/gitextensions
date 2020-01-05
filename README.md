@@ -2,6 +2,9 @@
 
 # ConEmu x64
 
+Required files not found: ConEmuC.exe, ConEmuCD.dll, ConEmuHk.dll
+Recommended files: ConEmuC64.exe ConEmuCD64.exe, ConEmuHk64.dll
+
 ConEmuC64.exe
 ConEmu64.exe
 ConEmuCD64.dll

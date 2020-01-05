@@ -126,7 +126,8 @@ namespace GitUI.CommandsDialogs
                 _NO_TRANSLATE_Preview.Enabled = false;
             }
 
-            ThreadHelper.JoinableTaskFactory.Run(async () =>
+#pragma warning disable VSTHRD012, VSTHRD110, VSTHRD102, CS1998
+            ThreadHelper.JoinableTaskFactory.Run(async () => await
             _ignoredFilesLoader.LoadAsync(() => Module.GetIgnoredFiles(GetCurrentPatterns()), UpdatePreviewPanel));
         }
     }

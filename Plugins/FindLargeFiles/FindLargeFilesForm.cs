@@ -35,7 +35,7 @@ namespace FindLargeFiles
             commitCountDataGridViewTextBoxColumn.Width = DpiUtil.Scale(88);
             lastCommitDateDataGridViewTextBoxColumn.Width = DpiUtil.Scale(103);
 
-            InitializeComplete();
+            //InitializeComplete();
 
             sHADataGridViewTextBoxColumn.DataPropertyName = nameof(GitObject.SHA);
             pathDataGridViewTextBoxColumn.DataPropertyName = nameof(GitObject.Path);
@@ -81,6 +81,8 @@ namespace FindLargeFiles
                     {
                         d.LastCommitDate = date;
                         _list.Add(d.SHA, d);
+
+#pragma warning disable VSTHRD102
                         ThreadHelper.JoinableTaskFactory.Run(async () =>
                         {
                             await BranchesGrid.SwitchToMainThreadAsync();
@@ -119,7 +121,7 @@ namespace FindLargeFiles
                         ThreadHelper.JoinableTaskFactory.Run(async () =>
                         {
                             await pbRevisions.SwitchToMainThreadAsync();
-                            pbRevisions.Value = pbRevisions.Value + (int)((_revList.Length * 0.1f) / packFiles.Length);
+                            pbRevisions.Value += (int)((_revList.Length * 0.1f) / packFiles.Length);
                         });
                         foreach (var gitObject in objects.Where(x => x.Contains(" blob ")))
                         {

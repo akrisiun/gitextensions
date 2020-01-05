@@ -1414,6 +1414,9 @@ namespace NetSpell.SpellChecker
 
         #endregion
 
+
+        /// <summary> bla bla Autocomplete </summary>
+        /// <param name="words"></param>
         public void AddAutoCompleteWords(IEnumerable<string> words)
         {
             foreach (var word in words)

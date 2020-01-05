@@ -33,7 +33,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{BB46D9
 		build.cmd = build.cmd
 		GitExtensions\copy_plugins.cmd = GitExtensions\copy_plugins.cmd
 		Directory.Build.props = Directory.Build.props
-		Directory.Build.targets = Directory.Build.targets
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
@@ -50,8 +49,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Git.hub", "Externals\Git.hub\Git.hub\Git.hub.csproj", "{F50B1DBF-1C9F-4437-87EC-7ABA805CC446}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBug", "Externals\NBug\NBug\NBug.csproj", "{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stash", "Plugins\Stash\Stash.csproj", "{50AEAB6C-83C4-45F8-AA01-90E1405C48AF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JenkinsIntegration", "Plugins\BuildServerIntegration\JenkinsIntegration\JenkinsIntegration.csproj", "{E6AAC693-815B-4D1A-83D7-F4DE36072793}"
 EndProject
@@ -197,14 +194,6 @@ Global
 		{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{62CED1D5-F603-40DE-8BF5-3E49D3A392F4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{50AEAB6C-83C4-45F8-AA01-90E1405C48AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{50AEAB6C-83C4-45F8-AA01-90E1405C48AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{50AEAB6C-83C4-45F8-AA01-90E1405C48AF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{50AEAB6C-83C4-45F8-AA01-90E1405C48AF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{50AEAB6C-83C4-45F8-AA01-90E1405C48AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{50AEAB6C-83C4-45F8-AA01-90E1405C48AF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{50AEAB6C-83C4-45F8-AA01-90E1405C48AF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{50AEAB6C-83C4-45F8-AA01-90E1405C48AF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E6AAC693-815B-4D1A-83D7-F4DE36072793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E6AAC693-815B-4D1A-83D7-F4DE36072793}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6AAC693-815B-4D1A-83D7-F4DE36072793}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -248,7 +237,6 @@ Global
 		{F1B97F5D-CA42-4280-94A1-CE412BEA20DF} = {3D5CA0E0-EF51-4488-A8B7-86CC330D7AD8}
 		{F50B1DBF-1C9F-4437-87EC-7ABA805CC446} = {0E859634-B3DF-46AC-A73C-D49734F19D6A}
 		{62CED1D5-F603-40DE-8BF5-3E49D3A392F4} = {0E859634-B3DF-46AC-A73C-D49734F19D6A}
-		{50AEAB6C-83C4-45F8-AA01-90E1405C48AF} = {3D5CA0E0-EF51-4488-A8B7-86CC330D7AD8}
 		{E6AAC693-815B-4D1A-83D7-F4DE36072793} = {F1B97F5D-CA42-4280-94A1-CE412BEA20DF}
 		{0F1F1168-A4B2-4FA2-B17B-735140D17F39} = {7E670B5E-7A90-4F10-9C29-0901E385F914}
 		{1DC7D403-484B-43B4-B017-1356397A32CB} = {0E859634-B3DF-46AC-A73C-D49734F19D6A}

@@ -7,6 +7,8 @@ using ConEmu.WinForms;
 using GitCommands;
 using GitCommands.Utils;
 
+#pragma warning disable IDE0018, IDE0019
+
 namespace GitUI
 {
     public class ConsoleHelper // : IConsoleHelper
@@ -25,6 +27,7 @@ namespace GitUI
         public static Process RunPS(string bashCommand = null, params string[] parm)
             => Instance.RunConsolePS(bashCommand, parm);
 
+#pragma warning disable IDE0060
         public Process RunConsolePS(string bashCommand = null, params string[] parm)
         {
             if (EnvUtils.RunningOnUnix())

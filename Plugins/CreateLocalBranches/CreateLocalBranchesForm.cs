@@ -6,19 +6,19 @@ using GitUIPluginInterfaces;
 
 namespace CreateLocalBranches
 {
-    public partial class CreateLocalBranchesForm : ResourceManager.GitExtensionsFormBase
+    public partial class CreateLocalBranchesForm : GitUI.GitExtensionsFormBase
     {
         private readonly GitUIEventArgs _gitUiCommands;
 
         public CreateLocalBranchesForm(GitUIEventArgs gitUiCommands)
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
 
             _gitUiCommands = gitUiCommands;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             var args = new GitArgumentBuilder("branch") { "-a" };
             string[] references = _gitUiCommands.GitModule.GitExecutable.GetOutput(args)

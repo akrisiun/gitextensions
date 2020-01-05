@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using GitCommands;
 using JetBrains.Annotations;
 
+#pragma warning disable IDE0018, IDE0019, IDE0039, IDE1006
+
 namespace GitUI.CommandsDialogs
 {
     public partial class SearchControl<T> : UserControl, IDisposable where T : class
@@ -129,7 +131,9 @@ namespace GitUI.CommandsDialogs
 
             string selectedText = txtSearchBox.Text;
 
-            _backgroundLoader.LoadAsync(() => _getCandidates(selectedText), SearchForCandidates);
+            ThreadHelper.JoinableTaskFactory.RunAsync(async () => await
+            _backgroundLoader.LoadAsync(() => _getCandidates(selectedText), SearchForCandidates)
+            );
         }
 
         private void txtSearchBox_KeyUp(object sender, KeyEventArgs e)

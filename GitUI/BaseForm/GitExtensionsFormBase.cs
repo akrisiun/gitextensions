@@ -7,19 +7,13 @@ using GitCommands;
 
 namespace GitUI
 {
-    //using MaterialSkin.Controls;
     using ResourceManager;
 
-    public class GitExtensionsFormBase : Form, IWin32Window // ITranslate
+    public class GitExtensionsFormBase : Form, IWin32Window, ITranslate
     {
         static GitExtensionsFormBase()
         {
-            //var manager = MaterialSkin.MaterialSkinManager.Instance;
-            //manager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;
         }
-
-        /// <summary>indicates whether the <see cref="Form"/> has been translated</summary>
-        //private bool _translated;
 
         /// <summary>Creates a new <see cref="GitExtensionsFormBase"/> indicating position restore.</summary>
         public GitExtensionsFormBase()
@@ -88,6 +82,7 @@ namespace GitUI
         /// <summary>Indicates whether this is a valid <see cref="IComponent"/> running in design mode.</summary>
         protected static bool CheckComponent(object value)
         {
+#pragma warning disable IDE0019
             var component = value as IComponent;
             if (component == null)
                 return false;
@@ -111,7 +106,7 @@ namespace GitUI
         protected void GitExtensionsFormLoad(object sender, EventArgs e)
         {
             // find out if the value is a component and is currently in design mode
-            var isComponentInDesignMode = CheckComponent(this);
+            // var isComponentInDesignMode = CheckComponent(this);
 
             //if (!_translated && !isComponentInDesignMode)
             //    throw new Exception("The control " + GetType().Name +

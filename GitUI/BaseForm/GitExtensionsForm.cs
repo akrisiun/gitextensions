@@ -15,7 +15,7 @@ namespace GitUI
     /// <remarks>
     /// Includes support for font, hotkey, icon, translation, and position restore.
     /// </remarks></summary>
-    public class GitExtensionsForm2 : GitUI.GitExtensionsFormBase, IWin32Window
+    public class GitExtensionsForm2 : GitExtensionsFormBase, IWin32Window
     {
         #region ctor
 
@@ -88,91 +88,6 @@ namespace GitUI
             Red,
             Yellow,
             Unknown = -1
-        }
-
-        protected static ColorIndex GetColorIndexByName(string color)
-        {
-            switch (color) {
-                case "default":
-                return ColorIndex.Default;
-                case "blue":
-                return ColorIndex.Blue;
-                case "green":
-                return ColorIndex.Green;
-                case "lightblue":
-                return ColorIndex.LightBlue;
-                case "purple":
-                return ColorIndex.Purple;
-                case "red":
-                return ColorIndex.Red;
-                case "yellow":
-                return ColorIndex.Yellow;
-                case "random":
-                return (ColorIndex)new Random(DateTime.Now.Millisecond).Next(7);
-            }
-            return ColorIndex.Unknown;
-        }
-
-        [Obsolete]
-        static Icon GetApplicationIcon(string iconStyle, string iconColor)
-        {
-            //var colorIndex = (int)GetColorIndexByName(iconColor);
-            //if (colorIndex == (int)ColorIndex.Unknown)
-            //    colorIndex = 0;
-
-            Icon appIcon = null;
-            //if (iconStyle.Equals("small", StringComparison.OrdinalIgnoreCase)) {
-            //    Icon[] icons = {
-            //                        Resources.x_with_arrow,
-            //                        Resources.x_with_arrow_blue,
-            //                        Resources.x_with_arrow_green,
-            //                        Resources.x_with_arrow_lightblue,
-            //                        Resources.x_with_arrow_purple,
-            //                        Resources.x_with_arrow_red,
-            //                        Resources.x_with_arrow_yellow
-            //                    };
-            //    Debug.Assert(icons.Length == 7);
-            //    appIcon = icons[colorIndex];
-            //} else if (iconStyle.Equals("large", StringComparison.OrdinalIgnoreCase)) {
-            //    Icon[] icons = {
-            //                        Resources.git_extensions_logo_final,
-            //                        Resources.git_extensions_logo_final_blue,
-            //                        Resources.git_extensions_logo_final_green,
-            //                        Resources.git_extensions_logo_final_lightblue,
-            //                        Resources.git_extensions_logo_final_purple,
-            //                        Resources.git_extensions_logo_final_red,
-            //                        Resources.git_extensions_logo_final_yellow
-            //                    };
-            //    Debug.Assert(icons.Length == 7);
-            //    appIcon = icons[colorIndex];
-            //} else if (iconStyle.Equals("cow", StringComparison.OrdinalIgnoreCase)) {
-            //    Icon[] icons = {
-            //                        Resources.cow_head,
-            //                        Resources.cow_head_blue,
-            //                        Resources.cow_head_green,
-            //                        Resources.cow_head_blue,
-            //                        Resources.cow_head_purple,
-            //                        Resources.cow_head_red,
-            //                        Resources.cow_head_yellow
-            //                    };
-            //    Debug.Assert(icons.Length == 7);
-            //    appIcon = icons[colorIndex];
-            //} else {
-            //    Icon[] icons = {
-            //                        Resources.git_extensions_logo_final_mixed,
-            //                        Resources.git_extensions_logo_final_mixed_blue,
-            //                        Resources.git_extensions_logo_final_mixed_green,
-            //                        Resources.git_extensions_logo_final_mixed_lightblue,
-            //                        Resources.git_extensions_logo_final_mixed_purple,
-            //                        Resources.git_extensions_logo_final_mixed_red,
-            //                        Resources.git_extensions_logo_final_mixed_yellow
-            //                    };
-            //    Debug.Assert(icons.Length == 7);
-            //    appIcon = icons[colorIndex];
-            //}
-
-            //Debug.Assert(appIcon != null);
-            return appIcon;
         }
 
         #endregion icon

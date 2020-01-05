@@ -10,6 +10,8 @@ using GitCommands.Patches;
 using GitExtUtils.GitUI;
 using ResourceManager;
 
+#pragma warning disable IDE0019, IDE1006
+
 namespace GitUI.CommandsDialogs
 {
     public sealed partial class FormStash : GitModuleForm
@@ -152,13 +154,19 @@ namespace GitUI.CommandsDialogs
             if (gitStash == _currentWorkingDirStashItem)
             {
                 toolStripButton_customMessage.Enabled = true;
-                _asyncLoader.LoadAsync(() => Module.GetAllChangedFiles(), LoadGitItemStatuses);
+
+                ThreadHelper.JoinableTaskFactory.RunAsync(async () => await
+                _asyncLoader.LoadAsync(() => Module.GetAllChangedFiles(), LoadGitItemStatuses)
+                );
                 Clear.Enabled = false; // disallow Drop  (of current working directory)
                 Apply.Enabled = false; // disallow Apply (of current working directory)
             }
             else if (gitStash != null)
             {
-                _asyncLoader.LoadAsync(() => Module.GetStashDiffFiles(gitStash.Name), LoadGitItemStatuses);
+                ThreadHelper.JoinableTaskFactory.RunAsync(async () => await
+                _asyncLoader.LoadAsync(() => Module.GetStashDiffFiles(gitStash.Name), LoadGitItemStatuses)
+                );
+
                 Clear.Enabled = true; // allow Drop
                 Apply.Enabled = true; // allow Apply
             }
@@ -199,7 +207,9 @@ namespace GitUI.CommandsDialogs
                     {
                         if (!stashedItem.IsSubmodule)
                         {
-                            View.ViewGitItemAsync(stashedItem.Name, stashedItem.TreeGuid);
+                            ThreadHelper.JoinableTaskFactory.RunAsync(async () => await
+                            View.ViewGitItemAsync(stashedItem.Name, stashedItem.TreeGuid)
+                            );
                         }
                         else
                         {
@@ -214,7 +224,8 @@ namespace GitUI.CommandsDialogs
                         string extraDiffArguments = View.GetExtraDiffArguments();
                         Encoding encoding = View.Encoding;
 
-                        ThreadHelper.JoinableTaskFactory.Run(async () =>
+#pragma warning disable VSTHRD012, VSTHRD110, VSTHRD105, VSTHRD102, CS1998
+                        ThreadHelper.JoinableTaskFactory.RunAsync(async () => await
                         View.ViewPatchAsync(
                             () =>
                             {

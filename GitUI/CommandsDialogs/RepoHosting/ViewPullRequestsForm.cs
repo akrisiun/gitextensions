@@ -10,13 +10,15 @@ using JetBrains.Annotations;
 using Microsoft.VisualStudio.Threading;
 using ResourceManager;
 
+#pragma warning disable IDE1006
+
 namespace GitUI.CommandsDialogs.RepoHosting
 {
     public partial class ViewPullRequestsForm : GitModuleForm
     {
         #region Translation
         private readonly TranslationString _strFailedToFetchPullData = new TranslationString("Failed to fetch pull data!");
-        private readonly TranslationString _strFailedToLoadDiscussionItem = new TranslationString("Failed to post discussion item!");
+        //private readonly TranslationString _strFailedToLoadDiscussionItem = new TranslationString("Failed to post discussion item!");
         private readonly TranslationString _strFailedToClosePullRequest = new TranslationString("Failed to close pull request!");
         private readonly TranslationString _strFailedToLoadDiffData = new TranslationString("Failed to load diff data!");
         private readonly TranslationString _strCouldNotLoadDiscussion = new TranslationString("Could not load discussion!");
@@ -70,6 +72,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
 
             this.Mask();
 
+#pragma warning disable VSTHRD012, VSTHRD102, VSTHRD110, CS1998
             ThreadHelper.JoinableTaskFactory.Run(async () =>
             _loader.LoadAsync(
                 () =>
@@ -163,6 +166,8 @@ namespace GitUI.CommandsDialogs.RepoHosting
             // In this case we fallback to the first remote in the list.
             // Currently, local git repo with no remote will show error message and can not open this dialog.
             // So there will always be at least 1 remote when this dialog is open
+
+#pragma warning disable VSTHRD012, VSTHRD110, VSTHRD105, VSTHRD102, CS1998
             _cloneGitProtocol = ThreadHelper.JoinableTaskFactory.Run(async () => (await Module.GetRemotesAsync())
                 .First(r => string.IsNullOrEmpty(currentRemote) || r.Name == currentRemote).FetchUrl.IsUrlUsingHttp() ? GitProtocol.Https : GitProtocol.Ssh);
             var hostedRemote = _selectHostedRepoCB.Items.

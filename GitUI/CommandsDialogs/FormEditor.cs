@@ -6,6 +6,8 @@ using GitUI.Editor;
 using JetBrains.Annotations;
 using ResourceManager;
 
+#pragma warning disable IDE0018, IDE0019, IDE0039, IDE1006
+
 namespace GitUI.CommandsDialogs
 {
     public sealed partial class FormEditor : GitModuleForm
@@ -58,6 +60,7 @@ namespace GitUI.CommandsDialogs
         {
             try
             {
+#pragma warning disable VSTHRD012, VSTHRD110
                 fileViewer.ViewFileAsync(_fileName);
                 fileViewer.IsReadOnly = false;
                 fileViewer.SetVisibilityDiffContextMenu(false, false);

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
-using GitCommands;
 using GitCommands.Utils;
 using GitExtUtils;
 using GitUIPluginInterfaces;
@@ -15,7 +14,7 @@ namespace ReleaseNotesGenerator
     /// <summary>
     /// Test on GE repository from "2.00" to "2.10". Should display 687 items.
     /// </summary>
-    public partial class ReleaseNotesGeneratorForm : GitExtensionsFormBase
+    public partial class ReleaseNotesGeneratorForm : GitUI.GitExtensionsFormBase
     {
         private readonly TranslationString _commitLogFrom = new TranslationString("Commit log from '{0}' to '{1}' ({2}):");
         private readonly TranslationString _fromCommitNotSpecified = new TranslationString("'From' commit must be specified");
@@ -30,7 +29,7 @@ namespace ReleaseNotesGenerator
         public ReleaseNotesGeneratorForm(GitUIEventArgs gitUiCommands)
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
 
             _gitUiCommands = gitUiCommands;
             _gitLogLineParser = new GitLogLineParser();
@@ -42,6 +41,7 @@ namespace ReleaseNotesGenerator
             textBoxResult_TextChanged(null, null);
         }
 
+        #pragma warning disable IDE1006
         private void buttonGenerate_Click(object sender, EventArgs e)
         {
             textBoxResult.Text = string.Empty;

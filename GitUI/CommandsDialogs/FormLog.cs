@@ -39,6 +39,7 @@ namespace GitUI.CommandsDialogs
 
             using (WaitCursorScope.Enter())
             {
+#pragma warning disable VSTHRD102
                 ThreadHelper.JoinableTaskFactory.Run(async () =>
                     await diffViewer.ViewChangesAsync(RevisionGrid.GetSelectedRevisions(), DiffFiles.SelectedItem, string.Empty)
                     );

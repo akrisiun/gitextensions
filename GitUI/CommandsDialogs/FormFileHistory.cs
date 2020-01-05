@@ -14,6 +14,8 @@ using GitUI.Properties;
 using JetBrains.Annotations;
 using ResourceManager;
 
+#pragma warning disable IDE0018, IDE0019, IDE0052, IDE1006
+
 namespace GitUI.CommandsDialogs
 {
     public sealed partial class FormFileHistory : GitModuleForm
@@ -194,6 +196,7 @@ namespace GitUI.CommandsDialogs
                 return;
             }
 
+#pragma warning disable VSTHRD012, VSTHRD110
             _asyncLoader.LoadAsync(
                 () => BuildFilter(),
                 filter =>

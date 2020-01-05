@@ -1095,8 +1095,8 @@ namespace GitUI.CommandsDialogs
                 return;
             }
 
-            var recentRepositoryHistory = ThreadHelper.JoinableTaskFactory.Run(
-                () => RepositoryHistoryManager.Locals.AddAsMostRecentAsync(path));
+            var recentRepositoryHistory = ThreadHelper.JoinableTaskFactory.RunAsync(async () => await
+                RepositoryHistoryManager.Locals.AddAsMostRecentAsync(path));
 
             var mostRecentRepos = new List<RecentRepoInfo>();
             using (var graphics = CreateGraphics())
@@ -1107,7 +1107,8 @@ namespace GitUI.CommandsDialogs
                     Graphics = graphics
                 };
 
-                splitter.SplitRecentRepos(recentRepositoryHistory, mostRecentRepos, mostRecentRepos);
+#pragma warning disable VSTHRD105, VSTHRD102
+                splitter.SplitRecentRepos(recentRepositoryHistory.Join(), mostRecentRepos, mostRecentRepos);
 
                 var ri = mostRecentRepos.Find(e => e.Repo.Path.Equals(path, StringComparison.InvariantCultureIgnoreCase));
 
@@ -1693,7 +1694,11 @@ namespace GitUI.CommandsDialogs
                 return;
             }
 
-            int invalidPathCount = ThreadHelper.JoinableTaskFactory.Run(() => RepositoryHistoryManager.Locals.LoadRecentHistoryAsync()).Count(repo => !GitModule.IsValidGitWorkingDir(repo.Path));
+            int invalidPathCount = ThreadHelper.JoinableTaskFactory.Run<IList<Repository>>(() => // async () => await
+                RepositoryHistoryManager.Locals.LoadRecentHistoryAsync())
+                .Count(repo => !GitModule.IsValidGitWorkingDir(repo.Path)
+                );
+
             string commandButtonCaptions = _directoryIsNotAValidRepositoryRemoveSelectedRepoCommand.Text;
             if (invalidPathCount > 1)
             {
@@ -1721,7 +1726,9 @@ namespace GitUI.CommandsDialogs
             else if (PSTaskDialog.cTaskDialog.CommandButtonResult == 1)
             {
                 /* Remove all invalid repos */
-                ThreadHelper.JoinableTaskFactory.Run(() => RepositoryHistoryManager.Locals.RemoveInvalidRepositoriesAsync(repoPath => GitModule.IsValidGitWorkingDir(repoPath)));
+                ThreadHelper.JoinableTaskFactory.RunAsync(async () => await
+                    RepositoryHistoryManager.Locals.RemoveInvalidRepositoriesAsync(repoPath => GitModule.IsValidGitWorkingDir(repoPath))
+                );
             }
         }
 
@@ -2967,7 +2974,7 @@ namespace GitUI.CommandsDialogs
 
                 if (AppSettings.ConEmuStyle.ValueOrDefault != "Default")
                 {
-                    //startInfo.ConsoleProcessExtraArgs = " -new_console:P:\"" + AppSettings.ConEmuStyle.ValueOrDefault + "\"";
+                    startInfo.ConsoleProcessExtraArgs = " -new_console:P:\"" + AppSettings.ConEmuStyle.ValueOrDefault + "\"";
                 }
 
                 // Set path to git in this window (actually, effective with CMD only)
@@ -2982,6 +2989,7 @@ namespace GitUI.CommandsDialogs
 
                 try
                 {
+#pragma warning disable VSTHRD012
                     _terminal.Start(startInfo); // , ThreadHelper.JoinableTaskFactory);
                 }
                 catch (InvalidOperationException)

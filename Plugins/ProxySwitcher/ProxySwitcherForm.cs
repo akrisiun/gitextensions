@@ -9,7 +9,7 @@ using ResourceManager;
 
 namespace ProxySwitcher
 {
-    public partial class ProxySwitcherForm : GitExtensionsFormBase
+    public partial class ProxySwitcherForm : GitUI.GitExtensionsFormBase
     {
         private readonly ProxySwitcherPlugin _plugin;
         private readonly ISettingsSource _settings;
@@ -33,7 +33,7 @@ namespace ProxySwitcher
         public ProxySwitcherForm(ProxySwitcherPlugin plugin, ISettingsSource settings, GitUIEventArgs gitUiCommands)
         {
             InitializeComponent();
-            InitializeComplete();
+            //InitializeComplete();
 
             Text = _pluginDescription.Text;
             _plugin = plugin;

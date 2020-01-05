@@ -10,6 +10,8 @@ using GitUIPluginInterfaces;
 using JetBrains.Annotations;
 using ResourceManager;
 
+#pragma warning disable IDE1006
+
 namespace GitUI.CommandsDialogs
 {
     public partial class FormDiff : GitModuleForm
@@ -122,7 +124,9 @@ namespace GitUI.CommandsDialogs
                 items = new List<GitRevision> { _headRevision, DiffFiles.SelectedItemParent };
             }
 
-            DiffText.ViewChangesAsync(items, DiffFiles.SelectedItem, string.Empty);
+            ThreadHelper.JoinableTaskFactory.RunAsync(async () => await
+            DiffText.ViewChangesAsync(items, DiffFiles.SelectedItem, string.Empty)
+            );
         }
 
         private void btnSwap_Click(object sender, EventArgs e)

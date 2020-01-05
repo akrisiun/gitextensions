@@ -9,6 +9,8 @@ using JetBrains.Annotations;
 using Microsoft.VisualStudio.Threading;
 using ResourceManager;
 
+#pragma warning disable IDE1006, IDE0052
+
 namespace GitUI.CommandsDialogs.RepoHosting
 {
     public partial class CreatePullRequestForm : GitModuleForm
@@ -55,6 +57,8 @@ namespace GitUI.CommandsDialogs.RepoHosting
             _yourBranchesCB.Text = _strLoading.Text;
             _hostedRemotes = _repoHost.GetHostedRemotesForModule();
             this.Mask();
+
+            ThreadHelper.JoinableTaskFactory.RunAsync(async () => await
             _remoteLoader.LoadAsync(
                 () => _hostedRemotes.Where(r => !r.IsOwnedByMe).ToArray(),
                 foreignHostedRemotes =>
@@ -72,7 +76,8 @@ namespace GitUI.CommandsDialogs.RepoHosting
                     _currentBranch = Module.IsValidGitWorkingDir() ? Module.GetSelectedBranch() : "";
                     LoadRemotes(foreignHostedRemotes);
                     LoadMyBranches();
-                });
+                })
+            );
         }
 
         private void LoadRemotes(IHostedRemote[] foreignHostedRemotes)

@@ -7,6 +7,8 @@ using GitCommands;
 using GitUI.CommandsDialogs.GitIgnoreDialog;
 using ResourceManager;
 
+#pragma warning disable IDE1006
+
 namespace GitUI.CommandsDialogs
 {
     public sealed partial class FormGitIgnore : GitModuleForm
@@ -118,6 +120,7 @@ namespace GitUI.CommandsDialogs
             {
                 if (File.Exists(ExcludeFile))
                 {
+#pragma warning disable VSTHRD012, VSTHRD110
                     _NO_TRANSLATE_GitIgnoreEdit.ViewFileAsync(ExcludeFile);
                 }
             }

@@ -55,6 +55,7 @@ namespace GitUI.CommandsDialogs
                 var path = _fullPathResolver.Resolve(".gitattributes");
                 if (File.Exists(path))
                 {
+#pragma warning disable VSTHRD012, VSTHRD110
                     _NO_TRANSLATE_GitAttributesText.ViewFileAsync(path);
                 }
             }
