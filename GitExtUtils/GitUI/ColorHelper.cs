@@ -23,7 +23,7 @@ namespace GitUI
 
         public static bool IsLightTheme()
         {
-            return IsLightColor(SystemColors.Window);
+            return true; // IsLightColor(SystemColors.Window);
         }
 
         public static Color GetSplitterColor()

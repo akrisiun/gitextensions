@@ -26,6 +26,11 @@ namespace GitUI.CommandsDialogs.BrowseDialog.DashboardControl
                 _secondaryFont?.Dispose();
             }
             base.Dispose(disposing);
+
+#pragma warning disable CA2214
+            _favouriteColorBrush?.Dispose();
+            _foreColorBrush?.Dispose();
+            _hoverColorBrush?.Dispose();
         }
 
         #region Component Designer generated code

@@ -18,12 +18,12 @@ namespace ResourceManager
     /// Deriving from this class requires a call to <see cref="InitializeComplete"/> at
     /// the end of the constructor. Omitting this call with result in a runtime exception.
     /// </remarks>
-    public class GitExtensionsFormBase : Form, ITranslate
+    public class GitExtensionsFormBase1 : Form, ITranslate
     {
         private readonly GitExtensionsControlInitialiser _initialiser;
 
-        /// <summary>Creates a new <see cref="GitExtensionsFormBase"/> indicating position restore.</summary>
-        public GitExtensionsFormBase()
+        /// <summary>Creates a new <see cref="GitExtensionsFormBase1"/> indicating position restore.</summary>
+        public GitExtensionsFormBase1()
         {
             _initialiser = new GitExtensionsControlInitialiser(this);
 

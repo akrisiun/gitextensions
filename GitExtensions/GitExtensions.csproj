@@ -50,6 +50,7 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <TargetFramework>net48</TargetFramework>
+    <StartupObject>GitExtensions.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PSTaskDialog">
