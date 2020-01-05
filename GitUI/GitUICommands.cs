@@ -25,6 +25,8 @@ namespace GitUI
         private readonly IFullPathResolver _fullPathResolver;
         private readonly IFindFilePredicateProvider _findFilePredicateProvider;
 
+        public static Form FormCommit { get; set; }
+
         [NotNull]
         public GitModule Module { get; private set; }
         public ILockableNotifier RepoChangedNotifier { get; }
@@ -514,15 +516,20 @@ namespace GitUI
                         });
                     }
 
-                    using (var form = new FormCommit(this, commitMessage: commitMessage))
+                    var form = FormCommit ?? new FormCommit(this, commitMessage: commitMessage);
                     {
+                        FormCommit = form;
+
                         if (showOnlyWhenChanges)
                         {
-                            form.ShowDialogWhenChanges(owner);
+                            (form as FormCommit).ShowDialogWhenChanges(owner);
                         }
                         else
                         {
-                            form.ShowDialog(owner);
+                            // form.ShowDialog(owner);
+                            // Modalless mode:
+                            form.ShowInTaskbar = true;
+                            form.Show();
                         }
                     }
                 }

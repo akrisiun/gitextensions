@@ -1474,7 +1474,9 @@
     <PackageReference Include="System.IO.Abstractions" Version="2.0.0.144" />
     <PackageReference Include="System.Reactive" Version="3.1.1" />
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
-
+    <PackageReference Include="System.Resources.Extensions" Version="4.7.0" />
+    <Reference Include="System.Resources.Extensions, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
+    
     <ProjectReference Include="..\Externals\conemu-inside\ConEmuWinForms\ConEmuWinForms.csproj" />
     <ProjectReference Include="..\Externals\Git.hub\Git.hub\Git.hub.csproj" />
     <ProjectReference Include="..\GitCommands\GitCommands.csproj" />

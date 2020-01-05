@@ -137,6 +137,8 @@ namespace GitUI.CommandsDialogs
         {
             InitializeComponent();
 
+            Icon = Resources.GitExtensionsLogoIcon;
+
             bool light = ColorHelper.IsLightTheme();
             translateToolStripMenuItem.Image = light ? Images.Translate : Images.Translate_inv;
             recoverLostObjectsToolStripMenuItem.Image = light ? Images.RecoverLostObjects : Images.RecoverLostObjects_inv;
@@ -1321,6 +1323,12 @@ namespace GitUI.CommandsDialogs
 
         private void CommitToolStripMenuItemClick(object sender, EventArgs e)
         {
+            // UICommands.ShowModelessForm
+            if (GitUICommands.FormCommit != null && GitUICommands.FormCommit.IsHandleCreated && !GitUICommands.FormCommit.Visible) { 
+                GitUICommands.FormCommit.Dispose();
+                GitUICommands.FormCommit = null;
+            }
+
             UICommands.StartCommitDialog(this);
         }
 

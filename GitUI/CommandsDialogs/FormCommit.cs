@@ -36,6 +36,8 @@ namespace GitUI.CommandsDialogs
 {
     public sealed partial class FormCommit : GitModuleForm
     {
+        #region Properties
+
         private const string fixupPrefix = "fixup!";
         private const string squashPrefix = "squash!";
 
@@ -205,6 +207,8 @@ namespace GitUI.CommandsDialogs
             InitializeComponent();
         }
 
+        #endregion
+
         public FormCommit([NotNull] GitUICommands commands, CommitKind commitKind = CommitKind.Normal, GitRevision editedCommit = null, string commitMessage = null)
             : base(commands)
         {
@@ -213,6 +217,8 @@ namespace GitUI.CommandsDialogs
             _editedCommit = editedCommit;
 
             InitializeComponent();
+
+            Icon = Resources.GitExtensionsLogoIcon;
 
             splitRight.Panel2MinSize = DpiUtil.Scale(100);
 

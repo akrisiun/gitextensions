@@ -1,8 +1,7 @@
 {
   "profiles": {
     "GitExtensions": {
-      "commandName": "Executable",
-      "executablePath": "D:\\Beta\\dotnet\\dark.gitext\\develop\\GitExtensions\\bin\\Release\\net48\\GitExtensions.exe",
+      "commandName": "Project",
       "workingDirectory": "D:\\Beta\\dotnet\\dark.gitext\\develop\\GitExtensions\\bin\\Release\\net48\\"
     }
   }
