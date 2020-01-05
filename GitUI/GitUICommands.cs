@@ -516,6 +516,9 @@ namespace GitUI
                         });
                     }
 
+                    if (FormCommit != null && FormCommit.IsDisposed)
+                        FormCommit = null;
+
                     var form = FormCommit ?? new FormCommit(this, commitMessage: commitMessage);
                     {
                         FormCommit = form;
