@@ -4,7 +4,7 @@
 	ignore = dirty
 [submodule "Externals/Git.hub"]
 	path = Externals/Git.hub
-	url = https://github.com/akrisiun/Git.hub
+	url = https://github.com/gitextensions/Git.hub
 	ignore = dirty
 [submodule "Externals/conemu-inside"]
 	path = Externals/conemu-inside
