@@ -2,7 +2,8 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFrameworks>net471;net48</TargetFrameworks>
+    <!--<TargetFrameworks>net471;net48</TargetFrameworks>-->
+    <TargetFramework>net48</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>    
     <DefineConstants>TRACE;NETCORE;NET471</DefineConstants>
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
@@ -49,7 +50,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <TargetFramework>net48</TargetFramework>
     <StartupObject>GitExtensions.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>

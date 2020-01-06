@@ -1,8 +1,7 @@
 {
   "profiles": {
     "GitExtensions": {
-      "commandName": "Project",
-      "workingDirectory": "D:\\Beta\\dotnet\\dark.gitext\\develop\\GitExtensions\\bin\\Release\\net48\\"
+      "commandName": "Project"
     }
   }
 }
