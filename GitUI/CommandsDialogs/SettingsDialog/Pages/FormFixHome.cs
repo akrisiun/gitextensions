@@ -32,7 +32,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
         public FormFixHome()
         {
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
         }
 
         private static bool IsFixHome()

@@ -18,8 +18,7 @@ namespace GitUI.CommandsDialogs.AboutBoxDialog
         public FormContributors()
         {
             InitialiseComponent();
-
-            //InitializeComplete();
+            InitializeComplete();
 
             void InitialiseComponent()
             {

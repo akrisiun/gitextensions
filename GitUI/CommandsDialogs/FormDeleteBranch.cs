@@ -35,7 +35,7 @@ namespace GitUI.CommandsDialogs
             _defaultBranches = defaultBranches;
 
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
         }
 
         private void FormDeleteBranchLoad(object sender, EventArgs e)

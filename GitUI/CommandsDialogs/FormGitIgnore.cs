@@ -76,7 +76,7 @@ namespace GitUI.CommandsDialogs
         {
             _localExclude = localExclude;
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
 
             _dialogModel = CreateGitIgnoreDialogModel(localExclude);
 
@@ -120,7 +120,6 @@ namespace GitUI.CommandsDialogs
             {
                 if (File.Exists(ExcludeFile))
                 {
-#pragma warning disable VSTHRD012, VSTHRD110
                     _NO_TRANSLATE_GitIgnoreEdit.ViewFileAsync(ExcludeFile);
                 }
             }

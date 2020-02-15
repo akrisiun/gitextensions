@@ -3,8 +3,6 @@ using System.Windows.Forms;
 using GitUIPluginInterfaces;
 using JetBrains.Annotations;
 
-#pragma warning disable IDE1006
-
 namespace GitUI.CommandsDialogs
 {
     public partial class FormCompareToBranch : GitModuleForm
@@ -22,7 +20,7 @@ namespace GitUI.CommandsDialogs
             MaximizeBox = false;
             ShowInTaskbar = false;
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
 
             branchSelector.Initialize(remote: true, containRevisions: null);
             branchSelector.CommitToCompare = selectedCommit;

@@ -11,7 +11,7 @@ namespace GitUI.CommandsDialogs.SettingsDialog
         public FormAvailableEncodings()
         {
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
             LoadEncoding();
         }
 

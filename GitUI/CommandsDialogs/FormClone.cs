@@ -14,8 +14,6 @@ using GitExtUtils.GitUI.Theming;
 using GitUIPluginInterfaces;
 using ResourceManager;
 
-#pragma warning disable VSTHRD104
-
 namespace GitUI.CommandsDialogs
 {
     public partial class FormClone : GitModuleForm
@@ -48,7 +46,7 @@ namespace GitUI.CommandsDialogs
         {
             _gitModuleChanged = gitModuleChanged;
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
             _openedFromProtocolHandler = openedFromProtocolHandler;
             _url = url;
             _defaultBranchItems = new[] { _branchDefaultRemoteHead.Text, _branchNone.Text };
@@ -72,7 +70,6 @@ namespace GitUI.CommandsDialogs
             MaximumSize = DpiUtil.Scale(new Size(950, 375));
             MinimumSize = DpiUtil.Scale(new Size(450, 375));
 
-#pragma warning disable VSTHRD104
             ThreadHelper.JoinableTaskFactory.Run(async () =>
             {
                 var repositoryHistory = await RepositoryHistoryManager.Remotes.LoadRecentHistoryAsync();
@@ -273,11 +270,10 @@ namespace GitUI.CommandsDialogs
                     }
                 }
 
-#pragma warning disable VSTHRD012, VSTHRD110, VSTHRD105, VSTHRD102
-                ThreadHelper.JoinableTaskFactory.Run(async () =>
+                ThreadHelper.JoinableTaskFactory.Run(() =>
                 {
-                    await RepositoryHistoryManager.Remotes.AddAsMostRecentAsync(sourceRepo);
-                    await RepositoryHistoryManager.Locals.AddAsMostRecentAsync(dirTo);
+                    RepositoryHistoryManager.Remotes.AddAsMostRecentAsync(sourceRepo);
+                    RepositoryHistoryManager.Locals.AddAsMostRecentAsync(dirTo);
                     return Task.CompletedTask;
                 });
 
@@ -449,7 +445,6 @@ namespace GitUI.CommandsDialogs
         {
             string from = _NO_TRANSLATE_From.Text;
             Cursor = Cursors.AppStarting;
-#pragma warning disable VSTHRD012, VSTHRD110
             _branchListLoader.LoadAsync(() => Module.GetRemoteServerRefs(from, false, true), UpdateBranches);
         }
 

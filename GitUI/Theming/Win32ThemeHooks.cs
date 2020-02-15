@@ -6,8 +6,17 @@ using EasyHook;
 using GitExtUtils.GitUI.Theming;
 using GitUI.UserControls;
 
+namespace EasyHook {
+    public class LocalHook 
+    {
+
+    }
+}
+
 namespace GitUI.Theming
 {
+
+
     internal static class Win32ThemeHooks
     {
         private static Theme _theme;
@@ -20,13 +29,14 @@ namespace GitUI.Theming
         private static DrawThemeTextExDelegate _drawThemeTextExBypass;
         private static CreateWindowExDelegate _createWindowExBypass;
 
+        /*
         private static LocalHook _getSysColorHook;
         private static LocalHook _getSysColorBrushHook;
         private static LocalHook _drawThemeBackgroundHook;
         private static LocalHook _getThemeColorHook;
         private static LocalHook _drawThemeTextHook;
         private static LocalHook _drawThemeTextExHook;
-        private static LocalHook _createWindowExHook;
+        private static LocalHook _createWindowExHook; */
 
         private static ThemeRenderer[] _renderers;
         private static SystemDialogDetector _systemDialogDetector;
@@ -44,6 +54,7 @@ namespace GitUI.Theming
             _theme = theme;
             _systemDialogDetector = systemDialogDetector;
 
+            /*
             (_getSysColorBrushHook, _getSysColorBrushBypass) = InstallHook<GetSysColorBrushDelegate>(
                 "user32.dll",
                 "GetSysColorBrush",
@@ -83,7 +94,7 @@ namespace GitUI.Theming
                     "user32.dll",
                     "CreateWindowExW",
                     CreateWindowExHook);
-
+            */
             CreateRenderers();
         }
 

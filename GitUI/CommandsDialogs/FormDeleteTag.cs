@@ -8,7 +8,6 @@ using GitUIPluginInterfaces;
 
 namespace GitUI.CommandsDialogs
 {
-    #pragma warning disable IDE1006
     public partial class FormDeleteTag : GitModuleForm
     {
         [Obsolete("For VS designer and translation test only. Do not remove.")]
@@ -26,7 +25,7 @@ namespace GitUI.CommandsDialogs
             MaximumSize = DpiUtil.Scale(new Size(1000, 210));
             MinimumSize = DpiUtil.Scale(new Size(470, 210));
 
-            //InitializeComplete();
+            InitializeComplete();
             Tag = tag;
         }
 
@@ -35,7 +34,7 @@ namespace GitUI.CommandsDialogs
             Tags.DisplayMember = nameof(IGitRef.LocalName);
             Tags.DataSource = Module.GetRefs(true, false);
             Tags.Text = Tag as string;
-            //remotesComboboxControl1.SelectedRemote = Module.GetCurrentRemote();
+            remotesComboboxControl1.SelectedRemote = Module.GetCurrentRemote();
             EnableOrDisableRemotesCombobox();
         }
 
@@ -61,8 +60,7 @@ namespace GitUI.CommandsDialogs
 
         private void RemoveRemoteTag(string tagName)
         {
-            var pushCmd = string.Format("push \"{0}\" :refs/tags/{1}", "" // remotesComboboxControl1.SelectedRemote
-                , tagName);
+            var pushCmd = string.Format("push \"{0}\" :refs/tags/{1}", remotesComboboxControl1.SelectedRemote, tagName);
 
             ScriptManager.RunEventScripts(this, ScriptEvent.BeforePush);
 
@@ -88,7 +86,7 @@ namespace GitUI.CommandsDialogs
 
         private void EnableOrDisableRemotesCombobox()
         {
-            //remotesComboboxControl1.Enabled = deleteTag.Checked;
+            remotesComboboxControl1.Enabled = deleteTag.Checked;
         }
     }
 }

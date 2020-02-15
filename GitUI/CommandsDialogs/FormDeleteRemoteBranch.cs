@@ -32,7 +32,7 @@ namespace GitUI.CommandsDialogs
         {
             _defaultRemoteBranch = defaultRemoteBranch;
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
         }
 
         private void FormDeleteRemoteBranchLoad(object sender, EventArgs e)

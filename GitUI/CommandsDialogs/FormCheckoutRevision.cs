@@ -22,7 +22,7 @@ namespace GitUI.CommandsDialogs
             : base(commands)
         {
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
         }
 
         public void SetRevision(string commitHash)

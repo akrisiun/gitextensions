@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using GitCommands;
 using GitExtUtils.GitUI;
+using GitExtUtils.GitUI.Theming;
 using GitUI.Properties;
 using ResourceManager;
 
@@ -37,16 +38,14 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
             Open.Width = DpiUtil.Scale(39);
             Delete.Width = DpiUtil.Scale(44);
             Worktrees.AutoGenerateColumns = false;
-            //InitializeComplete();
+            Delete.Image = Images.Delete.AdaptLightness();
+            InitializeComplete();
 
             Path.DataPropertyName = nameof(WorkTree.Path);
             Type.DataPropertyName = nameof(WorkTree.Type);
             Branch.DataPropertyName = nameof(WorkTree.Branch);
             Sha1.DataPropertyName = nameof(WorkTree.Sha1);
             IsDeleted.DataPropertyName = nameof(WorkTree.IsDeleted);
-
-            bool light = ColorHelper.IsLightTheme();
-            Delete.Image = light ? Images.Delete : Images.Delete_inv;
         }
 
         private void FormManageWorktree_Load(object sender, EventArgs e)
@@ -214,7 +213,7 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
             if (e.ColumnIndex == 5)
             {
                 if (AppSettings.DontConfirmSwitchWorktree || MessageBox.Show(this,
-                        _switchWorktreeText.Text, _switchWorktreeTitle.Text, MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        _switchWorktreeText.Text, _switchWorktreeTitle.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     if (Directory.Exists(workTree.Path))
                     {
@@ -234,7 +233,7 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
                 }
 
                 if (MessageBox.Show(this, _deleteWorktreeText.Text, _deleteWorktreeTitle.Text,
-                        MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
                     if (Directory.Exists(workTree.Path))
                     {

@@ -37,7 +37,7 @@ namespace GitUI.CommandsDialogs
             : base(uiCommands)
         {
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
 
             gridReflog.RowTemplate.Height = DpiUtil.Scale(24);
             gridReflog.ColumnHeadersHeight = DpiUtil.Scale(30);

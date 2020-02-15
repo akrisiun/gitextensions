@@ -9,7 +9,7 @@ namespace GitUI.CommandsDialogs.ResolveConflictsDialog
             : base(true)
         {
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
             Aborted = true;
             KeepLocal = false;
             KeepRemote = false;

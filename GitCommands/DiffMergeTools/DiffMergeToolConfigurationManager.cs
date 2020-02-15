@@ -4,6 +4,17 @@ using System.Diagnostics;
 using System.Linq;
 using GitUIPluginInterfaces;
 
+namespace GitUIPluginInterfaces
+{
+    // TODO: Plugins\GitUIPluginInterfaces\IConfigValueStore.cs
+    public interface IConfigValueStore
+    {
+        string GetValue(string setting);
+        void SetPathValue(string setting, string value);
+        void SetValue(string setting, string value);
+    }
+}
+
 namespace GitCommands.DiffMergeTools
 {
     public sealed class DiffMergeToolConfigurationManager

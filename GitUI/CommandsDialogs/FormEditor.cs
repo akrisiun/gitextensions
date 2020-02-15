@@ -2,11 +2,11 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using GitCommands;
+using GitExtUtils.GitUI.Theming;
 using GitUI.Editor;
 using JetBrains.Annotations;
 using ResourceManager;
-
-#pragma warning disable IDE0018, IDE0019, IDE0039, IDE1006
 
 namespace GitUI.CommandsDialogs
 {
@@ -33,7 +33,9 @@ namespace GitUI.CommandsDialogs
         {
             _fileName = fileName;
             InitializeComponent();
-            //InitializeComplete();
+            panelMessage.BackColor = AppSettings.BranchColor;
+            panelMessage.SetForeColorForBackColor();
+            InitializeComplete();
 
             // for translation form
             if (_fileName != null)
@@ -60,10 +62,8 @@ namespace GitUI.CommandsDialogs
         {
             try
             {
-#pragma warning disable VSTHRD012, VSTHRD110
                 fileViewer.ViewFileAsync(_fileName);
                 fileViewer.IsReadOnly = false;
-                fileViewer.SetVisibilityDiffContextMenu(false, false);
                 Text = _fileName;
 
                 // loading a new file from disk, the text hasn't been changed yet.
@@ -71,7 +71,7 @@ namespace GitUI.CommandsDialogs
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, _cannotOpenFile.Text + Environment.NewLine + ex.Message, _error.Text);
+                MessageBox.Show(this, _cannotOpenFile.Text + Environment.NewLine + ex.Message, _error.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
             }
         }

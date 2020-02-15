@@ -15,6 +15,10 @@ namespace GitUI
     {
         /// <inheritdoc />
         public event EventHandler<GitUICommandsChangedEventArgs> UICommandsChanged;
+        public event EventHandler<GitUICommandsChangedEventArgs> GitUICommandsChanged { 
+            add => UICommandsChanged;
+            remove  => UICommandsChanged;
+        }
 
         /// <summary>
         /// Indicates that the process is run by unit tests runner.

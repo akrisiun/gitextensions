@@ -14,7 +14,7 @@ namespace GitUI.CommandsDialogs
             : base(commands)
         {
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
 
             diffViewer.ExtraDiffArgumentsChanged += DiffViewerExtraDiffArgumentsChanged;
         }

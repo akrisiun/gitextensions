@@ -71,7 +71,8 @@ namespace GitUI.BuildServerIntegration
             {
                 return;
             }
-
+            
+            /*
             var scheduler = NewThreadScheduler.Default;
 
             // Run this first as it (may) force start queries
@@ -121,6 +122,7 @@ namespace GitUI.BuildServerIntegration
 
             CancelBuildStatusFetchOperation();
             _buildStatusCancellationToken = cancellationToken;
+            */
         }
 
         public void CancelBuildStatusFetchOperation()

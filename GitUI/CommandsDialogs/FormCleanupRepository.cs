@@ -26,7 +26,7 @@ namespace GitUI.CommandsDialogs
             : base(commands)
         {
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
             PreviewOutput.ReadOnly = true;
             checkBoxPathFilter_CheckedChanged(null, null);
         }

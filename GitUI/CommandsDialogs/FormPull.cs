@@ -22,8 +22,6 @@ using ResourceManager;
 
 namespace GitUI.CommandsDialogs
 {
-    #pragma warning disable IDE1006
-
     public sealed partial class FormPull : GitModuleForm
     {
         #region Translation
@@ -126,7 +124,7 @@ namespace GitUI.CommandsDialogs
             : base(commands)
         {
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
 
             helpImageDisplayUserControl1.Visible = !AppSettings.DontShowHelpImages;
             helpImageDisplayUserControl1.IsOnHoverShowImage2NoticeText = _hoverShowImageLabelText.Text;
@@ -236,7 +234,7 @@ namespace GitUI.CommandsDialogs
             // Special case for "Fetch and prune" and "Fetch and prune all" to make sure user confirms the action.
             if (pullAction == AppSettings.PullAction.FetchPruneAll)
             {
-                string messageBoxTitle;
+                string messageBoxTitle = null;
                 if (remote.IsNullOrEmpty())
                 {
                     messageBoxTitle = string.Format(_pruneFromCaption.Text, AllRemotes);
@@ -392,7 +390,7 @@ namespace GitUI.CommandsDialogs
             if (PullFromUrl.Checked && Directory.Exists(comboBoxPullSource.Text))
             {
                 var path = comboBoxPullSource.Text;
-                _ = ThreadHelper.JoinableTaskFactory.Run(() => RepositoryHistoryManager.Remotes.AddAsMostRecentAsync(path));
+                ThreadHelper.JoinableTaskFactory.Run(() => RepositoryHistoryManager.Remotes.AddAsMostRecentAsync(path));
             }
 
             var source = CalculateSource();

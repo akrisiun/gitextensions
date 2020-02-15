@@ -50,74 +50,12 @@
     <Reference Include="System.Windows.Forms" />
     <PackageReference Include="Microsoft.VisualStudio.Composition" Version="15.6.36" />
     <PackageReference Include="System.Collections.Immutable" Version="1.5.0" />
-    <PackageReference Include="System.Reactive.Interfaces" Version="3.1.1" />
+    <PackageReference Include="System.Reactive" Version="4.2.0" />
+    <!-- <PackageReference Include="System.Reactive.Linq" Version="3.1.1" /> -->
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuildServerIntegration\BuildDurationFormatter.cs" />
-    <Compile Include="BuildServerIntegration\BuildInfo.cs" />
-    <Compile Include="BuildServerIntegration\BuildServerAdapterMetadataAttribute.cs" />
-    <Compile Include="BuildServerIntegration\BuildServerCredentials.cs" />
-    <Compile Include="BuildServerIntegration\BuildServerSettingsHelper.cs" />
-    <Compile Include="BuildServerIntegration\BuildServerSettingsUserControlMetadata.cs" />
-    <Compile Include="BuildServerIntegration\IBuildServerAdapter.cs" />
-    <Compile Include="BuildServerIntegration\IBuildServerCredentials.cs" />
-    <Compile Include="BuildServerIntegration\IBuildServerSettingsUserControl.cs" />
-    <Compile Include="BuildServerIntegration\IBuildServerTypeMetadata.cs" />
-    <Compile Include="BuildServerIntegration\IBuildServerWatcher.cs" />
-    <Compile Include="CredentialsManager.cs" />
-    <Compile Include="ExecutionResult.cs" />
-    <Compile Include="FontParser.cs" />
-    <Compile Include="GitCmdResult.cs" />
-    <Compile Include="GitUIPostActionEventArgs.cs" />
-    <Compile Include="IBrowseRepo.cs" />
-    <Compile Include="IConfigFileSettings.cs" />
-    <Compile Include="IConfigSection.cs" />
-    <Compile Include="IExecutable.cs" />
-    <Compile Include="IGitCommand.cs" />
-    <Compile Include="IGitCommandRunner.cs" />
-    <Compile Include="IGitItem.cs" />
-    <Compile Include="IGitPluginForRepository.cs" />
-    <Compile Include="IGitModule.cs" />
-    <Compile Include="IGitRef.cs" />
-    <Compile Include="IGitRemoteCommand.cs" />
-    <Compile Include="ILockableNotifier.cs" />
-    <Compile Include="IProcess.cs" />
-    <Compile Include="ISettingControlBinding.cs" />
-    <Compile Include="PluginsPathScanner.cs" />
-    <Compile Include="RepositoryHosts\GitProtocol.cs" />
-    <Compile Include="RepositoryHosts\GitProtocolExtensions.cs" />
-    <Compile Include="SettingLevel.cs" />
-    <Compile Include="ISettingsValueGetter.cs" />
-    <Compile Include="ObjectId.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Remote.cs" />
-    <Compile Include="Settings\BoolSetting.cs" />
-    <Compile Include="ISetting.cs" />
-    <Compile Include="ISettingsSource.cs" />
-    <Compile Include="ManagedExtensibility.cs" />
-    <Compile Include="RepositoryHosts\IRepositoryHostPlugin.cs" />
-    <Compile Include="IGitPlugin.cs" />
-    <Compile Include="IGitPluginSettingsContainer.cs" />
-    <Compile Include="IGitSubmoduleInfo.cs" />
-    <Compile Include="IGitUICommands.cs" />
-    <Compile Include="GitUIEventArgs.cs" />
-    <Compile Include="RepositoryHosts\IHostedRepository.cs" />
-    <Compile Include="RepositoryHosts\IPasswordHelper.cs" />
-    <Compile Include="RepositoryHosts\IHostedRemote.cs" />
-    <Compile Include="RepositoryHosts\IPullRequestInformation.cs" />
-    <Compile Include="Settings\NumberSetting.cs" />
-    <Compile Include="Settings\ChoiceSetting.cs" />
-    <Compile Include="Settings\CredentialsSetting.cs" />
-    <Compile Include="Settings\PasswordSetting.cs" />
-    <Compile Include="Settings\PseudoSetting.cs" />
-    <Compile Include="Settings\StringSetting.cs" />
-    <Compile Include="UserControls\CredentialsControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\CredentialsControl.Designer.cs">
-      <DependentUpon>CredentialsControl.cs</DependentUpon>
-    </Compile>
+    <Compile Include="**\*.cs" />
     <EmbeddedResource Include="UserControls\CredentialsControl.resx">
       <DependentUpon>CredentialsControl.cs</DependentUpon>
     </EmbeddedResource>

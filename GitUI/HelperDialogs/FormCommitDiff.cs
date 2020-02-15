@@ -16,7 +16,7 @@ namespace GitUI.HelperDialogs
             : base(commands)
         {
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
 
             CommitDiff.TextChanged += (s, e) => Text = CommitDiff.Text;
 

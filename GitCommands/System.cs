@@ -218,7 +218,7 @@ namespace System
         /// If this string is longer than the specified <paramref name="maxLength"/>, it'll be truncated to the length of <paramref name="maxLength"/>-3
         /// and the "..." will be appended to the end of the resulting string.
         /// </summary>
-        public static string ShortenTo(this string str, int maxLength)
+        public static string ShortenTo2(this string str, int maxLength)
         {
             if (str.IsNullOrEmpty())
                 return string.Empty;

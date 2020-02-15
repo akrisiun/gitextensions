@@ -9,7 +9,7 @@ using ResourceManager;
 
 namespace ProxySwitcher
 {
-    public partial class ProxySwitcherForm : GitUI.GitExtensionsFormBase
+    public partial class ProxySwitcherForm : GitUI.GitExtensionsFormBase1
     {
         private readonly ProxySwitcherPlugin _plugin;
         private readonly ISettingsSource _settings;

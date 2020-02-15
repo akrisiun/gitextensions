@@ -18,7 +18,7 @@ namespace GitUI.CommandsDialogs
         public FormAbout()
         {
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
 
             environmentInfo.SetCopyButtonTooltip(_copyTooltip.Text);
 

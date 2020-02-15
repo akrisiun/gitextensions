@@ -585,7 +585,8 @@ namespace GitUI.Editor
                 patchText => ViewPatch(patchText.text, patchText.openWithDifftool, patchText.filename));
         }
 
-        public async Task ViewTextAsync([NotNull] string fileName, [NotNull] string text, [CanBeNull] Action openWithDifftool = null, bool checkGitAttributes = false)
+        public async Task ViewTextAsync([NotNull] string fileName, [NotNull] string text,
+            [CanBeNull] Action openWithDifftool = null, bool checkGitAttributes = false)
         {
             ResetForText(fileName);
 

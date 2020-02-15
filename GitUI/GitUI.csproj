@@ -2,6 +2,7 @@
   
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <ItemGroup>
@@ -62,18 +63,11 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="app.config" SubType="Designer" />
     <None Include="gituikey.snk.pfx" />
     <None Include="Resources\ChangeLog.md" />
-
-    <Content Include="Themes\dark.colors">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Themes\win10default.colors">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Themes\dark.colors" CopyToOutputDirectory="Always" />
+    <Content Include="Themes\win10default.colors" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
 </Project>

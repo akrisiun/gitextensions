@@ -31,7 +31,7 @@ namespace GitUI.CommandsDialogs
             _localExclude = localExclude;
 
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
 
             if (localExclude)
             {
@@ -126,9 +126,7 @@ namespace GitUI.CommandsDialogs
                 _NO_TRANSLATE_Preview.Enabled = false;
             }
 
-#pragma warning disable VSTHRD012, VSTHRD110, VSTHRD102, CS1998
-            ThreadHelper.JoinableTaskFactory.Run(async () => await
-            _ignoredFilesLoader.LoadAsync(() => Module.GetIgnoredFiles(GetCurrentPatterns()), UpdatePreviewPanel));
+            _ignoredFilesLoader.LoadAsync(() => Module.GetIgnoredFiles(GetCurrentPatterns()), UpdatePreviewPanel);
         }
     }
 }

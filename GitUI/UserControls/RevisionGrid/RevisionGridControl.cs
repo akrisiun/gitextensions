@@ -34,7 +34,7 @@ using ResourceManager;
 
 namespace GitUI
 {
-    public enum RevisionGraphDrawStyleEnum
+    public enum RevisionGraphDrawStyleEnum2
     {
         Normal,
         DrawNonRelativesGray,

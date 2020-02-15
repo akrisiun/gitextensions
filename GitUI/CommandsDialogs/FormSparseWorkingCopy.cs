@@ -27,7 +27,7 @@ namespace GitUI.CommandsDialogs
             var sparse = new FormSparseWorkingCopyViewModel(commands);
             BindToViewModelGlobal(sparse);
             CreateView(sparse);
-            //InitializeComplete();
+            InitializeComplete();
         }
 
         private void BindSaveOnClose([NotNull] FormSparseWorkingCopyViewModel sparse)
@@ -207,9 +207,7 @@ namespace GitUI.CommandsDialogs
                 FileInfo sparseFile = sparse.GetPathToSparseCheckoutFile();
                 if (sparseFile.Exists)
                 {
-                    ThreadHelper.JoinableTaskFactory.RunAsync(async () => await
-                    editor.ViewFileAsync(sparseFile.FullName)
-                    );
+                    editor.ViewFileAsync(sparseFile.FullName);
                 }
             }
             catch (Exception ex)

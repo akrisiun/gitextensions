@@ -16,9 +16,11 @@ using GitCommands;
 using GitCommands.Config;
 using GitCommands.Git;
 using GitCommands.Patches;
+using GitCommands.Settings;
 using GitCommands.Utils;
 using GitExtUtils;
 using GitExtUtils.GitUI;
+using GitExtUtils.GitUI.Theming;
 using GitUI.AutoCompletion;
 using GitUI.CommandsDialogs.CommitDialog;
 using GitUI.Editor;
@@ -36,8 +38,6 @@ namespace GitUI.CommandsDialogs
 {
     public sealed partial class FormCommit : GitModuleForm
     {
-        #region Properties
-
         private const string fixupPrefix = "fixup!";
         private const string squashPrefix = "squash!";
 
@@ -207,8 +207,6 @@ namespace GitUI.CommandsDialogs
             InitializeComponent();
         }
 
-        #endregion
-
         public FormCommit([NotNull] GitUICommands commands, CommitKind commitKind = CommitKind.Normal, GitRevision editedCommit = null, string commitMessage = null)
             : base(commands)
         {
@@ -217,8 +215,6 @@ namespace GitUI.CommandsDialogs
             _editedCommit = editedCommit;
 
             InitializeComponent();
-
-            Icon = Resources.GitExtensionsLogoIcon;
 
             splitRight.Panel2MinSize = DpiUtil.Scale(100);
 
@@ -240,7 +236,6 @@ namespace GitUI.CommandsDialogs
             ShowOnlyMyMessagesToolStripMenuItem.Checked = AppSettings.CommitDialogShowOnlyMyMessages;
 
             Unstaged.SetNoFilesText(_noUnstagedChanges.Text);
-            Unstaged.FilterVisible = true;
             Staged.SetNoFilesText(_noStagedChanges.Text);
 
             ConfigureMessageBox();
@@ -310,7 +305,12 @@ namespace GitUI.CommandsDialogs
 
             SelectedDiff.EscapePressed += () => DialogResult = DialogResult.Cancel;
 
-            // InitializeComplete();
+            SolveMergeconflicts.BackColor = AppSettings.BranchColor;
+            SolveMergeconflicts.SetForeColorForBackColor();
+
+            toolStripStatusBranchIcon.AdaptImageLightness();
+
+            InitializeComplete();
 
             // By calling this in the constructor, we prevent flickering caused by resizing the
             // form, for example when it is restored to maximised, but first drawn as a smaller window.
@@ -398,15 +398,15 @@ namespace GitUI.CommandsDialogs
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hwnd, int msg, IntPtr wp, IntPtr lp);
 
-        //override protected 
-        void OnApplicationActivated()
+        // TODO: protected override 
+            void OnApplicationActivated()
         {
             if (!_bypassActivatedEventHandler && AppSettings.RefreshCommitDialogOnFormFocus)
             {
                 RescanChanges();
             }
 
-            //base.OnApplicationActivated();
+            base.OnApplicationActivated();
         }
 
         protected override void OnActivated(EventArgs e)
@@ -419,21 +419,23 @@ namespace GitUI.CommandsDialogs
             base.OnActivated(e);
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
+        protected override void OnFormClosed(FormClosedEventArgs e)
         {
-            Message.CancelAutoComplete();
-
-            // Do not remember commit message of fixup or squash commits, since they have
-            // a special meaning, and can be dangerous if used inappropriately.
-            if (CommitKind == CommitKind.Normal)
+            // Do not attempt to store again if the form has already been closed. Unfortunately, OnFormClosed is always called by Close.
+            if (Visible)
             {
-                _commitMessageManager.MergeOrCommitMessage = Message.Text;
-                _commitMessageManager.AmendState = Amend.Checked;
+                // Do not remember commit message of fixup or squash commits, since they have
+                // a special meaning, and can be dangerous if used inappropriately.
+                if (CommitKind == CommitKind.Normal)
+                {
+                    _commitMessageManager.MergeOrCommitMessage = Message.Text;
+                    _commitMessageManager.AmendState = Amend.Checked;
+                }
+
+                _splitterManager.SaveSplitters();
             }
 
-            _splitterManager.SaveSplitters();
-
-            base.OnFormClosing(e);
+            base.OnFormClosed(e);
         }
 
         protected override void OnLoad(EventArgs e)
@@ -898,7 +900,7 @@ namespace GitUI.CommandsDialogs
         {
             if (!string.IsNullOrEmpty(output))
             {
-                MessageBox.Show(this, output + "\n\n" + SelectedDiff.Encoding.GetString(patch));
+                MessageBox.Show(this, output + "\n\n" + SelectedDiff.Encoding.GetString(patch), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             if (_currentItemStaged)
@@ -929,7 +931,7 @@ namespace GitUI.CommandsDialogs
             }
 
             if (MessageBox.Show(this, _resetSelectedLinesConfirmation.Text, _resetChangesCaption.Text,
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
             {
                 return;
             }
@@ -1232,10 +1234,10 @@ namespace GitUI.CommandsDialogs
         private async Task SetSelectedDiffAsync(GitItemStatus item, bool staged)
         {
             Action openWithDiffTool = () => (staged ? stagedOpenDifftoolToolStripMenuItem9 : openWithDifftoolToolStripMenuItem).PerformClick();
-            if (!item.IsTracked || FileHelper.IsImage(item.Name))
+            if (FileHelper.IsImage(item.Name))
             {
                 var guid = staged ? ObjectId.IndexId : ObjectId.WorkTreeId;
-                await SelectedDiff.ViewGitItemRevisionAsync(item.Name, guid, openWithDiffTool);
+                await SelectedDiff.ViewGitItemRevisionAsync(item, guid, openWithDiffTool);
             }
             else
             {
@@ -1286,7 +1288,7 @@ namespace GitUI.CommandsDialogs
                     // commit, because amend may be used just to change the commit message or timestamp.
                     if (!AppSettings.DontConfirmAmend)
                     {
-                        if (MessageBox.Show(this, _amendCommit.Text, _amendCommitCaption.Text, MessageBoxButtons.YesNo) != DialogResult.Yes)
+                        if (MessageBox.Show(this, _amendCommit.Text, _amendCommitCaption.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                         {
                             return false;
                         }
@@ -1453,7 +1455,7 @@ namespace GitUI.CommandsDialogs
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(this, $"Exception: {e.Message}");
+                    MessageBox.Show(this, $"Exception: {e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 return;
@@ -2089,12 +2091,12 @@ namespace GitUI.CommandsDialogs
 
                 if (filesInUse.Count > 0)
                 {
-                    MessageBox.Show(this, "The following files are currently in use and will not be reset:" + Environment.NewLine + "\u2022 " + string.Join(Environment.NewLine + "\u2022 ", filesInUse), "Files In Use");
+                    MessageBox.Show(this, "The following files are currently in use and will not be reset:" + Environment.NewLine + "\u2022 " + string.Join(Environment.NewLine + "\u2022 ", filesInUse), "Files In Use", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
                 if (!string.IsNullOrEmpty(output.ToString()))
                 {
-                    MessageBox.Show(this, output.ToString(), _resetChangesCaption.Text);
+                    MessageBox.Show(this, output.ToString(), _resetChangesCaption.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             finally
@@ -2110,7 +2112,7 @@ namespace GitUI.CommandsDialogs
             try
             {
                 if (Unstaged.SelectedItem == null ||
-                    MessageBox.Show(this, _deleteSelectedFiles.Text, _deleteSelectedFilesCaption.Text, MessageBoxButtons.YesNo) !=
+                    MessageBox.Show(this, _deleteSelectedFiles.Text, _deleteSelectedFilesCaption.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) !=
                     DialogResult.Yes)
                 {
                     return;
@@ -2128,7 +2130,7 @@ namespace GitUI.CommandsDialogs
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, _deleteFailed.Text + Environment.NewLine + ex.Message);
+                MessageBox.Show(this, _deleteFailed.Text + Environment.NewLine + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -2142,7 +2144,7 @@ namespace GitUI.CommandsDialogs
 
         private void DeleteSelectedFilesToolStripMenuItemClick(object sender, EventArgs e)
         {
-            if (MessageBox.Show(this, _deleteSelectedFiles.Text, _deleteSelectedFilesCaption.Text, MessageBoxButtons.YesNo) !=
+            if (MessageBox.Show(this, _deleteSelectedFiles.Text, _deleteSelectedFilesCaption.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) !=
                 DialogResult.Yes)
             {
                 return;
@@ -2157,7 +2159,7 @@ namespace GitUI.CommandsDialogs
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, _deleteFailed.Text + Environment.NewLine + ex);
+                MessageBox.Show(this, _deleteFailed.Text + Environment.NewLine + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             Initialize();
@@ -2165,7 +2167,7 @@ namespace GitUI.CommandsDialogs
 
         private void ResetSelectedFilesToolStripMenuItemClick(object sender, EventArgs e)
         {
-            if (MessageBox.Show(this, _resetSelectedChangesText.Text, _resetChangesCaption.Text, MessageBoxButtons.YesNo) !=
+            if (MessageBox.Show(this, _resetSelectedChangesText.Text, _resetChangesCaption.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) !=
                 DialogResult.Yes)
             {
                 return;
@@ -2262,7 +2264,8 @@ namespace GitUI.CommandsDialogs
             if (MessageBox.Show(this,
                 _deleteUntrackedFiles.Text,
                 _deleteUntrackedFilesCaption.Text,
-                MessageBoxButtons.YesNo) !=
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) !=
                 DialogResult.Yes)
             {
                 return;
@@ -2590,7 +2593,7 @@ namespace GitUI.CommandsDialogs
                 string output = Module.OpenWithDifftool(item.Name, null, firstRevision, secondRevision, "", item.IsTracked);
                 if (!string.IsNullOrEmpty(output))
                 {
-                    MessageBox.Show(this, output);
+                    MessageBox.Show(this, output, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -2606,7 +2609,7 @@ namespace GitUI.CommandsDialogs
 
             if (items.Count != 1)
             {
-                MessageBox.Show(this, _onlyStageChunkOfSingleFileError.Text, _resetStageChunkOfFileCaption.Text);
+                MessageBox.Show(this, _onlyStageChunkOfSingleFileError.Text, _resetStageChunkOfFileCaption.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -2725,7 +2728,7 @@ namespace GitUI.CommandsDialogs
             }
             else
             {
-                MessageBox.Show(this, _selectOnlyOneFile.Text, _error.Text);
+                MessageBox.Show(this, _selectOnlyOneFile.Text, _error.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -2824,7 +2827,7 @@ namespace GitUI.CommandsDialogs
                 {
                     // Ensure next line. Optionally add a bullet.
                     Message.EnsureEmptyLine(commitValidationIndentAfterFirstLine, 1);
-                    Message.ChangeTextColor(2, 0, Message.LineLength(2), Color.Black);
+                    Message.ChangeTextColor(2, 0, Message.LineLength(2), SystemColors.ControlText);
                     if (FormatLine(2))
                     {
                         changed = true;
@@ -2858,7 +2861,7 @@ namespace GitUI.CommandsDialogs
 
                     if (!textAppended && len > 0)
                     {
-                        Message.ChangeTextColor(line, offset, len, Color.Black);
+                        Message.ChangeTextColor(line, offset, len, SystemColors.WindowText);
                     }
 
                     if (lineLength > lineLimit)
@@ -3235,7 +3238,11 @@ namespace GitUI.CommandsDialogs
 
             if (AppSettings.CommitAndPushForcedWhenAmend)
             {
-                CommitAndPush.BackColor = Amend.Checked ? Color.Salmon : SystemColors.ButtonFace;
+                CommitAndPush.BackColor = Amend.Checked
+                    ? AppSettings.BranchColor
+                    : SystemColors.ButtonFace;
+
+                CommitAndPush.SetForeColorForBackColor();
             }
         }
 

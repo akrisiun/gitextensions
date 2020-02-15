@@ -67,7 +67,7 @@ namespace GitUI.CommandsDialogs
 
             copyToClipboardToolStripMenuItem.SetRevisionFunc(() => FileChanges.GetSelectedRevisions());
 
-            //InitializeComplete();
+            InitializeComplete();
 
             Blame.ConfigureRepositoryHostPlugin(PluginRegistry.TryGetGitHosterForModule(Module));
 
@@ -199,7 +199,6 @@ namespace GitUI.CommandsDialogs
                 return;
             }
 
-#pragma warning disable VSTHRD012, VSTHRD110
             _asyncLoader.LoadAsync(
                 () => BuildFilter(),
                 filter =>

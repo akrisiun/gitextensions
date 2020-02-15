@@ -130,7 +130,7 @@ namespace GitUI.CommandsDialogs
             settingsTreeView.GotoPage(initialPage);
             settingsTreeView.ResumeLayout();
 
-            //InitializeComplete();
+            InitializeComplete();
         }
 
         public static DialogResult ShowSettingsDialog(GitUICommands uiCommands, IWin32Window owner, SettingsPageReference initialPage = null)

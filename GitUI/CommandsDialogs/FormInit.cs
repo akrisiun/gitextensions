@@ -32,7 +32,7 @@ namespace GitUI.CommandsDialogs
         {
             _gitModuleChanged = gitModuleChanged;
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
 
             ThreadHelper.JoinableTaskFactory.Run(async () =>
             {

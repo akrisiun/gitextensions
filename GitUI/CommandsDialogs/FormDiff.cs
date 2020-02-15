@@ -5,12 +5,11 @@ using System.Linq;
 using System.Windows.Forms;
 using GitCommands;
 using GitCommands.Git;
+using GitExtUtils.GitUI.Theming;
 using GitUI.HelperDialogs;
 using GitUIPluginInterfaces;
 using JetBrains.Annotations;
 using ResourceManager;
-
-#pragma warning disable IDE1006
 
 namespace GitUI.CommandsDialogs
 {
@@ -51,7 +50,10 @@ namespace GitUI.CommandsDialogs
             _firstParentIsValid = firstParentIsValid;
 
             InitializeComponent();
-            //InitializeComplete();
+
+            btnSwap.AdaptImageLightness();
+
+            InitializeComplete();
 
             _toolTipControl.SetToolTip(btnAnotherBaseBranch, _anotherBranchTooltip.Text);
             _toolTipControl.SetToolTip(btnAnotherHeadBranch, _anotherBranchTooltip.Text);
@@ -103,7 +105,7 @@ namespace GitUI.CommandsDialogs
             // I.e., git difftool --gui --no-prompt --dir-diff -R HEAD fails, but
             // git difftool --gui --no-prompt --dir-diff HEAD succeeds
             // Thus, we disable comparing "from" working directory.
-            var enableDifftoolDirDiff = _baseRevision?.Guid != GitRevision.WorkTreeGuid;
+            var enableDifftoolDirDiff = _baseRevision?.ObjectId != ObjectId.WorkTreeId;
             btnCompareDirectoriesWithDiffTool.Enabled = enableDifftoolDirDiff;
         }
 
@@ -111,7 +113,7 @@ namespace GitUI.CommandsDialogs
         {
             if (DiffFiles.SelectedItem == null)
             {
-                DiffText.ViewPatch(null);
+                DiffText.Clear();
                 return;
             }
 
@@ -124,9 +126,7 @@ namespace GitUI.CommandsDialogs
                 items = new List<GitRevision> { _headRevision, DiffFiles.SelectedItemParent };
             }
 
-            ThreadHelper.JoinableTaskFactory.RunAsync(async () => await
-            DiffText.ViewChangesAsync(items, DiffFiles.SelectedItem, string.Empty)
-            );
+            DiffText.ViewChangesAsync(items, DiffFiles.SelectedItem, string.Empty);
         }
 
         private void btnSwap_Click(object sender, EventArgs e)

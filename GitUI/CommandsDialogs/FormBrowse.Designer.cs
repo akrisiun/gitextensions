@@ -749,12 +749,10 @@ namespace GitUI.CommandsDialogs
             // 
             // CommitInfoTabControl
             // 
-            FillTerminalTab();
             this.CommitInfoTabControl.Controls.Add(this.CommitInfoTabPage);
             this.CommitInfoTabControl.Controls.Add(this.DiffTabPage);
             this.CommitInfoTabControl.Controls.Add(this.TreeTabPage);
             this.CommitInfoTabControl.Controls.Add(this.GpgInfoTabPage);
-
             this.CommitInfoTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CommitInfoTabControl.Location = new System.Drawing.Point(0, 0);
             this.CommitInfoTabControl.Margin = new System.Windows.Forms.Padding(0);

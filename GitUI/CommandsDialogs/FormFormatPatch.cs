@@ -47,7 +47,7 @@ namespace GitUI.CommandsDialogs
         {
             InitializeComponent();
             RevisionGrid.ShowUncommittedChangesIfPossible = false;
-            //InitializeComplete();
+            InitializeComplete();
 
             MailFrom.Text = Module.GetEffectiveSetting(SettingKeyString.UserEmail);
         }

@@ -8,7 +8,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
             : base(true)
         {
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
 
             Load += (s, e) => ChangeLog.Text = Resources.ChangeLog;
         }

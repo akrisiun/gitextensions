@@ -24,6 +24,9 @@ namespace GitUI
         {
         }
 
+        protected virtual void InitializeComplete()
+        {}
+
         /// <summary>Creates a new <see cref="GitExtensionsForm"/> indicating position restore.</summary>
         /// <param name="enablePositionRestore">Indicates whether the <see cref="Form"/>'s position
         /// will be restored upon being re-opened.</param>

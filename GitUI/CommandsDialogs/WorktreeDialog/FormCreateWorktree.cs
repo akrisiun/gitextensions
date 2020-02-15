@@ -31,7 +31,7 @@ namespace GitUI.CommandsDialogs.WorktreeDialog
             : base(commands)
         {
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
         }
 
         private void FormCreateWorktree_Load(object sender, EventArgs e)

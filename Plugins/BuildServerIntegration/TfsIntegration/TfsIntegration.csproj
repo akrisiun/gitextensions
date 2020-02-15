@@ -45,7 +45,8 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <PackageReference Include="System.Reactive.Linq" Version="3.1.1" />
+    <PackageReference Include="System.Reactive" Version="4.2.0" />
+    <!-- <PackageReference Include="System.Reactive.Linq" Version="3.1.1" /> -->
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ITfsHelper.cs" />

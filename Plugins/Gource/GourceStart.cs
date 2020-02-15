@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using GitCommands;
 using GitExtUtils;
 using GitUI;
-using GitUI.Avatars;
+// using GitUI.Avatars;
 using GitUIPluginInterfaces;
 
 namespace Gource

@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using GitCommands;
+using GitExtUtils.GitUI.Theming;
 using GitUI.HelperDialogs;
 using ResourceManager;
 
@@ -39,7 +40,10 @@ namespace GitUI.CommandsDialogs
         {
             _defaultBranch = defaultBranch;
             InitializeComponent();
-            //InitializeComplete();
+            SolveMergeconflicts.BackColor = AppSettings.BranchColor;
+            SolveMergeconflicts.SetForeColorForBackColor();
+            helpImageDisplayUserControl1.Image1 = Properties.Images.HelpCommandRebase.AdaptLightness();
+            InitializeComplete();
             helpImageDisplayUserControl1.Visible = !AppSettings.DontShowHelpImages;
             helpImageDisplayUserControl1.IsOnHoverShowImage2NoticeText = _hoverShowImageLabelText.Text;
             if (AppSettings.AlwaysShowAdvOpt)
@@ -143,22 +147,26 @@ namespace GitUI.CommandsDialogs
 
             Resolved.Text = _continueRebaseText.Text;
             Mergetool.Text = _solveConflictsText.Text;
+            Resolved.ForeColor = SystemColors.ControlText;
+            Mergetool.ForeColor = SystemColors.ControlText;
             ContinuePanel.BackColor = Color.Transparent;
             MergeToolPanel.BackColor = Color.Transparent;
+
+            var highlightColor = Color.Yellow.AdaptBackColor();
 
             if (Module.InTheMiddleOfConflictedMerge())
             {
                 AcceptButton = Mergetool;
                 Mergetool.Focus();
                 Mergetool.Text = _solveConflictsText2.Text;
-                MergeToolPanel.BackColor = Color.Yellow;
+                MergeToolPanel.BackColor = highlightColor;
             }
             else if (Module.InTheMiddleOfRebase())
             {
                 AcceptButton = Resolved;
                 Resolved.Focus();
                 Resolved.Text = _continueRebaseText2.Text;
-                ContinuePanel.BackColor = Color.Yellow;
+                ContinuePanel.BackColor = highlightColor;
             }
         }
 
@@ -239,7 +247,7 @@ namespace GitUI.CommandsDialogs
             {
                 if (string.IsNullOrEmpty(Branches.Text))
                 {
-                    MessageBox.Show(this, _noBranchSelectedText.Text);
+                    MessageBox.Show(this, _noBranchSelectedText.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -262,7 +270,7 @@ namespace GitUI.CommandsDialogs
                 var dialogResult = FormProcess.ReadDialog(this, rebaseCmd);
                 if (dialogResult.Trim() == "Current branch a is up to date.")
                 {
-                    MessageBox.Show(this, _branchUpToDateText.Text, _branchUpToDateCaption.Text);
+                    MessageBox.Show(this, _branchUpToDateText.Text, _branchUpToDateCaption.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 if (!Module.InTheMiddleOfAction() &&
@@ -300,7 +308,7 @@ namespace GitUI.CommandsDialogs
             {
                 if (chooseForm.ShowDialog(this) == DialogResult.OK && chooseForm.SelectedRevision != null)
                 {
-                    txtFrom.Text = chooseForm.SelectedRevision.ObjectId.ToShortString(8);
+                    txtFrom.Text = chooseForm.SelectedRevision.ObjectId.ToShortString();
                 }
             }
         }

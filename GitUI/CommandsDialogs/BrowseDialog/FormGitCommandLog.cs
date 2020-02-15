@@ -7,8 +7,6 @@ using System.Windows.Forms;
 using GitCommands;
 using GitCommands.Logging;
 
-#pragma warning disable IDE1006
-
 namespace GitUI.CommandsDialogs.BrowseDialog
 {
     public sealed partial class FormGitCommandLog : GitExtensionsForm
@@ -20,7 +18,7 @@ namespace GitUI.CommandsDialogs.BrowseDialog
 
             ShowInTaskbar = true;
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
 
             LogItems.DisplayMember = nameof(CommandLogEntry.ColumnLine);
 
