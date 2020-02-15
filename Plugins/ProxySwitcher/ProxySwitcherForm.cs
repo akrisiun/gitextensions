@@ -33,7 +33,7 @@ namespace ProxySwitcher
         public ProxySwitcherForm(ProxySwitcherPlugin plugin, ISettingsSource settings, GitUIEventArgs gitUiCommands)
         {
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
 
             Text = _pluginDescription.Text;
             _plugin = plugin;

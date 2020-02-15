@@ -8,7 +8,8 @@ using JetBrains.Annotations;
 
 namespace GitCommands.Settings
 {
-    public sealed class ConfigFileSettings : SettingsContainer<ConfigFileSettings, ConfigFileSettingsCache>, IConfigFileSettings, IConfigValueStore
+    public sealed class ConfigFileSettings : SettingsContainer<ConfigFileSettings, ConfigFileSettingsCache>, 
+        IConfigFileSettings // , IConfigValueStore
     {
         public ConfigFileSettings(ConfigFileSettings lowerPriority, ConfigFileSettingsCache settingsCache,
             SettingLevel settingLevel)

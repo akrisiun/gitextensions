@@ -1867,7 +1867,8 @@ namespace GitCommands
 
         public static Color GetColor(AppColor name)
         {
-            return SettingsContainer.GetColor(name.ToString().ToLowerInvariant() + "color", AppColorDefaults.GetBy(name));
+            return SettingsContainer.GetColor(name.ToString().ToLowerInvariant() + "color", 
+                   AppColorDefaults.GetBy(name));
         }
 
         public static void SetEnum<T>(string name, T value)
