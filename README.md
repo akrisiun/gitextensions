@@ -1,5 +1,24 @@
 ![Git Extensions logo](https://cdn.rawgit.com/gitextensions/gitextensions/master/Logo/git-extensions-logo.svg)
 
+# Modules
+
+```
+git submodule add https://github.com/gitextensions/ICSharpCode.TextEditor.git Externals/ICSharpCode.TextEditor 
+git submodule add https://github.com/akrisiun/NBug Externals/NBug
+https://github.com/gitextensions/Git.hub  Externals/Git.hub
+https://github.com/akrisiun/conemu-inside Externals/conemu-inside
+url = https://github.com/akrisiun/NBug
+
+url = https://github.com/gitextensions/Git.hub
+path = Externals/Git.hub
+
+url = https://github.com/akrisiun/conemu-inside
+path = Externals/conemu-inside
+
+url = https://github.com/gitextensions/ICSharpCode.TextEditor.git
+path = Externals/ICSharpCode.TextEditor
+```
+
 # ConEmu x64
 
 Required files not found: ConEmuC.exe, ConEmuCD.dll, ConEmuHk.dll

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <!--<TargetFrameworks>net471;net48</TargetFrameworks>-->
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net471</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>    
     <DefineConstants>TRACE;NETCORE;NET471</DefineConstants>
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
