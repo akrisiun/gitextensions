@@ -14,7 +14,7 @@ namespace GitUI.UserControls.RevisionGrid
         public FormQuickItemSelector()
         {
             InitializeComponent();
-            // InitializeComplete();
+            InitializeComplete();
 
             lbxRefs.DisplayMember = nameof(ItemData.Label);
         }

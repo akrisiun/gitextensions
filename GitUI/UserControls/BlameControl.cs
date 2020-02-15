@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using GitCommands;
 using GitExtUtils;
+using GitUI.BranchTreePanel;
 using GitUI.CommitInfo;
 using GitUI.Editor;
 using GitUI.HelperDialogs;
@@ -18,7 +19,6 @@ using ResourceManager;
 
 namespace GitUI.Blame
 {
-    #pragma warning disable IDE1006
     public sealed partial class BlameControl : GitModuleControl
     {
         public event EventHandler<CommandEventArgs> CommandClick;
@@ -109,10 +109,8 @@ namespace GitUI.Blame
             _fileName = fileName;
             _encoding = encoding;
 
-            ThreadHelper.JoinableTaskFactory.RunAsync(async () => await
             _blameLoader.LoadAsync(() => _blame = Module.Blame(fileName, objectId.ToString(), encoding),
-                () => ProcessBlame(fileName, revision, children, controlToMask, line, scrollPos))
-            );
+                () => ProcessBlame(fileName, revision, children, controlToMask, line, scrollPos));
         }
 
         private void commitInfo_CommandClicked(object sender, CommandEventArgs e)

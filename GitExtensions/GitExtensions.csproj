@@ -69,7 +69,6 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="15.8.132" />
     <PackageReference Include="System.Resources.Extensions" Version="4.7.0" />
     
     <ProjectReference Include="..\Externals\conemu-inside\ConEmuWinForms\ConEmuWinForms.csproj" />

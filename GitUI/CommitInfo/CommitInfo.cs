@@ -98,7 +98,7 @@ namespace GitUI.CommitInfo
             {
                 this.InvokeAsync(() =>
                 {
-                   // UICommandsSource.UICommandsChanged += delegate { RefreshSortedTags(); };
+                    UICommandsSource.UICommandsChanged += delegate { RefreshSortedTags(); };
 
                     // call this event handler also now (necessary for "Contained in branches/tags")
                     RefreshSortedTags();

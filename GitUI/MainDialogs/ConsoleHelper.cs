@@ -7,7 +7,7 @@ using ConEmu.WinForms;
 using GitCommands;
 using GitCommands.Utils;
 
-#pragma warning disable IDE0018, IDE0019
+#pragma warning disable IDE0018, IDE0019, IDE0060, VSTHRD012, VSTHRD110, CS1998
 
 namespace GitUI
 {
@@ -27,7 +27,6 @@ namespace GitUI
         public static Process RunPS(string bashCommand = null, params string[] parm)
             => Instance.RunConsolePS(bashCommand, parm);
 
-#pragma warning disable IDE0060
         public Process RunConsolePS(string bashCommand = null, params string[] parm)
         {
             if (EnvUtils.RunningOnUnix())
@@ -114,7 +113,6 @@ namespace GitUI
 
             try
             {
-#pragma warning disable VSTHRD012, VSTHRD110, CS1998
                 session = terminal.Start(startinfo);
                 if (session == null)
                 {

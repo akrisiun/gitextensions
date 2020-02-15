@@ -25,8 +25,6 @@ namespace GitUI
         private readonly IFullPathResolver _fullPathResolver;
         private readonly IFindFilePredicateProvider _findFilePredicateProvider;
 
-        public static Form FormCommit { get; set; }
-
         [NotNull]
         public GitModule Module { get; private set; }
         public ILockableNotifier RepoChangedNotifier { get; }
@@ -47,26 +45,6 @@ namespace GitUI
         public GitUICommands([CanBeNull] string workingDir)
             : this(new GitModule(workingDir))
         {
-        }
-
-        event EventHandler<GitUIPluginInterfaces.GitUIEventArgs> IGitUICommands.PostRepositoryChanged {
-            add { }
-            remove { }
-        }
-
-        event EventHandler<GitUIPluginInterfaces.GitUIEventArgs> IGitUICommands.PostBrowseInitialize {
-            add { }
-            remove { }
-        }
-
-        event EventHandler<GitUIPluginInterfaces.GitUIEventArgs> IGitUICommands.PostRegisterPlugin {
-            add { }
-            remove { }
-        }
-
-        event EventHandler<GitUIPluginInterfaces.GitUIEventArgs> IGitUICommands.PreCommit {
-            add { }
-            remove { }
         }
 
         public IGitModule GitModule => Module;
@@ -516,23 +494,15 @@ namespace GitUI
                         });
                     }
 
-                    if (FormCommit != null && FormCommit.IsDisposed)
-                        FormCommit = null;
-
-                    var form = FormCommit ?? new FormCommit(this, commitMessage: commitMessage);
+                    using (var form = new FormCommit(this, commitMessage: commitMessage))
                     {
-                        FormCommit = form;
-
                         if (showOnlyWhenChanges)
                         {
-                            (form as FormCommit).ShowDialogWhenChanges(owner);
+                            form.ShowDialogWhenChanges(owner);
                         }
                         else
                         {
-                            // form.ShowDialog(owner);
-                            // Modalless mode:
-                            form.ShowInTaskbar = true;
-                            form.Show();
+                            form.ShowDialog(owner);
                         }
                     }
                 }
@@ -1610,7 +1580,7 @@ namespace GitUI
 
                     break;
             }
-            #pragma warning restore SA1025 // Code should not contain multiple whitespace in a row
+#pragma warning restore SA1025 // Code should not contain multiple whitespace in a row
 
             Application.Run(new FormCommandlineHelp { StartPosition = FormStartPosition.CenterScreen });
         }

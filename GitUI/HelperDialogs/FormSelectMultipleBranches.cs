@@ -12,13 +12,13 @@ namespace GitUI.HelperDialogs
             : base(true)
         {
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
         }
 
         public FormSelectMultipleBranches(IReadOnlyList<IGitRef> branchesToSelect)
         {
             InitializeComponent();
-            //InitializeComplete();
+            InitializeComplete();
 
             if (branchesToSelect.Count > 350)
             {

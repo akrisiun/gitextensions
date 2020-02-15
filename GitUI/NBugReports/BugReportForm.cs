@@ -61,7 +61,7 @@ Send report anyway?");
             warningLabel.MaximumSize = new Size(warningLabel.Width, 0);
             warningLabel.AutoSize = true;
 
-            //InitializeComplete();
+            InitializeComplete();
 
             toolTip.SetToolTip(btnCopy, _toolTipCopy.Text);
             toolTip.SetToolTip(sendAndQuitButton, _toolTipSendQuit.Text);

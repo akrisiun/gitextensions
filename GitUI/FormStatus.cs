@@ -45,7 +45,7 @@ namespace GitUI
                 KeepDialogOpen.Hide();
             }
 
-            //InitializeComplete();
+            InitializeComplete();
         }
 
         public FormStatus(Action<FormStatus> process, string text)
@@ -73,8 +73,7 @@ namespace GitUI
             get
             {
                 CreateParams mdiCp = base.CreateParams;
-#pragma warning disable IDE0054
-                mdiCp.ClassStyle = mdiCp.ClassStyle | NativeConstants.CP_NOCLOSE_BUTTON;
+                mdiCp.ClassStyle = mdiCp.ClassStyle | NativeMethods.CP_NOCLOSE_BUTTON;
                 return mdiCp;
             }
         }
