@@ -129,7 +129,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
                     }
                     catch (Exception ex) when (!(ex is OperationCanceledException))
                     {
-                        MessageBox.Show(this, _strFailedToFetchPullData.Text + Environment.NewLine + ex.Message, _strError.Text);
+                        MessageBox.Show(this, _strFailedToFetchPullData.Text + Environment.NewLine + ex.Message, _strError.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 })
                 .FileAndForget();
@@ -207,7 +207,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
         private void ResetAllAndShowLoadingPullRequests()
         {
             _discussionWB.DocumentText = "";
-            _diffViewer.ViewPatch(null);
+            _diffViewer.Clear();
             _fileStatusList.SetDiffs();
 
             _pullRequestsList.Items.Clear();
@@ -258,8 +258,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
             {
                 _currentPullRequestInfo = null;
                 _discussionWB.DocumentText = "";
-                ThreadHelper.JoinableTaskFactory.RunAsync(
-                    () => _diffViewer.ViewTextAsync("", ""));
+                _diffViewer.Clear();
                 return;
             }
 
@@ -277,7 +276,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
             _currentPullRequestInfo.HeadRepo.CloneProtocol = _cloneGitProtocol;
 
             _discussionWB.DocumentText = DiscussionHtmlCreator.CreateFor(_currentPullRequestInfo);
-            _diffViewer.ViewPatch(null);
+            _diffViewer.Clear();
             _fileStatusList.SetDiffs();
 
             LoadDiffPatch();
@@ -302,7 +301,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
                     }
                     catch (Exception ex) when (!(ex is OperationCanceledException))
                     {
-                        MessageBox.Show(this, _strCouldNotLoadDiscussion.Text + Environment.NewLine + ex.Message, _strError.Text);
+                        MessageBox.Show(this, _strCouldNotLoadDiscussion.Text + Environment.NewLine + ex.Message, _strError.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         LoadDiscussion(null);
                     }
                 })
@@ -341,7 +340,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
                     }
                     catch (Exception ex) when (!(ex is OperationCanceledException))
                     {
-                        MessageBox.Show(this, _strFailedToLoadDiffData.Text + Environment.NewLine + ex.Message, _strError.Text);
+                        MessageBox.Show(this, _strFailedToLoadDiffData.Text + Environment.NewLine + ex.Message, _strError.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 })
                 .FileAndForget();
@@ -359,7 +358,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
                 var match = Regex.Match(part, @"^a/([^\n]+) b/([^\n]+)\s*(.*)$", RegexOptions.Singleline);
                 if (!match.Success)
                 {
-                    MessageBox.Show(this, _strUnableUnderstandPatch.Text, _strError.Text);
+                    MessageBox.Show(this, _strUnableUnderstandPatch.Text, _strError.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -423,7 +422,8 @@ namespace GitUI.CommandsDialogs.RepoHosting
                     if (hostedRepository.CloneReadOnlyUrl != remoteUrl)
                     {
                         MessageBox.Show(this, string.Format(_strRemoteAlreadyExist.Text,
-                                            remoteName, hostedRepository.CloneReadOnlyUrl, remoteUrl));
+                                            remoteName, hostedRepository.CloneReadOnlyUrl, remoteUrl),
+                                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
@@ -432,7 +432,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
                     var error = Module.AddRemote(remoteName, remoteUrl);
                     if (!string.IsNullOrEmpty(error))
                     {
-                        MessageBox.Show(this, error, string.Format(_strCouldNotAddRemote.Text, remoteName, remoteUrl));
+                        MessageBox.Show(this, error, string.Format(_strCouldNotAddRemote.Text, remoteName, remoteUrl), MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
 
@@ -472,7 +472,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
             }
 
             var data = _diffCache[gis.Name];
-            _diffViewer.ViewPatch(text: data, openWithDifftool: null /* not implemented */);
+            _diffViewer.ViewPatch(gis.Name, text: data, openWithDifftool: null, isText: gis.IsSubmodule);
         }
 
         private void _closePullRequestBtn_Click(object sender, EventArgs e)
@@ -489,7 +489,7 @@ namespace GitUI.CommandsDialogs.RepoHosting
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, _strFailedToClosePullRequest.Text + Environment.NewLine + ex.Message, _strError.Text);
+                MessageBox.Show(this, _strFailedToClosePullRequest.Text + Environment.NewLine + ex.Message, _strError.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

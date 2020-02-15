@@ -11,6 +11,7 @@ using GitCommands;
 using GitExtUtils;
 using GitExtUtils.GitUI;
 using GitUI.Properties;
+using GitUIPluginInterfaces;
 using JetBrains.Annotations;
 using ResourceManager;
 
@@ -68,13 +69,15 @@ namespace GitUI.CommandsDialogs
 
             //InitializeComplete();
 
+            Blame.ConfigureRepositoryHostPlugin(PluginRegistry.TryGetGitHosterForModule(Module));
+
             return;
 
             void ConfigureTabControl()
             {
                 tabControl1.ImageList = new ImageList
                 {
-                    ColorDepth = ColorDepth.Depth8Bit,
+                    ColorDepth = ColorDepth.Depth32Bit,
                     ImageSize = DpiUtil.Scale(new Size(16, 16)),
                     Images =
                     {
@@ -141,7 +144,7 @@ namespace GitUI.CommandsDialogs
                 showOriginalFilePathToolStripMenuItem.Checked = AppSettings.BlameShowOriginalFilePath;
             }
 
-            if (filterByRevision && revision?.Guid != null)
+            if (filterByRevision && revision?.ObjectId != null)
             {
                 _filterBranchHelper.SetBranchFilter(revision.Guid, false);
             }
@@ -361,7 +364,13 @@ namespace GitUI.CommandsDialogs
             else if (tabControl1.SelectedTab == ViewTab)
             {
                 View.Encoding = Diff.Encoding;
-                View.ViewGitItemRevisionAsync(fileName, revision.ObjectId);
+                var file = new GitItemStatus
+                {
+                    IsTracked = true,
+                    Name = fileName,
+                    IsSubmodule = GitModule.IsValidGitWorkingDir(_fullPathResolver.Resolve(fileName))
+                };
+                View.ViewGitItemRevisionAsync(file, revision.ObjectId);
             }
             else if (tabControl1.SelectedTab == DiffTab)
             {
@@ -525,7 +534,7 @@ namespace GitUI.CommandsDialogs
             var selectedRevisions = FileChanges.GetSelectedRevisions();
 
             diffToolRemoteLocalStripMenuItem.Enabled =
-                selectedRevisions.Count == 1 && selectedRevisions[0].Guid != GitRevision.WorkTreeGuid &&
+                selectedRevisions.Count == 1 && selectedRevisions[0].ObjectId != ObjectId.WorkTreeId &&
                 File.Exists(_fullPathResolver.Resolve(FileName));
             openWithDifftoolToolStripMenuItem.Enabled =
                 selectedRevisions.Count >= 1 && selectedRevisions.Count <= 2;

@@ -39,27 +39,27 @@ namespace GitUI.CommandsDialogs
                 var repositoryHistory = await RepositoryHistoryManager.Locals.LoadRecentHistoryAsync();
 
                 await this.SwitchToMainThreadAsync();
-                Directory.DataSource = repositoryHistory;
-                Directory.DisplayMember = nameof(Repository.Path);
+                _NO_TRANSLATE_Directory.DataSource = repositoryHistory;
+                _NO_TRANSLATE_Directory.DisplayMember = nameof(Repository.Path);
             });
 
-            Directory.SelectedIndex = -1;
-            Directory.Text = string.IsNullOrEmpty(dir) ? AppSettings.DefaultCloneDestinationPath : dir;
+            _NO_TRANSLATE_Directory.SelectedIndex = -1;
+            _NO_TRANSLATE_Directory.Text = string.IsNullOrEmpty(dir) ? AppSettings.DefaultCloneDestinationPath : dir;
         }
 
         private void InitClick(object sender, EventArgs e)
         {
-            var directoryPath = Directory.Text;
+            var directoryPath = _NO_TRANSLATE_Directory.Text;
 
             if (!IsRootedDirectoryPath(directoryPath))
             {
-                MessageBox.Show(this, _chooseDirectory.Text, _chooseDirectoryCaption.Text);
+                MessageBox.Show(this, _chooseDirectory.Text, _chooseDirectoryCaption.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (File.Exists(directoryPath))
             {
-                MessageBox.Show(this, _chooseDirectoryNotFile.Text, _chooseDirectoryNotFileCaption.Text);
+                MessageBox.Show(this, _chooseDirectoryNotFile.Text, _chooseDirectoryNotFileCaption.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -70,7 +70,7 @@ namespace GitUI.CommandsDialogs
                 System.IO.Directory.CreateDirectory(module.WorkingDir);
             }
 
-            MessageBox.Show(this, module.Init(Central.Checked, Central.Checked), _initMsgBoxCaption.Text);
+            MessageBox.Show(this, module.Init(Central.Checked, Central.Checked), _initMsgBoxCaption.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             _gitModuleChanged?.Invoke(this, new GitModuleEventArgs(module));
 
@@ -108,7 +108,7 @@ namespace GitUI.CommandsDialogs
 
             if (userSelectedPath != null)
             {
-                Directory.Text = userSelectedPath;
+                _NO_TRANSLATE_Directory.Text = userSelectedPath;
             }
         }
 
@@ -123,7 +123,7 @@ namespace GitUI.CommandsDialogs
                 _form = form;
             }
 
-            public ComboBox DirectoryCombo => _form.Directory;
+            public ComboBox DirectoryCombo => _form._NO_TRANSLATE_Directory;
 
             public bool IsRootedDirectoryPath(string path)
             {

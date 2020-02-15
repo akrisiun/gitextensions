@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using Gerrit.Server;
 using GitCommands;
 using GitExtUtils;
+using GitExtUtils.GitUI.Theming;
 using GitUI.Properties;
 using GitUIPluginInterfaces;
 using JetBrains.Annotations;
@@ -13,8 +16,6 @@ namespace Gerrit
 {
     public partial class FormGerritPublish : FormGerritBase
     {
-        private string _currentBranchRemote;
-
         #region Translation
         private readonly TranslationString _publishGerritChangeCaption = new TranslationString("Publish Gerrit Change");
 
@@ -22,34 +23,27 @@ namespace Gerrit
 
         private readonly TranslationString _selectRemote = new TranslationString("Please select a remote repository");
         private readonly TranslationString _selectBranch = new TranslationString("Please enter a branch");
-
-        private readonly TranslationString _publishTypeReview = new TranslationString("For Review");
-        private readonly TranslationString _publishTypeWip = new TranslationString("Work-in-Progress");
-        private readonly TranslationString _publishTypePrivate = new TranslationString("Private");
         #endregion
 
-        public FormGerritPublish(IGitUICommands uiCommand)
+        private string _currentBranchRemote;
+        private GerritCapabilities _capabilities;
+
+        public FormGerritPublish(IGitUICommands uiCommand, GerritCapabilities capabilities)
             : base(uiCommand)
         {
+            _capabilities = capabilities;
             InitializeComponent();
+            Publish.Image = Images.Push.AdaptLightness();
             InitializeComplete();
-
-            Publish.Image = Images.Push;
-            PublishType.Items.AddRange(new object[]
-            {
-                new KeyValuePair<string, string>(_publishTypeReview.Text, ""),
-                new KeyValuePair<string, string>(_publishTypeWip.Text, "wip")
-            });
-            PublishType.SelectedIndex = 0;
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            if (Version >= Version.Parse("2.15"))
-            {
-                PublishType.Items.Add(new KeyValuePair<string, string>(_publishTypePrivate.Text, "private"));
-            }
+
+            _capabilities.PublishTypes.ForEach(
+                item => PublishType.Items.Add(item));
+            PublishType.SelectedIndex = 0;
         }
 
         private void PublishClick(object sender, EventArgs e)
@@ -76,71 +70,29 @@ namespace Gerrit
 
             if (string.IsNullOrEmpty(_NO_TRANSLATE_Remotes.Text))
             {
-                MessageBox.Show(owner, _selectRemote.Text);
+                MessageBox.Show(owner, _selectRemote.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
             if (string.IsNullOrEmpty(branch))
             {
-                MessageBox.Show(owner, _selectBranch.Text);
+                MessageBox.Show(owner, _selectBranch.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
             GerritUtil.StartAgent(owner, Module, _NO_TRANSLATE_Remotes.Text);
 
-            List<string> additionalOptions = new List<string>();
-
-            string reviewers = _NO_TRANSLATE_Reviewers.Text.Trim();
-            if (!string.IsNullOrEmpty(reviewers))
-            {
-                additionalOptions.AddRange(reviewers.Split(new[] { ' ', ',', ';', '|' })
-                                                    .Where(r => !string.IsNullOrEmpty(r))
-                                                    .Select(r => "r=" + r));
-            }
-
-            string cc = _NO_TRANSLATE_Cc.Text.Trim();
-            if (!string.IsNullOrEmpty(cc))
-            {
-                additionalOptions.AddRange(cc.Split(new[] { ' ', ',', ';', '|' })
-                                             .Where(r => !string.IsNullOrEmpty(r))
-                                             .Select(r => "cc=" + r));
-            }
-
-            string topic = _NO_TRANSLATE_Topic.Text.Trim();
-            if (!string.IsNullOrEmpty(topic))
-            {
-                additionalOptions.Add("topic=" + topic);
-            }
-
-            string hashtag = _NO_TRANSLATE_Hashtag.Text.Trim();
-            if (!string.IsNullOrEmpty(hashtag))
-            {
-                additionalOptions.Add("hashtag=" + hashtag);
-            }
-
-            additionalOptions = additionalOptions.Where(r => !string.IsNullOrEmpty(r)).ToList();
-
-            string publishType = ((KeyValuePair<string, string>)PublishType.SelectedItem).Value;
-            string targetRef = "for";
-            if (Version >= Version.Parse("2.15"))
-            {
-                additionalOptions.Add(publishType);
-            }
-            else if (publishType == "wip")
-            {
-                targetRef = "drafts";
-            }
-
-            string targetBranch = $"refs/{targetRef}/{branch}";
-            if (additionalOptions.Count > 0)
-            {
-                targetBranch += "%" + string.Join(",", additionalOptions);
-            }
+            var builder = _capabilities.NewBuilder()
+                .WithReviewers(_NO_TRANSLATE_Reviewers.Text)
+                .WithCC(_NO_TRANSLATE_Cc.Text)
+                .WithTopic(_NO_TRANSLATE_Topic.Text)
+                .WithHashTag(_NO_TRANSLATE_Hashtag.Text)
+                .WithPublishType(((KeyValuePair<string, string>)PublishType.SelectedItem).Value);
 
             var pushCommand = UICommands.CreateRemoteCommand();
             pushCommand.CommandText = PushCmd(
                 _NO_TRANSLATE_Remotes.Text,
-                targetBranch);
+                builder.Build(branch));
 
             pushCommand.Remote = _NO_TRANSLATE_Remotes.Text;
             pushCommand.Title = _publishCaption.Text;
@@ -176,7 +128,7 @@ namespace Gerrit
                 }
             }
 
-            return true;
+            return !pushCommand.ErrorOccurred;
         }
 
         [CanBeNull]

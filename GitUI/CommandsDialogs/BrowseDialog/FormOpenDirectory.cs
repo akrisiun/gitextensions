@@ -114,6 +114,16 @@ namespace GitUI.CommandsDialogs.BrowseDialog
             }
         }
 
+        private void folderBrowserButton_Click(object sender, EventArgs e)
+        {
+            string userSelectedPath = OsShellUtil.PickFolder(this, _NO_TRANSLATE_Directory.Text);
+            if (!userSelectedPath.IsNullOrEmpty())
+            {
+                _NO_TRANSLATE_Directory.Text = userSelectedPath;
+                Load.PerformClick();
+            }
+        }
+
         private void folderGoUpButton_Click(object sender, EventArgs e)
         {
             try
@@ -178,7 +188,8 @@ namespace GitUI.CommandsDialogs.BrowseDialog
                 _form = form;
             }
 
-            public GitModule OpenGitRepository([NotNull] string path, ILocalRepositoryManager localRepositoryManager) => FormOpenDirectory.OpenGitRepository(path, localRepositoryManager);
+            public static GitModule OpenGitRepository([NotNull] string path, ILocalRepositoryManager localRepositoryManager)
+                => FormOpenDirectory.OpenGitRepository(path, localRepositoryManager);
         }
     }
 }

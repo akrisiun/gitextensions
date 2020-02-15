@@ -707,9 +707,17 @@ namespace GitCommands
             filename = filename.ToPosixPath();
 
             var list = new List<ConflictData>();
+            var args = new GitArgumentBuilder("ls-files")
+            {
+                "-z",
+                "--unmerged",
+                { filename.IsNotNullOrWhitespace(), "--" },
+                filename.QuoteNE()
+            };
 
             var unmerged = (await _gitExecutable
-                .GetOutputAsync("ls-files -z --unmerged " + filename.QuoteNE()).ConfigureAwait(false))
+                .GetOutputAsync(args)
+                .ConfigureAwait(false))
                 .Split(new[] { '\0', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
             var item = new ConflictedFileData[3];
@@ -804,6 +812,7 @@ namespace GitCommands
             var args = new GitArgumentBuilder("ls-tree")
             {
                 refName,
+                { filename.IsNotNullOrWhitespace(), "--" },
                 filename.QuoteNE()
             };
             var output = _gitExecutable.GetOutput(args);
@@ -888,9 +897,14 @@ namespace GitCommands
             }
         }
 
-        public void RunMergeTool()
+        public void RunMergeTool([CanBeNull] string fileName = "")
         {
-            using (var process = _gitExecutable.Start("mergetool", createWindow: true))
+            var args = new GitArgumentBuilder("mergetool")
+            {
+                { fileName.IsNotNullOrWhitespace(), "--" },
+                fileName.ToPosixPath().QuoteNE()
+            };
+            using (var process = _gitExecutable.Start(args, createWindow: true))
             {
                 process.WaitForExit();
             }
@@ -1035,7 +1049,7 @@ namespace GitCommands
             if (loadRefs)
             {
                 revision.Refs = GetRefs()
-                    .Where(r => r.Guid == revision.Guid)
+                    .Where(r => r.ObjectId == revision.ObjectId)
                     .ToList();
             }
 
@@ -1368,7 +1382,7 @@ namespace GitCommands
                     "--force",
                     "--"
                 }
-                .BuildBatchArguments(files.Select(item => item.ToPosixPath().Quote())));
+                .BuildBatchArgumentsForFiles(files));
         }
 
         /// <summary>
@@ -1418,7 +1432,7 @@ namespace GitCommands
                     revision,
                     "--"
                 }
-                .BuildBatchArguments(files.Select(f => f.ToPosixPath().Quote())));
+                .BuildBatchArgumentsForFiles(files));
         }
 
         public string RemoveFiles(IReadOnlyList<string> files, bool force)
@@ -1866,7 +1880,7 @@ namespace GitCommands
             {
                 var args = GitCommandHelpers.ResetCmd(ResetMode.ResetIndex, "HEAD");
                 _gitExecutable.RunBatchCommand(new ArgumentBuilder() { args }
-                    .BuildBatchArguments(filesToRemove),
+                    .BuildBatchArgumentsForFiles(filesToRemove),
                     action);
             }
 
@@ -1939,6 +1953,11 @@ namespace GitCommands
         public bool InTheMiddleOfPatch()
         {
             return !File.Exists(GetRebaseDir() + "rebasing") && Directory.Exists(GetRebaseDir());
+        }
+
+        public bool InTheMiddleOfMerge()
+        {
+            return File.Exists(Path.Combine(GetGitDirectory(), "MERGE_HEAD"));
         }
 
         public bool InTheMiddleOfAction()
@@ -2288,6 +2307,7 @@ namespace GitCommands
             LocalConfigFile.SetValue(setting, value);
         }
 
+        // TODO: remove
         public void SetPathSetting(string setting, string value)
         {
             LocalConfigFile.SetPathValue(setting, value);
@@ -2994,7 +3014,7 @@ namespace GitCommands
             foreach (var gitRef in gitRefs)
             {
                 if (headByRemote.TryGetValue(gitRef.Remote, out var defaultHead) &&
-                    gitRef.Guid == defaultHead.Guid)
+                    gitRef.ObjectId == defaultHead.ObjectId)
                 {
                     headByRemote.Remove(gitRef.Remote);
                 }
@@ -3457,6 +3477,7 @@ namespace GitCommands
                 var args = new GitArgumentBuilder("ls-files")
                 {
                     "-s",
+                    { fileName.IsNotNullOrWhitespace(), "--" },
                     fileName.QuoteNE()
                 };
 
@@ -3474,6 +3495,7 @@ namespace GitCommands
                 {
                     "-r",
                     objectId,
+                    { fileName.IsNotNullOrWhitespace(), "--" },
                     fileName.QuoteNE()
                 };
                 var lines = _gitExecutable.GetOutput(args).Split(' ', '\t');
@@ -3603,6 +3625,7 @@ namespace GitCommands
 
         public SubmoduleStatus CheckSubmoduleStatus([CanBeNull] ObjectId commit, [CanBeNull] ObjectId oldCommit, CommitData data, CommitData oldData, bool loadData = false)
         {
+            // TODO File access for Git revision access
             if (!IsValidGitWorkingDir() || oldCommit == null)
             {
                 return SubmoduleStatus.NewSubmodule;

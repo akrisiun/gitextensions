@@ -63,7 +63,8 @@ namespace GitUI.CommandsDialogs.AboutBoxDialog
                 {
                     return new TextBox
                     {
-                        BackColor = Color.White,
+                        BackColor = SystemColors.Window,
+                        ForeColor = SystemColors.WindowText,
                         BorderStyle = BorderStyle.None,
                         Dock = DockStyle.Fill,
                         Margin = new Padding(0),

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -11,7 +12,9 @@ using GitUI.CommitInfo;
 using GitUI.Editor;
 using GitUI.HelperDialogs;
 using GitUIPluginInterfaces;
+using GitUIPluginInterfaces.RepositoryHosts;
 using JetBrains.Annotations;
+using ResourceManager;
 
 namespace GitUI.Blame
 {
@@ -26,6 +29,7 @@ namespace GitUI.Blame
         public event Action EscapePressed;
 
         private readonly AsyncLoader _blameLoader = new AsyncLoader();
+        private int _lineIndex;
 
         [CanBeNull] private GitBlameLine _lastBlameLine;
         [CanBeNull] private GitBlameLine _clickedBlameLine;
@@ -39,6 +43,7 @@ namespace GitUI.Blame
         private int _lastTooltipY = -100;
         private GitBlameCommit _tooltipCommit;
         private bool _changingScrollPosition;
+        private IRepositoryHostPlugin _gitHoster;
 
         public BlameControl()
         {
@@ -64,6 +69,17 @@ namespace GitUI.Blame
             BlameFile.EscapePressed += () => EscapePressed?.Invoke();
 
             CommitInfo.CommandClicked += commitInfo_CommandClicked;
+        }
+
+        public void ConfigureRepositoryHostPlugin(IRepositoryHostPlugin gitHoster)
+        {
+            _gitHoster = gitHoster;
+            if (_gitHoster == null)
+            {
+                return;
+            }
+
+            _gitHoster.ConfigureContextMenu(contextMenu);
         }
 
         public void UpdateShowLineNumbers()
@@ -121,10 +137,10 @@ namespace GitUI.Blame
                 return;
             }
 
-            var lineIndex = BlameAuthor.GetLineFromVisualPosY(e.Y);
+            _lineIndex = BlameAuthor.GetLineFromVisualPosY(e.Y);
 
-            var blameCommit = lineIndex < _blame.Lines.Count
-                ? _blame.Lines[lineIndex].Commit
+            var blameCommit = _lineIndex < _blame.Lines.Count
+                ? _blame.Lines[_lineIndex].Commit
                 : null;
 
             HighlightLinesForCommit(blameCommit);
@@ -405,7 +421,6 @@ namespace GitUI.Blame
             Point position = BlameAuthor.PointToClient(MousePosition);
 
             int line = BlameAuthor.GetLineFromVisualPosY(position.Y);
-
             if (line >= _blame.Lines.Count)
             {
                 return -1;
@@ -416,7 +431,7 @@ namespace GitUI.Blame
 
         private void contextMenu_Opened(object sender, EventArgs e)
         {
-            contextMenu.Tag = GetBlameLine();
+            contextMenu.Tag = new GitBlameContext(_fileName, _lineIndex, GetBlameLine(), _blameId);
 
             if (_revGrid == null || !TryGetSelectedRevision(out var selectedRevision))
             {
@@ -432,8 +447,7 @@ namespace GitUI.Blame
         [CanBeNull]
         private GitBlameCommit GetBlameCommit()
         {
-            int line = (int?)contextMenu.Tag ?? -1;
-
+            int line = (contextMenu.Tag as GitBlameContext)?.BlameLine ?? -1;
             if (line < 0)
             {
                 return null;

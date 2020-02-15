@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Win32;
 
 namespace GitCommands.Utils
@@ -20,6 +21,22 @@ namespace GitCommands.Utils
                 default:
                     return false;
             }
+        }
+
+        public static bool RunningOnWindowsWithMainWindow()
+        {
+            if (!RunningOnWindows())
+            {
+                return false;
+            }
+
+            var currentProcess = Process.GetCurrentProcess();
+            if (currentProcess is null)
+            {
+                return false;
+            }
+
+            return currentProcess.MainWindowHandle != IntPtr.Zero;
         }
 
         public static bool IsWindowsVistaOrGreater()

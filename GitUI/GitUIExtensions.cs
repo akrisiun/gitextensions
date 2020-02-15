@@ -104,7 +104,7 @@ namespace GitUI
                 if (file.TreeGuid != null)
                 {
                     // blob guid exists
-                    return diffViewer.ViewGitItemAsync(file.Name, file.TreeGuid, openWithDifftool);
+                    return diffViewer.ViewGitItemAsync(file, openWithDifftool);
                 }
 
                 if (secondRevision == null)
@@ -113,31 +113,29 @@ namespace GitUI
                 }
 
                 // Get blob guid from revision
-                return diffViewer.ViewGitItemRevisionAsync(file.Name, secondRevision, openWithDifftool);
+                return diffViewer.ViewGitItemRevisionAsync(file, secondRevision, openWithDifftool);
             }
 
-            return diffViewer.ViewPatchAsync(() =>
+            string selectedPatch = diffViewer.GetSelectedPatch(firstRevision, secondRevision, file);
+            if (selectedPatch == null)
             {
-                string selectedPatch = diffViewer.GetSelectedPatch(firstRevision, secondRevision, file);
-                if (selectedPatch == null)
-                {
-                    return (text: defaultText, openWithDifftool: null /* not applicable */, file.Name);
-                }
+                return diffViewer.ViewPatchAsync(file.Name, text: defaultText,
+                    openWithDifftool: null /* not applicable */, isText: true);
+            }
 
-                return (text: selectedPatch,
-                    openWithDifftool: openWithDifftool ?? OpenWithDifftool, file.Name);
+            return diffViewer.ViewPatchAsync(file.Name, text: selectedPatch,
+                openWithDifftool: openWithDifftool ?? OpenWithDifftool, isText: file.IsSubmodule);
 
-                void OpenWithDifftool()
-                {
-                    diffViewer.Module.OpenWithDifftool(
-                        file.Name,
-                        null,
-                        firstRevision.ToString(),
-                        firstRevision.ToString(),
-                        "",
-                        file.IsTracked);
-                }
-            });
+            void OpenWithDifftool()
+            {
+                diffViewer.Module.OpenWithDifftool(
+                    file.Name,
+                    null,
+                    firstRevision.ToString(),
+                    firstRevision.ToString(),
+                    "",
+                    file.IsTracked);
+            }
         }
 
         public static void RemoveIfExists(this TabControl tabControl, TabPage page)

@@ -115,7 +115,7 @@ See the changes in the commit form.");
             {
                 if (isIncompleteMatch)
                 {
-                    MessageBox.Show(_nodeNotFoundNextAvailableParentSelected.Text);
+                    MessageBox.Show(_nodeNotFoundNextAvailableParentSelected.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 tvGitTree.SelectedNode = foundNode;
@@ -123,7 +123,7 @@ See the changes in the commit form.");
             }
             else
             {
-                MessageBox.Show(_nodeNotFoundSelectionNotChanged.Text);
+                MessageBox.Show(_nodeNotFoundSelectionNotChanged.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -203,7 +203,7 @@ See the changes in the commit form.");
 
                 if (tvGitTree.SelectedNode == null)
                 {
-                    ThreadHelper.JoinableTaskFactory.Run(() => FileText.ViewTextAsync("", ""));
+                    FileText.Clear();
                 }
             }
             finally
@@ -342,7 +342,7 @@ See the changes in the commit form.");
                     WorkingDirectory = _fullPathResolver.Resolve(item.FileName.EnsureTrailingPathSeparator())
                 }
             };
-            if (item.Guid.IsNotNullOrWhitespace())
+            if (item.ObjectId != null)
             {
                 process.StartInfo.Arguments += " -commit=" + item.Guid;
             }
@@ -366,13 +366,17 @@ See the changes in the commit form.");
                 switch (gitItem.ObjectType)
                 {
                     case GitObjectType.Blob:
-                    {
-                        return FileText.ViewGitItemAsync(gitItem.FileName, gitItem.ObjectId);
-                    }
-
                     case GitObjectType.Commit:
                     {
-                        return FileText.ViewTextAsync(gitItem.FileName, LocalizationHelpers.GetSubmoduleText(Module, gitItem.FileName, gitItem.Guid));
+                        var file = new GitItemStatus
+                        {
+                            IsTracked = true,
+                            Name = gitItem.Name,
+                            TreeGuid = gitItem.ObjectId,
+                            IsSubmodule = gitItem.ObjectType == GitObjectType.Commit
+                        };
+
+                        return FileText.ViewGitItemAsync(file);
                     }
 
                     default:
@@ -624,7 +628,7 @@ See the changes in the commit form.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message);
+                MessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -654,7 +658,7 @@ See the changes in the commit form.");
         {
             if (tvGitTree.SelectedNode?.Tag is GitItem gitItem && _revision != null)
             {
-                if (MessageBox.Show(_resetFileText.Text, _resetFileCaption.Text, MessageBoxButtons.OKCancel) == DialogResult.OK)
+                if (MessageBox.Show(_resetFileText.Text, _resetFileCaption.Text, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
                 {
                     Module.CheckoutFiles(new[] { gitItem.FileName }, _revision.ObjectId, false);
                 }
@@ -677,7 +681,7 @@ See the changes in the commit form.");
                 {
                     var extension = Path.GetExtension(fileDialog.FileName);
 
-                    fileDialog.Filter = $@"{_saveFileFilterCurrentFormat.Text}(*.{extension})|*.{extension}| {_saveFileFilterAllFiles.Text} (*.*)|*.*";
+                    fileDialog.Filter = $@"{_saveFileFilterCurrentFormat.Text}(*{extension})|*{extension}| {_saveFileFilterAllFiles.Text} (*.*)|*.*";
                     if (fileDialog.ShowDialog(this) == DialogResult.OK)
                     {
                         Module.SaveBlobAs(fileDialog.FileName, gitItem.Guid);
