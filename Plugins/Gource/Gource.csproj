@@ -49,9 +49,6 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\CommonAssemblyInfo.cs">
-      <Link>Properties\CommonAssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="GourcePlugin.cs" />
     <Compile Include="GourceStart.cs">
       <SubType>Form</SubType>

@@ -11,11 +11,13 @@ using Microsoft.VisualStudio.Threading;
 
 namespace GitUI
 {
+    #pragma warning disable VSTHRD002, SA1139
+    // Avoid problematic synchronous waits
+    // Use literal suffix notation instead of casting
+
     public static class ThreadHelper
     {
-#pragma warning disable SA1139 // Use literal suffix notation instead of casting
         private const int RPC_E_WRONG_THREAD = unchecked((int)0x8001010E);
-#pragma warning restore SA1139 // Use literal suffix notation instead of casting
 
         private static JoinableTaskContext _joinableTaskContext;
         private static JoinableTaskCollection _joinableTaskCollection;
@@ -99,9 +101,7 @@ namespace GitUI
                 {
                     try
                     {
-#pragma warning disable VSTHRD003 // Avoid awaiting foreign Tasks (As a fire-and-forget continuation, deadlocks can't happen.)
                         await task.ConfigureAwait(false);
-#pragma warning restore VSTHRD003 // Avoid awaiting foreign Tasks
                     }
                     catch (OperationCanceledException)
                     {
@@ -117,7 +117,8 @@ namespace GitUI
 
         public static async Task JoinPendingOperationsAsync(CancellationToken cancellationToken)
         {
-            await _joinableTaskCollection.JoinTillEmptyAsync(cancellationToken);
+            // Microsoft.VisualStudio.Threading.JoinableTaskCollection
+            await _joinableTaskCollection.JoinTillEmptyAsync(); // cancellationToken);
         }
 
         public static T CompletedResult<T>(this Task<T> task)
@@ -127,9 +128,7 @@ namespace GitUI
                 throw new InvalidOperationException();
             }
 
-#pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
             return task.Result;
-#pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
         }
 
         public static T CompletedOrDefault<T>(this Task<T> task)
@@ -139,9 +138,7 @@ namespace GitUI
                 return default;
             }
 
-#pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
             return task.Result;
-#pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
         }
     }
 }

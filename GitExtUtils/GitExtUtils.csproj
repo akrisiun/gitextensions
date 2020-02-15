@@ -43,9 +43,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\CommonAssemblyInfo.cs">
-      <Link>Properties\CommonAssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="ArgumentBuilder.cs" />
     <Compile Include="ArgumentString.cs" />
     <Compile Include="ArrayExtensions.cs" />
@@ -54,22 +51,9 @@
     <Compile Include="GitArgumentBuilder.cs" />
     <Compile Include="GitCommandConfiguration.cs" />
     <Compile Include="GitConfigItem.cs" />
-    <Compile Include="GitUI\CancellationTokenSequence.cs" />
-    <Compile Include="GitUI\ColorHelper.cs" />
-    <Compile Include="GitUI\ComboBoxExtensions.cs" />
-    <Compile Include="GitUI\ControlDpiExtensions.cs" />
-    <Compile Include="GitUI\ControlHotkeyExtensions.cs" />
-    <Compile Include="GitUI\ControlThreadingExtensions.cs" />
-    <Compile Include="GitUI\ControlUtil.cs" />
-    <Compile Include="GitUI\DpiUtil.cs" />
-    <Compile Include="GitUI\HighDpiMouseCursors.cs" />
-    <Compile Include="GitUI\ListViewExtensions.cs" />
-    <Compile Include="GitUI\TableLayoutPanelExtensions.cs" />
-    <Compile Include="GitUI\TaskExtensions.cs" />
-    <Compile Include="GitUI\ThreadHelper.cs" />
-    <Compile Include="GitUI\UIExtensions.cs" />
-    <Compile Include="GitUI\Win32ApiUtil.cs" />
-    <Compile Include="GitUI\HslColor.cs" />
+    <Compile Include="GitUI\Theming\*.cs" />
+    <Compile Include="GitUI\*.cs" />
+    <!-- <Compile Include="GitUI\HslColor.cs" /> -->
     <Compile Include="Linq\LinqExtensions.cs" />
     <Compile Include="MruCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
