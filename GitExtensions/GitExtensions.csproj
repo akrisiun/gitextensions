@@ -30,6 +30,7 @@
  </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Externals\ConEmuWinForms.net471.csproj" />
     <ProjectReference Include="..\GitUI\GitUI.csproj" />
     <ProjectReference Include="..\GitCommands\GitCommands.csproj" />
     <ProjectReference Include="..\GitExtUtils\GitExtUtils.csproj" />
