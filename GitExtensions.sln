@@ -93,7 +93,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JenkinsIntegration", "Plugi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitExtUtils", "GitExtUtils\GitExtUtils.csproj", "{0F1F1168-A4B2-4FA2-B17B-735140D17F39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConEmuWinForms.net471", "Externals\conemu-inside\ConEmuWinForms\ConEmuWinForms.net471.csproj", "{1DC7D403-484B-43B4-B017-1356397A32CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConEmuWinForms.net471", "Externals\ConEmuWinForms.net471.csproj", "{1DC7D403-484B-43B4-B017-1356397A32CB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppVeyorIntegration", "Plugins\BuildServerIntegration\AppVeyorIntegration\AppVeyorIntegration.csproj", "{39228D7F-9239-4A2D-8A6F-4D0F7DEB9178}"
 EndProject

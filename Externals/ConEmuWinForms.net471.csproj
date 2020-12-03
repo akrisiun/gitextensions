@@ -1,0 +1,66 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>ConEmu.WinForms</AssemblyName>
+    <RootNamespace>ConEmu.WinForms</RootNamespace>
+    <TargetFramework>net471</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>$(NoWarn),1573,1591,1696,1712</NoWarn>
+
+    <!-- TODO once all project migrated to SDK-style, remove this and move properties to Directory.Build.props -->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="conemu-inside\ConEmuInside\**" />
+    <Compile Remove="conemu-inside\ConEmuWinForms\bin\**" />
+    <Compile Remove="conemu-inside\ConEmuWinForms\obj\**" />
+    <Compile Remove="conemu-inside\ConEmuWinForms\Properties\**" />
+    <Compile Remove="conemu-inside\Samples\**" />
+    <Compile Remove="conemu-inside\Tests\**" />
+    <Compile Remove="EasyHook\**" />
+    <Compile Remove="Git.hub\**" />
+    <Compile Remove="ICSharpCode.TextEditor\**" />
+    <EmbeddedResource Remove="conemu-inside\ConEmuInside\**" />
+    <EmbeddedResource Remove="conemu-inside\ConEmuWinForms\bin\**" />
+    <EmbeddedResource Remove="conemu-inside\ConEmuWinForms\obj\**" />
+    <EmbeddedResource Remove="conemu-inside\ConEmuWinForms\Properties\**" />
+    <EmbeddedResource Remove="conemu-inside\Samples\**" />
+    <EmbeddedResource Remove="conemu-inside\Tests\**" />
+    <EmbeddedResource Remove="EasyHook\**" />
+    <EmbeddedResource Remove="Git.hub\**" />
+    <EmbeddedResource Remove="ICSharpCode.TextEditor\**" />
+    <None Remove="conemu-inside\ConEmuInside\**" />
+    <None Remove="conemu-inside\ConEmuWinForms\bin\**" />
+    <None Remove="conemu-inside\ConEmuWinForms\obj\**" />
+    <None Remove="conemu-inside\ConEmuWinForms\Properties\**" />
+    <None Remove="conemu-inside\Samples\**" />
+    <None Remove="conemu-inside\Tests\**" />
+    <None Remove="EasyHook\**" />
+    <None Remove="Git.hub\**" />
+    <None Remove="ICSharpCode.TextEditor\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="conemu-inside\ConEmuWinForms\Resources.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="conemu-inside\ConEmuWinForms\Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="conemu-inside\ConEmuWinForms\ConEmu.xml" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ConEmu.Core" Version="20.07.13" PrivateAssets="all" />
+    <PackageReference Include="JetBrains.Annotations" Version="$(JetBrainsAnnotationsVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="$(MicrosoftVisualStudioThreadingVersion)" />
+  </ItemGroup>
+
+</Project>
