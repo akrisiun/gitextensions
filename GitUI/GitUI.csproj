@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Externals\conemu-inside\ConEmuWinForms\ConEmuWinForms.csproj" />
+    <ProjectReference Include="..\Externals\conemu-inside\ConEmuWinForms\ConEmuWinForms.net471.csproj" />
     <ProjectReference Include="..\Externals\EasyHook\EasyHook\EasyHook.csproj" />
     <ProjectReference Include="..\Externals\Git.hub\Git.hub\Git.hub.csproj" />
     <ProjectReference Include="..\Externals\ICSharpCode.TextEditor\Project\ICSharpCode.TextEditor.csproj" />

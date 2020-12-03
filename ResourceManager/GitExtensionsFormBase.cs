@@ -28,6 +28,8 @@ namespace ResourceManager
             _initialiser = new GitExtensionsControlInitialiser(this);
 
             ShowInTaskbar = Application.OpenForms.Count <= 0;
+
+            // 'System.Resources.Extensions, Version=4.0.0.0
             Icon = Resources.GitExtensionsLogoIcon;
         }
 

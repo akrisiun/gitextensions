@@ -25,7 +25,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="WiX" Version="$(WiXVersion)" />
+    <!--<PackageReference Include="WiX" Version="$(WiXVersion)" />-->
+    <PackageReference Include="System.Resources.Extensions" Version="5.0.0" />    
  </ItemGroup>
 
   <ItemGroup>
