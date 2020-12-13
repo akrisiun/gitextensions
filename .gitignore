@@ -2,15 +2,20 @@
 _UpgradeReport_Files/
 [Dd]ebug*/
 [Rr]elease*/
-!ReleaseNotesGenerator*
+!ReleaseNotesGenerator
 ipch/
-.vs/
 _ReSharper*/
 TestResults/
-*.DS_Store*
 
-obj/
-bin/
+*.sdf
+*.opensdf
+*.ipch
+
+*/obj
+Plugins/*/obj
+Plugins/*/bin
+Plugins/*/*/obj
+Plugins/*/*/bin
 
 #ignore output mild compiler
 GitExtensionsShellEx/Generated/
@@ -22,17 +27,9 @@ GitExtensionsShellEx/Generated/
 *.orig
 *.msi
 *.user
-*.opendb
-*.sdf
-*.opensdf
-*.ipch
-*.iml
-*.VC.db
-*.sqlite
 *.aps
 *.bak
 *.[Cc]ache
-.idea/
 Thumbs.db
 GitPlugin/bin/*
 GitPlugin/Properties/Resources.resources
@@ -45,14 +42,14 @@ GitPlugin/Properties/Resources.resources
 test-results/*
 GitCommandsTests/test-results/*
 /!runTests.bat
+GitExtensionsMono.sln.VisualState.xml
 TestResult.xml
 libgit2sharp
 Setup/GitExtensions/
-Setup/GitExtensions-pdbs/
-Setup/GitExtensions-Portable-*.zip
-Setup/GitExtensions-pdbs-*.zip
+Setup/GitExtensions*Mono.zip
 Setup/tools/tx.exe
-Plugins/GitExtensions.PluginManager/*
+/Bin/Git*.exe
+/Bin/KDiff3*.exe
 
 # Backup & report files from converting an old project file to a newer
 # Visual Studio version. Backup files are not needed, because we have git ;-)
@@ -65,14 +62,26 @@ UpgradeLog*.htm*
 packages/
 GitExtensions.*.sln.VisualState.xml
 GitExtensions.settings.backup
-/Setup/*.zip
-/Setup/Changelog.md
-*.received.*
-Directory.Build.rsp
-GitStatus.txt
-OpenCover.GitExtensions.xml
-tree.txt
-*.binlog
-artifacts/
-.tools/vswhere/
-.dotnet/
+*.opendb
+*.VS2015.VC.db
+*.VS2015.sqlite
+Bin/*.dll
+Bin/PSTaskDialog.dll
+Bin/*.dll
+Bin/*.xml
+Bin/*.pdb
+Bin/*.config
+Bin/*.txt
+Bin/Plugins/
+Bin/Translation/
+Bin/*.exe.lastcodeanalysissucceeded
+*.resources.dll
+Bin/*.vshost.*
+Bin/*.exe.manifest
+vendor/bin/
+*.pfx
+.vs*/
+*.txt
+
+*.log
+**/bin/net45/*
