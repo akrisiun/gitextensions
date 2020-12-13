@@ -1,15 +1,20 @@
-[submodule "Externals/NBug"]
-	path = Externals/NBug
-	url = https://github.com/gitextensions/NBug
-	ignore = dirty
 [submodule "Externals/Git.hub"]
 	path = Externals/Git.hub
-	url = https://github.com/akrisiun/Git.hub
+	url = ../../gitextensions/Git.hub.git
+[submodule "Externals/ICSharpCode.TextEditor"]
+	path = Externals/ICSharpCode.TextEditor
+	url = ../../gitextensions/ICSharpCode.TextEditor.git
+[submodule "Externals/EasyHook"]
+	path = Externals/EasyHook
+	url = ../../gitextensions/EasyHook.git
+[submodule "Externals/NBug"]
+	path = Externals/NBug
+	url = https://github.com/gitextensions/NBug.git
 	ignore = dirty
 [submodule "Externals/conemu-inside"]
 	path = Externals/conemu-inside
-	url = https://github.com/akrisiun/conemu-inside
+	url = https://github.com/akrisiun/conemu-inside.git
 	ignore = dirty
 [submodule "Externals/MaterialSkin"]
 	path = Externals/MaterialSkin
-	url = https://github.com/akrisiun/MaterialSkin
+	url = https://github.com/akrisiun/MaterialSkin.git
