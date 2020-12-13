@@ -527,6 +527,11 @@ namespace GitUI.UserControls.RevisionGrid
                     // Normal cancellation of background queue during clear
                     return;
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Unknown error {ex}");
+                    return;
+                }
             }
         }
 

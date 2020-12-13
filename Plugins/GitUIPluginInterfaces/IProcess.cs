@@ -13,6 +13,10 @@ namespace GitUIPluginInterfaces
     /// </remarks>
     public interface IProcess : IDisposable
     {
+        public int PID { get; }
+
+        public Process Process { get; }
+
         /// <summary>
         /// Gets an object that facilitates writing to the process's standard input stream.
         /// </summary>

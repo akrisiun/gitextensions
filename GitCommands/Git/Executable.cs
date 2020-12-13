@@ -68,6 +68,9 @@ namespace GitCommands
 
             private bool _disposed;
 
+            public Process Process => _process;
+            public int PID => _process?.Id ?? 0;
+
             [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
             public ProcessWrapper(string fileName, string arguments, string workDir, bool createWindow, bool redirectInput, bool redirectOutput, [CanBeNull] Encoding outputEncoding)
             {
@@ -98,9 +101,16 @@ namespace GitCommands
 
                 _process.Exited += OnProcessExit;
 
-                _process.Start();
+                try
+                {
+                    _process.Start();
 
-                _logOperation.SetProcessId(_process.Id);
+                    _logOperation.SetProcessId(_process.Id);
+                }
+                catch (System.ComponentModel.Win32Exception ex)
+                {
+                    Console.WriteLine($"Failed process {ex}");
+                }
             }
 
             private void OnProcessExit(object sender, EventArgs eventArgs)

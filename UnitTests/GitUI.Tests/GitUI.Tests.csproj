@@ -5,7 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Externals\conemu-inside\ConEmuWinForms\ConEmuWinForms.net471.csproj" />
+    <ProjectReference Include="..\..\Externals\ConEmuWinForms.net471.csproj" />
     <ProjectReference Include="..\..\Externals\ICSharpCode.TextEditor\Project\ICSharpCode.TextEditor.csproj" />
     <ProjectReference Include="..\..\GitCommands\GitCommands.csproj" />
     <ProjectReference Include="..\..\GitExtUtils\GitExtUtils.csproj" />

@@ -366,7 +366,33 @@ namespace GitCommands
             {
                 var outputBuffer = new MemoryStream();
                 var errorBuffer = new MemoryStream();
+
+                int exitCode = 0;
+                try
+                {
+                    if (process.Process == null || process.PID == 0)
+                    {
+                        exitCode = -1;
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                    exitCode = -2;
+                }
+
+                if (exitCode != 0)
+                {
+                    return new ExecutionResult(
+                    "",
+                    "",
+                    exitCode);
+                }
+
                 var outputTask = process.StandardOutput.BaseStream.CopyToAsync(outputBuffer);
+
+                // An unhandled exception of type 'System.InvalidOperationException' occurred in mscorlib.dll
+                // StandardOut has not been redirected or the process hasn't started yet.
+
                 var errorTask = process.StandardError.BaseStream.CopyToAsync(errorBuffer);
 
                 if (writeInput != null)
@@ -383,7 +409,7 @@ namespace GitCommands
                 var output = outputEncoding.GetString(outputBuffer.GetBuffer(), 0, (int)outputBuffer.Length);
                 var error = outputEncoding.GetString(errorBuffer.GetBuffer(), 0, (int)errorBuffer.Length);
 
-                var exitCode = await process.WaitForExitAsync();
+                exitCode = await process.WaitForExitAsync();
 
                 return new ExecutionResult(
                     CleanString(stripAnsiEscapeCodes, output),

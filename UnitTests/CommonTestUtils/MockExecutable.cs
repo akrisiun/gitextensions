@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -120,12 +121,16 @@ namespace CommonTestUtils
 
         private sealed class MockProcess : IProcess
         {
+            public Process Process => null;
+            public int PID { get; private set; }
+
             public MockProcess([CanBeNull] string output, int? exitCode = 0)
             {
                 StandardOutput = new StreamReader(new MemoryStream(Encoding.UTF8.GetBytes(output ?? "")));
                 StandardError = new StreamReader(new MemoryStream());
                 StandardInput = new StreamWriter(new MemoryStream());
                 _exitCode = exitCode;
+                PID = 0;
             }
 
             public MockProcess()
@@ -134,6 +139,7 @@ namespace CommonTestUtils
                 StandardError = new StreamReader(new MemoryStream());
                 StandardInput = new StreamWriter(new MemoryStream());
                 _exitCode = 0;
+                PID = 0;
             }
 
             private int? _exitCode;
