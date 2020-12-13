@@ -20,11 +20,13 @@ namespace GitUI.Shells
             {
                 case BashShell.ShellName:
                     terminal.RunningSession.BeginGuiMacro("Keys").WithParam("^A").WithParam("^K").ExecuteSync();
-                    terminal.RunningSession.WriteInputTextAsync(command + Environment.NewLine);
+
+                    // WriteInputTextAsync
+                    terminal.RunningSession.WriteInputText(command + Environment.NewLine);
                     break;
 
                 default:
-                    terminal.RunningSession.WriteInputTextAsync($"\x1B{command}{Environment.NewLine}");
+                    terminal.RunningSession.WriteInputText($"\x1B{command}{Environment.NewLine}");
                     break;
             }
         }

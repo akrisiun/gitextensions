@@ -38,7 +38,8 @@ namespace GitUI.UserControls
 
         public override void AppendMessageFreeThreaded(string text)
         {
-            _terminal.RunningSession?.WriteOutputTextAsync(text);
+            // WriteOutputTextAsync
+            _terminal.RunningSession?.WriteOutputText(text);
         }
 
         public override void KillProcess()
@@ -120,7 +121,10 @@ namespace GitUI.UserControls
                     }
                 };
 
-                _terminal.Start(startInfo, ThreadHelper.JoinableTaskFactory, AppSettings.ConEmuStyle.Value, AppSettings.ConEmuFontSize.Value);
+                startInfo.AllowUsedUp = true;
+                _terminal.Start(startInfo);
+
+                // , ThreadHelper.JoinableTaskFactory, AppSettings.ConEmuStyle.Value, AppSettings.ConEmuFontSize.Value);
             }
             catch (Exception ex)
             {

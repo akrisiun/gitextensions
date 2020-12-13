@@ -16,6 +16,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="FormBrowseDark.cs" />
+    <Compile Remove="FormBrowseDark.Designer.cs" />
+    <Compile Remove="FormBrowseDarkCommands.cs" />
+    <Compile Remove="GitUICommandsThread.cs" />
+    <Compile Remove="ProgramCommit.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="FormBrowseDark.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\CommonAssemblyInfo.cs" Link="Properties\CommonAssemblyInfo.cs" />
   </ItemGroup>
 

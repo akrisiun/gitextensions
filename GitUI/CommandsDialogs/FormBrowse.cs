@@ -2977,7 +2977,10 @@ namespace GitUI.CommandsDialogs
 
                 try
                 {
-                    _terminal.Start(startInfo, ThreadHelper.JoinableTaskFactory, AppSettings.ConEmuStyle.Value, AppSettings.ConEmuFontSize.Value);
+                    startInfo.AllowUsedUp = true;
+                    _terminal.Start(startInfo);
+
+                    // ThreadHelper.JoinableTaskFactory, AppSettings.ConEmuStyle.Value, AppSettings.ConEmuFontSize.Value);
                 }
                 catch (InvalidOperationException)
                 {
